@@ -31,7 +31,7 @@ typedef struct _nfc {
     bool (*onDisconnect)(NFC* this);
     void (*Send)(NFC* this, NDEF message);
     NDEF (*Recv)(NFC* this);
-}NFC;
+} NFC;
 
 NFC* newNFC();
 void deleteNFC(NFC* this_gen);
