@@ -5,15 +5,11 @@
  *      Author: parksanghyun
  */
 
-
-
 #ifndef DIT_ONGOINGNOTIFICATION_H
 #define DIT_ONGOINGNOTIFICATION_H
 
-
-#include <stdio.h>
-#include <notification.h>
-
+#include <stdbool.h>
+#include <stdalign.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -23,28 +19,27 @@ typedef struct _OngoingNotification OngoingNotification;
 
 
 typedef struct _OngoingNotification {
-    void (* create)(OngoingNotification* this_gen);
+    void (* create)(OngoingNotification* this);
 
-    void (* delete)(OngoingNotification* this_gen);
+    void (* delete)(OngoingNotification* this);
 
-    void (* setTitle)(OngoingNotification* this_gen, char* title);
+    void (* setTitle)(OngoingNotification* this, char* title);
 
-    void (* setText)(OngoingNotification* this_gen, char* text);
+    void (* setText)(OngoingNotification* this, char* text);
 
-    void (* setIcon)(OngoingNotification* this_gen, char* imagePath);
+    void (* setIcon)(OngoingNotification* this, char* imagePath);
 
 } OngoingNotification;
 
 OngoingNotification* newOngoingNotification();
 
-void deleteOngoingNotification(OngoingNotification* this_gen);
-void createOngoingNotification(OngoingNotification* this_gen);
-void setOngoingNotificationTitle(OngoingNotification* this_gen, char* title);
-void setOngoingNotificationText(OngoingNotification* this_gen, char* text);
-void setOngoingNotificationIcon(OngoingNotification* this_gen, char* imagePath);
+void deleteOngoingNotification(OngoingNotification* this);
+void createOngoingNotification(OngoingNotification* this);
+void setOngoingNotificationTitle(OngoingNotification* this, char* title);
+void setOngoingNotificationText(OngoingNotification* this, char* text);
+void setOngoingNotificationIcon(OngoingNotification* this, char* imagePath);
 
-
-typedef struct _OngoingNotificationExtends{
+typedef struct _OngoingNotificationExtends {
     OngoingNotification Ongoingnotification;
     notification_h ongoingnotification_handle;
     char* title;

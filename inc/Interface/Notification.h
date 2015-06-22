@@ -11,10 +11,8 @@
 #define DIT_NOTIFICATION_H
 
 
-#include <stdio.h>
-#include <notification.h>
-
-
+#include <stdbool.h>
+#include <stdalign.h>
 
 
 #ifdef __cplusplus
@@ -28,23 +26,23 @@ typedef struct _Notification Notification;
 typedef struct _Notification {
     void (* create)(Notification* this);
 
-    void (* delete)(Notification* this_gen);
+    void (* delete)(Notification* this);
 
-    void (* setTitle)(Notification* this_gen, char* title);
+    void (* setTitle)(Notification* this, char* title);
 
-    void (* setText)(Notification* this_gen, char* text);
+    void (* setText)(Notification* this, char* text);
 
-    void (* setIcon)(Notification* this_gen, char* imagePath);
+    void (* setIcon)(Notification* this, char* imagePath);
 
 } Notification;
 
 
 Notification* newNotification();
-void deleteNotification(Notification* this_gen);
-void createNotification(Notification* this_gen);
-void setNotificationTitle(Notification* this_gen, char* title);
-void setNotificationText(Notification* this_gen, char* text);
-void setNotificationIcon(Notification* this_gen, char* imagePath);
+void deleteNotification(Notification* this);
+void createNotification(Notification* this);
+void setNotificationTitle(Notification* this, char* title);
+void setNotificationText(Notification* this, char* text);
+void setNotificationIcon(Notification* this, char* imagePath);
 
 
 typedef struct {
