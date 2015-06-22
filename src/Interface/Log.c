@@ -18,7 +18,7 @@ Log* CreateLog() {
     this->log.Warnnig = LogWarring;
     this->log.Error = LogError;
 
-    return this;
+    return &this->log;
 }
 
 void DeleteLog(Log* this_gen) {
