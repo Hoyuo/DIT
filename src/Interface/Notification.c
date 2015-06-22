@@ -6,26 +6,34 @@
  *
  */
 #include "Interface/Notification.h"
-#include <stdlib.h>
+#include <stdio.h>
+#include <notification.h>
+
+
 
 void createNotification(Notification* this_gen){
 
     NotificationExtend* this = (NotificationExtend *)this_gen;
     this->notification_handle = notification_create(NOTIFICATION_TYPE_NOTI);
 
-    notification_set_text(this->notification_handle,NOTIFICATION_TYPE_TITLE,this->title,This,);
+    notification_set_text(this->notification_handle,NOTIFICATION_TEXT_TYPE_TITLE,this->title,NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+    notification_set_text(this->notification_handle,NOTIFICATION_TEXT_TYPE_CONTENT,this->text,NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+    notification_set_image(this->notification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
+
+    notification_post(this->notification_handle);
 }
 
 void setNotificationTitle(Notification* this_gen,char* title){
 
     NotificationExtend* this = (NotificationExtend *)this_gen;
-    this->text="Title";
+    this->title=title;
 
 }
 
 void setNotificationText(Notification* this_gen,char* text){
-    this->text="Text";
 
+    NotificationExtend* this = (NotificationExtend *)this_gen;
+    this->text=text;
 }
 
 void setNotificationIcon(Notification* this_gen,char* imagePath){

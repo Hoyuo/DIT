@@ -10,9 +10,11 @@
 #ifndef DIT_NOTIFICATION_H
 #define DIT_NOTIFICATION_H
 
-#include <stdbool.h>
-#include <stdalign.h>
+
+#include <stdio.h>
 #include <notification.h>
+
+
 
 
 #ifdef __cplusplus

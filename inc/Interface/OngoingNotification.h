@@ -10,8 +10,10 @@
 #ifndef DIT_ONGOINGNOTIFICATION_H
 #define DIT_ONGOINGNOTIFICATION_H
 
-#include <stdbool.h>
-#include <stdalign.h>
+
+#include <stdio.h>
+#include <notification.h>
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,20 +35,21 @@ typedef struct _OngoingNotification {
 
 } OngoingNotification;
 
-Notification* newOngoingNotification();
-void deleteOngoingNotification(OngoingNotification* this_gen);
+OngoingNotification* newOngoingNotification();
 
+void deleteOngoingNotification(OngoingNotification* this_gen);
 void createOngoingNotification(OngoingNotification* this_gen);
 void setOngoingNotificationTitle(OngoingNotification* this_gen, char* title);
 void setOngoingNotificationText(OngoingNotification* this_gen, char* text);
 void setOngoingNotificationIcon(OngoingNotification* this_gen, char* imagePath);
 
 
-typedef struct {
+typedef struct _OngoingNotificationExtends{
     OngoingNotification Ongoingnotification;
+    notification_h ongoingnotification_handle;
     char* title;
     char* text;
-    char* imagePath;;
+    char* imagepath;
 } OngoingNotificationExtends;
 
 #ifdef __cplusplus
