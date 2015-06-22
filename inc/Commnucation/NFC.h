@@ -7,6 +7,7 @@
 
 #ifndef DIT_NFC_H
 #define DIT_NFC_H
+
 #include <stdbool.h>
 #include <stdalign.h>
 
@@ -14,7 +15,8 @@
 extern "C" {
 #endif
 
-typedef struct { } NDEF;
+typedef struct {
+} NDEF;
 
 typedef struct _nfc NFC;
 
@@ -26,21 +28,30 @@ typedef struct _nfc NFC;
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
 typedef struct _nfc {
-    bool (*isAccessible)(NFC* this);
-    bool (*onConnect)(NFC* this);
-    bool (*onDisconnect)(NFC* this);
-    void (*Send)(NFC* this, NDEF message);
-    NDEF (*Recv)(NFC* this);
+    bool (* isAccessible)(NFC* this);
+
+    bool (* onConnect)(NFC* this);
+
+    bool (* onDisconnect)(NFC* this);
+
+    void (* Send)(NFC* this, NDEF message);
+
+    NDEF (* Recv)(NFC* this);
 } NFC;
 
 NFC* newNFC();
+
 void deleteNFC(NFC* this_gen);
 
-bool isNFCAccessible(NFC * this);
-bool onNFCConnect(NFC * this);
-bool onNFCDisconnect(NFC * this);
+bool isNFCAccessible(NFC* this);
+
+bool onNFCConnect(NFC* this);
+
+bool onNFCDisconnect(NFC* this);
+
 void NFCSend(NFC* this, NDEF message);
-NDEF NFCRecv(NFC * this);
+
+NDEF NFCRecv(NFC* this);
 
 /**
 	@struct NFCExtends
@@ -51,7 +62,7 @@ NDEF NFCRecv(NFC * this);
  */
 typedef struct {
     NFC nfc;
-	NDEF ndefMessage;
+    NDEF ndefMessage;
 } NFCExtends;
 
 #ifdef __cplusplus

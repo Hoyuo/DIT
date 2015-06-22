@@ -1,6 +1,7 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include "GPS.h"
+#include "dit.h"
+#include "Commnucation/GPS.h"
 
 GPS* newGPS() {
 	GPSExtends* this;
@@ -22,17 +23,18 @@ void deleteGPS(GPS* this_gen) {
 }
 
 bool isGPSAccessible(GPS* this) {
-	return fasle;
+	return false;
 }
 
 bool onGPSConnect(GPS* this) {
-	return fasle;
+	return false;
 }
 
 bool onGPSDisconnect(GPS* this) {
-	return fasle;
+	return false;
 }
 
 Location GPSRecv(GPS* this) {
-	return NULL;
+	Location t;
+	return t;
 }
