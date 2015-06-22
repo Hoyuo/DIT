@@ -5,8 +5,8 @@
  *      Author: parksanghyun
  */
 
-#ifndef LOG_H_
-#define LOG_H_
+#ifndef DIT_LOG_H
+#define DIT_LOG_H
 
 #include <stdbool.h>
 #include <stdalign.h>
