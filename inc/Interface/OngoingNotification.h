@@ -41,13 +41,13 @@ void setOngoingNotificationTitle(OngoingNotification* this, char* title);
 void setOngoingNotificationText(OngoingNotification* this, char* text);
 void setOngoingNotificationIcon(OngoingNotification* this, char* imagePath);
 
-typedef struct _OngoingNotificationExtends {
+typedef struct _OngoingNotificationExtend {
     OngoingNotification Ongoingnotification;
     notification_h ongoingnotification_handle;
     char* title;
     char* text;
     char* imagepath;
-} OngoingNotificationExtends;
+} OngoingNotificationExtend;
 
 #ifdef __cplusplus
 }
