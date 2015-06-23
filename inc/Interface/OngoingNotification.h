@@ -36,9 +36,13 @@ typedef struct _OngoingNotification {
 OngoingNotification* newOngoingNotification();
 
 void deleteOngoingNotification(OngoingNotification* this);
+
 void createOngoingNotification(OngoingNotification* this);
+
 void setOngoingNotificationTitle(OngoingNotification* this, char* title);
+
 void setOngoingNotificationText(OngoingNotification* this, char* text);
+
 void setOngoingNotificationIcon(OngoingNotification* this, char* imagePath);
 
 typedef struct _OngoingNotificationExtend {

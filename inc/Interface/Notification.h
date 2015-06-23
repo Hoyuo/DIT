@@ -15,7 +15,6 @@
 #include <stdalign.h>
 #include <notification.h>
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -39,10 +38,15 @@ typedef struct _Notification {
 
 
 Notification* newNotification();
+
 void deleteNotification(Notification* this);
+
 void createNotification(Notification* this);
+
 void setNotificationTitle(Notification* this, char* title);
+
 void setNotificationText(Notification* this, char* text);
+
 void setNotificationIcon(Notification* this, char* imagePath);
 
 
