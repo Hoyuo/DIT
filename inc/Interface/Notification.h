@@ -13,6 +13,7 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+#include <notification.h>
 
 
 #ifdef __cplusplus

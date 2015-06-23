@@ -6,8 +6,6 @@
  *
  */
 #include "Interface/Notification.h"
-#include "Notification.h"
-#include <notification.h>
 #include <stdlib.h>
 
 
