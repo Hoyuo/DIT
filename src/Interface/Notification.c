@@ -36,6 +36,7 @@ void setNotificationText(Notification* this_gen, char* text) {
 
 void setNotificationIcon(Notification* this_gen, char* imagePath) {
     NotificationExtend* this = (NotificationExtend*) this_gen;
+    this->imagePath = imagePath;
 
 }
 
@@ -55,9 +56,11 @@ void deleteNotification(Notification* this_gen) {
         }
         if (NULL != this->notification_handle) {
             notification_free(this->notification_handle);
+            this->notification_handle=0;
+
         }
         free(this);
-
+        this=NULL;
     }
 }
 
