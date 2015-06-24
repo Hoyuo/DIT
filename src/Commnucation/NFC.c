@@ -1,6 +1,8 @@
 #include "Commnucation/NFC.h"
 #include <stdlib.h>
+#include <tizen.h>
 #include <nfc.h>
+#include <app_control.h>
 
 /**
 	@name isNFCAccessible
@@ -12,8 +14,11 @@
 	@see
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
-bool isNFCAccessible(NFC * this) {
-    return false;
+bool isNFCAccessible(NFC* this) {
+    bool ret;
+    system_info_get_platform_bool("http://tizen.org/feature/network.nfc", &ret);
+    ((NFCExtends*) this)->access = ret;
+    return ret;
 }
 
 /**
@@ -26,8 +31,30 @@ bool isNFCAccessible(NFC * this) {
 	@see
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
-bool onNFCConnect(NFC * this) {
-    return false;
+bool onNFCConnect(NFC* this) {
+    bool access = ((NFCExtends*) this)->access;
+    bool ret = true;
+
+    if (access == false) {
+        int r;
+        nfc_manager_initialize();
+        nfc_manager_is_supported();
+
+        //NFC 메니저 생성
+        app_control_h service = NULL;
+        app_control_create(&service);
+        //app_control 생성
+        app_control_set_operation(service, "http://tizen.org/appcontrol/operation/setting/nfc");
+        app_control_add_extra_data(service, "type", "nfc");
+        r = app_control_send_launch_request(service, NULL, NULL);
+        //NFC 켜기
+        if (r != APP_CONTROL_ERROR_NONE) {
+            ret = false;
+        }
+        app_control_destroy(service);
+    }
+
+    return ret;
 }
 
 /**
@@ -40,7 +67,8 @@ bool onNFCConnect(NFC * this) {
 	@see
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
-bool onNFCDisconnect(NFC * this) {
+bool onNFCDisconnect(NFC* this) {
+    nfc_manager_deinitialize();
     return false;
 }
 
@@ -108,7 +136,7 @@ NFC* newNFC() {
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
 void deleteNFC(NFC* this_gen) {
-    if(this_gen != NULL) {
+    if (this_gen != NULL) {
         NFCExtends* this = (NFCExtends*) this_gen;
         free(this);
     }
