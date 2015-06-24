@@ -35,19 +35,20 @@ typedef struct _OngoingNotification {
 
 //constructor
 OngoingNotification* newOngoingNotification();
+
 //destroyer
 void deleteOngoingNotification(OngoingNotification* this);
 
 
-void showOngoingNotification(OngoingNotification* this);
+void show(OngoingNotification* this);
 
-void hideOngoingNotification(OngoingNotification* this);
+void hide(OngoingNotification* this);
 
-void setOngoingNotificationTitle(OngoingNotification* this, char* title);
+void setTitle(OngoingNotification* this, char* title);
 
-void setOngoingNotificationText(OngoingNotification* this, char* text);
+void setText(OngoingNotification* this, char* text);
 
-void setOngoingNotificationIcon(OngoingNotification* this, char* imagePath);
+void setIcon(OngoingNotification* this, char* imagePath);
 
 typedef struct _OngoingNotificationExtend {
     OngoingNotification Ongoingnotification;
