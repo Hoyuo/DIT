@@ -15,12 +15,14 @@
 extern "C" {
 #endif
 
-typedef struct {
-	char* tag;
-	char* msg;
+typedef struct _ndef{
+    char* tag;
+    char* msg;
 } NDEF;
 
 NDEF CreateNDEF(char* tag, char* msg);
+
+void DeleteNDEF(NDEF* ndef);
 
 typedef struct _nfc NFC;
 
@@ -67,7 +69,7 @@ NDEF NFCRecv(NFC* this);
 typedef struct {
     NFC nfc;
     NDEF ndefMessage;
-	bool access;
+    bool access;
 } NFCExtends;
 
 #ifdef __cplusplus

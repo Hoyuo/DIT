@@ -1,8 +1,23 @@
 #include "Commnucation/NFC.h"
 #include <stdlib.h>
+#include <string.h>
 #include <tizen.h>
 #include <nfc.h>
 #include <app_control.h>
+
+NDEF CreateNDEF(char* tag, char* msg) {
+    NDEF ndef = {0, 0};
+    ndef.tag = (char*) malloc(strlen(tag) + 1);
+    strcpy(ndef.tag, tag);
+    ndef.msg = (char*) malloc(strlen(msg) + 1);
+    strcpy(ndef.msg, msg);
+    return ndef;
+}
+
+void DeleteNDEF(NDEF* ndef) {
+    free(ndef->tag);
+    free(ndef->msg);
+}
 
 /**
 	@name isNFCAccessible
@@ -17,6 +32,9 @@
 bool isNFCAccessible(NFC* this) {
     bool ret;
     system_info_get_platform_bool("http://tizen.org/feature/network.nfc", &ret);
+    if (ret == true) {
+        nfc_manager_set_tag_filter(NFC_TAG_FILTER_ALL_ENABLE);
+    }
     ((NFCExtends*) this)->access = ret;
     return ret;
 }
@@ -52,6 +70,15 @@ bool onNFCConnect(NFC* this) {
             ret = false;
         }
         app_control_destroy(service);
+
+        if (nfc_manager_is_system_handler_enabled() != true) {
+            if (nfc_manager_set_system_handler_enable(true) == NFC_ERROR_NONE) {
+            	nfc_manager_set_tag_filter(NFC_TAG_FILTER_ALL_ENABLE);
+                ret = true;
+            } else {
+                ret = false;
+            }
+        }
     }
 
     return ret;
@@ -68,8 +95,15 @@ bool onNFCConnect(NFC* this) {
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
 bool onNFCDisconnect(NFC* this) {
-    nfc_manager_deinitialize();
-    return false;
+    bool access = ((NFCExtends*) this)->access;
+    bool ret = false;
+
+    if (access == true) {
+        nfc_manager_deinitialize();
+        ret = true;
+    }
+
+    return ret;
 }
 
 /**
@@ -80,10 +114,30 @@ bool onNFCDisconnect(NFC* this) {
 	@return
 	@note
 	@see
- 	@todo features add "http://tizen.org/feature/network.nfc"
+ 	@todo features add "http://tizen.org/feature/network.nfc" privilege add "http://tizen.org/privilege/nfc"
  */
 void NFCSend(NFC* this, NDEF message) {
+    bool access = ((NFCExtends*) this)->access;
 
+    if (access == true) {
+        nfc_ndef_message_h ndef_message = NULL;
+        nfc_ndef_message_create(&ndef_message);
+
+        if (strcmp(message.tag, "TEXT") == 0) {
+            nfc_ndef_record_create_text(&ndef_message, message.msg, "en-US", NFC_ENCODE_UTF_8);
+        } else if (strcmp(message.tag, "URI") == 0) {
+            nfc_ndef_record_create_uri(&ndef_message, message.msg);
+        } else if (strcmp(message.tag, "MIME") == 0) {
+            nfc_ndef_record_create_mime(&ndef_message, "image/jpeg", message.msg, sizeof(message.msg));
+        } else {
+            return;
+        }
+
+        nfc_tag_h tag;
+        nfc_tag_write_ndef(tag, ndef_message, NULL, NULL);
+
+        nfc_ndef_record_destroy(&ndef_message);
+    }
 }
 
 /**
@@ -96,8 +150,17 @@ void NFCSend(NFC* this, NDEF message) {
 	@see
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
+
 NDEF NFCRecv(NFC* this) {
-    NDEF ret;
+    NDEF ret = {0, 0};
+    bool access = ((NFCExtends*) this)->access;
+
+    if (access == true) {
+        nfc_tag_h tag;
+        nfc_tag_read_ndef(tag, NULL, NULL);
+
+
+    }
     return ret;
 }
 
