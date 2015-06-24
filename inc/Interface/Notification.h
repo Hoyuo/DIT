@@ -24,7 +24,7 @@ typedef struct _Notification Notification;
 
 
 typedef struct _Notification {
-    void (* createNotification)(Notification* this);
+    void (* showNotification)(Notification* this);
 
     void (* hideNotification)(Notification* this);
 

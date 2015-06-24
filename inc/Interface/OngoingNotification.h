@@ -40,15 +40,15 @@ OngoingNotification* newOngoingNotification();
 void deleteOngoingNotification(OngoingNotification* this);
 
 
-void show(OngoingNotification* this);
+void showOngoing(OngoingNotification* this);
 
-void hide(OngoingNotification* this);
+void hideOngoing(OngoingNotification* this);
 
-void setTitle(OngoingNotification* this, char* title);
+void setOngoingTitle(OngoingNotification* this, char* title);
 
-void setText(OngoingNotification* this, char* text);
+void setOngoingText(OngoingNotification* this, char* text);
 
-void setIcon(OngoingNotification* this, char* imagePath);
+void setOngoingIcon(OngoingNotification* this, char* imagePath);
 
 typedef struct _OngoingNotificationExtend {
     OngoingNotification Ongoingnotification;

@@ -11,14 +11,14 @@
 #include <string.h>
 #include "Interface/OngoingNotification.h"
 
-void setTitle(OngoingNotification* this_gen, char* title) {
+void setOngoingTitle(OngoingNotification* this_gen, char* title) {
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     if(NULL!=this->title)free(this->title);
     this->title = malloc(strlen(title)+sizeof(char));
      strcpy(this->title,title);
 }
 
-void setText(OngoingNotification* this_gen, char* text) {
+void setOngoingText(OngoingNotification* this_gen, char* text) {
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     if(NULL!=this->text)
     	free(this->text);
@@ -26,7 +26,7 @@ void setText(OngoingNotification* this_gen, char* text) {
      strcpy(this->text,text);
 }
 
-void setIcon(OngoingNotification* this_gen, char* imagepath) {
+void setOngoingIcon(OngoingNotification* this_gen, char* imagepath) {
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     if(NULL!=this->imagepath){
     	free(this->imagepath);
@@ -36,7 +36,7 @@ void setIcon(OngoingNotification* this_gen, char* imagepath) {
 }
 
 
-void show(OngoingNotification* this_gen) {
+void showOngoing(OngoingNotification* this_gen) {
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     this->ongoingnotification_handle = notification_create(NOTIFICATION_TYPE_ONGOING);
     notification_set_property(this->ongoingnotification_handle, NOTIFICATION_PROP_DISABLE_TICKERNOTI);
@@ -48,7 +48,7 @@ void show(OngoingNotification* this_gen) {
 }
 
 
-void hide(OngoingNotification* this_gen){
+void hideOngoing(OngoingNotification* this_gen){
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
 
 	notification_delete(this->ongoingnotification_handle);
@@ -82,11 +82,11 @@ OngoingNotification* newOngoingNotification() {
     OngoingNotificationExtend* this;
 
     this = (OngoingNotificationExtend*) malloc(sizeof(OngoingNotificationExtend));
-    this->Ongoingnotification.showOngoingNotification = show;
-    this->Ongoingnotification.hideOngoingNotification = hide;
-    this->Ongoingnotification.setOngoingNotificationTitle = setTitle;
-    this->Ongoingnotification.setOngoingNotificationText = setText;
-    this->Ongoingnotification.setOngoingNotificationIcon = setIcon;
+    this->Ongoingnotification.showOngoingNotification = showOngoing;
+    this->Ongoingnotification.hideOngoingNotification = hideOngoing;
+    this->Ongoingnotification.setOngoingNotificationTitle = setOngoingTitle;
+    this->Ongoingnotification.setOngoingNotificationText = setOngoingText;
+    this->Ongoingnotification.setOngoingNotificationIcon = setOngoingIcon;
     this->title = NULL;
     this->text = NULL;
     this->imagepath = NULL;

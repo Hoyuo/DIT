@@ -52,7 +52,7 @@ void setIcon(Notification* this_gen, char* imagepath) {
 
 
 //destroyer
-void delete(Notification* this_gen) {
+void deleteNotification(Notification* this_gen) {
 
     if (this_gen != NULL) {
         NotificationExtend* this = (NotificationExtend*) this_gen;
@@ -82,7 +82,7 @@ Notification* newNotification() {
        NotificationExtend* this;
 
        this = (NotificationExtend*) malloc(sizeof(NotificationExtend));
-       this->notification.createNotification= show;
+       this->notification.showNotification= show;
        this->notification.hideNotification = hide;
        this->notification.setNotificationTitle= setTitle;
        this->notification.setNotificationText = setText;
