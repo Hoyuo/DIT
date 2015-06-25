@@ -8,8 +8,13 @@
 extern "C" {
 #endif
 
+#include "dit.h"
+#include <locations.h>
+
 typedef struct _gps GPS;
 typedef struct _location {
+    double latitude;
+    double longitude;
 } Location;
 
 typedef struct _gps {
@@ -36,6 +41,7 @@ Location GPSRecv(GPS* this);
 
 typedef struct {
     Location location;
+    location_manager_h manager;
     GPS gps;
 } GPSExtends;
 

@@ -8,9 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-
 bool isBluetoothAccessible(Bluetooth* this_gen){
 	bt_adapter_state_e adapter_state;
 
