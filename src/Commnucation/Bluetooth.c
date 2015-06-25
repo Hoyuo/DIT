@@ -5,41 +5,82 @@
 #include "Commnucation/Bluetooth.h"
 #include <stdbool.h>
 #include <stdalign.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-Bluetooth* newBluetooth(){
 
-	return NULL;
+
+
+bool isBluetoothAccessible(Bluetooth* this_gen){
+
+	BluetoothExtends* this=(BluetoothExtends*)this_gen;
+	return this->accessible;
 }
 
-void deleteBluetooth(Bluetooth* this_gen){
+bool onBluetoothConnect(Bluetooth* this_gen){
+
+
 
 }
 
-bool isBluetoothAccessible(Bluetooth* this){
-
-	return false;
-}
-
-bool onBluetoothConnect(Bluetooth* this){
-	return false;
-
-}
-
-bool onBluetoothDisconnect(Bluetooth* this){
+bool onBluetoothDisconnect(Bluetooth* this_gen){
 	return false;
 
 }
 
-int BluetoothRecv(Bluetooth* this, char* recvbuffer){
+int BluetoothRecv(Bluetooth* this_gen, char* recvbuffer){
 return -1;
 }
-
-int BluetoothSend(Bluetooth* this, char* sendbuffer){
+/**
+ *
+ */
+int BluetoothSend(Bluetooth* this_gen, char* sendbuffer){
 	return -1;
 
 }
 
-bool isBluetoothConnected(Bluetooth *this){
+bool isBluetoothConnected(Bluetooth *this_gen){
 
 return false;
+}
+
+Bluetooth* newBluetooth(){
+
+	BluetoothExtends *this =malloc(sizeof(BluetoothExtends*));
+
+	this->Bluetooth.isBluetoothAccessible=isBlutoothAccessible;
+	this->Bluetooth.onBluetoothConnect=onBluetoothConnect;
+	this->Bluetooth.isBluetoothConnected=isBluetoothConnected;
+	this->Bluetooth.onBluetoothDisconnect=onBluetoothDisconnect;
+	this->Bluetooth.BluetoothSend=BluetoothRecv;
+	this->Bluetooth.BluetoothRecv=BluetoothSend;
+	this->accessible=false;
+
+
+	bt_error_e ret=bt_initialize();
+
+	this->accessible= (BT_ERROR_NONE==ret)?true:false;
+
+
+
+
+	return &this->Bluetooth;
+}
+
+void deleteBluetooth(Bluetooth* this_gen){
+
+	if(NULL==this_gen) return;
+
+	BluetoothExtends* this =(BluetoothExtends* )this_gen;
+
+	if(NULL!=this->Bluetooth)
+	{
+
+		// do somthing...
+	}
+
+
+
+	free(this);
+
 }
