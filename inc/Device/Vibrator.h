@@ -6,6 +6,7 @@
 #define DIT_VIBRATOR_H
 
 #include <device/haptic.h>
+#include "dit.h"
 
 #ifdef __cplusplus
 extern "C" {

@@ -9,6 +9,7 @@
 #define DIT_NFC_H
 #include <stdbool.h>
 #include <stdalign.h>
+#include <tizen.h>
 
 #ifndef EXPORT_API
 #define EXPORT_API __attribute__((__visibility__("default")))
