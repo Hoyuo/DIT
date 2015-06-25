@@ -99,11 +99,6 @@ void deleteNotification(Notification* this_gen) {
         }
         free(this);
 
-
-
-
-
-
 }
 
 
