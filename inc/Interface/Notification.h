@@ -22,40 +22,43 @@ extern "C" {
 
 typedef struct _Notification Notification;
 
-
 typedef struct _Notification {
-    void (* create)(Notification* this);
+    void (* showNotification)(Notification* this);
 
-    void (* delete)(Notification* this);
+    void (* hideNotification)(Notification* this);
 
-    void (* setTitle)(Notification* this, char* title);
+    void (* setNotificationTitle)(Notification* this, char* title);
 
-    void (* setText)(Notification* this, char* text);
+    void (* setNotificationText)(Notification* this, char* text);
 
-    void (* setIcon)(Notification* this, char* imagePath);
+    void (* setNotificationIcon)(Notification* this, char* imagePath);
 
 } Notification;
 
 
 Notification* newNotification();
 
+//destroyer
 void deleteNotification(Notification* this);
 
-void createNotification(Notification* this);
 
-void setNotificationTitle(Notification* this, char* title);
 
-void setNotificationText(Notification* this, char* text);
+void show(Notification* this);
 
-void setNotificationIcon(Notification* this, char* imagePath);
+void hide(Notification* this);
 
+void setTitle(Notification* this, char* title);
+
+void setText(Notification* this, char* text);
+
+void setIcon(Notification* this, char* imagePath);
 
 typedef struct {
     Notification notification;
     notification_h notification_handle;
     char* title;
     char* text;
-    char* imagePath;
+    char* imagepath;
 
 } NotificationExtend;
 

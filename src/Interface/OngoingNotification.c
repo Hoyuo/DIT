@@ -8,25 +8,50 @@
 
 
 #include <stdlib.h>
+#include <string.h>
 #include "Interface/OngoingNotification.h"
 
-void setOngoingNotificationTitle(OngoingNotification* this_gen, char* title) {
+void setOngoingTitle(OngoingNotification* this_gen, char* title) {
+	 if (this_gen == NULL)
+	    	return;
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    this->title = title;
+    if(NULL==title)
+    	return;
+    if(NULL!=this->title)
+    	free(this->title);
+    this->title = malloc(strlen(title)+sizeof(char));
+     strcpy(this->title,title);
 }
 
-void setOngoingNotificationText(OngoingNotification* this_gen, char* text) {
+void setOngoingText(OngoingNotification* this_gen, char* text) {
+	 if (this_gen == NULL)
+	    	return;
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    this->text = text;
+    if(NULL==text)
+    	return;
+    if(NULL!=this->text)
+    	free(this->text);
+    this->text = malloc(strlen(text)+sizeof(char));
+     strcpy(this->text,text);
 }
 
-void setOngoingNotificationIcon(OngoingNotification* this_gen, char* imagepath) {
+void setOngoingIcon(OngoingNotification* this_gen, char* imagepath) {
+	 if (this_gen == NULL)
+	    	return;
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    this->imagepath = imagepath;
+    if(NULL==imagepath)
+    	return;
+    if(NULL!=this->imagepath){
+    	free(this->imagepath);
+    }
+    this->imagepath = malloc(strlen(imagepath)+sizeof(char));
+     strcpy(this->imagepath,imagepath);
 }
 
 
-void createOngoingNotification(OngoingNotification* this_gen) {
+void showOngoing(OngoingNotification* this_gen) {
+	 if (this_gen == NULL)
+	    	return;
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     this->ongoingnotification_handle = notification_create(NOTIFICATION_TYPE_ONGOING);
     notification_set_property(this->ongoingnotification_handle, NOTIFICATION_PROP_DISABLE_TICKERNOTI);
@@ -37,9 +62,20 @@ void createOngoingNotification(OngoingNotification* this_gen) {
     notification_post(this->ongoingnotification_handle);
 }
 
+
+void hideOngoing(OngoingNotification* this_gen){
+	 if (this_gen == NULL)
+	    	return;
+    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
+
+	notification_delete(this->ongoingnotification_handle);
+}
+
+
 void deleteOngoingNotification(OngoingNotification* this_gen) {
 
-    if (this_gen != NULL) {
+    if (this_gen == NULL)
+    	return;
         OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
 
         notification_delete(this->ongoingnotification_handle);
@@ -56,19 +92,18 @@ void deleteOngoingNotification(OngoingNotification* this_gen) {
 
         free(this);
 
-        this_gen = NULL;
-    }
+
 }
 
 OngoingNotification* newOngoingNotification() {
     OngoingNotificationExtend* this;
 
     this = (OngoingNotificationExtend*) malloc(sizeof(OngoingNotificationExtend));
-    this->Ongoingnotification.create = createOngoingNotification;
-    this->Ongoingnotification.delete = deleteOngoingNotification;
-    this->Ongoingnotification.setTitle = setOngoingNotificationTitle;
-    this->Ongoingnotification.setText = setOngoingNotificationText;
-    this->Ongoingnotification.setIcon = setOngoingNotificationIcon;
+    this->Ongoingnotification.showOngoingNotification = showOngoing;
+    this->Ongoingnotification.hideOngoingNotification = hideOngoing;
+    this->Ongoingnotification.setOngoingNotificationTitle = setOngoingTitle;
+    this->Ongoingnotification.setOngoingNotificationText = setOngoingText;
+    this->Ongoingnotification.setOngoingNotificationIcon = setOngoingIcon;
     this->title = NULL;
     this->text = NULL;
     this->imagepath = NULL;
