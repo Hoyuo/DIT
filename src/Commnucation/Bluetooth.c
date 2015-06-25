@@ -8,9 +8,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-
-
 bool isBluetoothAccessible(Bluetooth* this_gen){
 
 	BluetoothExtends* this=(BluetoothExtends*)this_gen;
