@@ -12,15 +12,18 @@
 
 
 bool isBluetoothAccessible(Bluetooth* this_gen){
+	bt_adapter_state_e adapter_state;
+
+	ret = bt_adapter_get_state(&adapter_state);
 
 	BluetoothExtends* this=(BluetoothExtends*)this_gen;
-	return this->accessible;
+	return this->accessible=(BT_ERROR_NONE==ret)?true:false;
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen){
 
 
-
+return false;
 }
 
 bool onBluetoothDisconnect(Bluetooth* this_gen){
@@ -59,7 +62,6 @@ Bluetooth* newBluetooth(){
 
 	bt_error_e ret=bt_initialize();
 
-	this->accessible= (BT_ERROR_NONE==ret)?true:false;
 
 
 
