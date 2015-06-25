@@ -12,18 +12,15 @@
 
 
 bool isBluetoothAccessible(Bluetooth* this_gen){
-	bt_adapter_state_e adapter_state;
-
-	ret = bt_adapter_get_state(&adapter_state);
 
 	BluetoothExtends* this=(BluetoothExtends*)this_gen;
-	return this->accessible=(BT_ERROR_NONE==ret)?true:false;
+	return this->accessible;
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen){
 
+	bt_error_e ret=bt_initialize();
 
-return false;
 }
 
 bool onBluetoothDisconnect(Bluetooth* this_gen){
@@ -57,14 +54,9 @@ Bluetooth* newBluetooth(){
 	this->Bluetooth.onBluetoothDisconnect=onBluetoothDisconnect;
 	this->Bluetooth.BluetoothSend=BluetoothRecv;
 	this->Bluetooth.BluetoothRecv=BluetoothSend;
-	this->accessible=false;
 
 
-	bt_error_e ret=bt_initialize();
-
-
-
-
+	bt_error_e ret = bt_ᅟinitialize();
 
 	return &this->Bluetooth;
 }
@@ -77,7 +69,7 @@ void deleteBluetooth(Bluetooth* this_gen){
 
 	if(NULL!=this->Bluetooth)
 	{
-
+		ret = bt_deinitialize();
 		// do somthing...
 	}
 
