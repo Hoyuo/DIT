@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+#include "dit.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -13,8 +14,16 @@ extern "C" {
 
 typedef struct _gps GPS;
 typedef struct _location {
+    double altitude;
     double latitude;
     double longitude;
+    double climb;
+    double direction;
+    double speed;
+    location_accuracy_level_e level;
+    double horizontal;
+    double vertical;
+    time_t timestamp;
 } Location;
 
 typedef struct _gps {
@@ -40,6 +49,7 @@ bool onGPSDisconnect(GPS* this);
 Location GPSRecv(GPS* this);
 
 typedef struct {
+    bool access;
     Location location;
     location_manager_h manager;
     GPS gps;
