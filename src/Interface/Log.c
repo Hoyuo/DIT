@@ -10,48 +10,64 @@
 #include <stdarg.h>
 #include "Interface/Log.h"
 
-Log* CreateLog() {
-    LogExtends* this = (LogExtends*) malloc(sizeof(Log));
+Log* NewLog() {
+	LogExtends* this = (LogExtends*) malloc(sizeof(Log));
 
-    this->log.Info = LogInfo;
-    this->log.Debug = LogDebug;
-    this->log.Warnnig = LogWarring;
-    this->log.Error = LogError;
+	this->log.Info = LogInfo;
+	this->log.Debug = LogDebug;
+	this->log.Warnnig = LogWarring;
+	this->log.Error = LogError;
+	this->log.setTagName = setLogTagName;
 
-    return &this->log;
+	this->tag = (char*) malloc(5);
+	strcpy(this->tag, "DIT");
+
+	return &this->log;
 }
 
-void DeleteLog(Log* this_gen) {
-    if (this_gen != NULL) {
-        LogExtends* this = (LogExtends*) this_gen;
-        free(this);
-    }
+void DestroyLog(Log* this_gen) {
+	if (this_gen != NULL) {
+		LogExtends* this = (LogExtends*) this_gen;
+		free(this);
+	}
 }
 
-void LogInfo(Log* this, char* tag, char* msg, ...) {
-    va_list ap;
-    va_start(ap, msg);
-    dlog_vprint(DLOG_INFO, tag, msg, ap);
-    va_end(ap);
+void setLogTagName(Log* this_gen, char* tagName) {
+	LogExtends* this = (LogExtends*) this_gen;
+	size_t length = sizeof(tagName);
+	free(this->tag);
+	this->tag = (char*) malloc(length + 1);
+	memcpy(this->tag, tagName, length + 1);
 }
 
-void LogDebug(Log* this, char* tag, char* msg, ...) {
-    va_list ap;
-    va_start(ap, msg);
-    dlog_vprint(DLOG_DEBUG, tag, msg, ap);
-    va_end(ap);
+void LogInfo(Log* this_gen, char* msg, ...) {
+	LogExtends* this = (LogExtends*) this_gen;
+	va_list ap;
+	va_start(ap, msg);
+	dlog_vprint(DLOG_INFO, this->tag, msg, ap);
+	va_end(ap);
 }
 
-void LogWarring(Log* this, char* tag, char* msg, ...) {
-    va_list ap;
-    va_start(ap, msg);
-    dlog_vprint(DLOG_WARN, tag, msg, ap);
-    va_end(ap);
+void LogDebug(Log* this_gen, char* msg, ...) {
+	LogExtends* this = (LogExtends*) this_gen;
+	va_list ap;
+	va_start(ap, msg);
+	dlog_vprint(DLOG_DEBUG, this->tag, msg, ap);
+	va_end(ap);
 }
 
-void LogError(Log* this, char* tag, char* msg, ...) {
-    va_list ap;
-    va_start(ap, msg);
-    dlog_vprint(DLOG_ERROR, tag, msg, ap);
-    va_end(ap);
+void LogWarring(Log* this_gen, char* msg, ...) {
+	LogExtends* this = (LogExtends*) this_gen;
+	va_list ap;
+	va_start(ap, msg);
+	dlog_vprint(DLOG_WARN, this->tag, msg, ap);
+	va_end(ap);
+}
+
+void LogError(Log* this_gen, char* msg, ...) {
+	LogExtends* this = (LogExtends*) this_gen;
+	va_list ap;
+	va_start(ap, msg);
+	dlog_vprint(DLOG_ERROR, this->tag, msg, ap);
+	va_end(ap);
 }

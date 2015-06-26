@@ -23,23 +23,23 @@ extern "C" {
 typedef struct _Notification Notification;
 
 typedef struct _Notification {
-    void (* showNotification)(Notification* this);
+    void (* ShowNotification)(Notification* this);
 
-    void (* hideNotification)(Notification* this);
+    void (* HideNotification)(Notification* this);
 
-    void (* setNotificationTitle)(Notification* this, char* title);
+    void (* SetNotificationTitle)(Notification* this, char* title);
 
-    void (* setNotificationText)(Notification* this, char* text);
+    void (* SetNotificationText)(Notification* this, char* text);
 
-    void (* setNotificationIcon)(Notification* this, char* imagePath);
+    void (* SetNotificationIcon)(Notification* this, char* imagePath);
 
 } Notification;
 
 
-Notification* newNotification();
+Notification* NewNotification();
 
 //destroyer
-void deleteNotification(Notification* this);
+void DestroyNotification(Notification* this);
 
 
 
