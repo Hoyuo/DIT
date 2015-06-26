@@ -1,37 +1,27 @@
-//
-// Created by Park SangHyun on 2015. 6. 23..
-//
-
 #include "Device/Vibrator.h"
 #include <stdlib.h>
 
-Vibration* newVibrate()
+Vibration* NewVibrate()
 {
 	VibrationExtend* this = (VibrationExtend*) malloc(sizeof(VibrationExtend));
 
 	this->handle = NULL;
-	this->vibration.create = createVibrate;
-	this->vibration.delete = deleteVibrate;
 	this->vibration.Custom = VibrateCustom;
 	this->vibration.Short = VibrateShort;
 	this->vibration.Middle = VibrateMiddle;
 	this->vibration.Long = VibrateLong;
-
-    return &this->vibration;
-}
-
-void createVibrate(Vibration* this_gen)
-{
-	VibrationExtend* this = (VibrationExtend*) this_gen;
 	/*
-	 * Tizen based smartphone is the only Z1.
+	 * Tizen based smart phone is the only Z1.
 	 * Z1 has one haptic vibrate device.
 	 *  That's why I didn't make the code which 'device_haptic_get_count()'
 	 * */
 	this->error = device_haptic_open(0, &this->handle);
+
+    return &this->vibration;
 }
 
-void deleteVibrate(Vibration* this_gen)
+
+void DestroyVibrate(Vibration* this_gen)
 {
 
     if (this_gen != NULL) {
