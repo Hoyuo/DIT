@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include "GPS.h"
+#include "Commnucation/GPS.h"
 
 GPS* newGPS() {
     GPSExtends* this;
@@ -11,7 +11,6 @@ GPS* newGPS() {
     this->gps.onDisconnect = onGPSDisconnect;
     this->gps.Recv = GPSRecv;
 
-    location_manager_create(LOCATIONS_METHOD_GPS, &manager);
     Location temp = {0, 0};
     this->location = temp;
 

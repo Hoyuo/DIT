@@ -7,17 +7,51 @@
 #include <stdalign.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <app_control.h>
 
 bool isBluetoothAccessible(Bluetooth* this_gen){
 
-	BluetoothExtends* this=(BluetoothExtends*)this_gen;
-	return this->accessible;
+	bt_adapter_state_e adapter_state;
+	ret = bt_adapter_get_state(&adapter_state);
+	if (ret != BT_ERROR_NONE)
+	{
+	   dlog_print(DLOG_ERROR, LOG_TAG, "[bt_adapter_get_state] Failed");
+
+	   return false;
+	}
+	// If the Bluetooth Service is not enabled
+	if (adapter_state == BT_ADAPTER_ENABLED)
+	{
+	   dlog_print(DLOG_ERROR, LOG_TAG, "Bluetooth adapter ENABLED");
+	   return true;
+
+	}
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen){
 
-	bt_error_e ret=bt_initialize();
+	int res = 0;
+		   app_control_h service = NULL;
+		   app_control_create(&service);
+		   if (service == NULL)
+		   {
+		      return NULL;
+		   }
+		   app_control_set_operation(service,  "http://tizen.org/appcontrol/operation/edit");
+		   app_control_set_mime(service,  "application/x-bluetooth-visibility");
+		   res = app_control_send_launch_request(service, NULL, NULL);
 
+		   app_control_destroy(service);
+		   if (res == APP_CONTROL_ERROR_NONE)
+		   {
+
+		   }
+		   else
+		   {
+
+		   }
+
+return false;
 }
 
 bool onBluetoothDisconnect(Bluetooth* this_gen){
@@ -45,15 +79,18 @@ Bluetooth* newBluetooth(){
 
 	BluetoothExtends *this =malloc(sizeof(BluetoothExtends*));
 
-	this->Bluetooth.isBluetoothAccessible=isBlutoothAccessible;
+	this->Bluetooth.isBluetoothAccessible=isBluetoothAccessible;
 	this->Bluetooth.onBluetoothConnect=onBluetoothConnect;
 	this->Bluetooth.isBluetoothConnected=isBluetoothConnected;
 	this->Bluetooth.onBluetoothDisconnect=onBluetoothDisconnect;
 	this->Bluetooth.BluetoothSend=BluetoothRecv;
 	this->Bluetooth.BluetoothRecv=BluetoothSend;
 
+	bt_error_e ret;
 
-	bt_error_e ret = bt_ᅟinitialize();
+	ret = bt_initialize();
+
+
 
 	return &this->Bluetooth;
 }
@@ -64,12 +101,7 @@ void deleteBluetooth(Bluetooth* this_gen){
 
 	BluetoothExtends* this =(BluetoothExtends* )this_gen;
 
-	if(NULL!=this->Bluetooth)
-	{
-		ret = bt_deinitialize();
-		// do somthing...
-	}
-
+	///do something
 
 
 	free(this);
