@@ -21,23 +21,23 @@ typedef struct _OngoingNotification OngoingNotification;
 
 
 typedef struct _OngoingNotification {
-    void (* showOngoingNotification)(OngoingNotification* this);
+    void (* ShowOngoingNotification)(OngoingNotification* this);
 
-    void (* hideOngoingNotification)(OngoingNotification* this);
+    void (* HideOngoingNotification)(OngoingNotification* this);
 
-    void (* setOngoingNotificationTitle)(OngoingNotification* this, char* title);
+    void (* SetOngoingNotificationTitle)(OngoingNotification* this, char* title);
 
-    void (* setOngoingNotificationText)(OngoingNotification* this, char* text);
+    void (* SetOngoingNotificationText)(OngoingNotification* this, char* text);
 
-    void (* setOngoingNotificationIcon)(OngoingNotification* this, char* imagePath);
+    void (* SetOngoingNotificationIcon)(OngoingNotification* this, char* imagePath);
 
 } OngoingNotification;
 
 //constructor
-OngoingNotification* newOngoingNotification();
+OngoingNotification* NewOngoingNotification();
 
 //destroyer
-void deleteOngoingNotification(OngoingNotification* this);
+void DestroyOngoingNotification(OngoingNotification* this);
 
 
 void showOngoing(OngoingNotification* this);

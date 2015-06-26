@@ -72,7 +72,7 @@ void hideOngoing(OngoingNotification* this_gen){
 }
 
 
-void deleteOngoingNotification(OngoingNotification* this_gen) {
+void DestroyOngoingNotification(OngoingNotification* this_gen) {
 
     if (this_gen == NULL)
     	return;
@@ -95,15 +95,15 @@ void deleteOngoingNotification(OngoingNotification* this_gen) {
 
 }
 
-OngoingNotification* newOngoingNotification() {
+OngoingNotification* NewOngoingNotification() {
     OngoingNotificationExtend* this;
 
     this = (OngoingNotificationExtend*) malloc(sizeof(OngoingNotificationExtend));
-    this->Ongoingnotification.showOngoingNotification = showOngoing;
-    this->Ongoingnotification.hideOngoingNotification = hideOngoing;
-    this->Ongoingnotification.setOngoingNotificationTitle = setOngoingTitle;
-    this->Ongoingnotification.setOngoingNotificationText = setOngoingText;
-    this->Ongoingnotification.setOngoingNotificationIcon = setOngoingIcon;
+    this->Ongoingnotification.ShowOngoingNotification = showOngoing;
+    this->Ongoingnotification.HideOngoingNotification = hideOngoing;
+    this->Ongoingnotification.SetOngoingNotificationTitle = setOngoingTitle;
+    this->Ongoingnotification.SetOngoingNotificationText = setOngoingText;
+    this->Ongoingnotification.SetOngoingNotificationIcon = setOngoingIcon;
     this->title = NULL;
     this->text = NULL;
     this->imagepath = NULL;
