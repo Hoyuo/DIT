@@ -17,6 +17,7 @@ Log* NewLog() {
 	this->log.Debug = LogDebug;
 	this->log.Warnnig = LogWarring;
 	this->log.Error = LogError;
+	this->log.setTagName = setLogTagName;
 
 	this->tag = (char*) malloc(5);
 	strcpy(this->tag, "DIT");
@@ -31,7 +32,7 @@ void DestroyLog(Log* this_gen) {
 	}
 }
 
-void setTagName(Log* this_gen, char* tagName) {
+void setLogTagName(Log* this_gen, char* tagName) {
 	LogExtends* this = (LogExtends*) this_gen;
 	size_t length = sizeof(tagName);
 	free(this->tag);
