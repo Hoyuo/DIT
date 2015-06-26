@@ -17,26 +17,28 @@ extern "C" {
 
 typedef struct _log Log;
 typedef struct _log {
-    void (* Info)(Log* this, char* tag, char* msg, ...);
+    void (* Info)(Log* this_gen, char* msg, ...);
 
-    void (* Debug)(Log* this, char* tag, char* msg, ...);
+    void (* Debug)(Log* this_gen, char* msg, ...);
 
-    void (* Warnnig)(Log* this, char* tag, char* msg, ...);
+    void (* Warnnig)(Log* this_gen, char* msg, ...);
 
-    void (* Error)(Log* this, char* tag, char* msg, ...);
+    void (* Error)(Log* this_gen, char* msg, ...);
 };
 
-Log* CreateLog();
+Log* NewLog();
 
-void DeleteLog(Log* this_gen);
+void DestroyLog(Log* this_gen);
 
-void LogInfo(Log* this, char* tag, char* msg, ...);
+void setTagName(Log* this_gen, char* tagName);
 
-void LogDebug(Log* this, char* tag, char* msg, ...);
+void LogInfo(Log* this_gen, char* msg, ...);
 
-void LogWarring(Log* this, char* tag, char* msg, ...);
+void LogDebug(Log* this_gen, char* msg, ...);
 
-void LogError(Log* this, char* tag, char* msg, ...);
+void LogWarring(Log* this_gen, char* msg, ...);
+
+void LogError(Log* this_gen, char* msg, ...);
 
 typedef struct _logExtends {
     Log log;

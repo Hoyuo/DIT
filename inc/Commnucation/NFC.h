@@ -15,7 +15,7 @@
 extern "C" {
 #endif
 
-typedef struct _ndef{
+typedef struct {
     char* tag;
     char* msg;
 } NDEF;
