@@ -12,6 +12,7 @@ extern "C" {
 
 typedef struct _gps GPS;
 typedef struct _location {
+    bool vaild;
     double altitude;
     double latitude;
     double longitude;
@@ -47,8 +48,8 @@ bool onGPSDisconnect(GPS* this_gen);
 Location GPSRecv(GPS* this_gen);
 
 typedef struct {
-	GPS gps;
-	location_manager_h manager;
+    GPS gps;
+    location_manager_h manager;
     Location location;
     bool access;
 } GPSExtends;

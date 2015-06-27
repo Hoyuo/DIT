@@ -17,21 +17,30 @@ Log* NewLog() {
 	this->log.Debug = LogDebug;
 	this->log.Warnnig = LogWarring;
 	this->log.Error = LogError;
+	this->log.setTagName = setLogTagName;
 
-	this->tag = (char*) malloc(5);
+	this->tag = (char*) malloc(4);
 	strcpy(this->tag, "DIT");
 
 	return &this->log;
 }
 
 void DestroyLog(Log* this_gen) {
-	if (this_gen != NULL) {
-		LogExtends* this = (LogExtends*) this_gen;
-		free(this);
+	if (this_gen == NULL) {
+		return;
 	}
+
+	LogExtends* this = (LogExtends*) this_gen;
+
+	if(this->tag != NULL)
+		free(this->tag);
+
+	dlog_print(DLOG_INFO, "DIT", "설마 ?");
+
+	free(this);
 }
 
-void setTagName(Log* this_gen, char* tagName) {
+void setLogTagName(Log* this_gen, char* tagName) {
 	LogExtends* this = (LogExtends*) this_gen;
 	size_t length = sizeof(tagName);
 	free(this->tag);

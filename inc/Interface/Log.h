@@ -24,13 +24,15 @@ typedef struct _log {
     void (* Warnnig)(Log* this_gen, char* msg, ...);
 
     void (* Error)(Log* this_gen, char* msg, ...);
+
+    void (* setTagName)(Log* this_gen, char* tagName);
 };
 
 Log* NewLog();
 
 void DestroyLog(Log* this_gen);
 
-void setTagName(Log* this_gen, char* tagName);
+void setLogTagName(Log* this_gen, char* tagName);
 
 void LogInfo(Log* this_gen, char* msg, ...);
 

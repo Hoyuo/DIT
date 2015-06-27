@@ -1,7 +1,3 @@
-//
-// Created by Park SangHyun on 2015. 6. 23..
-//
-
 #ifndef DIT_VIBRATOR_H
 #define DIT_VIBRATOR_H
 
@@ -14,19 +10,14 @@ extern "C" {
 
 typedef struct _Vibration Vibration;
 typedef struct _Vibration {
-	void (* create)(Vibration* this);
-	void (* delete)(Vibration* this);
-
-    void (* Custom)(Vibration* this, int period);
+	void (* Custom)(Vibration* this, int period);
     void (* Short)(Vibration* this);
     void (* Middle)(Vibration* this);
     void (* Long)(Vibration* this);
-
 };
 
-Vibration* newVibrate();
-void createVibrate(Vibration* this);
-void deleteVibrate(Vibration* this);
+Vibration* NewVibrate();
+void DestroyVibrate(Vibration* this);
 void VibrateCustom(Vibration* this, int period);
 void VibrateShort(Vibration* this);
 void VibrateMiddle(Vibration* this);
