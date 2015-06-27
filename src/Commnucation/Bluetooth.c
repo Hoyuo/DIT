@@ -12,28 +12,20 @@
 
 bool isBluetoothAccessible(Bluetooth* this_gen) {
 
-    bt_adapter_state_e adapter_state;
-    int ret = bt_adapter_get_state(&adapter_state);
-    if (ret != BT_ERROR_NONE) {
-        dlog_print(DLOG_ERROR, LOG_TAG, "[bt_adapter_get_state] Failed");
-        return false;
-    }
-    // If the Bluetooth Service is not enabled
-    if (adapter_state == BT_ADAPTER_ENABLED) {
-        dlog_print(DLOG_ERROR, LOG_TAG, "Bluetooth adapter ENABLED");
-        return true;
-    }
+	return ((BluetoothExtends*)this_gen)->accessible;
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen) {
 
     int res = 0;
+    res = bt_initialize();
+
     app_control_h service = NULL;
     app_control_create(&service);
     if (service == NULL) {
         return NULL;
     }
-    app_control_set_operation(service, "http://tizen.org/appcontrol/operation/edit");
+    app_control_set_operation(service,  APP_CONTROL_OPERATION_VIEW);
     app_control_set_mime(service, "application/x-bluetooth-visibility");
     res = app_control_send_launch_request(service, NULL, NULL);
 
@@ -82,7 +74,6 @@ Bluetooth* newBluetooth() {
 
     bt_error_e ret;
 
-    ret = bt_initialize();
 
 
     return &this->Bluetooth;
@@ -96,6 +87,7 @@ void deleteBluetooth(Bluetooth* this_gen) {
 
     BluetoothExtends* this = (BluetoothExtends*) this_gen;
 
+    if(NULL!=this->url) free(this->url);
     ///do something
 
 
