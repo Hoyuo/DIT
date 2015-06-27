@@ -68,6 +68,7 @@ Location GPSRecv(GPS* this_gen) {
         location_accuracy_level_e level;
         time_t timestamp;
         int ret = location_manager_get_location(this->manager, &altitude, &latitude, &longitude, &climb, &direction, &speed, &level, &horizontal, &vertical, &timestamp);
+
         if (ret == LOCATIONS_ERROR_NONE) {
             this->location.vaild = true;
             this->location.altitude = altitude;
@@ -83,6 +84,7 @@ Location GPSRecv(GPS* this_gen) {
         } else {
             this->location.vaild = 0;
         }
+
         return this->location;
     }
 }

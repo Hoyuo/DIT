@@ -26,7 +26,7 @@ typedef struct _log {
     void (* Error)(Log* this_gen, char* msg, ...);
 
     void (* setTagName)(Log* this_gen, char* tagName);
-};
+} Log;
 
 Log* NewLog();
 

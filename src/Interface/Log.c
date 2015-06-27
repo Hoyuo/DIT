@@ -11,7 +11,7 @@
 #include "Interface/Log.h"
 
 Log* NewLog() {
-	LogExtends* this = (LogExtends*) malloc(sizeof(Log));
+	LogExtends* this = (LogExtends*) malloc(sizeof(LogExtends));
 
 	this->log.Info = LogInfo;
 	this->log.Debug = LogDebug;
@@ -19,7 +19,7 @@ Log* NewLog() {
 	this->log.Error = LogError;
 	this->log.setTagName = setLogTagName;
 
-	this->tag = (char*) malloc(4);
+	this->tag = (char*)malloc(4);
 	strcpy(this->tag, "DIT");
 
 	return &this->log;
@@ -32,20 +32,27 @@ void DestroyLog(Log* this_gen) {
 
 	LogExtends* this = (LogExtends*) this_gen;
 
-	if(this->tag != NULL)
+	if (this->tag != NULL)
 		free(this->tag);
-
-	dlog_print(DLOG_INFO, "DIT", "설마 ?");
 
 	free(this);
 }
 
 void setLogTagName(Log* this_gen, char* tagName) {
+	if (this_gen == NULL)
+		return;
+
 	LogExtends* this = (LogExtends*) this_gen;
-	size_t length = sizeof(tagName);
-	free(this->tag);
-	this->tag = (char*) malloc(length + 1);
-	memcpy(this->tag, tagName, length + 1);
+
+	if (NULL == tagName) {
+		return;
+	}
+
+	if (this->tag != NULL)
+		free(this->tag);
+
+	this->tag = (char*) malloc(strlen(tagName) + sizeof(char));
+	strcpy(this->tag, tagName);
 }
 
 void LogInfo(Log* this_gen, char* msg, ...) {
