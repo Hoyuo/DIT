@@ -1,7 +1,15 @@
 #include <stddef.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
+#include <strings.h>
+#include <curl.h>
 #include "Commnucation/Http.h"
+
+/*
+ * @privlevel public
+ * @privilege %http://tizen.org/privilege/internet
+ */
 
 HTTP* newHTTP() {
 	HTTPExtends* this;
@@ -24,22 +32,43 @@ void deleteHTTP(HTTP* this_gen) {
 	}
 }
 
-bool isHTTPAccessible(HTTP* this) {
+bool isHTTPAccessible(HTTP* this_gen) {
+
 	return false;
 }
 
-bool onHTTPConnect(HTTP* this) {
+bool onHTTPConnect(HTTP* this_gen) {
+	HTTPExtends* this = (HTTPExtends*)this_gen;
+	CURL* curl;
+	CURLcode res;
+
+	FILE* file;
+	file = fopen("test.html", "w");
+
+	curl = curl_easy_init();
+
+	if(curl) {
+		curl_easy_setopt(curl, CURLOPT_URL, "http://210.118.74.89:3000");
+		curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+		res = curl_easy_perform(curl);
+
+		curl_easy_cleanup(curl);
+	}
+
+	fclose(file);
+
 	return false;
 }
 
-bool onHTTPDisconnect(HTTP* this) {
+bool onHTTPDisconnect(HTTP* this_gen) {
 	return false;
 }
 
-void HTTPDownload(HTTP* this, char* url) {
+void HTTPDownload(HTTP* this_gen, char* url) {
 
 }
 
-void HTTPExcute(HTTP* this, char* res, char* req) {
+void HTTPExcute(HTTP* this_gen, char* res, char* req) {
 
 }
