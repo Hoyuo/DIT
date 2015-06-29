@@ -23,11 +23,10 @@ Vibration* NewVibrate()
 
 void DestroyVibrate(Vibration* this_gen)
 {
-
     if (this_gen != NULL) {
     	VibrationExtend* this = (VibrationExtend*) this_gen;
-//    	this->error = device_haptic_stop(this->handle, 0);
-//    	this->error = device_haptic_close(this->handle);
+		//this->error = device_haptic_stop(this->handle, 0);
+		//this->error = device_haptic_close(this->handle);
     	// No Issue
         free(this);
     }
