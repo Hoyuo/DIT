@@ -42,7 +42,6 @@ void VibrateShort(Vibration* this_gen)
 {
 	VibrationExtend* this = (VibrationExtend*) this_gen;
 	this->error = device_haptic_vibrate(this->handle, 100, 0, 0);
-	this->error = device_haptic_stop(this->handle, 0);
 }
 
 void VibrateMiddle(Vibration* this_gen)
