@@ -1,18 +1,11 @@
-//
-// Created by Park SangHyun on 2015. 5. 9..
-//
-
 #include "Commnucation/Bluetooth.h"
-#include <stdbool.h>
-#include <stdalign.h>
-#include <stdio.h>
+
 #include <stdlib.h>
 #include <app_control.h>
-#include <dlog.h>
 
 bool isBluetoothAccessible(Bluetooth* this_gen) {
 
-	return ((BluetoothExtends*)this_gen)->accessible;
+    return ((BluetoothExtends*) this_gen)->accessible;
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen) {
@@ -25,7 +18,7 @@ bool onBluetoothConnect(Bluetooth* this_gen) {
     if (service == NULL) {
         return NULL;
     }
-    app_control_set_operation(service,  APP_CONTROL_OPERATION_VIEW);
+    app_control_set_operation(service, APP_CONTROL_OPERATION_VIEW);
     app_control_set_mime(service, "application/x-bluetooth-visibility");
     res = app_control_send_launch_request(service, NULL, NULL);
 
@@ -57,13 +50,12 @@ int BluetoothSend(Bluetooth* this_gen, char* sendbuffer) {
 }
 
 bool isBluetoothConnected(Bluetooth* this_gen) {
-
     return false;
 }
 
 Bluetooth* newBluetooth() {
 
-    BluetoothExtends* this = malloc(sizeof(BluetoothExtends * ));
+    BluetoothExtends* this = malloc(sizeof(BluetoothExtends*));
 
     this->Bluetooth.isBluetoothAccessible = isBluetoothAccessible;
     this->Bluetooth.onBluetoothConnect = onBluetoothConnect;
@@ -73,8 +65,6 @@ Bluetooth* newBluetooth() {
     this->Bluetooth.BluetoothRecv = BluetoothSend;
 
     bt_error_e ret;
-
-
 
     return &this->Bluetooth;
 }
@@ -87,9 +77,10 @@ void deleteBluetooth(Bluetooth* this_gen) {
 
     BluetoothExtends* this = (BluetoothExtends*) this_gen;
 
-    if(NULL!=this->url) free(this->url);
+    if (NULL != this->url) {
+        free(this->url);
+    }
     ///do something
-
 
     free(this);
 

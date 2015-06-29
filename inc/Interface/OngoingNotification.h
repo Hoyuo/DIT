@@ -1,17 +1,10 @@
-/*
- * OngoingNotification.h
- *
- *  Created on: Jun 22, 2015
- *      Author: parksanghyun
- */
-
 #ifndef DIT_ONGOINGNOTIFICATION_H
 #define DIT_ONGOINGNOTIFICATION_H
 
 #include <stdbool.h>
 #include <stdalign.h>
-#include <notification.h>
 
+#include <notification.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -21,34 +14,31 @@ typedef struct _OngoingNotification OngoingNotification;
 
 
 typedef struct _OngoingNotification {
-    void (* ShowOngoingNotification)(OngoingNotification* this);
+    void (* ShowOngoingNotification)(OngoingNotification* this_gen);
 
-    void (* HideOngoingNotification)(OngoingNotification* this);
+    void (* HideOngoingNotification)(OngoingNotification* this_gen);
 
-    void (* SetOngoingNotificationTitle)(OngoingNotification* this, char* title);
+    void (* SetOngoingNotificationTitle)(OngoingNotification* this_gen, char* title);
 
-    void (* SetOngoingNotificationText)(OngoingNotification* this, char* text);
+    void (* SetOngoingNotificationText)(OngoingNotification* this_gen, char* text);
 
-    void (* SetOngoingNotificationIcon)(OngoingNotification* this, char* imagePath);
+    void (* SetOngoingNotificationIcon)(OngoingNotification* this_gen, char* imagePath);
 
 } OngoingNotification;
 
-//constructor
 OngoingNotification* NewOngoingNotification();
 
-//destroyer
-void DestroyOngoingNotification(OngoingNotification* this);
+void DestroyOngoingNotification(OngoingNotification* this_gen);
 
+void showOngoing(OngoingNotification* this_gen);
 
-void showOngoing(OngoingNotification* this);
+void hideOngoing(OngoingNotification* this_gen);
 
-void hideOngoing(OngoingNotification* this);
+void setOngoingTitle(OngoingNotification* this_gen, char* title);
 
-void setOngoingTitle(OngoingNotification* this, char* title);
+void setOngoingText(OngoingNotification* this_gen, char* text);
 
-void setOngoingText(OngoingNotification* this, char* text);
-
-void setOngoingIcon(OngoingNotification* this, char* imagePath);
+void setOngoingIcon(OngoingNotification* this_gen, char* imagePath);
 
 typedef struct _OngoingNotificationExtend {
     OngoingNotification Ongoingnotification;

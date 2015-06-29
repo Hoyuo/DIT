@@ -1,15 +1,10 @@
-//
-// Created by Park SangHyun on 2015. 5. 9..
-//
-
 #ifndef DIT_BLUETOOTH_H
 #define DIT_BLUETOOTH_H
 
-
-#include <bluetooth.h>
 #include <stdbool.h>
 #include <stdalign.h>
 
+#include <bluetooth.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,7 +23,7 @@ typedef struct _Bluetooth {
 
     int (* BluetoothSend)(Bluetooth* this_gen, char* sendbuffer);
 
-    bool(*isBluetoothConnected)(Bluetooth *this_gen);
+    bool(* isBluetoothConnected)(Bluetooth* this_gen);
 } Bluetooth;
 
 Bluetooth* newBluetooth();
@@ -45,10 +40,10 @@ int BluetoothRecv(Bluetooth* this_gen, char* recvbuffer);
 
 int BluetoothSend(Bluetooth* this_gen, char* sendbuffer);
 
-bool isBluetoothConnected(Bluetooth *this_gen);
+bool isBluetoothConnected(Bluetooth* this_gen);
 
 typedef struct {
-	Bluetooth Bluetooth;
+    Bluetooth Bluetooth;
     char* url;
     int urlLength;
     bool accessible;

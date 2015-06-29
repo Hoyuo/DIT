@@ -1,10 +1,11 @@
 #ifndef DIT_VIBRATOR_H
 #define DIT_VIBRATOR_H
 
+#include <stdbool.h>
+#include <stdalign.h>
+
 #include <device/battery.h>
 #include <device/callback.h>
-
-#include "dit.h"
 
 #ifdef __cplusplus
 extern "C" {

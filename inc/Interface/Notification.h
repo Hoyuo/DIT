@@ -1,57 +1,44 @@
-/*
- * Notification.h
- *
- *  Created on: Jun 22, 2015
- *      Author: parksanghyun
- */
-
-
-
 #ifndef DIT_NOTIFICATION_H
 #define DIT_NOTIFICATION_H
 
-
 #include <stdbool.h>
 #include <stdalign.h>
+
 #include <notification.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
 typedef struct _Notification Notification;
 
 typedef struct _Notification {
-    void (* ShowNotification)(Notification* this);
+    void (* ShowNotification)(Notification* this_gen);
 
-    void (* HideNotification)(Notification* this);
+    void (* HideNotification)(Notification* this_gen);
 
-    void (* SetNotificationTitle)(Notification* this, char* title);
+    void (* SetNotificationTitle)(Notification* this_gen, char* title);
 
-    void (* SetNotificationText)(Notification* this, char* text);
+    void (* SetNotificationText)(Notification* this_gen, char* text);
 
-    void (* SetNotificationIcon)(Notification* this, char* imagePath);
+    void (* SetNotificationIcon)(Notification* this_gen, char* imagePath);
 
 } Notification;
 
 
 Notification* NewNotification();
 
-//destroyer
-void DestroyNotification(Notification* this);
+void DestroyNotification(Notification* this_gen);
 
+void show(Notification* this_gen);
 
+void hide(Notification* this_gen);
 
-void show(Notification* this);
+void setTitle(Notification* this_gen, char* title);
 
-void hide(Notification* this);
+void setText(Notification* this_gen, char* text);
 
-void setTitle(Notification* this, char* title);
-
-void setText(Notification* this, char* text);
-
-void setIcon(Notification* this, char* imagePath);
+void setIcon(Notification* this_gen, char* imagePath);
 
 typedef struct {
     Notification notification;
