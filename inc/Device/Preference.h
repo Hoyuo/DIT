@@ -6,32 +6,34 @@
 #define DIT_PREFERENCE_H
 
 #include <stdbool.h>
-#include "dit.h"
+#include <stdalign.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
 typedef struct _Preference Preference;
+
 typedef struct _Preference {
-    int (* getInt)(Preference* this_gen, char* key);
+	int (*getInt)(char* key);
 
-    double (* getDouble)(Preference* this_gen, char* key);
+	double (*getDouble)(char* key);
 
-    bool (* getBoolean)(Preference* this_gen, char* key);
+	bool (*getBoolean)(char* key);
 
-    void (* getString)(Preference* this_gen, char* key, char* ret);
+	void (*getString)(char* key, char** ret);
 
-    void (* setInt)(Preference* this_gen, char* key, int value);
+	void (*setInt)(char* key, int value);
 
-    void (* setDouble)(Preference* this_gen, char* key, double value);
+	void (*setDouble)(char* key, double value);
 
-    void (* setBoolean)(Preference* this_gen, char* key, bool value);
+	void (*setBoolean)(char* key, bool value);
 
-    void (* setString)(Preference* this_gen, char* key, char* value);
+	void (*setString)(char* key, char* value);
 
-    void (* Clear)(Preference* this_gen);
+	void (*Remove)(char* key);
+
+	void (*Clear)();
 
 } Preference;
 
@@ -39,23 +41,25 @@ Preference* NewPreference();
 
 void DestroyPreference(Preference* this_gen);
 
-int getPreferenceInt(Preference* this_gen, char* key);
+int getPreferenceInt(char* key);
 
-double getPreferenceDouble(Preference* this_gen, char* key);
+double getPreferenceDouble(char* key);
 
-bool getPreferenceBoolean(Preference* this_gen, char* key);
+bool getPreferenceBoolean(char* key);
 
-void getPreferenceString(Preference* this_gen, char* key, char* ret);
+void getPreferenceString(char* key, char** ret);
 
-void setPreferenceInt(Preference* this_gen, char* key, int value);
+void setPreferenceInt(char* key, int value);
 
-void setPreferenceDouble(Preference* this_gen, char* key, double value);
+void setPreferenceDouble(char* key, double value);
 
-void setPreferenceBoolean(Preference* this_gen, char* key, bool value);
+void setPreferenceBoolean(char* key, bool value);
 
-void setPreferenceString(Preference* this_gen, char* key, char* value);
+void setPreferenceString(char* key, char* value);
 
-void PreferenceClear(Preference* this_gen);
+void PreferenceRemove(char* key);
+
+void PreferenceClear();
 
 #ifdef __cplusplus
 }
