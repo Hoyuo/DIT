@@ -11,30 +11,30 @@ extern "C" {
 typedef struct _http HTTP;
 
 typedef struct _http {
-    bool (* isAccessible)(HTTP* this);
+    bool (* isAccessible)(HTTP* this_gen);
 
-    bool (* onConnect)(HTTP* this, char* url);
+    bool (* onConnect)(HTTP* this_gen, char* url);
 
-    bool (* onDisconnect)(HTTP* this);
+    bool (* onDisconnect)(HTTP* this_gen);
 
-    void (* Download)(HTTP* this, char* url);
+    void (* Download)(HTTP* this_gen, char* url);
 
-    void (* Excute)(HTTP* this, char* req, char* res);
+    void (* Excute)(HTTP* this_gen, char* req, char* res);
 } HTTP;
 
 HTTP* newHTTP();
 
 void deleteHTTP(HTTP* this_gen);
 
-bool isHTTPAccessible(HTTP* this);
+bool isHTTPAccessible(HTTP* this_gen);
 
-bool onHTTPConnect(HTTP* this);
+bool onHTTPConnect(HTTP* this_gen);
 
-bool onHTTPDisconnect(HTTP* this);
+bool onHTTPDisconnect(HTTP* this_gen);
 
-void HTTPDownload(HTTP* this, char* url);
+void HTTPDownload(HTTP* this_gen, char* url);
 
-void HTTPExcute(HTTP* this, char* res, char* req);
+void HTTPExcute(HTTP* this_gen, char* res, char* req);
 
 typedef struct {
     HTTP http;
