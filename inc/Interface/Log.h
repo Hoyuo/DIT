@@ -1,10 +1,3 @@
-/*
- * Log.h
- *
- *  Created on: Jun 22, 2015
- *      Author: parksanghyun
- */
-
 #ifndef DIT_LOG_H
 #define DIT_LOG_H
 

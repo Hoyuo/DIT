@@ -1,8 +1,8 @@
-#include <stddef.h>
+#include "Commnucation/GPS.h"
+
 #include <stdlib.h>
 #include <locations.h>
 #include <dlog.h>
-#include "Commnucation/GPS.h"
 
 GPS* NewGps() {
 	GPSExtends* this;
@@ -36,8 +36,9 @@ bool isGPSAccessible(GPS* this_gen) {
 	GPSExtends* this = (GPSExtends*) this_gen;
 	return this->access;
 }
+
 static void position_updated(double latitude, double longitude, double altitude,
-		time_t timestamp, void *user_data) {
+		time_t timestamp, void* user_data) {
 	GPSExtends* this = (GPSExtends*) user_data;
 	this->location.vaild = true;
 	this->location.latitude = latitude;
@@ -46,17 +47,17 @@ static void position_updated(double latitude, double longitude, double altitude,
 	dlog_print(DLOG_DEBUG, "DIT", "%f %f", latitude, longitude);
 }
 
-static void __state_changed_cb(location_service_state_e state, void *user_data) {
-	GPSExtends* this = (GPSExtends*)user_data;
+static void __state_changed_cb(location_service_state_e state, void* user_data) {
+	GPSExtends* this = (GPSExtends*) user_data;
 	double altitude, latitude, longitude, climb, direction, speed;
 	double horizontal, vertical;
 	location_accuracy_level_e level;
 	time_t timestamp;
 
 	if (state == LOCATIONS_SERVICE_ENABLED) {
-		int ret = location_manager_get_location(this->manager, &altitude, &latitude,
-				&longitude, &climb, &direction, &speed, &level, &horizontal,
-				&vertical, &timestamp);
+		int ret = location_manager_get_location(this->manager, &altitude,
+				&latitude, &longitude, &climb, &direction, &speed, &level,
+				&horizontal, &vertical, &timestamp);
 
 		LogErrorChecker(ret);
 	}
@@ -64,8 +65,8 @@ static void __state_changed_cb(location_service_state_e state, void *user_data) 
 
 bool onGPSConnect(GPS* this_gen) {
 	GPSExtends* this = (GPSExtends*) this_gen;
-	location_manager_set_service_state_changed_cb(this->manager, __state_changed_cb,
-			this);
+	location_manager_set_service_state_changed_cb(this->manager,
+			__state_changed_cb, this);
 	int error = location_manager_start(this->manager);
 	if (error == LOCATIONS_ERROR_NONE) {
 		return this->access = true;

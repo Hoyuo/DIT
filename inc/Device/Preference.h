@@ -1,7 +1,3 @@
-//
-// Created by Park SangHyun on 2015. 6. 27..
-//
-
 #ifndef DIT_PREFERENCE_H
 #define DIT_PREFERENCE_H
 

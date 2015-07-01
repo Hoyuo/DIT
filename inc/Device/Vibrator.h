@@ -1,6 +1,9 @@
 #ifndef DIT_VIBRATOR_H
 #define DIT_VIBRATOR_H
 
+#include <stdbool.h>
+#include <stdalign.h>
+
 #include <device/haptic.h>
 
 #ifdef __cplusplus
@@ -22,10 +25,11 @@ void VibrateShort(Vibration* this_gen);
 void VibrateMiddle(Vibration* this_gen);
 void VibrateLong(Vibration* this_gen);
 
-typedef struct _VibrationExtend{
-	Vibration vibration;
-	haptic_device_h handle;
-	int error;
+
+typedef struct _VibrationExtend {
+    Vibration vibration;
+    haptic_device_h handle;
+    int error;
 } VibrationExtend;
 
 #ifdef __cplusplus

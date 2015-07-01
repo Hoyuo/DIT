@@ -1,57 +1,57 @@
-/*
- * OngoingNotification.c
- *
- *  Created on: Jun 22, 2015
- *      Author: parksanghyun
- *      Modifier: parkbeomchan
- */
-
-
+#include "Interface/OngoingNotification.h"
 #include <stdlib.h>
 #include <string.h>
-#include "Interface/OngoingNotification.h"
 
 void setOngoingTitle(OngoingNotification* this_gen, char* title) {
-	 if (this_gen == NULL)
-	    	return;
+    if (this_gen == NULL) {
+        return;
+    }
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    if(NULL==title)
-    	return;
-    if(NULL!=this->title)
-    	free(this->title);
-    this->title = malloc(strlen(title)+sizeof(char));
-     strcpy(this->title,title);
+    if (NULL == title) {
+        return;
+    }
+    if (NULL != this->title) {
+        free(this->title);
+    }
+    this->title = malloc(strlen(title) + sizeof(char));
+    strcpy(this->title, title);
 }
 
 void setOngoingText(OngoingNotification* this_gen, char* text) {
-	 if (this_gen == NULL)
-	    	return;
+    if (this_gen == NULL) {
+        return;
+    }
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    if(NULL==text)
-    	return;
-    if(NULL!=this->text)
-    	free(this->text);
-    this->text = malloc(strlen(text)+sizeof(char));
-     strcpy(this->text,text);
+    if (NULL == text) {
+        return;
+    }
+    if (NULL != this->text) {
+        free(this->text);
+    }
+    this->text = malloc(strlen(text) + sizeof(char));
+    strcpy(this->text, text);
 }
 
 void setOngoingIcon(OngoingNotification* this_gen, char* imagepath) {
-	 if (this_gen == NULL)
-	    	return;
-    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    if(NULL==imagepath)
-    	return;
-    if(NULL!=this->imagepath){
-    	free(this->imagepath);
+    if (this_gen == NULL) {
+        return;
     }
-    this->imagepath = malloc(strlen(imagepath)+sizeof(char));
-     strcpy(this->imagepath,imagepath);
+    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
+    if (NULL == imagepath) {
+        return;
+    }
+    if (NULL != this->imagepath) {
+        free(this->imagepath);
+    }
+    this->imagepath = malloc(strlen(imagepath) + sizeof(char));
+    strcpy(this->imagepath, imagepath);
 }
 
 
 void showOngoing(OngoingNotification* this_gen) {
-	 if (this_gen == NULL)
-	    	return;
+    if (this_gen == NULL) {
+        return;
+    }
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
     this->ongoingnotification_handle = notification_create(NOTIFICATION_TYPE_ONGOING);
     notification_set_property(this->ongoingnotification_handle, NOTIFICATION_PROP_DISABLE_TICKERNOTI);
@@ -63,34 +63,36 @@ void showOngoing(OngoingNotification* this_gen) {
 }
 
 
-void hideOngoing(OngoingNotification* this_gen){
-	 if (this_gen == NULL)
-	    	return;
+void hideOngoing(OngoingNotification* this_gen) {
+    if (this_gen == NULL) {
+        return;
+    }
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
 
-	notification_delete(this->ongoingnotification_handle);
+    notification_delete(this->ongoingnotification_handle);
 }
 
 
 void DestroyOngoingNotification(OngoingNotification* this_gen) {
 
-    if (this_gen == NULL)
-    	return;
-        OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
+    if (this_gen == NULL) {
+        return;
+    }
+    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
 
-        notification_delete(this->ongoingnotification_handle);
-        notification_free(this->ongoingnotification_handle);
-        if (NULL != this->title) {
-            free(this->title);
-        }
-        if (NULL != this->text) {
-            free(this->text);
-        }
-        if (NULL != this->imagepath) {
-            free(this->imagepath);
-        }
+    notification_delete(this->ongoingnotification_handle);
+    notification_free(this->ongoingnotification_handle);
+    if (NULL != this->title) {
+        free(this->title);
+    }
+    if (NULL != this->text) {
+        free(this->text);
+    }
+    if (NULL != this->imagepath) {
+        free(this->imagepath);
+    }
 
-        free(this);
+    free(this);
 
 
 }

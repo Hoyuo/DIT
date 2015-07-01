@@ -1,10 +1,3 @@
-/**
-	@file CNFC.h
-	@brief nfc모듈에 관한 파일
-	@note TIZEN API nfc를 이용하여서 작성을 하였다. 간략화된 코드가 많기 때문에 좀 더 새부설정은 DIT Library보다는 TIZEN API를 참고하기 바란다.
-	@see https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__MODULE.html
-*/
-
 #ifndef DIT_NFC_H
 #define DIT_NFC_H
 
@@ -34,30 +27,30 @@ typedef struct _nfc NFC;
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
 typedef struct _nfc {
-    bool (* isAccessible)(NFC* this);
+    bool (* isAccessible)(NFC* this_gen);
 
-    bool (* onConnect)(NFC* this);
+    bool (* onConnect)(NFC* this_gen);
 
-    bool (* onDisconnect)(NFC* this);
+    bool (* onDisconnect)(NFC* this_gen);
 
-    void (* Send)(NFC* this, NDEF message);
+    void (* Send)(NFC* this_gen, NDEF message);
 
-    NDEF (* Recv)(NFC* this);
+    NDEF (* Recv)(NFC* this_gen);
 } NFC;
 
 NFC* newNFC();
 
 void deleteNFC(NFC* this_gen);
 
-bool isNFCAccessible(NFC* this);
+bool isNFCAccessible(NFC* this_gen ) ;
 
-bool onNFCConnect(NFC* this);
+bool onNFCConnect(NFC* this_gen ) ;
 
-bool onNFCDisconnect(NFC* this);
+bool onNFCDisconnect(NFC* this_gen ) ;
 
-void NFCSend(NFC* this, NDEF message);
+void NFCSend(NFC* this_gen , NDEF message ) ;
 
-NDEF NFCRecv(NFC* this);
+NDEF NFCRecv(NFC* this_gen ) ;
 
 /**
 	@struct NFCExtends
