@@ -111,14 +111,12 @@ void HttpDownload(Http* this_gen, char* filename) {
 		char* path = (char*) malloc(FILENAME_MAX);
 		strcpy(path, "/opt/usr/media/Downloads/");
 		strcat(path, filename);
-		dlog_print(DLOG_INFO, "DIT", path);
 
 		char* url = (char*) malloc(FILENAME_MAX);
 		strcpy(url, this->url);
 		strcat(url, "/");
 		strcat(url, filename);
 
-		dlog_print(DLOG_INFO, "DIT", url);
 		CURL* curl = curl_easy_init();
 		if (curl) {
 			FILE* fp = fopen(path, "wb");
