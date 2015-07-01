@@ -12,26 +12,19 @@ extern "C" {
 
 typedef struct _Vibration Vibration;
 typedef struct _Vibration {
-    void (* Custom)(Vibration* this, int period);
-
-    void (* Short)(Vibration* this);
-
-    void (* Middle)(Vibration* this);
-
-    void (* Long)(Vibration* this);
-};
+	void (* Custom)(Vibration* this_gen, int period);
+    void (* Short)(Vibration* this_gen);
+    void (* Middle)(Vibration* this_gen);
+    void (* Long)(Vibration* this_gen);
+}Vibration;
 
 Vibration* NewVibrate();
+void DestroyVibrate(Vibration* this_gen);
+void VibrateCustom(Vibration* this_gen, int period);
+void VibrateShort(Vibration* this_gen);
+void VibrateMiddle(Vibration* this_gen);
+void VibrateLong(Vibration* this_gen);
 
-void DestroyVibrate(Vibration* this);
-
-void VibrateCustom(Vibration* this, int period);
-
-void VibrateShort(Vibration* this);
-
-void VibrateMiddle(Vibration* this);
-
-void VibrateLong(Vibration* this);
 
 typedef struct _VibrationExtend {
     Vibration vibration;
