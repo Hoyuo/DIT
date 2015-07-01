@@ -5,7 +5,7 @@
 #include <stdalign.h>
 
 #include <bluetooth.h>
-
+#include <glib.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -24,11 +24,18 @@ typedef struct _Bluetooth {
     int (* BluetoothSend)(Bluetooth* this_gen, char* sendbuffer);
 
     bool(* isBluetoothConnected)(Bluetooth* this_gen);
+
+    GList*(* getBoundDeviceList)(Bluetooth* this_gen);
+
+    GList*(* getSearchedDeviceList)(Bluetooth* this_gen);
+
+    GList *searched_list;
+    GList *bound_list;
 } Bluetooth;
 
-Bluetooth* newBluetooth();
+Bluetooth* NewBluetooth();
 
-void deleteBluetooth(Bluetooth* this_gen);
+void DestroyBluetooth(Bluetooth* this_gen);
 
 bool isBluetoothAccessible(Bluetooth* this_gen);
 
@@ -44,9 +51,9 @@ bool isBluetoothConnected(Bluetooth* this_gen);
 
 typedef struct {
     Bluetooth Bluetooth;
-    char* url;
-    int urlLength;
-    bool accessible;
+
+    char* remoteMACAddr;
+    bool connected;
 } BluetoothExtends;
 
 #ifdef __cplusplus
