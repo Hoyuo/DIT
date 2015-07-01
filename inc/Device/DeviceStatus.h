@@ -27,6 +27,8 @@ typedef struct _DeviceStatus {
 }DeviceStatus;
 
 DeviceStatus* NewDeviceStatus();
+void DestroyDeviceStatus(DeviceStatus* this_gen);
+
 int getBatteryRemainsPercent(DeviceStatus* this_gen);
 bool isBatteryCharging(DeviceStatus* this_gen);
 void DisplayLock(DeviceStatus* this_gen);

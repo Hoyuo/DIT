@@ -7,6 +7,7 @@ DeviceStatus* NewDeviceStatus()
 	DeviceStatusExtend* this = (DeviceStatusExtend*)malloc(sizeof(DeviceStatusExtend));
 
 	this->deviceStatus.getBattery = getBatteryRemainsPercent;
+	this->deviceStatus.isCharging = isBatteryCharging;
 	this->deviceStatus.DisplayLock = DisplayLock;
 	this->deviceStatus.DisplayUnlock = DisplayUnlock;
 	this->deviceStatus.FlashOn = onFlash;
@@ -16,6 +17,15 @@ DeviceStatus* NewDeviceStatus()
 
 	return &this->deviceStatus;
 }
+
+void DestroyDeviceStatus(DeviceStatus* this_gen)
+{
+	if (this_gen == NULL)
+		return;
+	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
+	free(this);
+}
+
 int getBatteryRemainsPercent(DeviceStatus* this_gen)
 {
 	int error, pct;
