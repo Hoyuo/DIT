@@ -62,7 +62,7 @@ static bool adapter_bonded_device_cb(bt_device_info_s *device_info, void *user_d
 
 
 
-void __bt_opp_client_push_responded_cbx(int result,
+static void __bt_opp_client_push_responded_cbx(int result,
                                        const char *remote_address,
                                        void *user_data)
 {
@@ -79,15 +79,16 @@ void __bt_opp_client_push_progress_cbx(const char *file,
    dlog_print(DLOG_INFO, LOG_TAG, "percent: %d", percent);
    dlog_print(DLOG_INFO, LOG_TAG, "file: %s", file);
 }
-void __bt_opp_client_push_finished_cbx(int result,
+static void __bt_opp_client_push_finished_cbx(int result,
                                       const char *remote_address,
                                       void *user_data)
 {
    dlog_print(DLOG_INFO, LOG_TAG, "result: %d", result);
    dlog_print(DLOG_INFO, LOG_TAG, "remote_address: %s", remote_address);
 }
+
 //블루투스 연결 가능 체크용 callback
-void adapter_state_changed_cbx(int result, bt_adapter_state_e adapter_state, void* user_data)
+static void adapter_state_changed_cbx(int result, bt_adapter_state_e adapter_state, void* user_data)
 {
 	BluetoothExtends* certainBTstate= (BluetoothExtends*)user_data;
 
