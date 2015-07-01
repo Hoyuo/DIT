@@ -54,6 +54,7 @@ typedef struct {
 
     char* remoteMACAddr;
     bool connected;
+    bool accessible;
 } BluetoothExtends;
 
 #ifdef __cplusplus

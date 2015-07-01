@@ -62,7 +62,7 @@ static bool adapter_bonded_device_cb(bt_device_info_s *device_info, void *user_d
 
 
 
-void __bt_opp_client_push_responded_cb(int result,
+void __bt_opp_client_push_responded_cbx(int result,
                                        const char *remote_address,
                                        void *user_data)
 {
@@ -70,7 +70,7 @@ void __bt_opp_client_push_responded_cb(int result,
    dlog_print(DLOG_INFO, LOG_TAG, "remote_address: %s", remote_address);
 }
 
-void __bt_opp_client_push_progress_cb(const char *file,
+void __bt_opp_client_push_progress_cbx(const char *file,
                                       long long size,
                                       int percent,
                                       void *user_data)
@@ -79,37 +79,79 @@ void __bt_opp_client_push_progress_cb(const char *file,
    dlog_print(DLOG_INFO, LOG_TAG, "percent: %d", percent);
    dlog_print(DLOG_INFO, LOG_TAG, "file: %s", file);
 }
-void __bt_opp_client_push_finished_cb(int result,
+void __bt_opp_client_push_finished_cbx(int result,
                                       const char *remote_address,
                                       void *user_data)
 {
    dlog_print(DLOG_INFO, LOG_TAG, "result: %d", result);
    dlog_print(DLOG_INFO, LOG_TAG, "remote_address: %s", remote_address);
 }
+//블루투스 연결 가능 체크용 callback
+void adapter_state_changed_cbx(int result, bt_adapter_state_e adapter_state, void* user_data)
+{
+	BluetoothExtends* certainBTstate= (BluetoothExtends*)user_data;
 
+	if (result != BT_ERROR_NONE)
+   {
+      dlog_print(DLOG_ERROR, LOG_TAG, "[adapter_state_changed_cb] Failed! result=%d", result);
+      certainBTstate->accessible=false;
+      return;
+   }
+   if (adapter_state == BT_ADAPTER_ENABLED)
+   {
+      dlog_print(DLOG_INFO, LOG_TAG, "[adapter_state_changed_cb] Bluetooth is enabled!");
 
+      // Visibility mode of the Bluetooth device
+      bt_adapter_visibility_mode_e mode;
+      // Duration until the visibility mode is changed so that other devices cannot find your device
+      int duration = 1;
+      bt_adapter_get_visibility(&mode, &duration);
+      switch (mode)
+      {
+      case BT_ADAPTER_VISIBILITY_MODE_NON_DISCOVERABLE:
+         dlog_print(DLOG_INFO, LOG_TAG, "[adapter_state_changed_cb] Visibility: NON_DISCOVERABLE");
+         certainBTstate->accessible=false;
+         break;
+      case BT_ADAPTER_VISIBILITY_MODE_GENERAL_DISCOVERABLE:
+         dlog_print(DLOG_INFO, LOG_TAG, "[adapter_state_changed_cb] Visibility: GENERAL_DISCOVERABLE");
+         certainBTstate->accessible=true;
+
+         break;
+      case BT_ADAPTER_VISIBILITY_MODE_LIMITED_DISCOVERABLE:
+         dlog_print(DLOG_INFO, LOG_TAG, "[adapter_state_changed_cb] Visibility: LIMITED_DISCOVERABLE");
+         certainBTstate->accessible=true;
+
+         break;
+      }
+   }
+   else
+   {
+      dlog_print(DLOG_INFO, LOG_TAG, "[adapter_state_changed_cb] Bluetooth is disabled!");
+      certainBTstate->accessible=false;
+   }
+}
 bool isBluetoothAccessible(Bluetooth* this_gen) {
 
-    return ((BluetoothExtends*) this_gen)->connected;
+	return ((BluetoothExtends*)this_gen)->accessible;
+
 }
 
 bool onBluetoothConnect(Bluetooth* this_gen) {
 
     int res = 0;
     res = bt_initialize();
+    if(BT_ERROR_NONE!=res)    return false;
 
-
-    return false;
+    return true;
 }
 
+
 GList* BTSearch(Bluetooth* this_gen){
-BluetoothExtends* this =(BluetoothExtends*) this_gen;
 
 return this_gen->searched_list;
 }
 
 GList* BTBound(Bluetooth* this_gen){
-	BluetoothExtends* this =(BluetoothExtends*) this_gen;
 
 	return  this_gen->bound_list;
 }
@@ -160,9 +202,9 @@ int BluetoothSend(Bluetooth* this_gen, char* sendfile) {
 		}
 
 		ret = bt_opp_client_push_files(this->remoteMACAddr,
-											__bt_opp_client_push_responded_cb,
-		                               __bt_opp_client_push_progress_cb,
-		                               __bt_opp_client_push_finished_cb, NULL);
+											__bt_opp_client_push_responded_cbx,
+		                               __bt_opp_client_push_progress_cbx,
+		                               __bt_opp_client_push_finished_cbx, NULL);
 		if (ret != 0)
 		{
 		   dlog_print(DLOG_ERROR, LOG_TAG, "[bt_opp_client_push_files] Failed.");
@@ -208,7 +250,13 @@ Bluetooth* NewBluetooth() {
     this->Bluetooth.bound_list=NULL;
     this->Bluetooth.searched_list=NULL;
 
+    this->remoteMACAddr=NULL;
+    this->connected=false;
+    this->accessible=false;
     bt_error_e ret;
+	   ret = bt_adapter_set_state_changed_cb(adapter_state_changed_cbx, (void*)this);
+
+
     ret = bt_adapter_foreach_bonded_device(adapter_bonded_device_cb, (void*)this->Bluetooth.searched_list);
    	if (ret != BT_ERROR_NONE)
    	{
