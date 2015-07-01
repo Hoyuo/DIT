@@ -4,7 +4,11 @@
 #include <string.h>
 #include <curl.h>
 #include <system_info.h>
-#include <dlog.h>
+
+/*
+ * @privlevel public
+ * @privilege %http://tizen.org/privilege/internet
+ */
 
 Http* NewHttp() {
 	HttpExtends* this = (HttpExtends*) malloc(sizeof(HttpExtends));
@@ -97,8 +101,9 @@ bool onHttpDisconnect(Http* this_gen) {
 }
 
 /*
- * http://tizne.org/privileges/mediastorage
- * http://tizne.org/privileges/download
+ * @privlevel public
+ * @privilege %http://tizne.org/privileges/mediastorage
+ * @privilege %http://tizne.org/privileges/download
  */
 void HttpDownload(Http* this_gen, char* filename) {
 	HttpExtends* this = (HttpExtends*) this_gen;
