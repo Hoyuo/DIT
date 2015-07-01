@@ -3,44 +3,55 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _http HTTP;
+typedef struct _Http Http;
 
-typedef struct _http {
-    bool (* isAccessible)(HTTP* this_gen);
+typedef struct _Http {
+	bool (*isAccessible)(Http* this_gen);
 
-    bool (* onConnect)(HTTP* this_gen, char* url);
+	bool (*onConnect)(Http* this_gen, char* url);
 
-    bool (* onDisconnect)(HTTP* this_gen);
+	bool (*onDisconnect)(Http* this_gen);
 
-    void (* Download)(HTTP* this_gen, char* url);
+	void (*Download)(Http* this_gen, char* url);
 
-    void (* Excute)(HTTP* this_gen, char* req, char* res);
-} HTTP;
+	void (*Post)(Http* this_gen, char* res, char* req);
 
-HTTP* newHTTP();
+	void (*Get)(Http* this_gen, char* res, char* req);
 
-void deleteHTTP(HTTP* this_gen);
+} Http;
 
-bool isHTTPAccessible(HTTP* this_gen);
+/*
+ * @privlevel public
+ * @privilege %http://tizen.org/privilege/internet
+ */
+Http* NewHttp();
 
-bool onHTTPConnect(HTTP* this_gen);
+void DestoryHttp(Http* this_gen);
 
-bool onHTTPDisconnect(HTTP* this_gen);
+bool isHttpAccessible(Http* this_gen);
 
-void HTTPDownload(HTTP* this_gen, char* url);
+bool onHttpConnect(Http* this_gen, char* url);
 
-void HTTPExcute(HTTP* this_gen, char* res, char* req);
+bool onHttpDisconnect(Http* this_gen);
+
+void HttpDownload(Http* this_gen, char* url);
+
+void HttpExcutePost(Http* this_gen, char* req, char* res);
+
+void HttpExcuteGet(Http* this_gen, char* req, char* res);
+
+static size_t write_callback(void* contents, size_t size, size_t nmemb, void** res);
 
 typedef struct {
-    HTTP http;
-    char* url;
-    int urlLength;
-} HTTPExtends;
+	Http http;
+	char* url;
+} HttpExtends;
 
 #ifdef __cplusplus
 }
