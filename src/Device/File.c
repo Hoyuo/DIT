@@ -157,7 +157,6 @@ Audio* NewAudio() {
 
 void DestroyAudio(Audio* this_gen) {
 
-	//test comment
 	if(this_gen!=NULL){
 		return;
 	}
