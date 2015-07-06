@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+#include <player.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -94,10 +95,14 @@ typedef struct _Audio{
 
 	void (*getAudioInfo)(Audio* this_gen);
 
+	void (*setURI)(Audio* this_gen,char* uri);
 }Audio;
 
 typedef struct _AudioExtends{
 Audio audio;
+
+player_h player_handle;
+char* uri;
 
 }AudioExtends;
 
@@ -115,6 +120,7 @@ void recordDITAudio(Audio* this_gen);
 
 void getDITAudioInfo(Audio* this_gen);
 
+void setAudioURI(Audio* this_gen, char* uri);
 typedef struct _Image Image;
 
 
