@@ -46,16 +46,18 @@ void moveDITFile(File* this_gen, char* src, char* dst);
 char** searchDITFile(File* this_gen, char* src, char* dst);
 
 
+typedef struct _Video Video;
+
 typedef struct _Video{
-	void (*playVideo)(File* this_gen);
+	void (*playVideo)(Video* this_gen);
 
-	void (*pauseVideo)(File* this_gen);
+	void (*pauseVideo)(Video* this_gen);
 
-	void (*stopVideo)(File* this_gen);
+	void (*stopVideo)(Video* this_gen);
 
-	void (*recordVideo)(File* this_gen);
+	void (*recordVideo)(Video* this_gen);
 
-	void (*getVideoInfo)(File* this_gen);
+	void (*getVideoInfo)(Video* this_gen);
 
 }Video;
 
@@ -79,17 +81,18 @@ typedef struct _VideoExtends{
 	void getDITVideoInfo(Video* this_gen);
 
 
+typedef struct _Audio Audio;
 
 typedef struct _Audio{
-	void (*playAudio)(File* this_gen);
+	void (*playAudio)(Audio* this_gen);
 
-	void (*pauseAudio)(File* this_gen);
+	void (*pauseAudio)(Audio* this_gen);
 
-	void (*stopAudio)(File* this_gen);
+	void (*stopAudio)(Audio* this_gen);
 
-	void (*recordAudio)(File* this_gen);
+	void (*recordAudio)(Audio* this_gen);
 
-	void (*getAudioInfo)(File* this_gen);
+	void (*getAudioInfo)(Audio* this_gen);
 
 }Audio;
 
@@ -112,10 +115,12 @@ void recordDITAudio(Audio* this_gen);
 
 void getDITAudioInfo(Audio* this_gen);
 
+typedef struct _Image Image;
+
 
 typedef struct _Image{
 
-	void (*getImageInfo)(File* this_gen);
+	void (*getImageInfo)(Image* this_gen);
 
 }Image;
 
