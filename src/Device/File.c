@@ -149,6 +149,8 @@ Audio* NewAudio() {
 	this->audio.stopAudio = stopDITAudio;
 	this->audio.setURI= setAudioURI;
 
+	this->uri=NULL;
+
 	player_create(&(this->player_handle));
 	player_prepare(this->player_handle);
 
@@ -161,6 +163,9 @@ void DestroyAudio(Audio* this_gen) {
 		return;
 	}
 	AudioExtends* this = (AudioExtends*) this_gen;
+	if(this->uri!=NULL){
+		free(this->uri);
+	}
 	player_unprepare(this->player_handle);
 	player_destroy(this->player_handle);
 	free(this);
@@ -170,16 +175,21 @@ void DestroyAudio(Audio* this_gen) {
 void playDITAudio(Audio* this_gen) {
 
 	AudioExtends* this = (AudioExtends*) this_gen;
+	player_start(this->player_handle);
+
 }
 
 void pauseDITAudio(Audio* this_gen) {
 
 	AudioExtends* this = (AudioExtends*) this_gen;
+	player_pause(this->player_handle);
+
 }
 
 void stopDITAudio(Audio* this_gen) {
 
 	AudioExtends* this = (AudioExtends*) this_gen;
+	player_stop(this->player_handle);
 }
 
 void recordDITAudio(Audio* this_gen) {
@@ -189,12 +199,15 @@ void recordDITAudio(Audio* this_gen) {
 
 void setAudioURI(Audio* this_gen, char* uri){
 
+	player_error_e res;
+
 	if(NULL==this_gen||NULL==uri){
 		return;
 	}
+
 	AudioExtends* this = (AudioExtends*) this_gen;
 
-	player_set_uri(this->player_handle,uri);
+	res = player_set_uri(this->player_handle,uri);
 
 }
 
@@ -207,6 +220,8 @@ Image* NewImage() {
 }
 
 void DestroyImage(Image* this_gen) {
+	if(this_gen) return;
+
 	ImageExtends* this = (ImageExtends*) this_gen;
 	player_destroy(&(this->player_handle));
 
