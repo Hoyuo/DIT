@@ -54,7 +54,7 @@ void copyDITFile(File* this_gen, char* src, char* dst) {
 
 	   source = fopen(src, "r");
 	   target = fopen(dst, "w");
-
+	   char ch=0;
 	  while( ( ch = fgetc(source) ) != EOF )
 	      fputc(ch, target);
 	  	  fclose(source);
@@ -63,7 +63,6 @@ void copyDITFile(File* this_gen, char* src, char* dst) {
 
 void moveDITFile(File* this_gen, char* src, char* dst) {
 
-	FileExtends* this = (FileExtends*) this_gen;
 
 	FileExtends* this = (FileExtends*) this_gen;
 
@@ -109,6 +108,7 @@ Video* NewVideo() {
 void DestroyVideo(Video* this_gen) {
 
 	VideoExtends* this = (VideoExtends*) this_gen;
+	player_destroy(this->player_handle);
 
 	free(this);
 }
@@ -223,7 +223,6 @@ void DestroyImage(Image* this_gen) {
 	if(this_gen) return;
 
 	ImageExtends* this = (ImageExtends*) this_gen;
-	player_destroy(&(this->player_handle));
 
 	free(this);
 }
