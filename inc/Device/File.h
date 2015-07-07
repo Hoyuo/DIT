@@ -64,7 +64,7 @@ typedef struct _Video{
 
 typedef struct _VideoExtends{
 	Video video;
-
+	player_h player_handle;
 }VideoExtends;
 
 	Video* NewVideo();
