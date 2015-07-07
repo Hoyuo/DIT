@@ -29,7 +29,7 @@ Sensor* NewSensor()
 	this->sensor.hasGravity = hasGravity;
 	this->sensor.getGravityData = getGravityData;
 
-	return this->sensor;
+	return &this->sensor;
 }
 
 void DestroySensor(Sensor* this_gen)

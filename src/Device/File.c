@@ -2,6 +2,10 @@
 #include "tizen.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <dlog.h>
+
+void AerrorTest(player_error_e x);
+
 File* NewFile() {
 
 	FileExtends* this = malloc(sizeof(FileExtends));
@@ -96,19 +100,34 @@ Video* NewVideo() {
 
 	VideoExtends* this = (VideoExtends*) malloc(sizeof(VideoExtends));
 
-	this->video.getVideoInfo = getDITVideoInfo;
-	this->video.pauseVideo = pauseDITVideo;
-	this->video.playVideo = playDITVideo;
-	this->video.recordVideo = recordDITVideo;
-	this->video.stopVideo = stopDITVideo;
+	this->video.getVideoInfo	= getDITVideoInfo;
+	this->video.pauseVideo	= pauseDITVideo;
+	this->video.playVideo	= playDITVideo;
+	this->video.recordVideo 	= recordDITVideo;
+	this->video.stopVideo	= stopDITVideo;
+	this->video.setURI		= setDITVideoURI;
+	this->player_handle=NULL;
+	this->uri=NULL;
+
+	player_error_e res;
+	res=player_create(&this->player_handle);
+	AerrorTest(res);
 
 	return &this->video;
 }
 
 void DestroyVideo(Video* this_gen) {
 
+	if(NULL==this_gen)
+		return;
+
 	VideoExtends* this = (VideoExtends*) this_gen;
-	player_destroy(this->player_handle);
+	player_error_e res;
+	res= player_destroy(this->player_handle);
+
+	if(this->uri!=NULL){
+		free(this->uri);
+	}
 
 	free(this);
 }
@@ -116,15 +135,31 @@ void DestroyVideo(Video* this_gen) {
 void playDITVideo(Video* this_gen) {
 	VideoExtends* this = (VideoExtends*) this_gen;
 
+	player_error_e res;
+//	res= player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_OVERLAY,);
+	res = player_set_uri(this->player_handle,this->uri);
+	AerrorTest(res);
+
+	res=player_prepare(this->player_handle);
+	AerrorTest(res);
+
+	res=player_start(this->player_handle);
+	AerrorTest(res);
 }
 
 void pauseDITVideo(Video* this_gen) {
-	VideoExtends* this = (VideoExtends*) this_gen;
+		VideoExtends* this = (VideoExtends*) this_gen;
+		player_error_e res;
+		res=player_pause(this->player_handle);
+		AerrorTest(res);
 
 }
 
 void stopDITVideo(Video* this_gen) {
 	VideoExtends* this = (VideoExtends*) this_gen;
+	player_error_e res;
+		res=player_stop(this->player_handle);
+		AerrorTest(res);
 
 }
 
@@ -135,6 +170,27 @@ void recordDITVideo(Video* this_gen) {
 
 void getDITVideoInfo(Video* this_gen) {
 	VideoExtends* this = (VideoExtends*) this_gen;
+
+}
+
+void setDITVideoURI(Video* this_gen, char* uri) {
+
+			if (this_gen == NULL) {
+		        return;
+		    }
+
+		    if (NULL == uri) {
+		        return;
+		    }
+
+		    VideoExtends* this = (VideoExtends*) this_gen;
+
+		    if (NULL != this->uri) {
+		        free(this->uri);
+		    }
+		    this->uri = malloc(strlen(uri) + sizeof(char));
+		    strcpy(this->uri, uri);
+
 
 }
 
@@ -150,46 +206,65 @@ Audio* NewAudio() {
 	this->audio.setURI= setAudioURI;
 
 	this->uri=NULL;
+	this->player_handle=NULL;
 
-	player_create(&(this->player_handle));
-	player_prepare(this->player_handle);
+	player_error_e res;
 
+	res=player_create(&this->player_handle);
+	AerrorTest(res);
 	return &this->audio;
 }
 
 void DestroyAudio(Audio* this_gen) {
 
-	if(this_gen!=NULL){
+	if(this_gen==NULL){
 		return;
 	}
 	AudioExtends* this = (AudioExtends*) this_gen;
 	if(this->uri!=NULL){
 		free(this->uri);
 	}
-	player_unprepare(this->player_handle);
-	player_destroy(this->player_handle);
+	player_error_e res;
+
+	res=player_unprepare(this->player_handle);
+	res=player_destroy(this->player_handle);
 	free(this);
+
 }
 
 
 void playDITAudio(Audio* this_gen) {
+	player_error_e res;
 
 	AudioExtends* this = (AudioExtends*) this_gen;
-	player_start(this->player_handle);
 
+
+	res = player_set_uri(this->player_handle,this->uri);
+	AerrorTest(res);
+
+	res=player_prepare(this->player_handle);
+	AerrorTest(res);
+
+	res=player_start(this->player_handle);
+	AerrorTest(res);
 }
 
 void pauseDITAudio(Audio* this_gen) {
+	player_error_e res;
 
 	AudioExtends* this = (AudioExtends*) this_gen;
-	player_pause(this->player_handle);
+	res=player_pause(this->player_handle);
+	AerrorTest(res);
 
 }
 
 void stopDITAudio(Audio* this_gen) {
+	player_error_e res;
 
 	AudioExtends* this = (AudioExtends*) this_gen;
-	player_stop(this->player_handle);
+	res=player_stop(this->player_handle);
+	AerrorTest(res);
+
 }
 
 void recordDITAudio(Audio* this_gen) {
@@ -199,15 +274,24 @@ void recordDITAudio(Audio* this_gen) {
 
 void setAudioURI(Audio* this_gen, char* uri){
 
-	player_error_e res;
+	   if (this_gen == NULL) {
+	        return;
+	    }
+		AudioExtends* this = (AudioExtends*) this_gen;
 
-	if(NULL==this_gen||NULL==uri){
-		return;
+	    if (NULL == uri) {
+	        return;
+	    }
+	    if (NULL != this->uri) {
+	        free(this->uri);
+	    }
+	    this->uri = malloc(strlen(uri) + sizeof(char));
+	    strcpy(this->uri, uri);
 	}
 
-	AudioExtends* this = (AudioExtends*) this_gen;
 
-	res = player_set_uri(this->player_handle,uri);
+
+void getDITAudioInfo(Audio* this_gen){
 
 }
 
@@ -223,11 +307,97 @@ void DestroyImage(Image* this_gen) {
 	if(this_gen) return;
 
 	ImageExtends* this = (ImageExtends*) this_gen;
-
 	free(this);
 }
 
 void getDITImageInfo(Image* this_gen) {
 	ImageExtends* this = (ImageExtends*) this_gen;
+
+}
+
+void AerrorTest(player_error_e x){
+	char code[]="DIT Error";
+	switch(x){
+	case PLAYER_ERROR_NONE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NONE");
+		break;
+
+	case PLAYER_ERROR_OUT_OF_MEMORY:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_OUT_OF_MEMORY");
+		break;
+	case 	PLAYER_ERROR_INVALID_PARAMETER:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_PARAMETER");
+		break;
+
+	case 	PLAYER_ERROR_NO_SUCH_FILE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NO_SUCH_FILE");
+		break;
+
+	case 	PLAYER_ERROR_INVALID_OPERATION:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_OPERATION");
+		break;
+
+	case 	PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE");
+		break;
+
+	case 	PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE");
+		break;
+
+	case 	PLAYER_ERROR_SEEK_FAILED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_SEEK_FAILED");
+		break;
+
+	case 	PLAYER_ERROR_INVALID_STATE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_STATE");
+		break;
+
+	case 	PLAYER_ERROR_NOT_SUPPORTED_FILE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NOT_SUPPORTED_FILE");
+		break;
+
+	case 	PLAYER_ERROR_INVALID_URI:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_URI");
+		break;
+
+	case 	PLAYER_ERROR_SOUND_POLICY:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_SOUND_POLICY");
+		break;
+
+	case 	PLAYER_ERROR_CONNECTION_FAILED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_CONNECTION_FAILED");
+			break;
+
+	case 	PLAYER_ERROR_VIDEO_CAPTURE_FAILED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_VIDEO_CAPTURE_FAILED");
+			break;
+
+	case 	PLAYER_ERROR_DRM_EXPIRED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_EXPIRED");
+			break;
+
+	case 	PLAYER_ERROR_DRM_NO_LICENSE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_NO_LICENSE");
+			break;
+
+	case 	PLAYER_ERROR_DRM_FUTURE_USE:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_FUTURE_USE");
+			break;
+
+	case 	PLAYER_ERROR_DRM_NOT_PERMITTED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_NOT_PERMITTED");
+			break;
+
+	case 	PLAYER_ERROR_RESOURCE_LIMIT:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_RESOURCE_LIMIT");
+			break;
+
+	case 	PLAYER_ERROR_PERMISSION_DENIED:
+		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_PERMISSION_DENIED");
+			break;
+
+
+	}
 
 }

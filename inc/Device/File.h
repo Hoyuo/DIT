@@ -9,7 +9,13 @@
 extern "C" {
 #endif
 
-
+/**
+ *
+ * Audio:
+ * http://tizen.org/privilege/mediastorage
+ * http://tizen.org/privilege/externalstorage
+ * http://tizen.org/privilege/internet
+ * */
 
 typedef struct _File File;
 
@@ -60,11 +66,14 @@ typedef struct _Video{
 
 	void (*getVideoInfo)(Video* this_gen);
 
+	void (*setURI)(Video* this_gen, char* uri);
+
 }Video;
 
 typedef struct _VideoExtends{
 	Video video;
 	player_h player_handle;
+	char* uri;
 }VideoExtends;
 
 	Video* NewVideo();
@@ -81,6 +90,7 @@ typedef struct _VideoExtends{
 
 	void getDITVideoInfo(Video* this_gen);
 
+	void setDITVideoURI(Video* this_gen, char* URI);
 
 typedef struct _Audio Audio;
 
