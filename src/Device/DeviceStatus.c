@@ -21,7 +21,8 @@ DeviceStatus* NewDeviceStatus()
 
 void DestroyDeviceStatus(DeviceStatus* this_gen)
 {
-	if (this_gen != NULL){
+	if (this_gen != NULL)
+	{
 		DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
 		free(this);
 	}
