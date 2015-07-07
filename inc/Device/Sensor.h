@@ -117,6 +117,8 @@ SensorValue getGravityData(Sensor* this_gen);
 
 typedef struct _SensorExtend{
 	Sensor sensor;
+	int error;
+
 } SensorExtend;
 
 
