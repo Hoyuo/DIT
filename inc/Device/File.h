@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdalign.h>
 #include <player.h>
+#include <metadata_extractor.h>
+#include <Evas.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -72,7 +74,10 @@ typedef struct _Video{
 
 typedef struct _VideoExtends{
 	Video video;
+
+	Evas_Object* videoPanel;
 	player_h player_handle;
+	metadata_extractor_h videoMetadataHandle;
 	char* uri;
 }VideoExtends;
 
@@ -103,7 +108,7 @@ typedef struct _Audio{
 
 	void (*recordAudio)(Audio* this_gen);
 
-	void (*getAudioInfo)(Audio* this_gen);
+	char* (*getAudioInfo)(Audio* this_gen,  metadata_extractor_attr_e metadataKey);
 
 	void (*setURI)(Audio* this_gen,char* uri);
 }Audio;
@@ -112,6 +117,8 @@ typedef struct _AudioExtends{
 Audio audio;
 
 player_h player_handle;
+metadata_extractor_h audioMetadataHandle;
+
 char* uri;
 
 }AudioExtends;
@@ -128,7 +135,7 @@ void stopDITAudio(Audio* this_gen);
 
 void recordDITAudio(Audio* this_gen);
 
-void getDITAudioInfo(Audio* this_gen);
+char* getDITAudioInfo(Audio* this_gen,  metadata_extractor_attr_e metadataKey);
 
 void setAudioURI(Audio* this_gen, char* uri);
 typedef struct _Image Image;

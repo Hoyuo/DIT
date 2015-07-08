@@ -3,7 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <dlog.h>
-
+#include <Evas.h>
+#include <metadata_extractor.h>
 void AerrorTest(player_error_e x);
 
 File* NewFile() {
@@ -75,7 +76,7 @@ void moveDITFile(File* this_gen, char* src, char* dst) {
 		   source = fopen(src, "r");
 		   target = fopen(dst, "w");
 		   int len=0;
-		   while ( (len = fread(buf, sizeof(char), sizeof(buf), source)) != NULL )
+		   while ( (len = fread(buf, sizeof(char), sizeof(buf), source)) != 0 )
 		     if (fwrite(buf, sizeof(char), len, target) == 0) {
 		       fclose(source); fclose(target);
 
@@ -101,16 +102,22 @@ Video* NewVideo() {
 	VideoExtends* this = (VideoExtends*) malloc(sizeof(VideoExtends));
 
 	this->video.getVideoInfo	= getDITVideoInfo;
-	this->video.pauseVideo	= pauseDITVideo;
-	this->video.playVideo	= playDITVideo;
+	this->video.pauseVideo		= pauseDITVideo;
+	this->video.playVideo		= playDITVideo;
 	this->video.recordVideo 	= recordDITVideo;
-	this->video.stopVideo	= stopDITVideo;
-	this->video.setURI		= setDITVideoURI;
+	this->video.stopVideo		= stopDITVideo;
+	this->video.setURI			= setDITVideoURI;
+
+	this->videoMetadataHandle=NULL;
 	this->player_handle=NULL;
 	this->uri=NULL;
+	this->videoPanel=NULL;
+
 
 	player_error_e res;
 	res=player_create(&this->player_handle);
+	AerrorTest(res);
+	res=metadata_extractor_create(&this->videoMetadataHandle);
 	AerrorTest(res);
 
 	return &this->video;
@@ -139,7 +146,7 @@ void playDITVideo(Video* this_gen) {
 //	res= player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_OVERLAY,);
 	res = player_set_uri(this->player_handle,this->uri);
 	AerrorTest(res);
-
+	res=player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_OVERLAY,GET_DISPLAY(NULL));
 	res=player_prepare(this->player_handle);
 	AerrorTest(res);
 
@@ -207,10 +214,13 @@ Audio* NewAudio() {
 
 	this->uri=NULL;
 	this->player_handle=NULL;
+	this->audioMetadataHandle=NULL;
 
 	player_error_e res;
 
 	res=player_create(&this->player_handle);
+
+	res=metadata_extractor_create(&this->audioMetadataHandle);
 	AerrorTest(res);
 	return &this->audio;
 }
@@ -225,7 +235,7 @@ void DestroyAudio(Audio* this_gen) {
 		free(this->uri);
 	}
 	player_error_e res;
-
+	metadata_extractor_destroy(this->audioMetadataHandle);
 	res=player_unprepare(this->player_handle);
 	res=player_destroy(this->player_handle);
 	free(this);
@@ -287,12 +297,25 @@ void setAudioURI(Audio* this_gen, char* uri){
 	    }
 	    this->uri = malloc(strlen(uri) + sizeof(char));
 	    strcpy(this->uri, uri);
+
+	    metadata_extractor_set_path(this->audioMetadataHandle,this->uri);
 	}
 
 
+/**
+ *	@brief for use this function, caller must import <metadata_extractor.h>
+ *
+ *	@remark return value must be free()
+ */
+char* getDITAudioInfo(Audio* this_gen,  metadata_extractor_attr_e metadataKey){
 
-void getDITAudioInfo(Audio* this_gen){
+	AudioExtends* this = (AudioExtends*) this_gen;
+		metadata_extractor_error_e error_value;
 
+		char* res=NULL;
+	error_value=metadata_extractor_get_metadata(this->audioMetadataHandle,metadataKey,&res);
+
+	return res;
 }
 
 Image* NewImage() {
