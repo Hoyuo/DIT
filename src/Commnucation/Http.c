@@ -67,15 +67,18 @@ bool onHttpConnect(Http* this_gen, char* url, int port) {
 		curl_global_init(CURL_GLOBAL_ALL);
 
 		curl = curl_easy_init();
+		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_URL, url);
+			curl_easy_setopt(curl, CURLOPT_PORT, port);
 
-		curl_easy_setopt(curl, CURLOPT_URL, url);
-		curl_easy_setopt(curl, CURLOPT_PORT, port);
+			r = curl_easy_perform(curl);
 
-		r = curl_easy_perform(curl);
-
-		if (r == CURLE_OK) {
-			this->conect = true;
-			return true;
+			if (r == CURLE_OK) {
+				this->conect = true;
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}

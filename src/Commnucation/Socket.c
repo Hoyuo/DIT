@@ -3,7 +3,32 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl.h>
+#include <dlog.h>
 #include <system_info.h>
+
+static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms) {
+	struct timeval tv;
+	fd_set infd, outfd, errfd;
+	int res;
+
+	tv.tv_sec = timeout_ms / 1000;
+	tv.tv_usec = (timeout_ms % 1000) * 1000;
+
+	FD_ZERO(&infd);
+	FD_ZERO(&outfd);
+	FD_ZERO(&errfd);
+
+	FD_SET(sockfd, &errfd);
+
+	if (for_recv) {
+		FD_SET(sockfd, &infd);
+	} else {
+		FD_SET(sockfd, &outfd);
+	}
+
+	res = select(sockfd + 1, &infd, &outfd, &errfd, &tv);
+	return res;
+}
 
 Socket* NewSocket() {
 	SocketExtends* this = (SocketExtends*) malloc(sizeof(SocketExtends));
@@ -49,6 +74,39 @@ bool isSocketAccessible(Socket* this_gen) {
 
 bool onSocketConnect(Socket* this_gen, char* url, int port) {
 	SocketExtends* this = (SocketExtends*) this_gen;
+
+	if (this->access) {
+		int lenght = strlen(url);
+		this->url = (char *) malloc(lenght + 1);
+		strcpy(this->url, url);
+		this->port = port;
+
+		CURL* curl;
+		CURLcode r;
+		curl_global_init(CURL_GLOBAL_ALL);
+
+		curl = curl_easy_init();
+		if (curl) {
+
+			curl_easy_setopt(curl, CURLOPT_URL, url);
+			curl_easy_setopt(curl, CURLOPT_PORT, port);
+
+			curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1L);
+
+			r = curl_easy_perform(curl);
+
+			if (r == CURLE_OK) {
+				this->conect = true;
+				return true;
+			} else {
+				return false;
+			}
+		} else { //curl
+			return false;
+		}
+	} else { //this->access
+		return false;
+	}
 }
 
 bool onSocketDisconnect(Socket* this_gen) {
@@ -62,6 +120,94 @@ bool onSocketDisconnect(Socket* this_gen) {
 
 		this->conect = false;
 		return true;
+	} else {
+		return false;
+	}
+}
+
+bool SocketMessageSend(Socket* this_gen, char* msg) {
+	SocketExtends* this = (SocketExtends*) this_gen;
+
+	if (this->conect) {
+		CURL* curl;
+		CURLcode res;
+
+		curl = curl_easy_init();
+
+		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_URL, this->url);
+			curl_easy_setopt(curl, CURLOPT_PORT, this->port);
+			curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1L);
+
+			res = curl_easy_perform(curl);
+
+			if (res != CURLE_OK) {
+				dlog_print(DLOG_DEBUG, "DIT", curl_easy_strerror(res));
+				return false;
+			}
+
+			size_t iolen = 0;
+
+			res = curl_easy_send(curl, msg, strlen(msg) + 1, &iolen);
+
+			if (res != CURLE_OK) {
+				dlog_print(DLOG_DEBUG, "DIT", curl_easy_strerror(res));
+				return false;
+			}
+
+			curl_easy_cleanup(curl);
+
+			return true;
+		}
+	} else {
+		return false;
+	}
+}
+
+bool SocketMessageRecv(Socket* this_gen, char* msg) {
+	SocketExtends* this = (SocketExtends*) this_gen;
+
+	if (this->conect) {
+		CURL* curl;
+		CURLcode res;
+
+		curl = curl_easy_init();
+
+		if (curl) {
+			curl_easy_setopt(curl, CURLOPT_URL, this->url);
+			curl_easy_setopt(curl, CURLOPT_PORT, this->port);
+			curl_easy_setopt(curl, CURLOPT_CONNECT_ONLY, 1L);
+
+			res = curl_easy_perform(curl);
+
+			if (res != CURLE_OK) {
+				dlog_print(DLOG_DEBUG, "DIT", curl_easy_strerror(res));
+				return false;
+			}
+
+			curl_socket_t sockfd;
+			long sockextr;
+			res = curl_easy_getinfo(curl, CURLINFO_LASTSOCKET, &sockextr);
+			sockfd = sockextr;
+
+			wait_on_socket(sockfd, 1, 10000L);
+
+			char buf[1024];
+			size_t iolen = 0;
+			res = curl_easy_recv(curl, buf, 1024, &iolen);
+			printf("%s\n", buf);
+			if (res) {
+				dlog_print(DLOG_DEBUG, "DIT", curl_easy_strerror(res));
+				return false;
+			}
+
+			msg = (char*) malloc(iolen + 1);
+			strcpy(msg, buf);
+
+			curl_easy_cleanup(curl);
+
+			return true;
+		}
 	} else {
 		return false;
 	}

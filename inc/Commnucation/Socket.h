@@ -43,10 +43,14 @@ bool SocketMessageSend(Socket* this_gen, char* msg);
 
 bool SocketMessageRecv(Socket* this_gen, char* msg);
 
+static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms);
+
 typedef struct {
 	Socket socket;
 	char* url;
-	int port;bool access;bool conect;
+	int port;
+	bool access;
+	bool conect;
 } SocketExtends;
 
 #ifdef __cplusplus
