@@ -65,6 +65,11 @@ void copyDITFile(File* this_gen, char* src, char* dst) {
 	  	  fclose(source);
 	     fclose(target);
 }
+/*
+ *
+ * error handling needed
+ *
+ * */
 
 void moveDITFile(File* this_gen, char* src, char* dst) {
 
@@ -107,12 +112,12 @@ Video* NewVideo() {
 	this->video.recordVideo 	= recordDITVideo;
 	this->video.stopVideo		= stopDITVideo;
 	this->video.setURI			= setDITVideoURI;
+	this->video.setEvasObject 	= setDITEvasObject;
 
 	this->videoMetadataHandle=NULL;
 	this->player_handle=NULL;
 	this->uri=NULL;
-	this->videoPanel=NULL;
-
+	this->EvasObject=NULL;
 
 	player_error_e res;
 	res=player_create(&this->player_handle);
@@ -199,7 +204,21 @@ void setDITVideoURI(Video* this_gen, char* uri) {
 		    strcpy(this->uri, uri);
 
 
+
+
 }
+
+void setDITEvasObject(Video* this_gen, Evas_Object* EvasObject){
+
+	if (this_gen == NULL) {
+			        return;
+			    }
+    VideoExtends* this = (VideoExtends*) this_gen;
+
+    this->EvasObject=EvasObject;
+
+}
+
 
 Audio* NewAudio() {
 

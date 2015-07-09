@@ -70,12 +70,14 @@ typedef struct _Video{
 
 	void (*setURI)(Video* this_gen, char* uri);
 
+	void (*setEvasObject)(Video* this_gen, Evas_Object* EvasObject);
+
 }Video;
 
 typedef struct _VideoExtends{
 	Video video;
 
-	Evas_Object* videoPanel;
+	Evas_Object* EvasObject;
 	player_h player_handle;
 	metadata_extractor_h videoMetadataHandle;
 	char* uri;
@@ -96,6 +98,9 @@ typedef struct _VideoExtends{
 	void getDITVideoInfo(Video* this_gen);
 
 	void setDITVideoURI(Video* this_gen, char* URI);
+
+	void setDITEvasObject(Video* this_gen, Evas_Object* EvasObject);
+
 
 typedef struct _Audio Audio;
 
