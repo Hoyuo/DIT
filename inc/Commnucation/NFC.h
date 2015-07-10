@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
-
+#include <system_info.h>
 #ifdef __cplusplus
 extern "C" {
 #endif

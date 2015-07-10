@@ -148,10 +148,14 @@ void playDITVideo(Video* this_gen) {
 	VideoExtends* this = (VideoExtends*) this_gen;
 
 	player_error_e res;
-//	res= player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_OVERLAY,);
 	res = player_set_uri(this->player_handle,this->uri);
 	AerrorTest(res);
-	res=player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_OVERLAY,GET_DISPLAY(NULL));
+	res=player_set_display(this->player_handle,PLAYER_DISPLAY_TYPE_EVAS,GET_DISPLAY(this->EvasObject));
+	AerrorTest(res);
+
+	res=player_set_display_mode(this->player_handle,PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
+	AerrorTest(res);
+
 	res=player_prepare(this->player_handle);
 	AerrorTest(res);
 
@@ -163,7 +167,6 @@ void pauseDITVideo(Video* this_gen) {
 		VideoExtends* this = (VideoExtends*) this_gen;
 		player_error_e res;
 		res=player_pause(this->player_handle);
-		AerrorTest(res);
 
 }
 
@@ -171,7 +174,6 @@ void stopDITVideo(Video* this_gen) {
 	VideoExtends* this = (VideoExtends*) this_gen;
 	player_error_e res;
 		res=player_stop(this->player_handle);
-		AerrorTest(res);
 
 }
 
