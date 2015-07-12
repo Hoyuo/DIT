@@ -18,49 +18,57 @@ typedef struct _Sensor Sensor;
 typedef struct _Sensor {
 	SensorValue (* getAllSensorData)(Sensor* this_gen);
 
-	bool (* hasBarometer)(Sensor* this_gen);
+	bool (* hasAccelerometer)(Sensor* this_gen);
 
-	SensorValue (* getBarometerData)(Sensor* this_gen);
+	SensorValue (* getAccelerometerData)(Sensor* this_gen);
+
+	bool (* hasGravity)(Sensor* this_gen);
+
+	SensorValue (* getGravityData)(Sensor* this_gen);
+
+	bool (* hasLinearAccelation)(Sensor* this_gen);
+
+	SensorValue (* getLinearAccelationData)(Sensor* this_gen);
 
 	bool (* hasMagnetoMeter)(Sensor* this_gen);
 
 	SensorValue (* getMagnetoMeterData)(Sensor* this_gen);
 
-	bool (* hasPhotoMeter)(Sensor* this_gen);
+	bool (* hasRotationVector)(Sensor* this_gen);
 
-	SensorValue (* getPhotoMeterData)(Sensor* this_gen);
+	SensorValue (* getRotationVectorData)(Sensor* this_gen);
+
+	bool (* hasOrientation)(Sensor* this_gen);
+
+	SensorValue (* getOrientationData)(Sensor* this_gen);
+
+	bool (* hasGyroscope)(Sensor* this_gen);
+
+	SensorValue (* getGyroscopeData)(Sensor* this_gen);
+
+	bool (* hasLight)(Sensor* this_gen);
+
+	SensorValue (* getLightData)(Sensor* this_gen);
 
 	bool (* hasProximity)(Sensor* this_gen);
 
 	SensorValue (* getProximityData)(Sensor* this_gen);
 
-	bool (* hasTiltMeter)(Sensor* this_gen);
+	bool (* hasPressure)(Sensor* this_gen);
 
-	SensorValue (* getTiltMeterData)(Sensor* this_gen);
-
-	bool (* hasTemperature)(Sensor* this_gen);
-
-	SensorValue (* getTemperatureData)(Sensor* this_gen);
+	SensorValue (* getPressureData)(Sensor* this_gen);
 
 	bool (* hasUltraViolet)(Sensor* this_gen);
 
 	SensorValue (* getUltraVioletData)(Sensor* this_gen);
 
+	bool (* hasTemperature)(Sensor* this_gen);
+
+	SensorValue (* getTemperatureData)(Sensor* this_gen);
+
 	bool (* hasHumidity)(Sensor* this_gen);
 
 	SensorValue (* getHumidityData)(Sensor* this_gen);
-
-	bool (* hasLinearAccelation)(Sensor* this_gen);
-
-	SensorValue (* getLinearAccelation)(Sensor* this_gen);
-
-	bool (* hasRotationVector)(Sensor* this_gen);
-
-	SensorValue (* getRotationVectorData)(Sensor* this_gen);
-
-	bool (* hasGravity)(Sensor* this_gen);
-
-	SensorValue (* getGravityData)(Sensor* this_gen);
 
 }Sensor;
 
@@ -71,53 +79,66 @@ void DestroySensor(Sensor* this_gen);
 
 SensorValue getAllSensorData(Sensor* this_gen);
 
-bool hasBarometer(Sensor* this_gen);
+bool hasAccelerometer(Sensor* this_gen);
 
-SensorValue getBarometerData(Sensor* this_gen);
-
-bool hasMagnetoMeter(Sensor* this_gen);
-
-SensorValue getMagnetoMeterData(Sensor* this_gen);
-
-bool hasPhotoMeter(Sensor* this_gen);
-
-SensorValue getPhotoMeterData(Sensor* this_gen);
-
-bool hasProximity(Sensor* this_gen);
-
-SensorValue getProximityData(Sensor* this_gen);
-
-bool hasTiltMeter(Sensor* this_gen);
-
-SensorValue getTiltMeterData(Sensor* this_gen);
-
-bool hasTemperature(Sensor* this_gen);
-
-SensorValue getTemperatureData(Sensor* this_gen);
-
-bool hasUltraViolet(Sensor* this_gen);
-
-SensorValue getUltraVioletData(Sensor* this_gen);
-
-bool hasHumidity(Sensor* this_gen);
-
-SensorValue getHumidityData(Sensor* this_gen);
-
-bool hasLinearAccelation(Sensor* this_gen);
-
-SensorValue getLinearAccelation(Sensor* this_gen);
-
-bool hasRotationVector(Sensor* this_gen);
-
-SensorValue getRotationVectorData(Sensor* this_gen);
+SensorValue getAccelerometerData(Sensor* this_gen);
 
 bool hasGravity(Sensor* this_gen);
 
 SensorValue getGravityData(Sensor* this_gen);
 
+bool hasLinearAccelation(Sensor* this_gen);
+
+SensorValue getLinearAccelationData(Sensor* this_gen);
+
+bool hasMagnetoMeter(Sensor* this_gen);
+
+SensorValue getMagnetoMeterData(Sensor* this_gen);
+
+bool hasRotationVector(Sensor* this_gen);
+
+SensorValue getRotationVectorData(Sensor* this_gen);
+
+bool hasOrientation(Sensor* this_gen);
+
+SensorValue getOrientationData(Sensor* this_gen);
+
+bool hasGyroscope(Sensor* this_gen);
+
+SensorValue getGyroscopeData(Sensor* this_gen);
+
+bool hasLight(Sensor* this_gen);
+
+SensorValue getLightData(Sensor* this_gen);
+
+bool hasProximity(Sensor* this_gen);
+
+SensorValue getProximityData(Sensor* this_gen);
+
+bool hasPressure(Sensor* this_gen);
+
+SensorValue getPressureData(Sensor* this_gen);
+
+bool hasUltraViolet(Sensor* this_gen);
+
+SensorValue getUltraVioletData(Sensor* this_gen);
+
+bool hasTemperature(Sensor* this_gen);
+
+SensorValue getTemperatureData(Sensor* this_gen);
+
+bool hasHumidity(Sensor* this_gen);
+
+SensorValue getHumidityData(Sensor* this_gen);
+
+
 typedef struct _SensorExtend{
 	Sensor sensor;
 	int error;
+	sensor_type_e type;
+	sensor_h sensors;
+	sensor_listener_h listener;
+	sensor_event_s event;
 
 } SensorExtend;
 
