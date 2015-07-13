@@ -23,7 +23,10 @@ typedef struct _Notification {
 
     void (* SetNotificationIcon)(Notification* this_gen, char* imagePath);
 
-} Notification;
+    void (* SetNotificationSound)(Notification* this_gen, char* soundpath);
+
+
+} ;
 
 
 Notification* NewNotification();
@@ -40,13 +43,17 @@ void setText(Notification* this_gen, char* text);
 
 void setIcon(Notification* this_gen, char* imagePath);
 
+void setSoundpath(Notification* this_gen, char* imagePath);
+
+
 typedef struct {
     Notification notification;
     notification_h notification_handle;
     char* title;
     char* text;
     char* imagepath;
-
+    char* soundpath;
+    bool visible;
 } NotificationExtend;
 
 #ifdef __cplusplus

@@ -24,6 +24,10 @@ typedef struct _OngoingNotification {
 
     void (* SetOngoingNotificationIcon)(OngoingNotification* this_gen, char* imagePath);
 
+    void (*SetOngoingNotificationProgress)(OngoingNotification* this_gen,double progress);
+
+    void (*updateOngoiongNotification)(OngoingNotification* this_gen);
+
 } OngoingNotification;
 
 OngoingNotification* NewOngoingNotification();
@@ -39,6 +43,11 @@ void setOngoingTitle(OngoingNotification* this_gen, char* title);
 void setOngoingText(OngoingNotification* this_gen, char* text);
 
 void setOngoingIcon(OngoingNotification* this_gen, char* imagePath);
+
+void setOngoingProgress(OngoingNotification* this_gen,double progress);
+
+void updateOngoiongNoti(OngoingNotification* this_gen);
+
 
 typedef struct _OngoingNotificationExtend {
     OngoingNotification Ongoingnotification;

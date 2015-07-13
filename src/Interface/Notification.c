@@ -8,13 +8,13 @@ void show(Notification* this_gen) {
         return;
     }
     NotificationExtend* this = (NotificationExtend*) this_gen;
-    this->notification_handle = notification_create(NOTIFICATION_TYPE_NOTI);
 
     notification_set_text(this->notification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     notification_set_text(this->notification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     notification_set_image(this->notification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagepath);
-
+    notification_set_sound(this->notification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA,this->imagepath);
     notification_post(this->notification_handle);
+    this->visible=true;
 }
 
 void hide(Notification* this_gen) {
@@ -24,7 +24,7 @@ void hide(Notification* this_gen) {
     NotificationExtend* this = (NotificationExtend*) this_gen;
 
     notification_delete(this->notification_handle);
-
+    this->visible=false;
 }
 
 void setTitle(Notification* this_gen, char* title) {
@@ -75,6 +75,22 @@ void setIcon(Notification* this_gen, char* imagepath) {
 
 }
 
+void setSoundpath(Notification* this_gen, char* soundpath) {
+    if (this_gen == NULL) {
+        return;
+    }
+    NotificationExtend* this = (NotificationExtend*) this_gen;
+    if (NULL == soundpath) {
+        return;
+    }
+    if (NULL != this->soundpath) {
+        free(this->soundpath);
+    }
+    this->soundpath = malloc(strlen(soundpath) + sizeof(char));
+    strcpy(this->soundpath, soundpath);
+
+}
+
 
 //destroyer
 void DestroyNotification(Notification* this_gen) {
@@ -93,9 +109,17 @@ void DestroyNotification(Notification* this_gen) {
     if (NULL != this->imagepath) {
         free(this->imagepath);
     }
+
+    if (NULL != this->soundpath) {
+           free(this->soundpath);
+       }
+    if(this->visible){ notification_delete(this->notification_handle);
+    	this->visible=false;
+    }
     if (NULL != this->notification_handle) {
         notification_free(this->notification_handle);
     }
+
     free(this);
 
 }
@@ -110,10 +134,14 @@ Notification* NewNotification() {
     this->notification.SetNotificationTitle = setTitle;
     this->notification.SetNotificationText = setText;
     this->notification.SetNotificationIcon = setIcon;
+    this->notification.SetNotificationSound=setSoundpath;
     this->title = NULL;
     this->text = NULL;
     this->imagepath = NULL;
+    this->soundpath =NULL;
 
+    this->notification_handle = notification_create(NOTIFICATION_TYPE_NOTI);
+    this->visible=false;
 
     return &this->notification;
 }

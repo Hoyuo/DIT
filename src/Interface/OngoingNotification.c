@@ -53,9 +53,7 @@ void showOngoing(OngoingNotification* this_gen) {
         return;
     }
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
-    this->ongoingnotification_handle = notification_create(NOTIFICATION_TYPE_ONGOING);
-    notification_set_display_applist(this->ongoingnotification_handle, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY | NOTIFICATION_DISPLAY_APP_TICKER);
-    notification_set_image(this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagepath);
+   notification_set_image(this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagepath);
     notification_set_text(this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     notification_set_text(this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
 
@@ -71,6 +69,21 @@ void hideOngoing(OngoingNotification* this_gen) {
 
     notification_delete(this->ongoingnotification_handle);
 }
+
+void setOngoingProgress(OngoingNotification* this_gen,double progress){
+
+    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
+
+    notification_set_progress(this->ongoingnotification_handle,progress);
+}
+
+void updateOngoiongNoti(OngoingNotification* this_gen){
+
+    OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
+
+    notification_update(this->ongoingnotification_handle);
+}
+
 
 
 void DestroyOngoingNotification(OngoingNotification* this_gen) {
@@ -106,9 +119,15 @@ OngoingNotification* NewOngoingNotification() {
     this->Ongoingnotification.SetOngoingNotificationTitle = setOngoingTitle;
     this->Ongoingnotification.SetOngoingNotificationText = setOngoingText;
     this->Ongoingnotification.SetOngoingNotificationIcon = setOngoingIcon;
+    this->Ongoingnotification.SetOngoingNotificationProgress = setOngoingProgress;
+    this->Ongoingnotification.updateOngoiongNotification = updateOngoiongNoti;
+
     this->title = NULL;
     this->text = NULL;
     this->imagepath = NULL;
+
+    this->ongoingnotification_handle = notification_create(NOTIFICATION_TYPE_ONGOING);
+    notification_set_display_applist(this->ongoingnotification_handle, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY | NOTIFICATION_DISPLAY_APP_TICKER);
 
     return &this->Ongoingnotification;
 }
