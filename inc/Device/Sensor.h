@@ -139,7 +139,6 @@ typedef struct _SensorExtend{
 	sensor_h sensors;
 	sensor_listener_h listener;
 	sensor_event_s event;
-
 } SensorExtend;
 
 
