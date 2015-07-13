@@ -3,45 +3,23 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+#include <dlog.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _log Log;
-typedef struct _log {
-    void (* Info)(Log* this_gen, char* msg, ...);
+#define LOGINFO(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_INFO, tag, format, ##arg)
 
-    void (* Debug)(Log* this_gen, char* msg, ...);
+#define LOGDEBUG(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_DEBUG, tag, format, ##arg)
 
-    void (* Warnnig)(Log* this_gen, char* msg, ...);
+#define LOGWARNING(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_WARN, tag, format, ##arg)
 
-    void (* Error)(Log* this_gen, char* msg, ...);
-
-    void (* setTagName)(Log* this_gen, char* tagName);
-} Log;
-
-Log* NewLog();
-
-void DestroyLog(Log* this_gen);
-
-void setLogTagName(Log* this_gen, char* tagName);
-
-void LogInfo(Log* this_gen, char* msg, ...);
-
-void LogDebug(Log* this_gen, char* msg, ...);
-
-void LogWarring(Log* this_gen, char* msg, ...);
-
-void LogError(Log* this_gen, char* msg, ...);
-
-typedef struct _logExtends {
-    Log log;
-    char* tag;
-} LogExtends;
+#define LOGERROR(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_ERROR, tag, format, ##arg)
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* LOG_H_ */
+
