@@ -81,6 +81,11 @@ void updateOngoiongNoti(OngoingNotification* this_gen){
 
     OngoingNotificationExtend* this = (OngoingNotificationExtend*) this_gen;
 
+    notification_set_image(this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagepath);
+    notification_set_text(this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+    notification_set_text(this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+
+
     notification_update(this->ongoingnotification_handle);
 }
 

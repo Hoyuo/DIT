@@ -12,7 +12,7 @@ void show(Notification* this_gen) {
     notification_set_text(this->notification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     notification_set_text(this->notification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     notification_set_image(this->notification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagepath);
-    notification_set_sound(this->notification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA,this->imagepath);
+    notification_set_sound(this->notification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA,this->soundpath);
     notification_post(this->notification_handle);
     this->visible=true;
 }
