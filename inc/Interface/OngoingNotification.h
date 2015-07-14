@@ -47,7 +47,7 @@ void setOngoingNotificationText (OngoingNotification this_gen, String text);
 
 void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
 
-void setNotificationSound (OngoingNotification this_gen, String soundPath);
+void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
 
 void setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
 

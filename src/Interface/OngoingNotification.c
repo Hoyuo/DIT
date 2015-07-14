@@ -14,7 +14,7 @@ OngoingNotification NewOngoingNotification ()
     this->Ongoingnotification.setTitle    = setOngoingNotificationTitle;
     this->Ongoingnotification.setText     = setOngoingNotificationText;
     this->Ongoingnotification.setIcon     = setOngoingNotificationIcon;
-    this->Ongoingnotification.setSound    = setNotificationSound;
+    this->Ongoingnotification.setSound    = setOngoingNotificationSound;
     this->Ongoingnotification.setProgress = setOngoingNotificationProgress;
     this->Ongoingnotification.update      = updateOngoingNotification;
 
@@ -167,7 +167,7 @@ void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
     }
 }
 
-void setNotificationSound (OngoingNotification this_gen, String soundPath)
+void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
 {
     if ( this_gen != NULL)
     {
