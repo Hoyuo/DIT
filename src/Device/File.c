@@ -2,7 +2,9 @@
 #include "tizen.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <dlog.h>
+#include "Interface/Log.h"
+#include <player.h>
+
 #include <Evas.h>
 #include <metadata_extractor.h>
 void AerrorTest(player_error_e x);
@@ -102,6 +104,12 @@ char** searchDITFile(File* this_gen, char* src, char* dst) {
 	return NULL;
 }
 
+/*
+ *
+ * @brief
+ * @remark privilege: http://tizen.org/privilege/display http://tizen.org/privilege/mediastorage http://tizen.org/privilege/display/externalstorage needed
+ *
+ * */
 Video* NewVideo() {
 
 	VideoExtends* this = (VideoExtends*) malloc(sizeof(VideoExtends));
@@ -363,82 +371,82 @@ void AerrorTest(player_error_e x){
 	char code[]="DIT Error";
 	switch(x){
 	case PLAYER_ERROR_NONE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NONE");
+		LOGERROR(code,"PLAYER_ERROR_NONE");
 		break;
 
 	case PLAYER_ERROR_OUT_OF_MEMORY:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_OUT_OF_MEMORY");
+		LOGERROR(code,"PLAYER_ERROR_OUT_OF_MEMORY");
 		break;
 	case 	PLAYER_ERROR_INVALID_PARAMETER:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_PARAMETER");
+		LOGERROR(code,"PLAYER_ERROR_INVALID_PARAMETER");
 		break;
 
 	case 	PLAYER_ERROR_NO_SUCH_FILE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NO_SUCH_FILE");
+		LOGERROR(code,"PLAYER_ERROR_NO_SUCH_FILE");
 		break;
 
 	case 	PLAYER_ERROR_INVALID_OPERATION:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_OPERATION");
+		LOGERROR(code,"PLAYER_ERROR_INVALID_OPERATION");
 		break;
 
 	case 	PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE");
+		LOGERROR(code,"PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE");
 		break;
 
 	case 	PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE");
+		LOGERROR(code,"PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE");
 		break;
 
 	case 	PLAYER_ERROR_SEEK_FAILED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_SEEK_FAILED");
+		LOGERROR(code,"PLAYER_ERROR_SEEK_FAILED");
 		break;
 
 	case 	PLAYER_ERROR_INVALID_STATE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_STATE");
+		LOGERROR(code,"PLAYER_ERROR_INVALID_STATE");
 		break;
 
 	case 	PLAYER_ERROR_NOT_SUPPORTED_FILE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_NOT_SUPPORTED_FILE");
+		LOGERROR(code,"PLAYER_ERROR_NOT_SUPPORTED_FILE");
 		break;
 
 	case 	PLAYER_ERROR_INVALID_URI:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_INVALID_URI");
+		LOGERROR(code,"PLAYER_ERROR_INVALID_URI");
 		break;
 
 	case 	PLAYER_ERROR_SOUND_POLICY:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_SOUND_POLICY");
+		LOGERROR(code,"PLAYER_ERROR_SOUND_POLICY");
 		break;
 
 	case 	PLAYER_ERROR_CONNECTION_FAILED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_CONNECTION_FAILED");
+		LOGERROR(code,"PLAYER_ERROR_CONNECTION_FAILED");
 			break;
 
 	case 	PLAYER_ERROR_VIDEO_CAPTURE_FAILED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_VIDEO_CAPTURE_FAILED");
+		LOGERROR(code,"PLAYER_ERROR_VIDEO_CAPTURE_FAILED");
 			break;
 
 	case 	PLAYER_ERROR_DRM_EXPIRED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_EXPIRED");
+		LOGERROR(code,"PLAYER_ERROR_DRM_EXPIRED");
 			break;
 
 	case 	PLAYER_ERROR_DRM_NO_LICENSE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_NO_LICENSE");
+		LOGERROR(code,"PLAYER_ERROR_DRM_NO_LICENSE");
 			break;
 
 	case 	PLAYER_ERROR_DRM_FUTURE_USE:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_FUTURE_USE");
+		LOGERROR(code,"PLAYER_ERROR_DRM_FUTURE_USE");
 			break;
 
 	case 	PLAYER_ERROR_DRM_NOT_PERMITTED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_DRM_NOT_PERMITTED");
+		LOGERROR(code,"PLAYER_ERROR_DRM_NOT_PERMITTED");
 			break;
 
 	case 	PLAYER_ERROR_RESOURCE_LIMIT:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_RESOURCE_LIMIT");
+		LOGERROR(code,"PLAYER_ERROR_RESOURCE_LIMIT");
 			break;
 
 	case 	PLAYER_ERROR_PERMISSION_DENIED:
-		dlog_print(DLOG_ERROR,code,"PLAYER_ERROR_PERMISSION_DENIED");
+		LOGERROR(code,"PLAYER_ERROR_PERMISSION_DENIED");
 			break;
 
 
