@@ -6,56 +6,63 @@
 
 #include <notification.h>
 
+#include "dit.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _OngoingNotification OngoingNotification;
+typedef struct _OngoingNotification * OngoingNotification;
 
+struct _OngoingNotification
+{
+    void (* Show) (OngoingNotification this_gen);
 
-typedef struct _OngoingNotification {
-    void (* ShowOngoingNotification)(OngoingNotification* this_gen);
+    void (* Hide) (OngoingNotification this_gen);
 
-    void (* HideOngoingNotification)(OngoingNotification* this_gen);
+    void (* setTitle) (OngoingNotification this_gen, String title);
 
-    void (* SetOngoingNotificationTitle)(OngoingNotification* this_gen, char* title);
+    void (* setText) (OngoingNotification this_gen, String text);
 
-    void (* SetOngoingNotificationText)(OngoingNotification* this_gen, char* text);
+    void (* setIcon) (OngoingNotification this_gen, String imagePath);
 
-    void (* SetOngoingNotificationIcon)(OngoingNotification* this_gen, char* imagePath);
+    void (* setSound) (OngoingNotification this_gen, String soundPath);
 
-    void (*SetOngoingNotificationProgress)(OngoingNotification* this_gen,double progress);
+    void (* setProgress) (OngoingNotification this_gen, double progress);
 
-    void (*updateOngoiongNotification)(OngoingNotification* this_gen);
+    void (* update) (OngoingNotification this_gen);
+};
 
-} OngoingNotification;
+OngoingNotification NewOngoingNotification ();
 
-OngoingNotification* NewOngoingNotification();
+void DestroyOngoingNotification (OngoingNotification this_gen);
 
-void DestroyOngoingNotification(OngoingNotification* this_gen);
+void OngoingNotificationShow (OngoingNotification this_gen);
 
-void showOngoing(OngoingNotification* this_gen);
+void OngoingNotificationHide (OngoingNotification this_gen);
 
-void hideOngoing(OngoingNotification* this_gen);
+void setOngoingNotificationTitle (OngoingNotification this_gen, String title);
 
-void setOngoingTitle(OngoingNotification* this_gen, char* title);
+void setOngoingNotificationText (OngoingNotification this_gen, String text);
 
-void setOngoingText(OngoingNotification* this_gen, char* text);
+void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
 
-void setOngoingIcon(OngoingNotification* this_gen, char* imagePath);
+void setNotificationSound (OngoingNotification this_gen, String soundPath);
 
-void setOngoingProgress(OngoingNotification* this_gen,double progress);
+void setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
 
-void updateOngoiongNoti(OngoingNotification* this_gen);
+void updateOngoingNotification (OngoingNotification this_gen);
 
-
-typedef struct _OngoingNotificationExtend {
-    OngoingNotification Ongoingnotification;
-    notification_h ongoingnotification_handle;
-    char* title;
-    char* text;
-    char* imagepath;
-} OngoingNotificationExtend;
+typedef struct _OngoingNotificationExtend
+{
+    struct _OngoingNotification Ongoingnotification;
+    notification_h              ongoingnotification_handle;
+    String                      title;
+    String                      text;
+    String                      imagePath;
+    String                      soundPath;
+    bool                        visible;
+}    OngoingNotificationExtend;
 
 #ifdef __cplusplus
 }
