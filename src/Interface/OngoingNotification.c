@@ -37,8 +37,6 @@ void DestroyOngoingNotification (OngoingNotification this_gen)
 
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
 
-        notification_delete (this->ongoingnotification_handle);
-        notification_free (this->ongoingnotification_handle);
         if ( NULL != this->title )
         {
             free (this->title);
