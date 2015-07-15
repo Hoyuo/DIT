@@ -22,16 +22,16 @@ struct _Vibration
     void (* Long) (Vibration this_gen);
 };
 
-Vibration NewVibrate ();
-void      DestroyVibrate (Vibration * this_gen);
-void      VibrateCustom (Vibration * this_gen, int period);
-void      VibrateShort (Vibration * this_gen);
-void      VibrateMiddle (Vibration * this_gen);
-void      VibrateLong (Vibration * this_gen);
+Vibration NewVibrate (void);
+void      DestroyVibrate (Vibration this_gen);
+void      VibrateCustom (Vibration this_gen, int period);
+void      VibrateShort (Vibration this_gen);
+void      VibrateMiddle (Vibration this_gen);
+void      VibrateLong (Vibration this_gen);
 
 typedef struct _VibrationExtend
 {
-    struct _Vibration;
+    struct _Vibration vibration;
     haptic_device_h handle;
 
 } VibrationExtend;

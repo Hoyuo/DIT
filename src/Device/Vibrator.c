@@ -3,7 +3,7 @@
 
 #include <device/haptic.h>
 
-Vibration * NewVibrate ()
+Vibration NewVibrate (void)
 {
     VibrationExtend * this = (VibrationExtend *)malloc (sizeof (VibrationExtend));
 
@@ -17,7 +17,7 @@ Vibration * NewVibrate ()
     return &this->vibration;
 }
 
-void DestroyVibrate (Vibration * this_gen)
+void DestroyVibrate (Vibration this_gen)
 {
     if ( this_gen != NULL)
     {
@@ -31,7 +31,7 @@ void DestroyVibrate (Vibration * this_gen)
     }
 }
 
-void VibrateCustom (Vibration * this_gen, int period)
+void VibrateCustom (Vibration this_gen, int period)
 {
     if ( this_gen != NULL)
     {
@@ -41,7 +41,7 @@ void VibrateCustom (Vibration * this_gen, int period)
     }
 }
 
-void VibrateShort (Vibration * this_gen)
+void VibrateShort (Vibration this_gen)
 {
     if ( this_gen != NULL)
     {
@@ -51,7 +51,7 @@ void VibrateShort (Vibration * this_gen)
     }
 }
 
-void VibrateMiddle (Vibration * this_gen)
+void VibrateMiddle (Vibration this_gen)
 {
     if ( this_gen != NULL)
     {
@@ -61,7 +61,7 @@ void VibrateMiddle (Vibration * this_gen)
     }
 }
 
-void VibrateLong (Vibration * this_gen)
+void VibrateLong (Vibration this_gen)
 {
     if ( this_gen != NULL)
     {
