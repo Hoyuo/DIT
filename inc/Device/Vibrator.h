@@ -10,34 +10,30 @@
 extern "C" {
 #endif
 
-typedef struct _Vibration Vibration;
-typedef struct _Vibration {
-	void (* Custom)(Vibration* this_gen, int period);
+typedef struct _Vibration * Vibration;
+struct _Vibration
+{
+    void (* Custom) (Vibration this_gen, int period);
 
-	void (* Short)(Vibration* this_gen);
+    void (* Short) (Vibration this_gen);
 
-	void (* Middle)(Vibration* this_gen);
+    void (* Middle) (Vibration this_gen);
 
-	void (* Long)(Vibration* this_gen);
-}Vibration;
+    void (* Long) (Vibration this_gen);
+};
 
-Vibration* NewVibrate();
+Vibration NewVibrate ();
+void      DestroyVibrate (Vibration * this_gen);
+void      VibrateCustom (Vibration * this_gen, int period);
+void      VibrateShort (Vibration * this_gen);
+void      VibrateMiddle (Vibration * this_gen);
+void      VibrateLong (Vibration * this_gen);
 
-void DestroyVibrate(Vibration* this_gen);
-
-void VibrateCustom(Vibration* this_gen, int period);
-
-void VibrateShort(Vibration* this_gen);
-
-void VibrateMiddle(Vibration* this_gen);
-
-void VibrateLong(Vibration* this_gen);
-
-
-typedef struct _VibrationExtend {
-    Vibration vibration;
+typedef struct _VibrationExtend
+{
+    struct _Vibration;
     haptic_device_h handle;
-    int error;
+
 } VibrationExtend;
 
 #ifdef __cplusplus
