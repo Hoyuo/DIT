@@ -1,99 +1,210 @@
 #include "Device/DeviceStatus.h"
+
 #include <device/battery.h>
+#include <device/display.h>
+#include <device/led.h>
+
 #include <stdlib.h>
 
-DeviceStatus* NewDeviceStatus()
+Display NewDisplay (void)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*)malloc(sizeof(DeviceStatusExtend));
+    DisplayExtend * this = (DisplayExtend *)malloc (sizeof (DisplayExtend));
 
-	this->deviceStatus.getBattery = getBatteryRemainsPercent;
-	this->deviceStatus.isCharging = isBatteryCharging;
-	this->deviceStatus.DisplayLock = DisplayLock;
-	this->deviceStatus.DisplayUnlock = DisplayUnlock;
-	this->deviceStatus.DisplayDim = DisplayDim;
-	this->deviceStatus.FlashOn = onFlash;
-	this->deviceStatus.FlashOff = offFlash;
-	this->deviceStatus.getDisplay = getDisplayBrightLevel;
-	this->deviceStatus.setDisplay = setDisplayBrightLevel;
+    this->display.Lock      = DisplayLock;
+    this->display.Unlock    = DisplayUnlock;
+    this->display.Dim       = DisplayDim;
+    this->display.getBright = getDisplayBrightLevel;
+    this->display.setBright = setDisplayBrightLevel;
 
-	return &this->deviceStatus;
+    return &this->display;
 }
 
-void DestroyDeviceStatus(DeviceStatus* this_gen)
+void DestroyDisplay (Display this_gen)
 {
-	if (this_gen != NULL)
-	{
-		DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-		free(this);
-	}
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
+        free (this);
+    }
 }
 
-int getBatteryRemainsPercent(DeviceStatus* this_gen)
+void DisplayLock (Display this_gen)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_battery_get_percent(&this->value);
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
 
-	return this->value;
+        device_display_get_state (&this->state);
+
+        if ( this->state != DISPLAY_STATE_SCREEN_OFF )
+        {
+            device_display_change_state (DISPLAY_STATE_SCREEN_OFF);
+        }
+    }
 }
 
-bool isBatteryCharging(DeviceStatus* this_gen)
+void DisplayUnlock (Display this_gen)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error= device_battery_is_charging(&this->value);
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
 
-	return (bool)this->value;
+        device_display_get_state (&this->state);
+
+        if ( this->state != DISPLAY_STATE_NORMAL )
+        {
+            device_display_change_state (DISPLAY_STATE_NORMAL);
+        }
+    }
 }
 
-void DisplayLock(DeviceStatus* this_gen)
+void DisplayDim (Display this_gen)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_display_get_state(&this->state);
-	if(this->state != DISPLAY_STATE_SCREEN_OFF)
-		this->error = device_display_change_state(DISPLAY_STATE_SCREEN_OFF);
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
+
+        device_display_get_state (&this->state);
+
+        if ( this->state != DISPLAY_STATE_SCREEN_DIM )
+        {
+            device_display_change_state (DISPLAY_STATE_SCREEN_DIM);
+        }
+    }
 }
 
-
-void DisplayUnlock(DeviceStatus* this_gen)
+int getDisplayBrightLevel (Display this_gen)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_display_get_state(&this->state);
-	if(this->state != DISPLAY_STATE_NORMAL)
-		this->error = device_display_change_state(DISPLAY_STATE_NORMAL);
-}
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
 
-void DisplayDim(DeviceStatus* this_gen)
-{
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_display_get_state(&this->state);
-	if(this->state != DISPLAY_STATE_SCREEN_DIM)
-		this->error = device_display_change_state(DISPLAY_STATE_SCREEN_DIM);
+        device_display_get_brightness (0, &this->brightLevel);
+
+        return this->brightLevel;
+    }
 }
 
-void onFlash(DeviceStatus* this_gen)
+void setDisplayBrightLevel (Display this_gen, int brightLevel)
 {
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_flash_get_max_brightness(&this->value);
-	this->error = device_flash_set_brightness(this->value);
-}
-void offFlash(DeviceStatus* this_gen)
-{
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_flash_set_brightness(0);
-}
-int getDisplayBrightLevel(DeviceStatus* this_gen)
-{
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_display_get_brightness(0, &this->value);
 
-	return this->value;
-}
-void setDisplayBrightLevel(DeviceStatus* this_gen, int bright)
-{
-	if (bright > 100)
-		bright = 100;
-	else if ( bright < 0)
-		bright = 0;
+    if ( this_gen != NULL)
+    {
+        DisplayExtend * this = (DisplayExtend *)this_gen;
 
-	DeviceStatusExtend* this = (DeviceStatusExtend*) this_gen;
-	this->error = device_display_set_brightness(0, bright);
+        if ( brightLevel > 100 )
+        {
+            brightLevel = 100;
+        }
+        else if ( brightLevel < 0 )
+        {
+            brightLevel = 0;
+        }
+
+        this->brightLevel = brightLevel;
+
+        device_display_set_brightness (0, this->brightLevel);
+    }
 }
+
+Battery NewBattery (void)
+{
+    BatteryExtend * this = (BatteryExtend *)malloc (sizeof (BatteryExtend));
+
+    this->battery.getLevel   = getBatteryRemainsPercent;
+    this->battery.isCharging = isBatteryCharging;
+
+    return &this->battery;
+}
+
+void DestoryBattery (Battery this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        BatteryExtend * this = (BatteryExtend *)this_gen;
+
+        free (this);
+    }
+}
+
+int getBatteryRemainsPercent (Battery this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        BatteryExtend * this = (BatteryExtend *)this_gen;
+
+        device_battery_get_percent (&this->batteryLevel);
+
+        return this->batteryLevel;
+    }
+}
+
+bool isBatteryCharging (Battery this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        BatteryExtend * this = (BatteryExtend *)this_gen;
+
+        device_battery_is_charging (&this->charging);
+
+        return this->charging;
+    }
+}
+
+Flash NewFlash (void)
+{
+    FlashExtend * this = (FlashExtend *)malloc (sizeof (FlashExtend));
+
+    this->flash.On  = onFlash;
+    this->flash.Off = offFlash;
+
+    int value;
+    device_flash_get_brightness (&value);
+
+    this->status = (bool)value;
+
+    return &this->flash;
+}
+
+void DestoryFlash (Flash this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        FlashExtend * this = (FlashExtend *)this_gen;
+
+        free (this);
+    }
+}
+
+void onFlash (Flash this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        FlashExtend * this = (FlashExtend *)this_gen;
+
+        if ( this->status != true )
+        {
+            int value;
+            device_flash_get_max_brightness (&value);
+            device_flash_set_brightness (value);
+
+            this->status = true;
+        }
+    }
+}
+
+void offFlash (Flash this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        FlashExtend * this = (FlashExtend *)this_gen;
+
+        if ( this->status != false )
+        {
+            device_flash_set_brightness (0);
+
+            this->status = false;
+        }
+    }
+}
+

@@ -6,64 +6,84 @@
 #include <stdbool.h>
 #include <stdalign.h>
 
-#include <device/battery.h>
-#include <device/callback.h>
 #include <device/display.h>
-#include <device/led.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _DeviceStatus DeviceStatus;
-typedef struct _DeviceStatus {
-	int (* getBattery)(DeviceStatus* this_gen);
+/* Display*/
+typedef struct _Display * Display;
 
-	bool (* isCharging)(DeviceStatus* this_gen);
+struct _Display {
+	void (*Lock)(Display this_gen);
 
-	void (* DisplayLock)(DeviceStatus* this_gen);
+	void (*Unlock)(Display this_gen);
 
-	void (* DisplayUnlock)(DeviceStatus* this_gen);
+	void (*Dim)(Display this_gen);
 
-	void (* DisplayDim)(DeviceStatus* this_gen);
+	int (*getBright)(Display this_gen);
 
-	void (* FlashOn)(DeviceStatus* this_gen);
+	void (*setBright)(Display this_gen, int bright);
+};
 
-	void (* FlashOff)(DeviceStatus* this_gen);
+Display NewDisplay(void);
+void DestroyDisplay(Display this_gen);
+void DisplayLock(Display this_gen);
+void DisplayUnlock(Display this_gen);
+void DisplayDim(Display this_gen);
+int getDisplayBrightLevel(Display this_gen);
+void setDisplayBrightLevel(Display this_gen, int brightLevel);
 
-	int (* getDisplay)(DeviceStatus* this_gen);
-
-	void (* setDisplay)(DeviceStatus* this_gen, int bright);
-}DeviceStatus;
-
-DeviceStatus* NewDeviceStatus();
-
-void DestroyDeviceStatus(DeviceStatus* this_gen);
-
-int getBatteryRemainsPercent(DeviceStatus* this_gen);
-
-bool isBatteryCharging(DeviceStatus* this_gen);
-
-void DisplayLock(DeviceStatus* this_gen);
-
-void DisplayUnlock(DeviceStatus* this_gen);
-
-void DisplayDim(DeviceStatus* this_gen);
-
-void onFlash(DeviceStatus* this_gen);
-
-void offFlash(DeviceStatus* this_gen);
-
-int getDisplayBrightLevel(DeviceStatus* this_gen);
-
-void setDisplayBrightLevel(DeviceStatus* this_gen, int bright);
-
-typedef struct _DeviceStatusExtend{
-	DeviceStatus deviceStatus;
-	int error;
-	int value;
+typedef struct _DisplayExtend {
+	struct _Display display;
+	int brightLevel;
 	display_state_e state;
-} DeviceStatusExtend;
+
+} DisplayExtend;
+
+/* Display*/
+
+/* Battery */
+typedef struct _Battery * Battery;
+struct _Battery {
+	int (*getLevel)(Battery this_gen);
+
+	bool (*isCharging)(Battery this_gen);
+};
+
+Battery NewBattery(void);
+void DestoryBattery(Battery this_gen);
+int getBatteryRemainsPercent(Battery this_gen);
+bool isBatteryCharging(Battery this_gen);
+
+typedef struct _BatteryExtend {
+	struct _Battery battery;
+	int batteryLevel;bool charging;
+
+} BatteryExtend;
+/* Battery */
+
+/* Flash */
+typedef struct _Flash * Flash;
+
+struct _Flash {
+	void (*On)(Flash this_gen);
+
+	void (*Off)(Flash this_gen);
+};
+
+Flash NewFlash(void);
+void DestoryFlash(Flash this_gen);
+void onFlash(Flash this_gen);
+void offFlash(Flash this_gen);
+
+typedef struct _FlashExtend {
+	bool status;
+	struct _Flash flash;
+
+} FlashExtend;
+/* Flash */
 
 #ifdef __cplusplus
 }

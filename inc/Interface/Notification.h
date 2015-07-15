@@ -32,22 +32,14 @@ struct _Notification
 };
 
 Notification NewNotification (void);
-
-void DestroyNotification (Notification this_gen);
-
-void NotificationShow (Notification this_gen);
-
-void NotificationHide (Notification this_gen);
-
-void setNotificationTitle (Notification this_gen, String title);
-
-void setNotificationText (Notification this_gen, String text);
-
-void setNotificationIcon (Notification this_gen, String imagePath);
-
-void setNotificationSound (Notification this_gen, String soundPath);
-
-void updateNotification (Notification this_gen);
+void         DestroyNotification (Notification this_gen);
+void         NotificationShow (Notification this_gen);
+void         NotificationHide (Notification this_gen);
+void         setNotificationTitle (Notification this_gen, String title);
+void         setNotificationText (Notification this_gen, String text);
+void         setNotificationIcon (Notification this_gen, String imagePath);
+void         setNotificationSound (Notification this_gen, String soundPath);
+void         updateNotification (Notification this_gen);
 
 typedef struct
 {
@@ -58,7 +50,8 @@ typedef struct
     String               imagePath;
     String               soundPath;
     bool                 visible;
-}    NotificationExtend;
+
+} NotificationExtend;
 
 #ifdef __cplusplus
 }

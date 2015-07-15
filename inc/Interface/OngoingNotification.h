@@ -34,24 +34,15 @@ struct _OngoingNotification
 };
 
 OngoingNotification NewOngoingNotification ();
-
-void DestroyOngoingNotification (OngoingNotification this_gen);
-
-void OngoingNotificationShow (OngoingNotification this_gen);
-
-void OngoingNotificationHide (OngoingNotification this_gen);
-
-void setOngoingNotificationTitle (OngoingNotification this_gen, String title);
-
-void setOngoingNotificationText (OngoingNotification this_gen, String text);
-
-void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
-
-void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
-
-void setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
-
-void updateOngoingNotification (OngoingNotification this_gen);
+void                DestroyOngoingNotification (OngoingNotification this_gen);
+void                OngoingNotificationShow (OngoingNotification this_gen);
+void                OngoingNotificationHide (OngoingNotification this_gen);
+void                setOngoingNotificationTitle (OngoingNotification this_gen, String title);
+void                setOngoingNotificationText (OngoingNotification this_gen, String text);
+void                setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
+void                setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
+void                setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
+void                updateOngoingNotification (OngoingNotification this_gen);
 
 typedef struct _OngoingNotificationExtend
 {
@@ -62,7 +53,8 @@ typedef struct _OngoingNotificationExtend
     String                      imagePath;
     String                      soundPath;
     bool                        visible;
-}    OngoingNotificationExtend;
+
+} OngoingNotificationExtend;
 
 #ifdef __cplusplus
 }
