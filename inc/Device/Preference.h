@@ -4,58 +4,50 @@
 #include <stdbool.h>
 #include <stdalign.h>
 
+#include "dit.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _Preference Preference;
+typedef struct _Preference * Preference;
 
-typedef struct _Preference {
-	int (*getInt)(char* key);
+struct _Preference
+{
+    int (* getInt) (String key);
 
-	double (*getDouble)(char* key);
+    double (* getDouble) (String key);
 
-	bool (*getBoolean)(char* key);
+    bool (* getBoolean) (String key);
 
-	void (*getString)(char* key, char** ret);
+    void (* getString) (String key, String * ret);
 
-	void (*setInt)(char* key, int value);
+    void (* setInt) (String key, int value);
 
-	void (*setDouble)(char* key, double value);
+    void (* setDouble) (String key, double value);
 
-	void (*setBoolean)(char* key, bool value);
+    void (* setBoolean) (String key, bool value);
 
-	void (*setString)(char* key, char* value);
+    void (* setString) (String key, String value);
 
-	void (*Remove)(char* key);
+    void (* Remove) (String key);
 
-	void (*Clear)();
+    void (* Clear) ();
 
-} Preference;
+};
 
-Preference* NewPreference();
-
-void DestroyPreference(Preference* this_gen);
-
-int getPreferenceInt(char* key);
-
-double getPreferenceDouble(char* key);
-
-bool getPreferenceBoolean(char* key);
-
-void getPreferenceString(char* key, char** ret);
-
-void setPreferenceInt(char* key, int value);
-
-void setPreferenceDouble(char* key, double value);
-
-void setPreferenceBoolean(char* key, bool value);
-
-void setPreferenceString(char* key, char* value);
-
-void PreferenceRemove(char* key);
-
-void PreferenceClear();
+Preference NewPreference (void);
+void       DestroyPreference (Preference this_gen);
+int        getPreferenceInt (String key);
+double     getPreferenceDouble (String key);
+bool       getPreferenceBoolean (String key);
+void       getPreferenceString (String key, String * ret);
+void       setPreferenceInt (String key, int value);
+void       setPreferenceDouble (String key, double value);
+void       setPreferenceBoolean (String key, bool value);
+void       setPreferenceString (String key, String value);
+void       PreferenceRemove (String key);
+void       PreferenceClear (void);
 
 #ifdef __cplusplus
 }
