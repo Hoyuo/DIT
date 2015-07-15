@@ -39,7 +39,7 @@ static void adapter_device_discovery_state_changed_cb(int result, bt_adapter_dev
          {
             new_device_info->remote_address = strdup(discovery_info->remote_address);
             new_device_info->remote_name = strdup(discovery_info->remote_name);
-            BT->Bluetooth.searched_list = g_list_append( BT->Bluetooth.searched_list, (gpointer)new_device_info);
+//            BT->Bluetooth.searched_list = g_list_append( BT->Bluetooth.searched_list, (gpointer)new_device_info);
          }
       }
       break;
@@ -61,7 +61,7 @@ static bool adapter_bonded_device_cbx(bt_device_info_s *device_info, void *user_
    paired_info->remote_address = strdup(device_info->remote_address);
    paired_info->remote_name = strdup(device_info->remote_name);
 
-   BT->Bluetooth.bound_list = g_list_append( BT->Bluetooth.bound_list, (gpointer)paired_info);
+//   BT->Bluetooth.bound_list = g_list_append( BT->Bluetooth.bound_list, (gpointer)paired_info);
 
    return true;
 }
@@ -187,25 +187,25 @@ bool onBTConnect(Bluetooth* this_gen) {
 }
 
 
-GList* BTSearch(Bluetooth* this_gen){
-	BluetoothExtends* this =(BluetoothExtends*) this_gen;
-
-   bt_error_e ret = bt_adapter_set_device_discovery_state_changed_cb(
-   	adapter_device_discovery_state_changed_cb, (void*)this);
-
-	if (ret != BT_ERROR_NONE)
-   	{
-   	   dlog_print(DLOG_ERROR, "DIT", "[bt_adapter_set_device_discovery_state_changed_cb] Failed.");
-      	errorTest(ret);
-
-   	}
-	return this_gen->searched_list;
-}
-
-GList* BTBound(Bluetooth* this_gen){
-
-	return  this_gen->bound_list;
-}
+//GList* BTSearch(Bluetooth* this_gen){
+//	BluetoothExtends* this =(BluetoothExtends*) this_gen;
+//
+//   bt_error_e ret = bt_adapter_set_device_discovery_state_changed_cb(
+//   	adapter_device_discovery_state_changed_cb, (void*)this);
+//
+//	if (ret != BT_ERROR_NONE)
+//   	{
+//   	   dlog_print(DLOG_ERROR, "DIT", "[bt_adapter_set_device_discovery_state_changed_cb] Failed.");
+//      	errorTest(ret);
+//
+//   	}
+//	return this_gen->searched_list;
+//}
+//
+//GList* BTBound(Bluetooth* this_gen){
+//
+//	return  this_gen->bound_list;
+//}
 
 bool onBTDisconnect(Bluetooth* this_gen) {
 
@@ -316,17 +316,17 @@ Bluetooth* NewBluetooth() {
 
     BluetoothExtends* this = malloc(sizeof(BluetoothExtends));
 
-    this->Bluetooth.isBluetoothAccessible = isBTAccessible;
-    this->Bluetooth.onBluetoothConnect = onBTConnect;
-    this->Bluetooth.isBluetoothConnected = isBTConnected;
-    this->Bluetooth.onBluetoothDisconnect = onBTDisconnect;
-    this->Bluetooth.BluetoothSend = BTSend;
-    this->Bluetooth.BluetoothRecv = BTRecv;
-    this->Bluetooth.getBoundDeviceList=BTBound;
-    this->Bluetooth.getSearchedDeviceList=BTSearch;
+    this->Bluetooth.isAccessible = isBTAccessible;
+    this->Bluetooth.onConnect = onBTConnect;
+    this->Bluetooth.isConnected = isBTConnected;
+    this->Bluetooth.onConnect = onBTDisconnect;
+    this->Bluetooth.Send = BTSend;
+    this->Bluetooth.Recv = BTRecv;
+//    this->Bluetooth.getBoundDeviceList=BTBound;
+//    this->Bluetooth.getSearchedDeviceList=BTSearch;
 
-    this->Bluetooth.bound_list=NULL;
-    this->Bluetooth.searched_list=NULL;
+//    this->Bluetooth.bound_list=NULL;
+//    this->Bluetooth.searched_list=NULL;
 
     this->Bluetooth.remoteMACAddr=NULL;
     this->connected=false;
@@ -404,12 +404,12 @@ void DestroyBluetooth(Bluetooth* this_gen) {
 	BluetoothExtends* this =(BluetoothExtends*) this_gen;
 
 
-    if (NULL != this_gen->searched_list) {
-    	g_list_free_full (this_gen->searched_list,searchedListElementFreeFunc);
-    }
-    if (NULL != this_gen->bound_list) {
-    	g_list_free_full (this_gen->bound_list,searchedListElementFreeFunc);
-        }
+//    if (NULL != this_gen->searched_list) {
+//    	g_list_free_full (this_gen->searched_list,searchedListElementFreeFunc);
+//    }
+//    if (NULL != this_gen->bound_list) {
+//    	g_list_free_full (this_gen->bound_list,searchedListElementFreeFunc);
+//        }
     ///do something
 
     free(this);

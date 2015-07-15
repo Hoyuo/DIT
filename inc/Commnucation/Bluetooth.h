@@ -13,24 +13,24 @@ extern "C" {
 typedef struct _Bluetooth Bluetooth;
 
 typedef struct _Bluetooth {
-    bool (* isBluetoothAccessible)(Bluetooth* this_gen);
+    bool (* isAccessible)(Bluetooth* this_gen);
 
-    bool (* onBluetoothConnect)(Bluetooth* this_gen);
+    bool (* onConnect)(Bluetooth* this_gen);
 
-    bool (* onBluetoothDisconnect)(Bluetooth* this_gen);
+    bool (* onDisconnect)(Bluetooth* this_gen);
 
-    int (* BluetoothRecv)(Bluetooth* this_gen);
+    int (* Recv)(Bluetooth* this_gen);
 
-    int (* BluetoothSend)(Bluetooth* this_gen, char* sendbuffer);
+    int (* Send)(Bluetooth* this_gen, char* sendbuffer);
 
-    bool(* isBluetoothConnected)(Bluetooth* this_gen);
-
-    GList*(* getBoundDeviceList)(Bluetooth* this_gen);
-
-    GList*(* getSearchedDeviceList)(Bluetooth* this_gen);
-
-    GList *searched_list;
-    GList *bound_list;
+    bool(* isConnected)(Bluetooth* this_gen);
+//
+//    GList*(* getBoundDeviceList)(Bluetooth* this_gen);
+//
+//    GList*(* getSearchedDeviceList)(Bluetooth* this_gen);
+//
+//    GList *searched_list;
+//    GList *bound_list;
     char* remoteMACAddr;
 
 } Bluetooth;
