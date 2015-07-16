@@ -153,58 +153,33 @@ bool isBatteryCharging (Battery this_gen)
 
 Flash NewFlash (void)
 {
-    FlashExtend * this = (FlashExtend *)malloc (sizeof (FlashExtend));
+	Flash this = (Flash)malloc (sizeof (struct _Flash));
 
-    this->flash.On  = onFlash;
-    this->flash.Off = offFlash;
+    this->On  = onFlash;
+    this->Off = offFlash;
 
-    int value;
-    device_flash_get_brightness (&value);
-
-    this->status = (bool)value;
-
-    return &this->flash;
+    return this;
 }
 
 void DestoryFlash (Flash this_gen)
 {
     if ( this_gen != NULL)
     {
-        FlashExtend * this = (FlashExtend *)this_gen;
 
-        free (this);
+        free (this_gen);
     }
 }
 
-void onFlash (Flash this_gen)
+void onFlash (void)
 {
-    if ( this_gen != NULL)
-    {
-        FlashExtend * this = (FlashExtend *)this_gen;
-
-        if ( this->status != true )
-        {
             int value;
             device_flash_get_max_brightness (&value);
             device_flash_set_brightness (value);
 
-            this->status = true;
-        }
-    }
 }
 
-void offFlash (Flash this_gen)
+void offFlash (void)
 {
-    if ( this_gen != NULL)
-    {
-        FlashExtend * this = (FlashExtend *)this_gen;
-
-        if ( this->status != false )
-        {
             device_flash_set_brightness (0);
-
-            this->status = false;
-        }
-    }
 }
 

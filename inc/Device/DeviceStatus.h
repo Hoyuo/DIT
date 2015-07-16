@@ -68,21 +68,16 @@ typedef struct _BatteryExtend {
 typedef struct _Flash * Flash;
 
 struct _Flash {
-	void (*On)(Flash this_gen);
+	void (*On)(void);
 
-	void (*Off)(Flash this_gen);
+	void (*Off)(void);
 };
 
 Flash NewFlash(void);
 void DestoryFlash(Flash this_gen);
-void onFlash(Flash this_gen);
-void offFlash(Flash this_gen);
+void onFlash(void);
+void offFlash(void);
 
-typedef struct _FlashExtend {
-	bool status;
-	struct _Flash flash;
-
-} FlashExtend;
 /* Flash */
 
 #ifdef __cplusplus
