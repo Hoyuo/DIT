@@ -1,10 +1,109 @@
 #include "Device/DeviceStatus.h"
 
+#include <stdlib.h>
+
 #include <device/battery.h>
 #include <device/display.h>
 #include <device/led.h>
+#include <device/haptic.h>
 
-#include <stdlib.h>
+const char * DeviceStatusErrorCheck (int errCode)
+{
+    switch (errCode)
+    {
+    case DEVICE_ERROR_NONE:
+        return "DEVICE_ERROR_NONE : Successful";
+
+    case DEVICE_ERROR_OPERATION_FAILED:
+        return "DEVICE_ERROR_OPERATION_FAILED : Operation not permitted";
+
+    case DEVICE_ERROR_PERMISSION_DENIED:
+        return "DEVICE_ERROR_PERMISSION_DENIED : Permission denied";
+
+    case DEVICE_ERROR_INVALID_PARAMETER:
+        return "DEVICE_ERROR_INVALID_PARAMETER : Invalid parameter";
+
+    case DEVICE_ERROR_ALREADY_IN_PROGRESS:
+        return "DEVICE_ERROR_ALREADY_IN_PROGRESS : Operation already in progress";
+
+    case DEVICE_ERROR_NOT_SUPPORTED:
+        return "DEVICE_ERROR_NOT_SUPPORTED : Not supported in this device";
+
+    case DEVICE_ERROR_NOT_INITIALIZED:
+        return "DEVICE_ERROR_NOT_INITIALIZED : Not initialized";
+
+    default:
+        return "DEVICE_ERROR_NOT_UNKWON";
+    }
+}
+
+Vibration NewVibration (void)
+{
+    VibrationExtend * this = (VibrationExtend *)malloc (sizeof (VibrationExtend));
+
+    this->vibration.Custom = VibrationCustom;
+    this->vibration.Short  = VibrationShort;
+    this->vibration.Middle = VibrationMiddle;
+    this->vibration.Long   = VibrationLong;
+
+    device_haptic_open (0, &this->handle);
+
+    return &this->vibration;
+}
+
+void DestroyVibration (Vibration this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        VibrationExtend * this = (VibrationExtend *)this_gen;
+
+        //this->error = device_haptic_stop(this->handle, 0);
+        //this->error = device_haptic_close(this->handle);
+        // No Issue
+
+        free (this);
+    }
+}
+
+void VibrationCustom (Vibration this_gen, int period)
+{
+    if ( this_gen != NULL)
+    {
+        VibrationExtend * this = (VibrationExtend *)this_gen;
+
+        device_haptic_Vibration (this->handle, period, 0, 0);
+    }
+}
+
+void VibrationShort (Vibration this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        VibrationExtend * this = (VibrationExtend *)this_gen;
+
+        device_haptic_Vibration (this->handle, 100, 0, 0);
+    }
+}
+
+void VibrationMiddle (Vibration this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        VibrationExtend * this = (VibrationExtend *)this_gen;
+
+        device_haptic_Vibration (this->handle, 500, 0, 0);
+    }
+}
+
+void VibrationLong (Vibration this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        VibrationExtend * this = (VibrationExtend *)this_gen;
+
+        device_haptic_Vibration (this->handle, 1500, 0, 0);
+    }
+}
 
 Display NewDisplay (void)
 {
@@ -151,9 +250,10 @@ bool isBatteryCharging (Battery this_gen)
     }
 }
 
+
 Flash NewFlash (void)
 {
-	Flash this = (Flash)malloc (sizeof (struct _Flash));
+    Flash this = (Flash)malloc (sizeof (struct _Flash));
 
     this->On  = onFlash;
     this->Off = offFlash;
@@ -165,21 +265,19 @@ void DestoryFlash (Flash this_gen)
 {
     if ( this_gen != NULL)
     {
-
         free (this_gen);
     }
 }
 
 void onFlash (void)
 {
-            int value;
-            device_flash_get_max_brightness (&value);
-            device_flash_set_brightness (value);
+    int value;
+    device_flash_get_max_brightness (&value);
+    device_flash_set_brightness (value);
 
 }
 
 void offFlash (void)
 {
-            device_flash_set_brightness (0);
+    device_flash_set_brightness (0);
 }
-

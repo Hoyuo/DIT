@@ -44,6 +44,8 @@ void                setOngoingNotificationSound (OngoingNotification this_gen, S
 void                setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
 void                updateOngoingNotification (OngoingNotification this_gen);
 
+const char * OngoingNotificationErrorCheck (int errCode);
+
 typedef struct _OngoingNotificationExtend
 {
     struct _OngoingNotification Ongoingnotification;

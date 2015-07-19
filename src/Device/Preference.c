@@ -1,6 +1,7 @@
 #include "Device/Preference.h"
 
 #include <stdlib.h>
+
 #include <app_preference.h>
 
 Preference NewPreference (void)
@@ -131,4 +132,28 @@ void PreferenceRemove (String key)
 void PreferenceClear (void)
 {
     preference_remove_all ();
+}
+
+const char * PreferenceErrorCheck (int errCode)
+{
+    switch (errCode)
+    {
+    case PREFERENCE_ERROR_NONE:
+        return "PREFERENCE_ERROR_NONE : Successful";
+
+    case PREFERENCE_ERROR_INVALID_PARAMETER:
+        return "PREFERENCE_ERROR_INVALID_PARAMETER : Invalid parameter";
+
+    case PREFERENCE_ERROR_OUT_OF_MEMORY:
+        return "PREFERENCE_ERROR_OUT_OF_MEMORY : Out of memory";
+
+    case PREFERENCE_ERROR_NO_KEY:
+        return "PREFERENCE_ERROR_NO_KEY : Required key not available";
+
+    case PREFERENCE_ERROR_IO_ERROR:
+        return "PREFERENCE_ERROR_IO_ERROR : Internal I/O Error";
+
+    default:
+        return "PREFERENCE_ERROR_UNKWON";
+    }
 }

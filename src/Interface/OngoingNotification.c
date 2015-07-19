@@ -1,7 +1,9 @@
 #include "Interface/OngoingNotification.h"
-#include <notification.h>
+
 #include <stdlib.h>
 #include <string.h>
+
+#include <notification.h>
 
 OngoingNotification NewOngoingNotification ()
 {
@@ -212,3 +214,41 @@ void updateOngoingNotification (OngoingNotification this_gen)
     }
 }
 
+const char * OngoingNotificationErrorCheck (int errCode)
+{
+    switch (errCode)
+    {
+    case NOTIFICATION_ERROR_NONE :
+        return "NOTIFICATION_ERROR_NONE : Success";
+
+    case NOTIFICATION_ERROR_INVALID_PARAMETER :
+        return " NOTIFICATION_ERROR_INVALID_PARAMETER : Invalid parameter";
+
+    case NOTIFICATION_ERROR_OUT_OF_MEMORY:
+        return "NOTIFICATION_ERROR_OUT_OF_MEMORY : out of memory";
+
+    case NOTIFICATION_ERROR_IO_ERROR :
+        return "NOTIFICATION_ERROR_IO_ERROR : I/O error";
+
+    case NOTIFICATION_ERROR_PERMISSION_DENIED :
+        return "NOTIFICATION_ERROR_PERMISSION_DENIED : Permission denied";
+
+    case NOTIFICATION_ERROR_FROM_DB:
+        return "NOTIFICATION_ERROR_FROM_DB : Error from DB query";
+
+    case NOTIFICATION_ERROR_ALREADY_EXIST_ID:
+        return "NOTIFICATION_ERROR_ALREADY_EXIST_ID : Already exist private ID";
+
+    case NOTIFICATION_ERROR_FROM_DBUS :
+        return "NOTIFICATION_ERROR_FROM_DBUS Error from DBus";
+
+    case NOTIFICATION_ERROR_NOT_EXIST_ID:
+        return "NOTIFICATION_ERROR_NOT_EXIST_ID Not exist private ID";
+
+    case NOTIFICATION_ERROR_SERVICE_NOT_READY:
+        return "NOTIFICATION_ERROR_SERVICE_NOT_READY : No reponse from notification service";
+
+    default:
+        return "NOTIFICATION_ERROR_UNKOWN";
+    }
+}

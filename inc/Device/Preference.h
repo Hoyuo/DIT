@@ -49,6 +49,8 @@ void       setPreferenceString (String key, String value);
 void       PreferenceRemove (String key);
 void       PreferenceClear (void);
 
+const char * PreferenceErrorCheck (int errCode);
+
 #ifdef __cplusplus
 }
 #endif

@@ -41,6 +41,8 @@ void         setNotificationIcon (Notification this_gen, String imagePath);
 void         setNotificationSound (Notification this_gen, String soundPath);
 void         updateNotification (Notification this_gen);
 
+const char * NotificationErrorCheck (int errCode);
+
 typedef struct
 {
     struct _Notification notification;
