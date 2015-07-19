@@ -5,8 +5,8 @@
  @see https://developer.tizen.org/dev-guide/2.3.0
  */
 
-#ifndef DIT_NFC_H
-#define DIT_NFC_H
+#ifndef DIT_H
+#define DIT_H
 
 #include <stdbool.h>
 #include <stdalign.h>
