@@ -29,6 +29,8 @@ void DestroyPreference (Preference this_gen)
     if ( this_gen != NULL)
     {
         Preference * this = (Preference *)this_gen;
+
+        preference_remove_all ();
         free (this);
     }
 }

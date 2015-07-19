@@ -1,142 +1,174 @@
 #include "Commnucation/GPS.h"
+#include "Interface/Log.h"
 
 #include <stdlib.h>
+
 #include <locations.h>
-#include <dlog.h>
+#include <system_info.h>
 
-GPS* NewGps() {
-	GPSExtends* this;
-	this = (GPSExtends*) malloc(sizeof(GPSExtends));
+GPS NewGps (void)
+{
+    GPSExtends * this = (GPSExtends *)malloc (sizeof (GPSExtends));
 
-	this->gps.isAccessible = isGPSAccessible;
-	this->gps.onConnect = onGPSConnect;
-	this->gps.onDisconnect = onGPSDisconnect;
-	this->gps.Recv = GPSRecv;
+    this->gps.isAccessible = isGPSAccessible;
+    this->gps.onConnect    = onGPSConnect;
+    this->gps.onDisconnect = onGPSDisconnect;
+    this->gps.Recv         = GPSRecv;
 
-	location_manager_create(LOCATIONS_METHOD_GPS, &this->manager);
+    location_manager_create (LOCATIONS_METHOD_GPS, &this->manager);
 
-	Location location = { false, };
-	this->location = location;
-	this->access = false;
+    this->state = LOCATIONS_SERVICE_DISABLED;
 
-	return &this->gps;
+    Location location = {0,};
+    this->location = location;
+    this->access   = false;
+    this->connect  = false;
+
+    return &this->gps;
 }
 
-void DestroyGps(GPS* this_gen) {
-	if (this_gen != NULL) {
-		GPSExtends* this = (GPSExtends*) this_gen;
-		location_manager_destroy(this->manager);
-		this->manager = NULL;
-		free(this);
-	}
+void DestroyGps (GPS this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        GPSExtends * this = (GPSExtends *)this_gen;
+
+        location_manager_unset_service_state_changed_cb (this->manager);
+        location_manager_destroy (this->manager);
+        this->manager = NULL;
+        free (this);
+    }
 }
 
-bool isGPSAccessible(GPS* this_gen) {
-	//todo 어떤 작업을 해야하는지가 의문이다.
-	GPSExtends* this = (GPSExtends*) this_gen;
-	return this->access;
+bool isGPSAccessible (GPS this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        GPSExtends * this = (GPSExtends *)this_gen;
+
+        system_info_get_platform_bool ("http://tizen.org/feature/location", &this->access);
+
+        return this->access;
+    }
 }
 
-static void position_updated(double latitude, double longitude, double altitude,
-		time_t timestamp, void* user_data) {
-	GPSExtends* this = (GPSExtends*) user_data;
-	this->location.vaild = true;
-	this->location.latitude = latitude;
-	this->location.longitude = longitude;
+static void gps_state_changed_cb (location_service_state_e state, void * user_data)
+{
+    GPSExtends * this = (GPSExtends *)user_data;
 
-	dlog_print(DLOG_DEBUG, "DIT", "%f %f", latitude, longitude);
+    if ( state == LOCATIONS_SERVICE_ENABLED )
+    {
+        Location location;
+        int      err;
+
+        err = location_manager_get_location (this->manager, &location.altitude,
+                &location.latitude, &location.longitude, &location.climb, &location.direction, &location.speed,
+                &location.level, &location.horizontal, &location.vertical, &location.timestamp);
+
+        this->location = location;
+
+        if ( err == LOCATIONS_ERROR_NONE )
+        {
+            this->state = LOCATIONS_SERVICE_ENABLED;
+        }
+        else
+        {
+            this->state = LOCATIONS_SERVICE_DISABLED;
+        }
+    }
+    else if ( state == LOCATIONS_SERVICE_DISABLED )
+    {
+        this->state = LOCATIONS_SERVICE_DISABLED;
+    }
 }
 
-static void __state_changed_cb(location_service_state_e state, void* user_data) {
-	GPSExtends* this = (GPSExtends*) user_data;
-	double altitude, latitude, longitude, climb, direction, speed;
-	double horizontal, vertical;
-	location_accuracy_level_e level;
-	time_t timestamp;
+bool onGPSConnect (GPS this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        GPSExtends * this = (GPSExtends *)this_gen;
+        int error;
+        error = location_manager_set_service_state_changed_cb (this->manager, gps_state_changed_cb, this);
 
-	if (state == LOCATIONS_SERVICE_ENABLED) {
-		int ret = location_manager_get_location(this->manager, &altitude,
-				&latitude, &longitude, &climb, &direction, &speed, &level,
-				&horizontal, &vertical, &timestamp);
+        error = location_manager_start (this->manager);
 
-		LogErrorChecker(ret);
-	}
+        if ( error == LOCATIONS_ERROR_NONE )
+        {
+            return this->connect = true;
+        }
+        else
+        {
+            return this->connect = false;
+        }
+    }
 }
 
-bool onGPSConnect(GPS* this_gen) {
-	GPSExtends* this = (GPSExtends*) this_gen;
-	location_manager_set_service_state_changed_cb(this->manager,
-			__state_changed_cb, this);
-	int error = location_manager_start(this->manager);
-	if (error == LOCATIONS_ERROR_NONE) {
-		return this->access = true;
-	} else {
-		return this->access = false;
-	}
+bool onGPSDisconnect (GPS this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        GPSExtends * this = (GPSExtends *)this_gen;
+        int error = location_manager_stop (this->manager);
+        if ( error == LOCATIONS_ERROR_NONE )
+        {
+            this->access = false;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
-bool onGPSDisconnect(GPS* this_gen) {
-	GPSExtends* this = (GPSExtends*) this_gen;
-	int error = location_manager_stop(this->manager);
-	if (error == LOCATIONS_ERROR_NONE) {
-		this->access = false;
-		return true;
-	} else {
-		return false;
-	}
+Location GPSRecv (GPS this_gen)
+{
+    if ( this_gen != NULL)
+    {
+        GPSExtends * this = (GPSExtends *)this_gen;
+
+        if ( this->connect && (this->state == LOCATIONS_SERVICE_ENABLED))
+        {
+            return this->location;
+        }
+    }
 }
 
-Location GPSRecv(GPS* this_gen) {
-	GPSExtends* this = (GPSExtends*) this_gen;
-	if (this->access) {
-		double altitude, latitude, longitude, climb, direction, speed;
-		double horizontal, vertical;
-		location_accuracy_level_e level;
-		time_t timestamp;
-		int ret = location_manager_get_last_location(this->manager, &altitude,
-				&latitude, &longitude, &climb, &direction, &speed, &level,
-				&horizontal, &vertical, &timestamp);
+const char * GPSErrorChecker (int errCode)
+{
+    switch (errCode)
+    {
+    case LOCATIONS_ERROR_NONE:
+        return "LOCATIONS_ERROR_NONE : Successful";
 
-		if (ret == LOCATIONS_ERROR_NONE) {
-			this->location.vaild = true;
-			this->location.altitude = altitude;
-			this->location.latitude = latitude;
-			this->location.longitude = longitude;
-			this->location.climb = climb;
-			this->location.direction = direction;
-			this->location.speed = speed;
-			this->location.level = level;
-			this->location.horizontal = horizontal;
-			this->location.vertical = vertical;
-			this->location.timestamp = timestamp;
-		} else {
-			LogErrorChecker(ret);
-			this->location.vaild = false;
+    case LOCATIONS_ERROR_OUT_OF_MEMORY:
+        return "LOCATIONS_ERROR_OUT_OF_MEMORY : Out of memory";
 
-		}
-		return this->location;
-	}
-}
+    case LOCATIONS_ERROR_INVALID_PARAMETER:
+        return "LOCATIONS_ERROR_INVALID_PARAMETER : Invalid parameter";
 
-void LogErrorChecker(int errorCode) {
-	switch (errorCode) {
-	case LOCATIONS_ERROR_INVALID_PARAMETER:
-		dlog_print(DLOG_DEBUG, "DIT", "LOCATIONS_ERROR_INVALID_PARAMETER");
-		break;
-	case LOCATIONS_ERROR_SERVICE_NOT_AVAILABLE:
-		dlog_print(DLOG_DEBUG, "DIT", "LOCATIONS_ERROR_SERVICE_NOT_AVAILABLE");
-		break;
-	case LOCATIONS_ERROR_GPS_SETTING_OFF:
-		dlog_print(DLOG_DEBUG, "DIT", "LOCATIONS_ERROR_GPS_SETTING_OFF");
-		break;
-	case LOCATIONS_ERROR_ACCESSIBILITY_NOT_ALLOWED:
-		dlog_print(DLOG_DEBUG, "DIT",
-				"LOCATIONS_ERROR_ACCESSIBILITY_NOT_ALLOWED");
-		break;
-	case LOCATIONS_ERROR_NOT_SUPPORTED:
-		dlog_print(DLOG_DEBUG, "DIT", "LOCATIONS_ERROR_NOT_SUPPORTED");
-		break;
-	default:
-		dlog_print(DLOG_DEBUG, "DIT", "UNKWON");
-	}
+    case LOCATIONS_ERROR_ACCESSIBILITY_NOT_ALLOWED:
+        return "LOCATIONS_ERROR_ACCESSIBILITY_NOT_ALLOWED : Permission denied";
+
+    case LOCATIONS_ERROR_NOT_SUPPORTED:
+        return "LOCATIONS_ERROR_NOT_SUPPORTED : Not supported";
+
+    case LOCATIONS_ERROR_INCORRECT_METHOD:
+        return "LOCATIONS_ERROR_INCORRECT_METHOD : Location manager contains incorrect method for a given call";
+
+    case LOCATIONS_ERROR_NETWORK_FAILED:
+        return "LOCATIONS_ERROR_NETWORK_FAILED : Network unavailable";
+
+    case LOCATIONS_ERROR_SERVICE_NOT_AVAILABLE:
+        return "LOCATIONS_ERROR_SERVICE_NOT_AVAILABLE : Location service is not available";
+
+    case LOCATIONS_ERROR_GPS_SETTING_OFF:
+        return "LOCATIONS_ERROR_GPS_SETTING_OFF : GPS/WPS setting is not enabled";
+
+    case LOCATIONS_ERROR_SECURITY_RESTRICTED:
+        return "LOCATIONS_ERROR_SECURITY_RESTRICTED : Restricted by security system policy";
+
+    default:
+        return "LOCATIONS_ERROR_UNKWON";
+    }
 }

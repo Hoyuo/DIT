@@ -5,7 +5,7 @@
 
 #include <notification.h>
 
-OngoingNotification NewOngoingNotification ()
+OngoingNotification NewOngoingNotification (void)
 {
     OngoingNotificationExtend * this;
 
