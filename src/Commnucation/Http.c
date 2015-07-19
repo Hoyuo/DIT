@@ -49,64 +49,74 @@ void DestoryHttp (Http this_gen)
 
 bool isHttpAccessible (Http this_gen)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-    bool check1, check2;
+    if ( this_gen != NULL)
+    {
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-    system_info_get_platform_bool ("http://tizen.org/feature/network.wifi", &check1);
-    system_info_get_platform_bool ("http://tizen.org/feature/network.telephony", &check2);
+        bool check1, check2;
 
-    this->access = check1 || check2;
-    return this->access;
+        system_info_get_platform_bool ("http://tizen.org/feature/network.wifi", &check1);
+        system_info_get_platform_bool ("http://tizen.org/feature/network.telephony", &check2);
+
+        this->access = check1 || check2;
+        return this->access;
+    }
+    return false;
 }
 
 bool onHttpConnect (Http this_gen, String url, int port)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-
-    if ( this->access )
+    if ( this_gen != NULL)
     {
-        int lenght = strlen (url);
-        this->url = (String)malloc (lenght + 1);
-        strcpy(this->url, url);
-        this->port = port;
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-        CURL * curl;
-        CURLcode r;
-        curl_global_init (CURL_GLOBAL_ALL);
-
-        curl = curl_easy_init ();
-        if ( curl )
+        if ( this->access )
         {
-            curl_easy_setopt (curl, CURLOPT_URL, url);
-            curl_easy_setopt (curl, CURLOPT_PORT, port);
+            int lenght = strlen (url);
+            this->url = (String)malloc (lenght + 1);
+            strcpy(this->url, url);
+            this->port = port;
 
-            r = curl_easy_perform (curl);
+            CURL * curl;
+            CURLcode r;
+            curl_global_init (CURL_GLOBAL_ALL);
 
-            if ( r == CURLE_OK )
+            curl = curl_easy_init ();
+            if ( curl )
             {
-                this->conect = true;
-                return true;
+                curl_easy_setopt (curl, CURLOPT_URL, url);
+                curl_easy_setopt (curl, CURLOPT_PORT, port);
+
+                r = curl_easy_perform (curl);
+
+                if ( r == CURLE_OK )
+                {
+                    this->conect = true;
+                    return true;
+                }
             }
         }
     }
-
     return false;
 }
 
 bool onHttpDisconnect (Http this_gen)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-
-    if ( this->access )
+    if ( this_gen != NULL)
     {
-        if ( this->url != NULL)
-        {
-            free (this->url);
-            this->url = NULL;
-        }
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-        this->conect = false;
-        return true;
+        if ( this->access )
+        {
+            if ( this->url != NULL)
+            {
+                free (this->url);
+                this->url = NULL;
+            }
+
+            this->conect = false;
+            return true;
+        }
     }
     return false;
 }
@@ -118,81 +128,93 @@ bool onHttpDisconnect (Http this_gen)
  */
 void HttpDownload (Http this_gen, String filename)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-    if ( this->conect )
+    if ( this_gen != NULL)
     {
-        String path = (String)malloc (FILENAME_MAX);
-        strcpy(path, "/opt/usr/media/Downloads/");
-        strcat(path, filename);
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-        String url = (String)malloc (FILENAME_MAX);
-        strcpy(url, this->url);
-        strcat(url, "/");
-        strcat(url, filename);
-
-        CURL * curl = curl_easy_init ();
-        if ( curl )
+        if ( this->conect )
         {
-            FILE * fp = fopen (path, "wb");
-            curl_easy_setopt (curl, CURLOPT_URL, url);
-            curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_data);
-            curl_easy_setopt (curl, CURLOPT_WRITEDATA, fp);
-            curl_easy_perform (curl);
-            /* always cleanup */
-            curl_easy_cleanup (curl);
-            fclose (fp);
+            String path = (String)malloc (FILENAME_MAX);
+            strcpy(path, "/opt/usr/media/Downloads/");
+            strcat(path, filename);
+
+            String url = (String)malloc (FILENAME_MAX);
+            strcpy(url, this->url);
+            strcat(url, "/");
+            strcat(url, filename);
+
+            CURL * curl = curl_easy_init ();
+            if ( curl )
+            {
+                FILE * fp = fopen (path, "wb");
+                curl_easy_setopt (curl, CURLOPT_URL, url);
+                curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_data);
+                curl_easy_setopt (curl, CURLOPT_WRITEDATA, fp);
+                curl_easy_perform (curl);
+                /* always cleanup */
+                curl_easy_cleanup (curl);
+                fclose (fp);
+            }
+            free (url);
+            free (path);
         }
-        free (url);
-        free (path);
     }
 }
 
 void HttpExcutePost (Http this_gen, String req, String * res)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-    if ( this->conect )
+    if ( this_gen != NULL)
     {
-        CURL * curl;
-        CURLcode r;
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-        curl = curl_easy_init ();
-        if ( curl )
+        if ( this->conect )
         {
-            curl_easy_setopt (curl, CURLOPT_URL, this->url);
-            curl_easy_setopt (curl, CURLOPT_PORT, this->port);
+            CURL * curl;
+            CURLcode r;
 
-            curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
-            curl_easy_setopt (curl, CURLOPT_POSTFIELDSIZE, (long)strlen (req) + 1L);
-            curl_easy_setopt (curl, CURLOPT_POSTFIELDS, req);
-            curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
+            curl = curl_easy_init ();
+            if ( curl )
+            {
+                curl_easy_setopt (curl, CURLOPT_URL, this->url);
+                curl_easy_setopt (curl, CURLOPT_PORT, this->port);
 
-            r = curl_easy_perform (curl);
-            curl_easy_cleanup (curl);
+                curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
+                curl_easy_setopt (curl, CURLOPT_POSTFIELDSIZE, (long)strlen (req) + 1L);
+                curl_easy_setopt (curl, CURLOPT_POSTFIELDS, req);
+                curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
+
+                r = curl_easy_perform (curl);
+                curl_easy_cleanup (curl);
+            }
+            curl_global_cleanup ();
         }
-        curl_global_cleanup ();
     }
 }
 
 void HttpExcuteGet (Http this_gen, String req, String * res)
 {
-    HttpExtends * this = (HttpExtends *)this_gen;
-    if ( this->conect )
+    if ( this_gen != NULL)
     {
-        CURL * curl;
-        CURLcode r;
+        HttpExtends * this = (HttpExtends *)this_gen;
 
-        curl = curl_easy_init ();
-        if ( curl )
+        if ( this->conect )
         {
-            curl_easy_setopt (curl, CURLOPT_URL, this->url);
-            curl_easy_setopt (curl, CURLOPT_PORT, this->port);
-            curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
-            curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
+            CURL * curl;
+            CURLcode r;
 
-            r = curl_easy_perform (curl);
-            curl_easy_cleanup (curl);
+            curl = curl_easy_init ();
+            if ( curl )
+            {
+                curl_easy_setopt (curl, CURLOPT_URL, this->url);
+                curl_easy_setopt (curl, CURLOPT_PORT, this->port);
+                curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
+                curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
+
+                r = curl_easy_perform (curl);
+                curl_easy_cleanup (curl);
+            }
+            curl_global_cleanup ();
         }
-        curl_global_cleanup ();
     }
 }
 

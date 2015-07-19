@@ -4,53 +4,54 @@
 #include <stdbool.h>
 #include <stdalign.h>
 #include <stddef.h>
+
+#include "dit.h"
+
 #include <curl.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct _Socket Socket;
+typedef struct _Socket * Socket;
 
-typedef struct _Socket {
-	bool (*isAccessible)(Socket* this_gen);
+struct _Socket
+{
+    bool (* isAccessible) (Socket this_gen);
 
-	bool (*onConnect)(Socket* this_gen, char* url, int port);
+    bool (* onConnect) (Socket this_gen, String url, int port);
 
-	bool (*onDisconnect)(Socket* this_gen);
+    bool (* onDisconnect) (Socket this_gen);
 
-	bool (*send)(Socket* this_gen, char* msg);
+    bool (* Send) (Socket this_gen, String msg);
 
-	bool (*recv)(Socket* this_gen, char* msg);
+    bool (* Recv) (Socket this_gen, String msg);
 
-} Socket;
+};
 
 /*
  * @privlevel public
  * @privilege %http://tizen.org/privilege/internet
  */
-Socket* NewSocket();
+Socket NewSocket (void);
+void   DestorySocket (Socket this_gen);
+bool   isSocketAccessible (Socket this_gen);
+bool   onSocketConnect (Socket this_gen, String url, int port);
+bool   onSocketDisconnect (Socket this_gen);
+bool   SocketMessageSend (Socket this_gen, String msg);
+bool   SocketMessageRecv (Socket this_gen, String msg);
 
-void DestorySocket(Socket* this_gen);
+static int wait_on_socket (curl_socket_t sockfd, int for_recv, long timeout_ms);
+const char * SocketErrorCheck (CURLcode errorCode);
 
-bool isSocketAccessible(Socket* this_gen);
+typedef struct
+{
+    struct _Socket socket;
+    String         url;
+    int            port;
+    bool           access;
+    bool           conect;
 
-bool onSocketConnect(Socket* this_gen, char* url, int port);
-
-bool onSocketDisconnect(Socket* this_gen);
-
-bool SocketMessageSend(Socket* this_gen, char* msg);
-
-bool SocketMessageRecv(Socket* this_gen, char* msg);
-
-static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms);
-
-typedef struct {
-	Socket socket;
-	char* url;
-	int port;
-	bool access;
-	bool conect;
 } SocketExtends;
 
 #ifdef __cplusplus
