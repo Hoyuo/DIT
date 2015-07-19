@@ -3,21 +3,25 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
-#include <system_info.h>
+
+#include "dit.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef struct {
-    char* tag;
-    char* msg;
+typedef struct
+{
+    String tag;
+    String msg;
+
 } NDEF;
 
-NDEF CreateNDEF(char* tag, char* msg);
+NDEF CreateNDEF (String tag, String msg);
 
-void DeleteNDEF(NDEF* ndef);
+void DeleteNDEF (NDEF * ndef);
 
-typedef struct _nfc NFC;
+typedef struct _nfc * NFC;
 
 /**
 	@struct NFC
@@ -26,31 +30,26 @@ typedef struct _nfc NFC;
 	@see https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__MODULE.html
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
-typedef struct _nfc {
-    bool (* isAccessible)(NFC* this_gen);
+struct _nfc
+{
+    bool (* isAccessible) (NFC this_gen);
 
-    bool (* onConnect)(NFC* this_gen);
+    bool (* onConnect) (NFC this_gen);
 
-    bool (* onDisconnect)(NFC* this_gen);
+    bool (* onDisconnect) (NFC this_gen);
 
-    void (* Send)(NFC* this_gen, NDEF message);
+    void (* Send) (NFC this_gen, NDEF message);
 
-    NDEF (* Recv)(NFC* this_gen);
-} NFC;
+    NDEF (* Recv) (NFC this_gen);
+};
 
-NFC* newNFC();
-
-void deleteNFC(NFC* this_gen);
-
-bool isNFCAccessible(NFC* this_gen ) ;
-
-bool onNFCConnect(NFC* this_gen ) ;
-
-bool onNFCDisconnect(NFC* this_gen ) ;
-
-void NFCSend(NFC* this_gen , NDEF message ) ;
-
-NDEF NFCRecv(NFC* this_gen ) ;
+NFC  newNFC (void);
+void deleteNFC (NFC this_gen);
+bool isNFCAccessible (NFC this_gen);
+bool onNFCConnect (NFC this_gen);
+bool onNFCDisconnect (NFC this_gen);
+void NFCSend (NFC this_gen, NDEF message);
+NDEF NFCRecv (NFC this_gen);
 
 /**
 	@struct NFCExtends
@@ -59,10 +58,12 @@ NDEF NFCRecv(NFC* this_gen ) ;
 	@see https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__MODULE.html
  	@todo features add "http://tizen.org/feature/network.nfc"
  */
-typedef struct {
-    NFC nfc;
-    NDEF ndefMessage;
-    bool access;
+typedef struct
+{
+    struct _nfc nfc;
+    NDEF        ndefMessage;
+    bool        access;
+
 } NFCExtends;
 
 #ifdef __cplusplus
