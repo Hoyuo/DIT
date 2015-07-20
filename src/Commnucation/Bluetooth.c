@@ -4,6 +4,7 @@
 
 #include <bluetooth.h>
 #include <app_control.h>
+#include <dlog.h>
 #include <glib.h>
 
 static bool adapter_bonded_device_cbx (bt_device_info_s * device_info, void * user_data);
@@ -19,12 +20,12 @@ Bluetooth NewBluetooth (void)
 {
     BluetoothExtends * this = malloc (sizeof (BluetoothExtends));
 
-    this->Bluetooth.isAccessible = isBluetoothAccessible;
-    this->Bluetooth.onConnect    = onBluetoothConnect;
-    this->Bluetooth.isConnected  = isBluetoothConnected;
-    this->Bluetooth.onConnect    = onBluetoothDisconnect;
-    this->Bluetooth.FileRecv     = BluetoothFileRecv;
-    this->Bluetooth.FileSend     = BluetoothFileSend;
+    this->bluetooth.isAccessible = isBluetoothAccessible;
+    this->bluetooth.onConnect    = onBluetoothConnect;
+    this->bluetooth.isConnected  = isBluetoothConnected;
+    this->bluetooth.onConnect    = onBluetoothDisconnect;
+    this->bluetooth.FileRecv     = BluetoothFileRecv;
+    this->bluetooth.FileSend     = BluetoothFileSend;
 
     this->connected     = false;
     this->accessible    = false;
