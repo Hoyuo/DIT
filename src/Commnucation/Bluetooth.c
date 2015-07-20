@@ -100,7 +100,7 @@ bool onBluetoothConnect (Bluetooth this_gen)
 
         if ( this->accessible )
         {
-            bt_error_e res = 0;
+            int res = 0;
 
             res += bt_initialize ();
             ret += bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
