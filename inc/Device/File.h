@@ -1,8 +1,11 @@
-#ifndef DIT_FILE_H
-#define DIT_FILE_H
+#ifndef _FILE_H
+#define _FILE_H
 
 #include <stdbool.h>
 #include <stdalign.h>
+
+#include "dit.h"
+
 #include <player.h>
 #include <metadata_extractor.h>
 #include <Evas.h>
@@ -19,153 +22,125 @@ extern "C" {
  * http://tizen.org/privilege/internet
  * */
 
-typedef struct _File File;
+/* File */
+typedef struct _File * File;
 
-typedef struct _File {
+struct _File
+{
 
-	void (*createFile)(File* this_gen, char* src);
+    void (* Create) (String src);
 
-	void (*deleteFile)(File* this_gen, char* src);
+    void (* Delete) (String src);
 
-	void (*copyFile)(File* this_gen, char* src, char* dst);
+    void (* Copy) (String src, String dst);
 
-	void (*moveFile)(File* this_gen, char* src, char* dst);
+    void (* Move) (String src, String dst);
 
-	char** (*searchFile)(File* this_gen, char* src, char* dst);
+    String * (* Search) (String src, String dst);
 
-} File;
+};
 
-typedef struct _FileExtends{
-	File file;
+File NewFile ();
+void DestroyFile (File this_gen);
+void createFile (String src);
+void deleteFile (String src);
+void copyFile (String src, String dst);
+void moveFile (String src, String dst);
+String * searchFile (String src, String dst);
 
-}FileExtends;
+/* Video */
 
-File* NewFile();
+typedef struct _Video * Video;
 
-void DestroyFile(File* this_gen);
+struct _Video
+{
+    void (* Play) (Video this_gen);
 
-void createDITFile(File* this_gen, char* src);
+    void (* Pause) (Video this_gen);
 
-void deleteDITFile(File* this_gen, char* src);
+    void (* Stop) (Video this_gen);
 
-void copyDITFile(File* this_gen, char* src, char* dst);
+    void (* Record) (Video this_gen);
 
-void moveDITFile(File* this_gen, char* src, char* dst);
+    void (* getInfo) (Video this_gen);
 
-char** searchDITFile(File* this_gen, char* src, char* dst);
+    void (* setURI) (Video this_gen, String uri);
 
+    void (* setObject) (Video this_gen, Evas_Object * EvasObject);
 
-typedef struct _Video Video;
+};
 
-typedef struct _Video{
-	void (*playVideo)(Video* this_gen);
+Video NewVideo ();
+void  DestroyVideo (Video this_gen);
+void  playVideo (Video this_gen);
+void  pauseVideo (Video this_gen);
+void  stopVideo (Video this_gen);
+void  recordVideo (Video this_gen);
+void  getVideoInfo (Video this_gen);
+void  setVideoURI (Video this_gen, String URI);
+void  setEvasObject (Video this_gen, Evas_Object * EvasObject);
 
-	void (*pauseVideo)(Video* this_gen);
+typedef struct _VideoExtends
+{
+    struct _Video        video;
+    Evas_Object *        EvasObject;
+    player_h             player_handle;
+    metadata_extractor_h videoMetadataHandle;
+    String               uri;
 
-	void (*stopVideo)(Video* this_gen);
+} VideoExtends;
 
-	void (*recordVideo)(Video* this_gen);
+/* Audio */
 
-	void (*getVideoInfo)(Video* this_gen);
+typedef struct _Audio * Audio;
 
-	void (*setURI)(Video* this_gen, char* uri);
+struct _Audio
+{
+    void (* Play) (Audio this_gen);
 
-	void (*setEvasObject)(Video* this_gen, Evas_Object* EvasObject);
+    void (* Pause) (Audio this_gen);
 
-}Video;
+    void (* Stop) (Audio this_gen);
 
-typedef struct _VideoExtends{
-	Video video;
+    void (* Record) (Audio this_gen);
 
-	Evas_Object* EvasObject;
-	player_h player_handle;
-	metadata_extractor_h videoMetadataHandle;
-	char* uri;
-}VideoExtends;
+    String (* getInfo) (Audio this_gen, metadata_extractor_attr_e metadataKey);
 
-	Video* NewVideo();
+    void (* setURI) (Audio this_gen, String uri);
+};
 
-	void DestroyVideo(Video* this_gen);
+Audio  NewAudio ();
+void   DestroyAudio (Audio this_gen);
+void   playAudio (Audio this_gen);
+void   pauseAudio (Audio this_gen);
+void   stopAudio (Audio this_gen);
+void   recordAudio (Audio this_gen);
+String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
+void   setAudioURI (Audio this_gen, String uri);
 
-	void playDITVideo(Video* this_gen);
+typedef struct _AudioExtends
+{
+    struct _Audio        audio;
+    player_h             player_handle;
+    metadata_extractor_h audioMetadataHandle;
+    String               uri;
 
-	void pauseDITVideo(Video* this_gen);
+} AudioExtends;
 
-	void stopDITVideo(Video* this_gen);
+/* Image */
+typedef struct _Image * Image;
 
-	void recordDITVideo(Video* this_gen);
+struct _Image
+{
+    void (* getInfo) (Image this_gen);
+};
 
-	void getDITVideoInfo(Video* this_gen);
-
-	void setDITVideoURI(Video* this_gen, char* URI);
-
-	void setDITEvasObject(Video* this_gen, Evas_Object* EvasObject);
-
-
-typedef struct _Audio Audio;
-
-typedef struct _Audio{
-	void (*playAudio)(Audio* this_gen);
-
-	void (*pauseAudio)(Audio* this_gen);
-
-	void (*stopAudio)(Audio* this_gen);
-
-	void (*recordAudio)(Audio* this_gen);
-
-	char* (*getAudioInfo)(Audio* this_gen,  metadata_extractor_attr_e metadataKey);
-
-	void (*setURI)(Audio* this_gen,char* uri);
-}Audio;
-
-typedef struct _AudioExtends{
-Audio audio;
-
-player_h player_handle;
-metadata_extractor_h audioMetadataHandle;
-
-char* uri;
-
-}AudioExtends;
-
-Audio* NewAudio();
-
-void DestroyAudio(Audio* this_gen);
-
-void playDITAudio(Audio* this_gen);
-
-void pauseDITAudio(Audio* this_gen);
-
-void stopDITAudio(Audio* this_gen);
-
-void recordDITAudio(Audio* this_gen);
-
-char* getDITAudioInfo(Audio* this_gen,  metadata_extractor_attr_e metadataKey);
-
-void setAudioURI(Audio* this_gen, char* uri);
-typedef struct _Image Image;
-
-
-typedef struct _Image{
-
-	void (*getImageInfo)(Image* this_gen);
-
-}Image;
-
-typedef struct _ImageExtends{
-Image image;
-
-}ImageExtends;
-
-Image* NewImage();
-
-void DestroyImage(Image* this_gen);
-
-void getDITImageInfo(Image* this_gen);
-
+Image NewImage ();
+void  DestroyImage (Image this_gen);
+void  getImageInfo (Image this_gen);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif //DIT_FILE_H
+#endif //_FILE_H
