@@ -2,6 +2,10 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <unistd.h>
 #include <glib.h>
 #include <tizen.h>
 #include <player.h>
@@ -19,12 +23,11 @@ File NewFile ()
 {
 	File this = malloc (sizeof (struct _File));
 
-	this->Create = createFile;
-	this->Delete = deleteFile;
+
 	this->Copy   = copyFile;
 	this->Move   = moveFile;
 	this->Search = searchFile;
-
+	this->deleteSearchedList =deleteSearchedList;
 	return this;
 }
 
@@ -36,22 +39,6 @@ void DestroyFile (File this_gen)
 	}
 }
 
-void createFile (String src)
-{
-	if ( NULL != src )
-	{
-		FILE * temp = fopen (src, "wb+");
-		fclose (temp);
-	}
-}
-
-void deleteFile (String src)
-{
-	if ( NULL != src )
-	{
-		remove (src);
-	}
-}
 
 void copyFile (String src, String dst)
 {
@@ -85,11 +72,61 @@ void moveFile (String src, String dst)
 	remove(src);
 }
 
-String * searchFile (String src, String dst)
+// file search recursion Function using GList
+void search_recur(char *dir, char* depth,GList** searchList)
 {
-	//todo : 작업 진행 안함
+	DIR *dp;
+	struct dirent *entry;
+	struct stat statbuf;
+	if((dp = opendir(dir)) == NULL) {
+		return;
+	}
+	chdir(dir);
+	while((entry = readdir(dp)) != NULL) {
+		lstat(entry->d_name,&statbuf);
+		if(S_ISDIR(statbuf.st_mode)) {
+			/* Found a directory, but ignore . and .. */
+			if(strcmp(".",entry->d_name) == 0 ||
+					strcmp("..",entry->d_name) == 0)
+				continue;
+			if(strcmp(entry->d_name,depth)==0){
+				char* pPath =realpath(entry->d_name,NULL);
+				*searchList= g_list_append(*searchList,strdup(pPath));
+			}
 
-	return NULL;
+			/* Recurse at a new indent level */
+			search_recur(entry->d_name,depth,searchList);
+
+		}
+		else  if(strcmp(entry->d_name,depth)==0){
+			char* pPath =realpath(entry->d_name,NULL);
+			*searchList= g_list_append(*searchList,strdup(pPath));
+		}
+	}
+	chdir("..");
+	closedir(dp);
+}
+
+GList* searchFile (String src, String dst)
+{
+	//todo : working
+	GList * searchList=NULL;
+	search_recur(src,dst,&searchList);
+
+	return searchList;
+}
+
+//callbacking function
+void deleteSearchListElement(gpointer data){
+
+	free(data);
+
+}
+
+void deleteSearchedList(GList* searchList){
+
+	g_list_free_full(searchList,deleteSearchListElement);
+
 }
 
 /*
@@ -414,9 +451,8 @@ void getImageInfo (Image this_gen, String src)
 
 
 	GList *all_item_list = NULL; // Include glib.h
-	media_content_type_e media_type;
+	media_content_type_e media_type =MEDIA_CONTENT_COLLATE_DEFAULT;
 	media_info_h media_handle = NULL;
-	char *media_id = NULL;
 
 	char buf[1024] = {'\0'};
 	int ret = MEDIA_CONTENT_ERROR_NONE;
@@ -427,8 +463,10 @@ void getImageInfo (Image this_gen, String src)
 	ImageExtends* this = (ImageExtends*)this_gen;
 	media_filter_create(&filter);
 
+	String filterpath = calloc(strlen(src)+4,sizeof(char));
+
 	// Set the condition
-	snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE,MEDIA_PATH,"'/opt/usr/media/Images/Screenshots/Screen-20150428190316.png'");
+	snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE,MEDIA_PATH,);
 
 	ret = media_filter_set_condition(filter, buf, collate_type);
 	if (ret != MEDIA_CONTENT_ERROR_NONE)
@@ -484,20 +522,21 @@ void getImageInfo (Image this_gen, String src)
 
 		}
 	}
+	media_content_disconnect();
 }
 String  getImageBurstId (Image this_gen){
 	ImageExtends* this = (ImageExtends*)this_gen;
 
-	return strdup(this->burst_id);
+	return this->burst_id;
 }
 String  getImageMediaId (Image this_gen){
 	ImageExtends* this = (ImageExtends*)this_gen;
 
-	return strdup(this->media_id);
+	return this->media_id;
 }
 String  getImageDateTaken (Image this_gen){
 	ImageExtends* this = (ImageExtends*)this_gen;
-	return strdup(this->datetaken);
+	return this->datetaken;
 }
 
 int		getImageWidth(Image this_gen){

@@ -11,6 +11,7 @@
 #include <media_content.h>
 #include <media_info.h>
 #include <Evas.h>
+#include <glib.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -38,8 +39,9 @@ struct _File
 
 	void (* Move) (String src, String dst);
 
-	String * (* Search) (String src, String dst);
+	GList* (* Search) (String src, String dst);
 
+	void (* deleteSearchedList) (GList* searchedList);
 };
 
 File NewFile ();
@@ -48,8 +50,8 @@ void createFile (String src);
 void deleteFile (String src);
 void copyFile (String src, String dst);
 void moveFile (String src, String dst);
-String * searchFile (String src, String dst);
-
+GList * searchFile (String src, String dst);
+void deleteSearchedList(GList * searchedList);
 /* Video */
 
 typedef struct _Video * Video;
