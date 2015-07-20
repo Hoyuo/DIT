@@ -43,9 +43,6 @@ void HttpDownload (Http this_gen, String filename);
 void HttpExcutePost (Http this_gen, String req, String * res);
 void HttpExcuteGet (Http this_gen, String req, String * res);
 
-static size_t write_callback (void * contents, size_t size, size_t nmemb, void ** res);
-static size_t write_data (void * ptr, size_t size, size_t nmemb, FILE * stream);
-
 const char * HttpErrorCheck (CURLcode errorCode);
 
 typedef struct

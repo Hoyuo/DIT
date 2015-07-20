@@ -4,9 +4,9 @@
 #include <stdbool.h>
 #include <stdalign.h>
 
-#include "dit.h"
-
 #include <notification.h>
+
+#include "dit.h"
 
 #ifdef __cplusplus
 extern "C" {

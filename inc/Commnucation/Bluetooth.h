@@ -7,6 +7,7 @@
 #include "dit.h"
 
 #include <glib.h>
+#include <bluetooth.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,13 +21,14 @@ struct _Bluetooth
 
     bool (* onConnect) (Bluetooth this_gen);
 
+    bool (* isConnected) (Bluetooth this_gen);
+
     bool (* onDisconnect) (Bluetooth this_gen);
 
-    int  (* Recv) (Bluetooth this_gen);
+    void (* FileSend) (Bluetooth this_gen, String sendBuffer);
 
-    int  (* Send) (Bluetooth this_gen, String sendbuffer);
+    void (* FileRecv) (Bluetooth this_gen, String * recvBuffer);
 
-    bool (* isConnected) (Bluetooth this_gen);
 };
 
 Bluetooth NewBluetooth (void);
@@ -35,11 +37,10 @@ bool      isBluetoothAccessible (Bluetooth this_gen);
 bool      onBluetoothConnect (Bluetooth this_gen);
 bool      isBluetoothConnected (Bluetooth this_gen);
 bool      onBluetoothDisconnect (Bluetooth this_gen);
-int       BluetoothRecv (Bluetooth this_gen);
-int       BluetoothSend (Bluetooth this_gen, String sendbuffer);
+void      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
+void      BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
 
-GList * BluetoothSearch (Bluetooth this_gen);
-GList * BluetoothBound (Bluetooth this_gen);
+const char * BluetoothErrorCheck (int errCode);
 
 typedef struct
 {

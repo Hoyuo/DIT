@@ -6,6 +6,8 @@
 #include <locations.h>
 #include <system_info.h>
 
+static void gps_state_changed_cb (location_service_state_e state, void * user_data);
+
 GPS NewGps (void)
 {
     GPSExtends * this = (GPSExtends *)malloc (sizeof (GPSExtends));

@@ -10,6 +10,6 @@
     </acheck>
     <pcheck>
         <violation>true</violation>
-        <unused>true</unused>
+        <unused>false</unused>
     </pcheck>
 </checkers>

@@ -7,6 +7,9 @@
 #include <curl.h>
 #include <system_info.h>
 
+static size_t write_callback (void * contents, size_t size, size_t nmemb, void ** res);
+static size_t write_data (void * ptr, size_t size, size_t nmemb, FILE * stream);
+
 /*
  * @privlevel public
  * @privilege %http://tizen.org/privilege/internet

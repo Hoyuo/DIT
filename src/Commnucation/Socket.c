@@ -7,6 +7,8 @@
 #include <curl.h>
 #include <system_info.h>
 
+static int wait_on_socket (curl_socket_t sockfd, int for_recv, long timeout_ms);
+
 Socket NewSocket (void)
 {
     SocketExtends * this = (SocketExtends *)malloc (sizeof (SocketExtends));

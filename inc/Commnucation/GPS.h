@@ -45,7 +45,6 @@ bool     onGPSConnect (GPS this_gen);
 bool     onGPSDisconnect (GPS this_gen);
 Location GPSRecv (GPS this_gen);
 
-static void gps_state_changed_cb (location_service_state_e state, void * user_data);
 const char * GPSErrorChecker (int errCode);
 
 typedef struct

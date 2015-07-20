@@ -40,7 +40,6 @@ bool   onSocketDisconnect (Socket this_gen);
 bool   SocketMessageSend (Socket this_gen, String msg);
 bool   SocketMessageRecv (Socket this_gen, String msg);
 
-static int wait_on_socket (curl_socket_t sockfd, int for_recv, long timeout_ms);
 const char * SocketErrorCheck (CURLcode errorCode);
 
 typedef struct
