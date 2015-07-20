@@ -71,7 +71,7 @@ void VibrationCustom (Vibration this_gen, int period)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
 
-        device_haptic_Vibration (this->handle, period, 0, 0);
+        device_haptic_vibrate (this->handle, period, 0, 0);
     }
 }
 
@@ -81,7 +81,7 @@ void VibrationShort (Vibration this_gen)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
 
-        device_haptic_Vibration (this->handle, 100, 0, 0);
+        device_haptic_vibrate (this->handle, 100, 0, 0);
     }
 }
 
@@ -91,7 +91,7 @@ void VibrationMiddle (Vibration this_gen)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
 
-        device_haptic_Vibration (this->handle, 500, 0, 0);
+        device_haptic_vibrate (this->handle, 500, 0, 0);
     }
 }
 
@@ -101,7 +101,7 @@ void VibrationLong (Vibration this_gen)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
 
-        device_haptic_Vibration (this->handle, 1500, 0, 0);
+        device_haptic_vibrate (this->handle, 1500, 0, 0);
     }
 }
 
