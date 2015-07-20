@@ -8,6 +8,8 @@
 #ifndef DIT_H
 #define DIT_H
 
+#define DOWNLOADSFOLDERPATH "/opt/usr/media/Downloads"
+
 #include <stdbool.h>
 #include <stdalign.h>
 #include <tizen.h>
