@@ -31,7 +31,7 @@ Bluetooth NewBluetooth (void)
     this->accessible    = false;
     this->remoteMACAddr = NULL;
 
-    return &this->Bluetooth;
+    return &this->bluetooth;
 }
 
 void DestroyBluetooth (Bluetooth this_gen)
@@ -320,8 +320,9 @@ static void bt_opp_server_transfer_finished_cb_for_oppx (int result, const char 
 
     String * recvBuffer = (String *)user_data;
 
-    size_t size = strlen (file) + strlen (DOWNLOADSFOLDERPATH) + 2;
-    *recvBuffer = (String)malloc (size);
+    size_t fileLen = strlen (file);
+    size_t downloadLen = strlen (DOWNLOADSFOLDERPATH);
+    *recvBuffer = (String)malloc (fileLen + downloadLen + 2);
     strcpy (recvBuffer, DOWNLOADSFOLDERPATH);
     strcat (recvBuffer, "/");
     strcat (recvBuffer, file);
