@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+
 #include <dlog.h>
 
 #ifdef __cplusplus

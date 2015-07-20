@@ -1,10 +1,10 @@
 #ifndef DIT_DEVICESTATUS_H
 #define DIT_DEVICESTATUS_H
 
-#include "dit.h"
-
 #include <stdbool.h>
 #include <stdalign.h>
+
+#include "dit.h"
 
 #include <device/display.h>
 #include <device/haptic.h>
