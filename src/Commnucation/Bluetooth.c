@@ -103,9 +103,9 @@ bool onBluetoothConnect (Bluetooth this_gen)
             int res = 0;
 
             res += bt_initialize ();
-            ret += bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
-            ret += bt_adapter_foreach_bonded_device (adapter_bonded_device_cbx, this);
-            ret += bt_adapter_start_device_discovery ();
+            res += bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
+            res += bt_adapter_foreach_bonded_device (adapter_bonded_device_cbx, this);
+            res += bt_adapter_start_device_discovery ();
 
             if ( res == BT_ERROR_NONE )
             {
