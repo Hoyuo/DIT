@@ -278,7 +278,8 @@ static void adapter_state_changed_cbx (int result, bt_adapter_state_e adapter_st
     if ( adapter_state == BT_ADAPTER_ENABLED )
     {
         bt_adapter_visibility_mode_e mode;
-        int                          duration = 1;
+
+        int duration = 1;
 
         bt_adapter_get_visibility (&mode, &duration);
 
@@ -297,7 +298,7 @@ static void adapter_state_changed_cbx (int result, bt_adapter_state_e adapter_st
     }
     else
     {
-        certainBTstate->accessible = false;
+        this->accessible = false;
     }
 }
 
