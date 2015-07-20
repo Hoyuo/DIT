@@ -6,7 +6,6 @@
 
 #include "dit.h"
 
-#include <bluetooth.h>
 #include <glib.h>
 
 #ifdef __cplusplus
@@ -23,9 +22,9 @@ struct _Bluetooth
 
     bool (* onDisconnect) (Bluetooth this_gen);
 
-    int (* Recv) (Bluetooth this_gen);
+    int  (* Recv) (Bluetooth this_gen);
 
-    int (* Send) (Bluetooth this_gen, String sendbuffer);
+    int  (* Send) (Bluetooth this_gen, String sendbuffer);
 
     bool (* isConnected) (Bluetooth this_gen);
 };
