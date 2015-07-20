@@ -2,97 +2,94 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-
+#include <glib.h>
 #include <tizen.h>
 #include <player.h>
 #include <Evas.h>
 #include <metadata_extractor.h>
-
+#include <media_content.h>
+#include <dlog.h>
+/*
+ *
+ * @brief
+ * @remark privilege:  http://tizen.org/privilege/mediastorage http://tizen.org/privilege/display/externalstorage needed
+ *
+ * */
 File NewFile ()
 {
-    File this = malloc (sizeof (struct _File));
+	File this = malloc (sizeof (struct _File));
 
-    this->Create = createFile;
-    this->Delete = deleteFile;
-    this->Copy   = copyFile;
-    this->Move   = moveFile;
-    this->Search = searchFile;
+	this->Create = createFile;
+	this->Delete = deleteFile;
+	this->Copy   = copyFile;
+	this->Move   = moveFile;
+	this->Search = searchFile;
 
-    return this;
+	return this;
 }
 
 void DestroyFile (File this_gen)
 {
-    if ( NULL != this_gen )
-    {
-        free (this_gen);
-    }
+	if ( NULL != this_gen )
+	{
+		free (this_gen);
+	}
 }
 
 void createFile (String src)
 {
-    if ( NULL != src )
-    {
-        FILE * temp = fopen (src, "wb+");
-        fclose (temp);
-    }
+	if ( NULL != src )
+	{
+		FILE * temp = fopen (src, "wb+");
+		fclose (temp);
+	}
 }
 
 void deleteFile (String src)
 {
-    if ( NULL != src )
-    {
-        remove (src);
-    }
+	if ( NULL != src )
+	{
+		remove (src);
+	}
 }
 
 void copyFile (String src, String dst)
 {
-    FILE * source, * target;
+	char buff[BUFSIZ];
+	FILE *in, *out;
+	size_t n;
 
-    source = fopen (src, "r");
-    target = fopen (dst, "w");
-
-    char ch = 0;
-    while ((ch = fgetc (source)) != EOF)
-    {
-        fputc (ch, target);
-    }
-    fclose (source);
-    fclose (target);
+	in = fopen( src, "rb" );
+	out= fopen( dst, "wb" );
+	while ( (n=fread(buff,1,BUFSIZ,in)) != 0 ) {
+		fwrite( buff, 1, n, out );
+	}
+	fclose(in);
+	fclose(out);
 }
 
 void moveFile (String src, String dst)
 {
-    FILE * source, * target;
+	char buff[BUFSIZ];
+	FILE *in, *out;
+	size_t n;
 
-    source = fopen (src, "r");
-    target = fopen (dst, "w");
+	in = fopen( src, "rb" );
+	out= fopen( dst, "wb" );
+	while ( (n=fread(buff,1,BUFSIZ,in)) != 0 ) {
+		fwrite( buff, 1, n, out );
+	}
+	fclose(in);
+	fclose(out);
 
-    int  len = 0;
-    char buf[1024];
-    while ((len = fread (buf, sizeof (char), sizeof (buf), source)) != 0)
-    {
-        if ( fwrite (buf, sizeof (char), len, target) == 0 )
-        {
-            fclose (source);
-            fclose (target);
-
-            remove (dst);// 에러난 파일 지우고 종료
-            return;
-        }
-    }
-
-    fclose (source);
-    fclose (target);
-    remove (src);
+	remove(src);
 }
 
 String * searchFile (String src, String dst)
 {
-    //todo : 작업 진행 안함
+	//todo : 작업 진행 안함
 
-    return NULL;
+	return NULL;
 }
 
 /*
@@ -104,243 +101,239 @@ String * searchFile (String src, String dst)
 Video NewVideo ()
 {
 
-    VideoExtends * this = (VideoExtends *)malloc (sizeof (VideoExtends));
+	VideoExtends * this = (VideoExtends *)malloc (sizeof (VideoExtends));
 
-    this->video.getInfo  = getVideoInfo;
-    this->video.Pause    = pauseVideo;
-    this->video.Play     = playVideo;
-    this->video.Record   = recordVideo;
-    this->video.Stop     = stopVideo;
-    this->video.setURI        = setVideoURI;
-    this->video.setObject = setEvasObject;
+	this->video.getInfo  = getVideoInfo;
+	this->video.Pause    = pauseVideo;
+	this->video.Play     = playVideo;
+	this->video.Record   = recordVideo;
+	this->video.Stop     = stopVideo;
+	this->video.setURI        = setVideoURI;
+	this->video.setObject = setEvasObject;
 
-    this->videoMetadataHandle = NULL;
-    this->player_handle       = NULL;
-    this->uri                 = NULL;
-    this->EvasObject          = NULL;
+	this->videoMetadataHandle = NULL;
+	this->player_handle       = NULL;
+	this->uri                 = NULL;
+	this->EvasObject          = NULL;
 
-    player_error_e res;
-    res = player_create (&this->player_handle);
-    AerrorTest (res);
-    res = metadata_extractor_create (&this->videoMetadataHandle);
-    AerrorTest (res);
+	player_error_e res;
+	res = player_create (&this->player_handle);
+	res = metadata_extractor_create (&this->videoMetadataHandle);
 
-    return &this->video;
+	return &this->video;
 }
 
 void DestroyVideo (Video this_gen)
 {
 
-    if ( NULL == this_gen )
-    {
-        return;
-    }
+	if ( NULL == this_gen )
+	{
+		return;
+	}
 
-    VideoExtends * this = (VideoExtends *)this_gen;
-    player_error_e res;
-    res = player_destroy (this->player_handle);
+	VideoExtends * this = (VideoExtends *)this_gen;
+	player_error_e res;
+	res = player_destroy (this->player_handle);
 
-    if ( this->uri != NULL)
-    {
-        free (this->uri);
-    }
+	if ( this->uri != NULL)
+	{
+		free (this->uri);
+	}
 
-    free (this);
+	free (this);
 }
 
 void playVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
+	VideoExtends * this = (VideoExtends *)this_gen;
 
-    player_error_e res;
-    res = player_set_uri (this->player_handle, this->uri);
-    AerrorTest (res);
-    res = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
-    AerrorTest (res);
+	player_error_e res;
+	res = player_set_uri (this->player_handle, this->uri);
+	res = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
 
-    res = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
-    AerrorTest (res);
+	res = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
 
-    res = player_prepare (this->player_handle);
-    AerrorTest (res);
+	res = player_prepare (this->player_handle);
 
-    res = player_start (this->player_handle);
-    AerrorTest (res);
+	res = player_start (this->player_handle);
 }
 
 void pauseVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
-    player_error_e res;
-    res = player_pause (this->player_handle);
+	VideoExtends * this = (VideoExtends *)this_gen;
+	player_error_e res;
+	res = player_pause (this->player_handle);
 
 }
 
 void stopVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
-    player_error_e res;
-    res = player_stop (this->player_handle);
+	VideoExtends * this = (VideoExtends *)this_gen;
+	player_error_e res;
+	res = player_stop (this->player_handle);
 
 }
 
 void recordVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
+	VideoExtends * this = (VideoExtends *)this_gen;
 
 }
-
-void getVideoInfo (Video this_gen)
+/**
+ *	@brief for use this function, caller must import <metadata_extractor.h>
+ *
+ *	@remark return value must be free()
+ */
+String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
+	VideoExtends * this = (VideoExtends *)this_gen;
+	String resultInfo;
 
+	metadata_extractor_get_metadata(this->videoMetadataHandle,element,&resultInfo);
+
+	return resultInfo;
 }
 
 void setVideoURI (Video this_gen, char * uri)
 {
 
-    if ( this_gen == NULL)
-    {
-        return;
-    }
+	if ( this_gen == NULL)
+	{
+		return;
+	}
 
-    if ( NULL == uri )
-    {
-        return;
-    }
+	if ( NULL == uri )
+	{
+		return;
+	}
 
-    VideoExtends * this = (VideoExtends *)this_gen;
+	VideoExtends * this = (VideoExtends *)this_gen;
 
-    if ( NULL != this->uri )
-    {
-        free (this->uri);
-    }
-    this->uri = malloc (strlen (uri) + sizeof (char));
-    strcpy (this->uri, uri);
+	if ( NULL != this->uri )
+	{
+		free (this->uri);
+	}
+	this->uri = malloc (strlen (uri) + sizeof (char));
+	strcpy (this->uri, uri);
 
 }
 
 void setEvasObject (Video this_gen, Evas_Object * EvasObject)
 {
 
-    if ( this_gen == NULL)
-    {
-        return;
-    }
-    VideoExtends * this = (VideoExtends *)this_gen;
+	if ( this_gen == NULL)
+	{
+		return;
+	}
+	VideoExtends * this = (VideoExtends *)this_gen;
 
-    this->EvasObject = EvasObject;
+	this->EvasObject = EvasObject;
 
 }
 
 Audio NewAudio ()
 {
 
-    AudioExtends * this = (AudioExtends *)malloc (sizeof (AudioExtends));
+	AudioExtends * this = (AudioExtends *)malloc (sizeof (AudioExtends));
 
-    this->audio.getInfo = getAudioInfo;
-    this->audio.Pause   = pauseAudio;
-    this->audio.Play    = playAudio;
-    this->audio.Record  = recordAudio;
-    this->audio.Stop    = stopAudio;
-    this->audio.setURI       = setAudioURI;
+	this->audio.getInfo = getAudioInfo;
+	this->audio.Pause   = pauseAudio;
+	this->audio.Play    = playAudio;
+	this->audio.Record  = recordAudio;
+	this->audio.Stop    = stopAudio;
+	this->audio.setURI       = setAudioURI;
 
-    this->uri                 = NULL;
-    this->player_handle       = NULL;
-    this->audioMetadataHandle = NULL;
+	this->uri                 = NULL;
+	this->player_handle       = NULL;
+	this->audioMetadataHandle = NULL;
 
-    player_error_e res;
+	player_error_e res;
 
-    res = player_create (&this->player_handle);
+	res = player_create (&this->player_handle);
 
-    res = metadata_extractor_create (&this->audioMetadataHandle);
-    AerrorTest (res);
-    return &this->audio;
+	res = metadata_extractor_create (&this->audioMetadataHandle);
+	return &this->audio;
 }
 
 void DestroyAudio (Audio this_gen)
 {
 
-    if ( this_gen == NULL)
-    {
-        return;
-    }
-    AudioExtends * this = (AudioExtends *)this_gen;
-    if ( this->uri != NULL)
-    {
-        free (this->uri);
-    }
-    player_error_e res;
-    metadata_extractor_destroy (this->audioMetadataHandle);
-    res = player_unprepare (this->player_handle);
-    res = player_destroy (this->player_handle);
-    free (this);
+	if ( this_gen == NULL)
+	{
+		return;
+	}
+	AudioExtends * this = (AudioExtends *)this_gen;
+	if ( this->uri != NULL)
+	{
+		free (this->uri);
+	}
+
+	player_error_e res;
+	metadata_extractor_destroy (this->audioMetadataHandle);
+	res = player_unprepare (this->player_handle);
+	res = player_destroy (this->player_handle);
+	free (this);
 
 }
 
 void playAudio (Audio this_gen)
 {
-    player_error_e res;
+	player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
+	AudioExtends * this = (AudioExtends *)this_gen;
 
-    res = player_set_uri (this->player_handle, this->uri);
-    AerrorTest (res);
+	res = player_set_uri (this->player_handle, this->uri);
 
-    res = player_prepare (this->player_handle);
-    AerrorTest (res);
+	res = player_prepare (this->player_handle);
 
-    res = player_start (this->player_handle);
-    AerrorTest (res);
+	res = player_start (this->player_handle);
 }
 
 void pauseAudio (Audio this_gen)
 {
-    player_error_e res;
+	player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
-    res = player_pause (this->player_handle);
-    AerrorTest (res);
+	AudioExtends * this = (AudioExtends *)this_gen;
+	res = player_pause (this->player_handle);
 
 }
 
 void stopAudio (Audio this_gen)
 {
-    player_error_e res;
+	player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
-    res = player_stop (this->player_handle);
-    AerrorTest (res);
+	AudioExtends * this = (AudioExtends *)this_gen;
+	res = player_stop (this->player_handle);
 
 }
 
 void recordAudio (Audio this_gen)
 {
 
-    AudioExtends * this = (AudioExtends *)this_gen;
+	AudioExtends * this = (AudioExtends *)this_gen;
 }
 
 void setAudioURI (Audio this_gen, char * uri)
 {
 
-    if ( this_gen == NULL)
-    {
-        return;
-    }
-    AudioExtends * this = (AudioExtends *)this_gen;
+	if ( this_gen == NULL)
+	{
+		return;
+	}
+	AudioExtends * this = (AudioExtends *)this_gen;
 
-    if ( NULL == uri )
-    {
-        return;
-    }
-    if ( NULL != this->uri )
-    {
-        free (this->uri);
-    }
-    this->uri = malloc (strlen (uri) + sizeof (char));
-    strcpy (this->uri, uri);
+	if ( NULL == uri )
+	{
+		return;
+	}
+	if ( NULL != this->uri )
+	{
+		free (this->uri);
+	}
+	this->uri = malloc (strlen (uri) + sizeof (char));
+	strcpy (this->uri, uri);
 
-    metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
+	metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
 }
 
 /**
@@ -351,123 +344,167 @@ void setAudioURI (Audio this_gen, char * uri)
 char * getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
 {
 
-    AudioExtends * this = (AudioExtends *)this_gen;
-    metadata_extractor_error_e error_value;
+	AudioExtends * this = (AudioExtends *)this_gen;
+	metadata_extractor_error_e error_value;
 
-    char * res = NULL;
-    error_value = metadata_extractor_get_metadata (this->audioMetadataHandle, metadataKey, &res);
+	char * res = NULL;
+	error_value = metadata_extractor_get_metadata (this->audioMetadataHandle, metadataKey, &res);
 
-    return res;
+	return res;
 }
 
 Image NewImage ()
 {
-    Image this = (Image)malloc (sizeof (struct _Image));
+	ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
 
-    this->getInfo = getImageInfo;
+	this->image.extractInfo = getImageInfo;
+	this->imageMetaHandle =NULL;
+	this->image.getBurstId	=getImageBurstId;
+	this->image.getMediaId	=getImageMediaId;
+	this->image.getDateTaken=getImageDateTaken;
+	this->image.getWidth	=getImageWidth;
+	this->image.getHeight	=getImageHeight;
+	this->height =-1;
+	this->width =-1;
+	this->burst_id =NULL;
+	this->datetaken =NULL;
+	this->media_id=NULL;
 
-    return this;
+	return &this->image;
 }
 
 void DestroyImage (Image this_gen)
 {
-    if ( this_gen )
-    {
-        return;
-    }
+	if ( this_gen )
+	{
+		return;
+	}
 
-    free (this_gen);
+	ImageExtends* this = (ImageExtends*)this_gen;
+
+	if(this->imageMetaHandle !=NULL)
+	{
+		image_meta_destroy(this->imageMetaHandle);
+	}
+
+	if(this->burst_id) 	free(this->burst_id);
+	if(this->datetaken) free(this->datetaken);
+	if(this->media_id)	free(this->media_id);
+	free (this_gen);
 }
 
-void getImageInfo (Image this_gen)
+
+bool gallery_media_item_cbx(media_info_h media, void *user_data)
 {
+	media_info_h new_media = NULL;
+	media_info_clone(&new_media, media);
 
+	GList **list = (GList**)user_data;
+	*list = g_list_append(*list, new_media);
+
+	return false;
 }
 
-//void AerrorTest (player_error_e x)
-//{
-//    char code[] = "DIT Error";
-//    switch (x)
-//    {
-//    case PLAYER_ERROR_NONE:
-//        LOGERROR (code, "PLAYER_ERROR_NONE");
-//        break;
-//
-//    case PLAYER_ERROR_OUT_OF_MEMORY:
-//        LOGERROR (code, "PLAYER_ERROR_OUT_OF_MEMORY");
-//        break;
-//    case    PLAYER_ERROR_INVALID_PARAMETER:
-//        LOGERROR (code, "PLAYER_ERROR_INVALID_PARAMETER");
-//        break;
-//
-//    case    PLAYER_ERROR_NO_SUCH_FILE:
-//        LOGERROR (code, "PLAYER_ERROR_NO_SUCH_FILE");
-//        break;
-//
-//    case    PLAYER_ERROR_INVALID_OPERATION:
-//        LOGERROR (code, "PLAYER_ERROR_INVALID_OPERATION");
-//        break;
-//
-//    case    PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE:
-//        LOGERROR (code, "PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE");
-//        break;
-//
-//    case    PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE:
-//        LOGERROR (code, "PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE");
-//        break;
-//
-//    case    PLAYER_ERROR_SEEK_FAILED:
-//        LOGERROR (code, "PLAYER_ERROR_SEEK_FAILED");
-//        break;
-//
-//    case    PLAYER_ERROR_INVALID_STATE:
-//        LOGERROR (code, "PLAYER_ERROR_INVALID_STATE");
-//        break;
-//
-//    case    PLAYER_ERROR_NOT_SUPPORTED_FILE:
-//        LOGERROR (code, "PLAYER_ERROR_NOT_SUPPORTED_FILE");
-//        break;
-//
-//    case    PLAYER_ERROR_INVALID_URI:
-//        LOGERROR (code, "PLAYER_ERROR_INVALID_URI");
-//        break;
-//
-//    case    PLAYER_ERROR_SOUND_POLICY:
-//        LOGERROR (code, "PLAYER_ERROR_SOUND_POLICY");
-//        break;
-//
-//    case    PLAYER_ERROR_CONNECTION_FAILED:
-//        LOGERROR (code, "PLAYER_ERROR_CONNECTION_FAILED");
-//        break;
-//
-//    case    PLAYER_ERROR_VIDEO_CAPTURE_FAILED:
-//        LOGERROR (code, "PLAYER_ERROR_VIDEO_CAPTURE_FAILED");
-//        break;
-//
-//    case    PLAYER_ERROR_DRM_EXPIRED:
-//        LOGERROR (code, "PLAYER_ERROR_DRM_EXPIRED");
-//        break;
-//
-//    case    PLAYER_ERROR_DRM_NO_LICENSE:
-//        LOGERROR (code, "PLAYER_ERROR_DRM_NO_LICENSE");
-//        break;
-//
-//    case    PLAYER_ERROR_DRM_FUTURE_USE:
-//        LOGERROR (code, "PLAYER_ERROR_DRM_FUTURE_USE");
-//        break;
-//
-//    case    PLAYER_ERROR_DRM_NOT_PERMITTED:
-//        LOGERROR (code, "PLAYER_ERROR_DRM_NOT_PERMITTED");
-//        break;
-//
-//    case    PLAYER_ERROR_RESOURCE_LIMIT:
-//        LOGERROR (code, "PLAYER_ERROR_RESOURCE_LIMIT");
-//        break;
-//
-//    case    PLAYER_ERROR_PERMISSION_DENIED:
-//        LOGERROR (code, "PLAYER_ERROR_PERMISSION_DENIED");
-//        break;
-//
-//    }
-//
-//}
+
+// @param[in] src fullpath of image
+
+void getImageInfo (Image this_gen, String src)
+{
+	media_content_connect();
+
+
+	GList *all_item_list = NULL; // Include glib.h
+	media_content_type_e media_type;
+	media_info_h media_handle = NULL;
+	char *media_id = NULL;
+
+	char buf[1024] = {'\0'};
+	int ret = MEDIA_CONTENT_ERROR_NONE;
+	filter_h filter = NULL;
+	media_content_collation_e collate_type = MEDIA_CONTENT_COLLATE_NOCASE;
+	media_content_order_e order_type = MEDIA_CONTENT_ORDER_DESC;
+
+	ImageExtends* this = (ImageExtends*)this_gen;
+	media_filter_create(&filter);
+
+	// Set the condition
+	snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE,MEDIA_PATH,"'/opt/usr/media/Images/Screenshots/Screen-20150428190316.png'");
+
+	ret = media_filter_set_condition(filter, buf, collate_type);
+	if (ret != MEDIA_CONTENT_ERROR_NONE)
+	{
+		media_filter_destroy(filter);
+
+		return ;
+	}
+	ret = media_filter_set_order(filter, order_type, MEDIA_DISPLAY_NAME, collate_type);
+	if (ret != MEDIA_CONTENT_ERROR_NONE)
+	{
+		media_filter_destroy(filter);
+
+		return ;
+	}
+
+	ret = media_info_foreach_media_from_db(filter, gallery_media_item_cbx, &all_item_list);
+	if (ret != MEDIA_CONTENT_ERROR_NONE)
+	{
+		return ;
+	}
+	else
+	{
+		media_handle = (media_info_h)g_list_nth_data(all_item_list, 0);
+
+		media_info_get_media_id(media_handle, &this->media_id);
+
+
+
+		if (media_type == MEDIA_CONTENT_TYPE_IMAGE)
+		{
+			image_meta_h image_handle;
+
+			ret = media_info_get_image(media_handle, &image_handle);
+			if (ret != MEDIA_CONTENT_ERROR_NONE)
+			{
+				// Error handling
+			}
+			else
+			{
+				image_meta_get_width(image_handle, &this->width);
+
+				image_meta_get_height(image_handle, &this->height);
+
+
+				if(this->datetaken) free(this->datetaken);
+				image_meta_get_date_taken(image_handle, &this->datetaken);
+
+				if(this->burst_id) 	free(this->burst_id);
+				image_meta_get_burst_id(image_handle, &this->burst_id);
+
+			}
+
+		}
+	}
+}
+String  getImageBurstId (Image this_gen){
+	ImageExtends* this = (ImageExtends*)this_gen;
+
+	return strdup(this->burst_id);
+}
+String  getImageMediaId (Image this_gen){
+	ImageExtends* this = (ImageExtends*)this_gen;
+
+	return strdup(this->media_id);
+}
+String  getImageDateTaken (Image this_gen){
+	ImageExtends* this = (ImageExtends*)this_gen;
+	return strdup(this->datetaken);
+}
+
+int		getImageWidth(Image this_gen){
+	ImageExtends* this = (ImageExtends*)this_gen;
+	return this->width;
+}
+int 	getImageHeight(Image this_gen){
+	ImageExtends* this = (ImageExtends*)this_gen;
+	return this->height;
+}
