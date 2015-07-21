@@ -80,10 +80,6 @@ void OngoingNotificationShow (OngoingNotification this_gen)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
 
-        notification_set_image (this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-        notification_set_sound (this->ongoingnotification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA, this->soundPath);
 
         notification_post (this->ongoingnotification_handle);
 
@@ -121,6 +117,8 @@ void setOngoingNotificationTitle (OngoingNotification this_gen, String title)
 
         this->title = malloc (strlen (title) + sizeof (char));
         strcpy(this->title, title);
+
+        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     }
 }
 
@@ -142,6 +140,8 @@ void setOngoingNotificationText (OngoingNotification this_gen, String text)
 
         this->text = malloc (strlen (text) + sizeof (char));
         strcpy(this->text, text);
+
+        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
     }
 }
 
@@ -164,6 +164,9 @@ void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
 
         this->imagePath = malloc (strlen (imagePath) + sizeof (char));
         strcpy(this->imagePath, imagePath);
+
+        notification_set_image (this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
+
     }
 }
 
@@ -186,6 +189,8 @@ void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
 
         this->soundPath = malloc (strlen (soundPath) + sizeof (char));
         strcpy(this->soundPath, soundPath);
+
+        notification_set_sound (this->ongoingnotification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA, this->soundPath);
     }
 }
 
@@ -204,11 +209,6 @@ void updateOngoingNotification (OngoingNotification this_gen)
     if ( this_gen != NULL)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
-
-        notification_set_image (this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
-        notification_set_sound (this->ongoingnotification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA, this->soundPath);
 
         notification_update (this->ongoingnotification_handle);
     }
