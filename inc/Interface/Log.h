@@ -18,6 +18,15 @@ extern "C" {
 
 #define LOGERROR(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_ERROR, tag, format, ##arg)
 
+#define LOGIF(expr, tag, fmt, arg...) \
+{ \
+    if (expr) \
+    { \
+    	LOGERROR(tag, fmt, ##arg); \
+        return; \
+    } \
+}
+
 #ifdef __cplusplus
 }
 #endif
