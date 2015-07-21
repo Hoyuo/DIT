@@ -31,7 +31,6 @@ typedef struct _File * File;
 struct _File
 {
 
-	void (* Create) (String src);
 
 	void (* Delete) (String src);
 
@@ -46,7 +45,6 @@ struct _File
 
 File NewFile ();
 void DestroyFile (File this_gen);
-void createFile (String src);
 void deleteFile (String src);
 void copyFile (String src, String dst);
 void moveFile (String src, String dst);
