@@ -23,7 +23,7 @@ File NewFile ()
 {
 	File this = malloc (sizeof (struct _File));
 
-
+	this->Delete = deleteFile;
 	this->Copy   = copyFile;
 	this->Move   = moveFile;
 	this->Search = searchFile;
@@ -38,7 +38,18 @@ void DestroyFile (File this_gen)
 		free (this_gen);
 	}
 }
+void deleteFile(String src){
 
+	if(src!=NULL){
+		remove(src);
+	}
+
+}
+
+void moveFile (String src, String dst)
+{
+	rename(src,dst);
+}
 
 void copyFile (String src, String dst)
 {
@@ -55,52 +66,45 @@ void copyFile (String src, String dst)
 	fclose(out);
 }
 
-void moveFile (String src, String dst)
-{
-	char buff[BUFSIZ];
-	FILE *in, *out;
-	size_t n;
 
-	in = fopen( src, "rb" );
-	out= fopen( dst, "wb" );
-	while ( (n=fread(buff,1,BUFSIZ,in)) != 0 ) {
-		fwrite( buff, 1, n, out );
-	}
-	fclose(in);
-	fclose(out);
-
-	remove(src);
-}
 
 // file search recursion Function using GList
-void search_recur(char *dir, char* depth,GList** searchList)
+void search_recur(String src, String dest,GList** searchList)
 {
+
 	DIR *dp;
 	struct dirent *entry;
 	struct stat statbuf;
-	if((dp = opendir(dir)) == NULL) {
+	if((dp = opendir(src)) == NULL) {
 		return;
 	}
-	chdir(dir);
-	while((entry = readdir(dp)) != NULL) {
+
+	chdir(src);
+
+	while((entry = readdir(dp)) != NULL)
+	{
 		lstat(entry->d_name,&statbuf);
-		if(S_ISDIR(statbuf.st_mode)) {
+		if(S_ISDIR(statbuf.st_mode))
+		{
+
 			/* Found a directory, but ignore . and .. */
-			if(strcmp(".",entry->d_name) == 0 ||
-					strcmp("..",entry->d_name) == 0)
+			if(strcmp(".",entry->d_name) == 0 ||strcmp("..",entry->d_name) == 0)
 				continue;
-			if(strcmp(entry->d_name,depth)==0){
-				char* pPath =realpath(entry->d_name,NULL);
-				*searchList= g_list_append(*searchList,strdup(pPath));
+			if(strcmp(entry->d_name,dest)==0)
+			{
+				String pPath =realpath(entry->d_name,NULL);
+				*searchList= g_list_append(*searchList,(gpointer)pPath);
 			}
 
 			/* Recurse at a new indent level */
-			search_recur(entry->d_name,depth,searchList);
+			search_recur(entry->d_name,dest,searchList);
 
 		}
-		else  if(strcmp(entry->d_name,depth)==0){
+		else if(strcmp(entry->d_name,dest)==0)
+		{
 			char* pPath =realpath(entry->d_name,NULL);
-			*searchList= g_list_append(*searchList,strdup(pPath));
+			*searchList= g_list_append(*searchList,(gpointer)pPath);
+
 		}
 	}
 	chdir("..");
@@ -463,11 +467,13 @@ void getImageInfo (Image this_gen, String src)
 	ImageExtends* this = (ImageExtends*)this_gen;
 	media_filter_create(&filter);
 
-	String filterpath = calloc(strlen(src)+4,sizeof(char));
+	String filterpath = calloc(strlen(src)+3,sizeof(char));
 
+	snprintf(filterpath,strlen(src)+3,"'%s'\0",src);
 	// Set the condition
-	snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE,MEDIA_PATH,);
+	snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE,MEDIA_PATH,filterpath);
 
+	free(filterpath);
 	ret = media_filter_set_condition(filter, buf, collate_type);
 	if (ret != MEDIA_CONTENT_ERROR_NONE)
 	{
