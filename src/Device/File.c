@@ -256,7 +256,8 @@ void setVideoURI (Video this_gen, char * uri)
 	}
 	this->uri = malloc (strlen (uri) + sizeof (char));
 	strcpy (this->uri, uri);
-
+	this->uri[strlen(uri)]=0;
+	metadata_extractor_set_path(this->videoMetadataHandle,this->uri);
 }
 
 void setEvasObject (Video this_gen, Evas_Object * EvasObject)
@@ -373,7 +374,7 @@ void setAudioURI (Audio this_gen, char * uri)
 	}
 	this->uri = malloc (strlen (uri) + sizeof (char));
 	strcpy (this->uri, uri);
-
+	this->uri[strlen(uri)]=0;
 	metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
 }
 
