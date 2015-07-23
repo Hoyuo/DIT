@@ -1,445 +1,1092 @@
 #include "Device/Sensor.h"
 #include <stdlib.h>
 #include <sensor.h>
+#include <string.h>
 
-Sensor* NewSensor()
+Accelerometer NewAccelerometer()
 {
-	SensorExtend* this = (SensorExtend*)malloc(sizeof(SensorExtend));
-	this->sensor.getAllSensorData = getAllSensorData;
-	this->sensor.hasAccelerometer = hasAccelerometer;
-	this->sensor.getAccelerometerData = getAccelerometerData;
-	this->sensor.hasGravity = hasGravity;
-	this->sensor.getGravityData = getGravityData;
-	this->sensor.hasLinearAccelation = hasLinearAccelation;
-	this->sensor.getLinearAccelationData = getAllSensorData;
-	this->sensor.hasMagnetoMeter = hasMagnetoMeter;
-	this->sensor.getMagnetoMeterData = getMagnetoMeterData;
-	this->sensor.hasRotationVector = hasRotationVector;
-	this->sensor.getRotationVectorData = getRotationVectorData;
-	this->sensor.hasOrientation = hasOrientation;
-	this->sensor.getOrientationData = getOrientationData;
-	this->sensor.hasGyroscope = hasGyroscope;
-	this->sensor.getGyroscopeData = getGyroscopeData;
-	this->sensor.hasLight = hasLight;
-	this->sensor.getLightData = getLightData;
-	this->sensor.hasProximity = hasProximity;
-	this->sensor.getProximityData = getProximityData;
-	this->sensor.hasPressure = hasPressure;
-	this->sensor.getPressureData = getPressureData;
-	this->sensor.hasUltraViolet = hasUltraViolet;
-	this->sensor.getUltraVioletData = getUltraVioletData;
-	this->sensor.hasTemperature = hasTemperature;
-	this->sensor.getTemperatureData = getTemperatureData;
-	this->sensor.hasHumidity = hasHumidity;
-	this->sensor.getHumidityData = getHumidityData;
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
 
-	return &this->sensor;
+
+	AccelerometerExtend* this= malloc(sizeof(AccelerometerExtend));
+
+	this->accelerometer.Off=AccelerometerOff;
+	this->accelerometer.On=AccelerometerOn;
+	this->accelerometer.addCallback =addAccelerometerCallback;
+	this->accelerometer.getValue=getAccelerometerValue;
+	this->accelerometer.isSupported=isAccelerometerSupported;
+
+	this->type=SENSOR_ACCELEROMETER;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->accelerometer;
 }
 
-void DestroySensor(Sensor* this_gen)
+
+void DestroyAccelerometer(Accelerometer this_gen)
 {
-	if (this_gen != NULL)
+	if(this_gen==NULL)
 	{
-		SensorExtend* this = (SensorExtend*) this_gen;
-		free(this);
+		return;
 	}
+
+	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
 }
 
-SensorValue getAllSensorData(Sensor* this_gen)
+void addAccelerometerCallback(Accelerometer this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_ALL;
-	sensor_h *list;
+	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
 
-	this->error = sensor_get_default_sensor(this->type, &list);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
-
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	free(list);
-	return data;
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void AccelerometerOn(Accelerometer this_gen)
+{
+	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
+	sensor_listener_start(this->listener);
 }
 
-bool hasAccelerometer(Sensor* this_gen)
+void AccelerometerOff(Accelerometer this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_ACCELEROMETER;
-	this->error = sensor_is_supported(this->type, &supported);
+	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
 
+bool isAccelerometerSupported(Accelerometer this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
 	return supported;
 }
 
-SensorValue getAccelerometerData(Sensor* this_gen)
+valueset getAccelerometerValue(Accelerometer this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_ACCELEROMETER;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasGravity(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_GRAVITY;
-	this->error = sensor_is_supported(this->type, &supported);
 
+Gravity NewGravity()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	GravityExtend* this= malloc(sizeof(GravityExtend));
+
+	this->gravity.Off=GravityOff;
+	this->gravity.On=GravityOn;
+	this->gravity.addCallback =addGravityCallback;
+	this->gravity.getValue=getGravityValue;
+	this->gravity.isSupported=isGravitySupported;
+
+	this->type=SENSOR_GRAVITY;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->gravity;
+}
+
+
+void DestroyGravity(Gravity this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	GravityExtend* this= (GravityExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addGravityCallback(Gravity this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	GravityExtend* this= (GravityExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void GravityOn(Gravity this_gen)
+{
+	GravityExtend* this= (GravityExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void GravityOff(Gravity this_gen)
+{
+	GravityExtend* this= (GravityExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isGravitySupported(Gravity this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_GRAVITY,&supported);
 	return supported;
 }
 
-SensorValue getGravityData(Sensor* this_gen)
+valueset getGravityValue(Gravity this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_GRAVITY;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	GravityExtend* this= (GravityExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasLinearAccelation(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_LINEAR_ACCELERATION;
-	this->error = sensor_is_supported(this->type, &supported);
 
+LinearAccelation NewLinearAccelation()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	LinearAccelationExtend* this= malloc(sizeof(LinearAccelationExtend));
+
+	this->linearaccelation.Off=LinearAccelationOff;
+	this->linearaccelation.On=LinearAccelationOn;
+	this->linearaccelation.addCallback =addLinearAccelationCallback;
+	this->linearaccelation.getValue=getLinearAccelationValue;
+	this->linearaccelation.isSupported=isLinearAccelationSupported;
+
+	this->type=SENSOR_LINEAR_ACCELERATION;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->linearaccelation;
+}
+
+
+void DestroyLinearAccelation(LinearAccelation this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addLinearAccelationCallback(LinearAccelation this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void LinearAccelationOn(LinearAccelation this_gen)
+{
+	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void LinearAccelationOff(LinearAccelation this_gen)
+{
+	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isLinearAccelationSupported(LinearAccelation this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_LINEAR_ACCELERATION,&supported);
 	return supported;
 }
 
-SensorValue getLinearAccelationData(Sensor* this_gen)
+valueset getLinearAccelationValue(LinearAccelation this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_LINEAR_ACCELERATION;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasMagnetoMeter(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_MAGNETIC;
-	this->error = sensor_is_supported(this->type, &supported);
 
+MagnetoMeter NewMagnetoMeter()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	MagnetoMeterExtend* this= malloc(sizeof(MagnetoMeterExtend));
+
+	this->magnetometer.Off=MagnetoMeterOff;
+	this->magnetometer.On=MagnetoMeterOn;
+	this->magnetometer.addCallback =addMagnetoMeterCallback;
+	this->magnetometer.getValue=getMagnetoMeterValue;
+	this->magnetometer.isSupported=isMagnetoMeterSupported;
+
+	this->type=SENSOR_MAGNETIC;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->magnetometer;
+}
+
+
+void DestroyMagnetoMeter(MagnetoMeter this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addMagnetoMeterCallback(MagnetoMeter this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void MagnetoMeterOn(MagnetoMeter this_gen)
+{
+	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void MagnetoMeterOff(MagnetoMeter this_gen)
+{
+	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isMagnetoMeterSupported(MagnetoMeter this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
 	return supported;
 }
 
-SensorValue getMagnetoMeterData(Sensor* this_gen)
+valueset getMagnetoMeterValue(MagnetoMeter this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_MAGNETIC;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasRotationVector(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_ROTATION_VECTOR;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+RotationVector NewRotationVector()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	RotationVectorExtend* this= malloc(sizeof(RotationVectorExtend));
+
+	this->rotationvector.Off=RotationVectorOff;
+	this->rotationvector.On=RotationVectorOn;
+	this->rotationvector.addCallback =addRotationVectorCallback;
+	this->rotationvector.getValue=getRotationVectorValue;
+	this->rotationvector.isSupported=isRotationVectorSupported;
+
+	this->type=SENSOR_ROTATION_VECTOR;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->rotationvector;
+}
+
+
+void DestroyRotationVector(RotationVector this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addRotationVectorCallback(RotationVector this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void RotationVectorOn(RotationVector this_gen)
+{
+	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void RotationVectorOff(RotationVector this_gen)
+{
+	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isRotationVectorSupported(RotationVector this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_ROTATION_VECTOR,&supported);
 	return supported;
 }
 
-SensorValue getRotationVectorData(Sensor* this_gen)
+valueset getRotationVectorValue(RotationVector this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_ROTATION_VECTOR;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasOrientation(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_ORIENTATION;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Orientation NewOrientation()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	OrientationExtend* this= malloc(sizeof(OrientationExtend));
+
+	this->orientation.Off=OrientationOff;
+	this->orientation.On=OrientationOn;
+	this->orientation.addCallback =addOrientationCallback;
+	this->orientation.getValue=getOrientationValue;
+	this->orientation.isSupported=isOrientationSupported;
+
+	this->type=SENSOR_ORIENTATION;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->orientation;
+}
+
+
+void DestroyOrientation(Orientation this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	OrientationExtend* this= (OrientationExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addOrientationCallback(Orientation this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	OrientationExtend* this= (OrientationExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void OrientationOn(Orientation this_gen)
+{
+	OrientationExtend* this= (OrientationExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void OrientationOff(Orientation this_gen)
+{
+	OrientationExtend* this= (OrientationExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isOrientationSupported(Orientation this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_ORIENTATION,&supported);
 	return supported;
 }
 
-SensorValue getOrientationData(Sensor* this_gen)
+valueset getOrientationValue(Orientation this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_ORIENTATION;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	OrientationExtend* this= (OrientationExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasGyroscope(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_GYROSCOPE;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Gyroscope NewGyroscope()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_GYROSCOPE,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	GyroscopeExtend* this= malloc(sizeof(GyroscopeExtend));
+
+	this->gyroscope.Off=GyroscopeOff;
+	this->gyroscope.On=GyroscopeOn;
+	this->gyroscope.addCallback =addGyroscopeCallback;
+	this->gyroscope.getValue=getGyroscopeValue;
+	this->gyroscope.isSupported=isGyroscopeSupported;
+
+	this->type=SENSOR_GYROSCOPE;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->gyroscope;
+}
+
+
+void DestroyGyroscope(Gyroscope this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addGyroscopeCallback(Gyroscope this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void GyroscopeOn(Gyroscope this_gen)
+{
+	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void GyroscopeOff(Gyroscope this_gen)
+{
+	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isGyroscopeSupported(Gyroscope this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_GYROSCOPE,&supported);
 	return supported;
 }
 
-SensorValue getGyroscopeData(Sensor* this_gen)
+valueset getGyroscopeValue(Gyroscope this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_GYROSCOPE;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasLight(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_LIGHT;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Light NewLight()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	LightExtend* this= malloc(sizeof(LightExtend));
+
+	this->light.Off=LightOff;
+	this->light.On=LightOn;
+	this->light.addCallback =addLightCallback;
+	this->light.getValue=getLightValue;
+	this->light.isSupported=isLightSupported;
+
+	this->type=SENSOR_LIGHT;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->light;
+}
+
+
+void DestroyLight(Light this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	LightExtend* this= (LightExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addLightCallback(Light this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	LightExtend* this= (LightExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void LightOn(Light this_gen)
+{
+	LightExtend* this= (LightExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void LightOff(Light this_gen)
+{
+	LightExtend* this= (LightExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isLightSupported(Light this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_LIGHT,&supported);
 	return supported;
 }
 
-SensorValue getLightData(Sensor* this_gen)
+valueset getLightValue(Light this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_LIGHT;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	LightExtend* this= (LightExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasProximity(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_PROXIMITY;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Proximity NewProximity()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	ProximityExtend* this= malloc(sizeof(ProximityExtend));
+
+	this->proximity.Off=ProximityOff;
+	this->proximity.On=ProximityOn;
+	this->proximity.addCallback =addProximityCallback;
+	this->proximity.getValue=getProximityValue;
+	this->proximity.isSupported=isProximitySupported;
+
+	this->type=SENSOR_PROXIMITY;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->proximity;
+}
+
+
+void DestroyProximity(Proximity this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	ProximityExtend* this= (ProximityExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addProximityCallback(Proximity this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	ProximityExtend* this= (ProximityExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void ProximityOn(Proximity this_gen)
+{
+	ProximityExtend* this= (ProximityExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void ProximityOff(Proximity this_gen)
+{
+	ProximityExtend* this= (ProximityExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isProximitySupported(Proximity this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_PROXIMITY,&supported);
 	return supported;
 }
 
-SensorValue getProximityData(Sensor* this_gen)
+valueset getProximityValue(Proximity this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_PROXIMITY;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	ProximityExtend* this= (ProximityExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasPressure(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_PRESSURE;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Pressure NewPressure()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_PRESSURE,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	PressureExtend* this= malloc(sizeof(PressureExtend));
+
+	this->pressure.Off=PressureOff;
+	this->pressure.On=PressureOn;
+	this->pressure.addCallback =addPressureCallback;
+	this->pressure.getValue=getPressureValue;
+	this->pressure.isSupported=isPressureSupported;
+
+	this->type=SENSOR_PRESSURE;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->pressure;
+}
+
+
+void DestroyPressure(Pressure this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	PressureExtend* this= (PressureExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addPressureCallback(Pressure this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	PressureExtend* this= (PressureExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void PressureOn(Pressure this_gen)
+{
+	PressureExtend* this= (PressureExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void PressureOff(Pressure this_gen)
+{
+	PressureExtend* this= (PressureExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isPressureSupported(Pressure this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_PRESSURE,&supported);
 	return supported;
 }
 
-SensorValue getPressureData(Sensor* this_gen)
+valueset getPressureValue(Pressure this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_PRESSURE;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	PressureExtend* this= (PressureExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasUltraViolet(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_ULTRAVIOLET;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+
+UltraViolet NewUltraViolet()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_ULTRAVIOLET,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	UltraVioletExtend* this= malloc(sizeof(UltraVioletExtend));
+
+	this->ultraviolet.Off=UltraVioletOff;
+	this->ultraviolet.On=UltraVioletOn;
+	this->ultraviolet.addCallback =addUltraVioletCallback;
+	this->ultraviolet.getValue=getUltraVioletValue;
+	this->ultraviolet.isSupported=isUltraVioletSupported;
+
+	this->type=SENSOR_ULTRAVIOLET;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->ultraviolet;
+}
+
+
+void DestroyUltraViolet(UltraViolet this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addUltraVioletCallback(UltraViolet this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void UltraVioletOn(UltraViolet this_gen)
+{
+	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void UltraVioletOff(UltraViolet this_gen)
+{
+	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isUltraVioletSupported(UltraViolet this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_ULTRAVIOLET,&supported);
 	return supported;
 }
 
-SensorValue getUltraVioletData(Sensor* this_gen)
+valueset getUltraVioletValue(UltraViolet this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_ULTRAVIOLET;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasTemperature(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_TEMPERATURE;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Temperature NewTemperature()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_TEMPERATURE,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	TemperatureExtend* this= malloc(sizeof(TemperatureExtend));
+
+	this->temperature.Off=TemperatureOff;
+	this->temperature.On=TemperatureOn;
+	this->temperature.addCallback =addTemperatureCallback;
+	this->temperature.getValue=getTemperatureValue;
+	this->temperature.isSupported=isTemperatureSupported;
+
+	this->type=SENSOR_TEMPERATURE;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->temperature;
+}
+
+
+void DestroyTemperature(Temperature this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	TemperatureExtend* this= (TemperatureExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addTemperatureCallback(Temperature this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	TemperatureExtend* this= (TemperatureExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void TemperatureOn(Temperature this_gen)
+{
+	TemperatureExtend* this= (TemperatureExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void TemperatureOff(Temperature this_gen)
+{
+	TemperatureExtend* this= (TemperatureExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isTemperatureSupported(Temperature this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_TEMPERATURE,&supported);
 	return supported;
 }
 
-SensorValue getTemperatureData(Sensor* this_gen)
+valueset getTemperatureValue(Temperature this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_TEMPERATURE;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	TemperatureExtend* this= (TemperatureExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
 
-bool hasHumidity(Sensor* this_gen)
-{
-	SensorExtend* this = (SensorExtend*) this_gen;
-	bool supported;
-	this->type = SENSOR_HUMIDITY;
-	this->error = sensor_is_supported(this->type, &supported);
 
+
+Humidity NewHumidity()
+{
+	bool supported;
+	sensor_is_supported(SENSOR_HUMIDITY,&supported);
+	if(supported==false)
+		return NULL;
+
+
+	HumidityExtend* this= malloc(sizeof(HumidityExtend));
+
+	this->humidity.Off=HumidityOff;
+	this->humidity.On=HumidityOn;
+	this->humidity.addCallback =addHumidityCallback;
+	this->humidity.getValue=getHumidityValue;
+	this->humidity.isSupported=isHumiditySupported;
+
+	this->type=SENSOR_HUMIDITY;
+	this->listener=NULL;
+	this->sensor=NULL;
+
+	return &this->humidity;
+}
+
+
+void DestroyHumidity(Humidity this_gen)
+{
+	if(this_gen==NULL)
+	{
+		return;
+	}
+
+	HumidityExtend* this= (HumidityExtend*)this_gen;
+	if(this->listener)
+	{
+		sensor_listener_unset_event_cb(this->listener);
+		sensor_listener_stop(this->listener);
+		sensor_destroy_listener(this->listener);
+
+	}
+	free(this_gen);
+}
+
+void addHumidityCallback(Humidity this_gen,sensor_callback sensorCallback, int timeinterval, void* data)
+{
+	HumidityExtend* this= (HumidityExtend*)this_gen;
+
+	sensor_listener_set_event_cb(this->listener,timeinterval,sensorCallback,data);
+}
+void HumidityOn(Humidity this_gen)
+{
+	HumidityExtend* this= (HumidityExtend*)this_gen;
+	sensor_listener_start(this->listener);
+}
+
+void HumidityOff(Humidity this_gen)
+{
+	HumidityExtend* this= (HumidityExtend*)this_gen;
+	sensor_listener_stop(this->listener);
+}
+
+bool isHumiditySupported(Humidity this_gen)
+{
+	bool supported=false;
+	sensor_is_supported(SENSOR_HUMIDITY,&supported);
 	return supported;
 }
 
-SensorValue getHumidityData(Sensor* this_gen)
+valueset getHumidityValue(Humidity this_gen)
 {
-	SensorExtend* this = (SensorExtend*) this_gen;
-	this->type = SENSOR_HUMIDITY;
-	this->error = sensor_get_default_sensor(this->type, &this->sensors);
-	this->error = sensor_create_listener(this->sensors, &this->listener);
-	this->error = sensor_listener_start(this->listener);
-	this->error = sensor_listener_read_data(this->listener, &this->event);
+	sensor_event_s data;
+	HumidityExtend* this= (HumidityExtend*)this_gen;
+	sensor_listener_read_data(this->listener, &data);
+	valueset vs;
+	for(int i=0;i<MAX_VALUE_SIZE;i++)
+	{
+		vs.values[i]=data.values[i];
+	}
+	vs.value_count=data.value_count;
+	return vs;
 
-	SensorValue data;
-	for(int i=0; i<MAX_VALUE_SIZE;i++)
-		data.values[i] = this->event.values[i];
-
-	this->error = sensor_listener_stop(this->listener);
-	this->error = sensor_destroy_listener(this->listener);
-
-	return data;
 }
