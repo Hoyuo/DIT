@@ -1,5 +1,4 @@
-/*! 파일 주석
- *  @file	DeviceStatus.c
+/*! @file	DeviceStatus.c
  *  @brief	Device Status API가 정의되어있다.
  *  @note	Device Status API가 정의되어있다.
  *  @see	DeviceStatus.h
