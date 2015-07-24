@@ -1,5 +1,5 @@
 #include "Device/Sensor.h"
-#include "Sensor.h"
+#include "sensor.h"
 #include <stdlib.h>
 #include <sensor.h>
 #include <string.h>
@@ -56,6 +56,8 @@ void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
 void AccelerometerOn (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -141,6 +143,8 @@ void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int t
 void GravityOn (Gravity this_gen)
 {
     GravityExtend * this = (GravityExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -226,6 +230,8 @@ void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sen
 void LinearAccelationOn (LinearAccelation this_gen)
 {
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -312,6 +318,8 @@ void addMagnetoMeterCallback (MagnetoMeter this_gen, sensor_callback sensorCallb
 void MagnetoMeterOn (MagnetoMeter this_gen)
 {
     MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -399,6 +407,8 @@ void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorC
 void RotationVectorOn (RotationVector this_gen)
 {
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -485,6 +495,8 @@ void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallbac
 void OrientationOn (Orientation this_gen)
 {
     OrientationExtend * this = (OrientationExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -571,6 +583,8 @@ void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, i
 void GyroscopeOn (Gyroscope this_gen)
 {
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -656,6 +670,8 @@ void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timei
 void LightOn (Light this_gen)
 {
     LightExtend * this = (LightExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -739,6 +755,8 @@ void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, i
 void ProximityOn (Proximity this_gen)
 {
     ProximityExtend * this = (ProximityExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -821,6 +839,8 @@ void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int
 void PressureOn (Pressure this_gen)
 {
     PressureExtend * this = (PressureExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -905,6 +925,8 @@ void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallbac
 void UltraVioletOn (UltraViolet this_gen)
 {
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -988,6 +1010,8 @@ void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallbac
 void TemperatureOn (Temperature this_gen)
 {
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
@@ -1071,6 +1095,8 @@ void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int
 void HumidityOn (Humidity this_gen)
 {
     HumidityExtend * this = (HumidityExtend *)this_gen;
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     sensor_listener_start (this->listener);
 }
 
