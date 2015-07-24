@@ -70,17 +70,19 @@ bool isAccelerometerSupported(Accelerometer this_gen)
 	return supported;
 }
 
-valueset getAccelerometerValue(Accelerometer this_gen)
+Accelerometer_data getAccelerometerValue(Accelerometer this_gen)
 {
 	sensor_event_s data;
 	AccelerometerExtend* this= (AccelerometerExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Accelerometer_data vs;
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -89,7 +91,7 @@ valueset getAccelerometerValue(Accelerometer this_gen)
 Gravity NewGravity()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_GRAVITY,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -153,17 +155,19 @@ bool isGravitySupported(Gravity this_gen)
 	return supported;
 }
 
-valueset getGravityValue(Gravity this_gen)
+Gravity_data getGravityValue(Gravity this_gen)
 {
 	sensor_event_s data;
 	GravityExtend* this= (GravityExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Gravity_data vs;
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -172,7 +176,7 @@ valueset getGravityValue(Gravity this_gen)
 LinearAccelation NewLinearAccelation()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_LINEAR_ACCELERATION,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -236,17 +240,20 @@ bool isLinearAccelationSupported(LinearAccelation this_gen)
 	return supported;
 }
 
-valueset getLinearAccelationValue(LinearAccelation this_gen)
+LinearAcceleration_data getLinearAccelationValue(LinearAccelation this_gen)
 {
 	sensor_event_s data;
 	LinearAccelationExtend* this= (LinearAccelationExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	LinearAcceleration_data vs;
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
+
 	return vs;
 
 }
@@ -255,7 +262,7 @@ valueset getLinearAccelationValue(LinearAccelation this_gen)
 MagnetoMeter NewMagnetoMeter()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_MAGNETIC,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -319,17 +326,21 @@ bool isMagnetoMeterSupported(MagnetoMeter this_gen)
 	return supported;
 }
 
-valueset getMagnetoMeterValue(MagnetoMeter this_gen)
+Magnetometer_data getMagnetoMeterValue(MagnetoMeter this_gen)
 {
 	sensor_event_s data;
 	MagnetoMeterExtend* this= (MagnetoMeterExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Magnetometer_data vs;
+
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
+
 	return vs;
 
 }
@@ -339,7 +350,7 @@ valueset getMagnetoMeterValue(MagnetoMeter this_gen)
 RotationVector NewRotationVector()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_ROTATION_VECTOR,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -403,17 +414,20 @@ bool isRotationVectorSupported(RotationVector this_gen)
 	return supported;
 }
 
-valueset getRotationVectorValue(RotationVector this_gen)
+RotationVector_data getRotationVectorValue(RotationVector this_gen)
 {
 	sensor_event_s data;
 	RotationVectorExtend* this= (RotationVectorExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	RotationVector_data vs;
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+	vs.w=data.values[3];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -423,7 +437,7 @@ valueset getRotationVectorValue(RotationVector this_gen)
 Orientation NewOrientation()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_ORIENTATION,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -487,17 +501,20 @@ bool isOrientationSupported(Orientation this_gen)
 	return supported;
 }
 
-valueset getOrientationValue(Orientation this_gen)
+Orientation_data getOrientationValue(Orientation this_gen)
 {
 	sensor_event_s data;
 	OrientationExtend* this= (OrientationExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Orientation_data vs;
+
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -571,17 +588,19 @@ bool isGyroscopeSupported(Gyroscope this_gen)
 	return supported;
 }
 
-valueset getGyroscopeValue(Gyroscope this_gen)
+Gyroscope_data getGyroscopeValue(Gyroscope this_gen)
 {
 	sensor_event_s data;
 	GyroscopeExtend* this= (GyroscopeExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Gyroscope_data vs;
+	vs.x=data.values[0];
+	vs.y=data.values[1];
+	vs.z=data.values[2];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -591,7 +610,7 @@ valueset getGyroscopeValue(Gyroscope this_gen)
 Light NewLight()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_LIGHT,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -655,17 +674,17 @@ bool isLightSupported(Light this_gen)
 	return supported;
 }
 
-valueset getLightValue(Light this_gen)
+Light_data getLightValue(Light this_gen)
 {
 	sensor_event_s data;
 	LightExtend* this= (LightExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Light_data vs;
+
+	vs.level=data.values[0];
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -675,7 +694,7 @@ valueset getLightValue(Light this_gen)
 Proximity NewProximity()
 {
 	bool supported;
-	sensor_is_supported(SENSOR_ACCELEROMETER,&supported);
+	sensor_is_supported(SENSOR_PROXIMITY,&supported);
 	if(supported==false)
 		return NULL;
 
@@ -739,17 +758,16 @@ bool isProximitySupported(Proximity this_gen)
 	return supported;
 }
 
-valueset getProximityValue(Proximity this_gen)
+Proximity_data getProximityValue(Proximity this_gen)
 {
 	sensor_event_s data;
 	ProximityExtend* this= (ProximityExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Proximity_data vs;
+	vs.proximity = data.values[0];
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -823,17 +841,18 @@ bool isPressureSupported(Pressure this_gen)
 	return supported;
 }
 
-valueset getPressureValue(Pressure this_gen)
+Pressure_data getPressureValue(Pressure this_gen)
 {
 	sensor_event_s data;
 	PressureExtend* this= (PressureExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Pressure_data vs;
+
+	vs.hPa= data.values[0];
+
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -908,17 +927,17 @@ bool isUltraVioletSupported(UltraViolet this_gen)
 	return supported;
 }
 
-valueset getUltraVioletValue(UltraViolet this_gen)
+UltraViolet_data getUltraVioletValue(UltraViolet this_gen)
 {
 	sensor_event_s data;
 	UltraVioletExtend* this= (UltraVioletExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	UltraViolet_data vs;
+
+	vs.uvindex=data.values[0];
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;
 	return vs;
 
 }
@@ -992,18 +1011,17 @@ bool isTemperatureSupported(Temperature this_gen)
 	return supported;
 }
 
-valueset getTemperatureValue(Temperature this_gen)
+Temperature_data getTemperatureValue(Temperature this_gen)
 {
 	sensor_event_s data;
 	TemperatureExtend* this= (TemperatureExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Temperature_data vs;
+
+	vs.celsius= data.values[0];
 	vs.value_count=data.value_count;
-	return vs;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;	return vs;
 
 }
 
@@ -1076,17 +1094,16 @@ bool isHumiditySupported(Humidity this_gen)
 	return supported;
 }
 
-valueset getHumidityValue(Humidity this_gen)
+Humidity_data getHumidityValue(Humidity this_gen)
 {
 	sensor_event_s data;
 	HumidityExtend* this= (HumidityExtend*)this_gen;
 	sensor_listener_read_data(this->listener, &data);
-	valueset vs;
-	for(int i=0;i<MAX_VALUE_SIZE;i++)
-	{
-		vs.values[i]=data.values[i];
-	}
+	Humidity_data vs;
+	vs.percent= data.values[0];
 	vs.value_count=data.value_count;
+	vs.timestamp=data.timestamp;
+	vs.accuracy=data.accuracy;	return vs;
 	return vs;
 
 }

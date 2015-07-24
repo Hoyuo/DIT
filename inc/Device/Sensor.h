@@ -14,11 +14,82 @@ extern "C" {
 
 typedef     void (*sensor_callback)(sensor_h sensor, sensor_event_s *event, void *user_data);
 
-typedef struct _valueset{
-	float values[MAX_VALUE_SIZE];
-	int value_count;
-}valueset;
+typedef struct _3d_data{
 
+
+	float x;
+	float y;
+	float z;
+
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+
+}_3d_data;
+
+typedef struct _3d_data Accelerometer_data ;
+typedef struct _3d_data Gravity_data ;
+typedef struct _3d_data LinearAcceleration_data ;
+typedef struct _3d_data Magnetometer_data ;
+typedef struct _3d_data Orientation_data ;
+typedef struct _3d_data Gyroscope_data ;
+
+
+
+typedef struct _4d_data{
+
+	float x;
+	float y;
+	float z;
+	float w;
+
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+
+}RotationVector_data;
+
+typedef struct _Light_data{
+	float level;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}Light_data;
+
+typedef struct _Proximity_data{
+	float proximity;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}Proximity_data;
+
+typedef struct _Pressure_data{
+	float hPa;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}Pressure_data;
+
+typedef struct _UltraViolet_data{
+	float uvindex;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}UltraViolet_data;
+
+typedef struct _Temperature_data{
+	float celsius;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}Temperature_data;
+
+typedef struct _Humidity_data{
+	float percent;
+	int value_count;
+	int accuracy;
+	unsigned long long int timestamp;
+}Humidity_data;
 
 
 typedef struct _Accelerometer * Accelerometer;
@@ -33,7 +104,8 @@ typedef struct _Accelerometer{
 
 	bool(*isSupported)(Accelerometer this_gen);
 
-	valueset (*getValue)(Accelerometer this_gen);
+
+	Accelerometer_data(*getValue)(Accelerometer this_gen);
 
 };
 
@@ -55,7 +127,7 @@ void AccelerometerOn(Accelerometer this_gen);
 void AccelerometerOff(Accelerometer this_gen);
 bool isAccelerometerSupported(Accelerometer this_gen);
 
-valueset getAccelerometerValue(Accelerometer this_gen);
+Accelerometer_data getAccelerometerValue(Accelerometer this_gen);
 
 typedef struct _Gravity * Gravity;
 
@@ -69,7 +141,7 @@ typedef struct _Gravity{
 
 	bool(*isSupported)(Gravity this_gen);
 
-	valueset (*getValue)(Gravity this_gen);
+	Gravity_data (*getValue)(Gravity this_gen);
 
 };
 
@@ -91,7 +163,7 @@ void GravityOn(Gravity this_gen);
 void GravityOff(Gravity this_gen);
 bool isGravitySupported(Gravity this_gen);
 
-valueset getGravityValue(Gravity this_gen);
+Gravity_data getGravityValue(Gravity this_gen);
 
 
 typedef struct _LinearAccelation * LinearAccelation;
@@ -106,7 +178,7 @@ typedef struct _LinearAccelation{
 
 	bool(*isSupported)(LinearAccelation this_gen);
 
-	valueset (*getValue)(LinearAccelation this_gen);
+	LinearAcceleration_data (*getValue)(LinearAccelation this_gen);
 
 };
 
@@ -128,7 +200,7 @@ void LinearAccelationOn(LinearAccelation this_gen);
 void LinearAccelationOff(LinearAccelation this_gen);
 bool isLinearAccelationSupported(LinearAccelation this_gen);
 
-valueset getLinearAccelationValue(LinearAccelation this_gen);
+LinearAcceleration_data getLinearAccelationValue(LinearAccelation this_gen);
 
 
 
@@ -144,7 +216,7 @@ typedef struct _MagnetoMeter{
 
 	bool(*isSupported)(MagnetoMeter this_gen);
 
-	valueset (*getValue)(MagnetoMeter this_gen);
+	Magnetometer_data (*getValue)(MagnetoMeter this_gen);
 
 };
 
@@ -166,7 +238,7 @@ void MagnetoMeterOn(MagnetoMeter this_gen);
 void MagnetoMeterOff(MagnetoMeter this_gen);
 bool isMagnetoMeterSupported(MagnetoMeter this_gen);
 
-valueset getMagnetoMeterValue(MagnetoMeter this_gen);
+Magnetometer_data getMagnetoMeterValue(MagnetoMeter this_gen);
 
 
 typedef struct _RotationVector * RotationVector;
@@ -181,7 +253,7 @@ typedef struct _RotationVector{
 
 	bool(*isSupported)(RotationVector this_gen);
 
-	valueset (*getValue)(RotationVector this_gen);
+	RotationVector_data (*getValue)(RotationVector this_gen);
 
 };
 
@@ -203,7 +275,7 @@ void RotationVectorOn(RotationVector this_gen);
 void RotationVectorOff(RotationVector this_gen);
 bool isRotationVectorSupported(RotationVector this_gen);
 
-valueset getRotationVectorValue(RotationVector this_gen);
+RotationVector_data getRotationVectorValue(RotationVector this_gen);
 
 
 typedef struct _Orientation * Orientation;
@@ -218,7 +290,7 @@ typedef struct _Orientation{
 
 	bool(*isSupported)(Orientation this_gen);
 
-	valueset (*getValue)(Orientation this_gen);
+	Orientation_data (*getValue)(Orientation this_gen);
 
 };
 
@@ -240,7 +312,7 @@ void OrientationOn(Orientation this_gen);
 void OrientationOff(Orientation this_gen);
 bool isOrientationSupported(Orientation this_gen);
 
-valueset getOrientationValue(Orientation this_gen);
+Orientation_data getOrientationValue(Orientation this_gen);
 
 
 typedef struct _Gyroscope * Gyroscope;
@@ -255,7 +327,7 @@ typedef struct _Gyroscope{
 
 	bool(*isSupported)(Gyroscope this_gen);
 
-	valueset (*getValue)(Gyroscope this_gen);
+	Gyroscope_data (*getValue)(Gyroscope this_gen);
 
 };
 
@@ -277,7 +349,7 @@ void GyroscopeOn(Gyroscope this_gen);
 void GyroscopeOff(Gyroscope this_gen);
 bool isGyroscopeSupported(Gyroscope this_gen);
 
-valueset getGyroscopeValue(Gyroscope this_gen);
+Gyroscope_data getGyroscopeValue(Gyroscope this_gen);
 
 
 typedef struct _Light * Light;
@@ -292,7 +364,7 @@ typedef struct _Light{
 
 	bool(*isSupported)(Light this_gen);
 
-	valueset (*getValue)(Light this_gen);
+	Light_data (*getValue)(Light this_gen);
 
 };
 
@@ -314,7 +386,7 @@ void LightOn(Light this_gen);
 void LightOff(Light this_gen);
 bool isLightSupported(Light this_gen);
 
-valueset getLightValue(Light this_gen);
+Light_data getLightValue(Light this_gen);
 
 
 typedef struct _Proximity * Proximity;
@@ -329,7 +401,7 @@ typedef struct _Proximity{
 
 	bool(*isSupported)(Proximity this_gen);
 
-	valueset (*getValue)(Proximity this_gen);
+	Proximity_data (*getValue)(Proximity this_gen);
 
 };
 
@@ -351,7 +423,7 @@ void ProximityOn(Proximity this_gen);
 void ProximityOff(Proximity this_gen);
 bool isProximitySupported(Proximity this_gen);
 
-valueset getProximityValue(Proximity this_gen);
+Proximity_data getProximityValue(Proximity this_gen);
 
 
 typedef struct _Pressure * Pressure;
@@ -366,7 +438,7 @@ typedef struct _Pressure{
 
 	bool(*isSupported)(Pressure this_gen);
 
-	valueset (*getValue)(Pressure this_gen);
+	Pressure_data (*getValue)(Pressure this_gen);
 
 };
 
@@ -388,7 +460,7 @@ void PressureOn(Pressure this_gen);
 void PressureOff(Pressure this_gen);
 bool isPressureSupported(Pressure this_gen);
 
-valueset getPressureValue(Pressure this_gen);
+Pressure_data getPressureValue(Pressure this_gen);
 
 
 typedef struct _UltraViolet * UltraViolet;
@@ -403,7 +475,7 @@ typedef struct _UltraViolet{
 
 	bool(*isSupported)(UltraViolet this_gen);
 
-	valueset (*getValue)(UltraViolet this_gen);
+	UltraViolet_data (*getValue)(UltraViolet this_gen);
 
 };
 
@@ -425,7 +497,7 @@ void UltraVioletOn(UltraViolet this_gen);
 void UltraVioletOff(UltraViolet this_gen);
 bool isUltraVioletSupported(UltraViolet this_gen);
 
-valueset getUltraVioletValue(UltraViolet this_gen);
+UltraViolet_data getUltraVioletValue(UltraViolet this_gen);
 
 
 typedef struct _Temperature * Temperature;
@@ -440,7 +512,7 @@ typedef struct _Temperature{
 
 	bool(*isSupported)(Temperature this_gen);
 
-	valueset (*getValue)(Temperature this_gen);
+	Temperature_data (*getValue)(Temperature this_gen);
 
 };
 
@@ -462,7 +534,7 @@ void TemperatureOn(Temperature this_gen);
 void TemperatureOff(Temperature this_gen);
 bool isTemperatureSupported(Temperature this_gen);
 
-valueset getTemperatureValue(Temperature this_gen);
+Temperature_data getTemperatureValue(Temperature this_gen);
 
 
 typedef struct _Humidity * Humidity;
@@ -477,7 +549,7 @@ typedef struct _Humidity{
 
 	bool(*isSupported)(Humidity this_gen);
 
-	valueset (*getValue)(Humidity this_gen);
+	Humidity_data (*getValue)(Humidity this_gen);
 
 };
 
@@ -499,7 +571,10 @@ void HumidityOn(Humidity this_gen);
 void HumidityOff(Humidity this_gen);
 bool isHumiditySupported(Humidity this_gen);
 
-valueset getHumidityValue(Humidity this_gen);
+Humidity_data getHumidityValue(Humidity this_gen);
+
+
+
 
 #ifdef __cplusplus
 }
