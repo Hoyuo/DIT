@@ -15,16 +15,19 @@ Accelerometer NewAccelerometer ()
 
     AccelerometerExtend * this = malloc (sizeof (AccelerometerExtend));
 
-    this->accelerometer.Off         = AccelerometerOff;
-    this->accelerometer.On          = AccelerometerOn;
-    this->accelerometer.addCallback = addAccelerometerCallback;
-    this->accelerometer.getValue    = getAccelerometerValue;
-    this->accelerometer.isSupported = isAccelerometerSupported;
+    this->accelerometer.Off        		= AccelerometerOff;
+    this->accelerometer.On        		= AccelerometerOn;
+    this->accelerometer.addCallback		= addAccelerometerCallback;
+    this->accelerometer.getValue   		= getAccelerometerValue;
+    this->accelerometer.isSupported 	= isAccelerometerSupported;
+    this->accelerometer.detachCallback = detachAccelerometerCallback;
 
     this->type     = SENSOR_ACCELEROMETER;
     this->listener = NULL;
     this->sensor   = NULL;
 
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     return &this->accelerometer;
 }
 
@@ -52,12 +55,16 @@ void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
 
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
+void detachAccelerometerCallback (Accelerometer this_gen)
+{
+    AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
 
+    sensor_listener_unset_event_cb(this->listener);
+}
 void AccelerometerOn (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -107,10 +114,14 @@ Gravity NewGravity ()
     this->gravity.addCallback = addGravityCallback;
     this->gravity.getValue    = getGravityValue;
     this->gravity.isSupported = isGravitySupported;
+    this->gravity.detachCallback = detachGravityCallback;
 
     this->type     = SENSOR_GRAVITY;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->gravity;
 }
@@ -140,11 +151,17 @@ void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int t
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachGravityCallback (Gravity this_gen)
+{
+	GravityExtend * this = (GravityExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void GravityOn (Gravity this_gen)
 {
     GravityExtend * this = (GravityExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -194,11 +211,14 @@ LinearAccelation NewLinearAccelation ()
     this->linearaccelation.addCallback = addLinearAccelationCallback;
     this->linearaccelation.getValue    = getLinearAccelationValue;
     this->linearaccelation.isSupported = isLinearAccelationSupported;
+    this->linearaccelation.detachCallback = detachLinearAccelationCallback;
 
     this->type     = SENSOR_LINEAR_ACCELERATION;
     this->listener = NULL;
     this->sensor   = NULL;
 
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
     return &this->linearaccelation;
 }
 
@@ -227,11 +247,17 @@ void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sen
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachLinearAccelationCallback (LinearAccelation this_gen)
+{
+	LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void LinearAccelationOn (LinearAccelation this_gen)
 {
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -282,10 +308,13 @@ MagnetoMeter NewMagnetoMeter ()
     this->magnetometer.addCallback = addMagnetoMeterCallback;
     this->magnetometer.getValue    = getMagnetoMeterValue;
     this->magnetometer.isSupported = isMagnetoMeterSupported;
-
+    this->magnetometer.detachCallback = detachMagnetoMeterCallback;
     this->type     = SENSOR_MAGNETIC;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->magnetometer;
 }
@@ -315,11 +344,17 @@ void addMagnetoMeterCallback (MagnetoMeter this_gen, sensor_callback sensorCallb
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachMagnetoMeterCallback (MagnetoMeter this_gen)
+{
+	MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void MagnetoMeterOn (MagnetoMeter this_gen)
 {
     MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -371,10 +406,14 @@ RotationVector NewRotationVector ()
     this->rotationvector.addCallback = addRotationVectorCallback;
     this->rotationvector.getValue    = getRotationVectorValue;
     this->rotationvector.isSupported = isRotationVectorSupported;
+    this->rotationvector.detachCallback = detachRotationVectorCallback;
 
     this->type     = SENSOR_ROTATION_VECTOR;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->rotationvector;
 }
@@ -404,11 +443,17 @@ void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorC
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachRotationVectorCallback (RotationVector this_gen)
+{
+	RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void RotationVectorOn (RotationVector this_gen)
 {
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -459,10 +504,14 @@ Orientation NewOrientation ()
     this->orientation.addCallback = addOrientationCallback;
     this->orientation.getValue    = getOrientationValue;
     this->orientation.isSupported = isOrientationSupported;
+    this->orientation.detachCallback=detachOrientationCallback;
 
     this->type     = SENSOR_ORIENTATION;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->orientation;
 }
@@ -492,11 +541,17 @@ void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallbac
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachOrientationCallback (Orientation this_gen)
+{
+	OrientationExtend * this = (OrientationExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void OrientationOn (Orientation this_gen)
 {
     OrientationExtend * this = (OrientationExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -547,10 +602,14 @@ Gyroscope NewGyroscope ()
     this->gyroscope.addCallback = addGyroscopeCallback;
     this->gyroscope.getValue    = getGyroscopeValue;
     this->gyroscope.isSupported = isGyroscopeSupported;
+    this->gyroscope.detachCallback = detachGyroscopeCallback;
 
     this->type     = SENSOR_GYROSCOPE;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_create_listener(this->sensor,&this->listener);
+    sensor_listener_start (this->listener);
 
     return &this->gyroscope;
 }
@@ -580,12 +639,18 @@ void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, i
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachGyroscopeCallback (Gyroscope this_gen)
+{
+	GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void GyroscopeOn (Gyroscope this_gen)
 {
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
     sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
-    sensor_listener_start (this->listener);
+
 }
 
 void GyroscopeOff (Gyroscope this_gen)
@@ -634,10 +699,14 @@ Light NewLight ()
     this->light.addCallback = addLightCallback;
     this->light.getValue    = getLightValue;
     this->light.isSupported = isLightSupported;
+    this->light.detachCallback= detachLightCallback;
 
     this->type     = SENSOR_LIGHT;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->light;
 }
@@ -667,11 +736,17 @@ void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timei
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachLightCallback (Light this_gen)
+{
+    AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void LightOn (Light this_gen)
 {
     LightExtend * this = (LightExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -719,10 +794,14 @@ Proximity NewProximity ()
     this->proximity.addCallback = addProximityCallback;
     this->proximity.getValue    = getProximityValue;
     this->proximity.isSupported = isProximitySupported;
+    this->proximity.detachCallback = detachProximityCallback;
 
     this->type     = SENSOR_PROXIMITY;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->proximity;
 }
@@ -752,11 +831,17 @@ void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, i
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachProximityCallback (Proximity this_gen)
+{
+	ProximityExtend * this = (ProximityExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void ProximityOn (Proximity this_gen)
 {
     ProximityExtend * this = (ProximityExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -803,10 +888,14 @@ Pressure NewPressure ()
     this->pressure.addCallback = addPressureCallback;
     this->pressure.getValue    = getPressureValue;
     this->pressure.isSupported = isPressureSupported;
+    this->pressure.detachCallback = detachPressureCallback;
 
     this->type     = SENSOR_PRESSURE;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->pressure;
 }
@@ -836,11 +925,17 @@ void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachPressureCallback (Pressure this_gen)
+{
+	PressureExtend * this = (PressureExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void PressureOn (Pressure this_gen)
 {
     PressureExtend * this = (PressureExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -889,10 +984,14 @@ UltraViolet NewUltraViolet ()
     this->ultraviolet.addCallback = addUltraVioletCallback;
     this->ultraviolet.getValue    = getUltraVioletValue;
     this->ultraviolet.isSupported = isUltraVioletSupported;
+    this->ultraviolet.detachCallback =detachUltraVioletCallback;
 
     this->type     = SENSOR_ULTRAVIOLET;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->ultraviolet;
 }
@@ -922,11 +1021,17 @@ void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallbac
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachUltraVioletCallback (UltraViolet this_gen)
+{
+	UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void UltraVioletOn (UltraViolet this_gen)
 {
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -974,10 +1079,14 @@ Temperature NewTemperature ()
     this->temperature.addCallback = addTemperatureCallback;
     this->temperature.getValue    = getTemperatureValue;
     this->temperature.isSupported = isTemperatureSupported;
+    this->temperature.detachCallback =detachTemperatureCallback;
 
     this->type     = SENSOR_TEMPERATURE;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->temperature;
 }
@@ -1007,11 +1116,17 @@ void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallbac
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachTemperatureCallback (Temperature this_gen)
+{
+	TemperatureExtend * this = (TemperatureExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void TemperatureOn (Temperature this_gen)
 {
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 
@@ -1059,10 +1174,13 @@ Humidity NewHumidity ()
     this->humidity.addCallback = addHumidityCallback;
     this->humidity.getValue    = getHumidityValue;
     this->humidity.isSupported = isHumiditySupported;
-
+    this->humidity.detachCallback = detachHumidityCallback;
     this->type     = SENSOR_HUMIDITY;
     this->listener = NULL;
     this->sensor   = NULL;
+
+    sensor_get_default_sensor(this->type,&this->sensor);
+    sensor_create_listener(this->sensor,&this->listener);
 
     return &this->humidity;
 }
@@ -1092,11 +1210,17 @@ void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
+void detachHumidityCallback (Humidity this_gen)
+{
+	HumidityExtend * this = (HumidityExtend *)this_gen;
+
+    sensor_listener_unset_event_cb(this->listener);
+}
+
 void HumidityOn (Humidity this_gen)
 {
     HumidityExtend * this = (HumidityExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-    sensor_create_listener(this->sensor,&this->listener);
+
     sensor_listener_start (this->listener);
 }
 

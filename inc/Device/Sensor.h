@@ -102,6 +102,8 @@ struct _Accelerometer
 
     void(* addCallback) (Accelerometer this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+    void(* detachCallback) (Accelerometer this_gen);
+
     void(* On) (Accelerometer this_gen);
 
     void(* Off) (Accelerometer this_gen);
@@ -127,6 +129,8 @@ void DestroyAccelerometer (Accelerometer this_gen);
 
 void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachAccelerometerCallback (Accelerometer this_gen);
+
 void AccelerometerOn (Accelerometer this_gen);
 
 void AccelerometerOff (Accelerometer this_gen);
@@ -141,6 +145,8 @@ struct _Gravity
 {
 
     void(* addCallback) (Gravity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Gravity this_gen);
 
     void(* On) (Gravity this_gen);
 
@@ -167,6 +173,8 @@ void DestroyGravity (Gravity this_gen);
 
 void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachGravityCallback (Gravity this_gen);
+
 void GravityOn (Gravity this_gen);
 
 void GravityOff (Gravity this_gen);
@@ -181,6 +189,8 @@ struct _LinearAccelation
 {
 
     void(* addCallback) (LinearAccelation this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (LinearAccelation this_gen);
 
     void(* On) (LinearAccelation this_gen);
 
@@ -207,6 +217,8 @@ void DestroyLinearAccelation (LinearAccelation this_gen);
 
 void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachLinearAccelationCallback (LinearAccelation this_gen);
+
 void LinearAccelationOn (LinearAccelation this_gen);
 
 void LinearAccelationOff (LinearAccelation this_gen);
@@ -221,6 +233,8 @@ struct _MagnetoMeter
 {
 
     void(* addCallback) (MagnetoMeter this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (MagnetoMeter this_gen);
 
     void(* On) (MagnetoMeter this_gen);
 
@@ -247,6 +261,8 @@ void DestroyMagnetoMeter (MagnetoMeter this_gen);
 
 void addMagnetoMeterCallback (MagnetoMeter this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachMagnetoMeterCallback (MagnetoMeter this_gen);
+
 void MagnetoMeterOn (MagnetoMeter this_gen);
 
 void MagnetoMeterOff (MagnetoMeter this_gen);
@@ -261,6 +277,8 @@ struct _RotationVector
 {
 
     void(* addCallback) (RotationVector this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (RotationVector this_gen);
 
     void(* On) (RotationVector this_gen);
 
@@ -287,6 +305,8 @@ void DestroyRotationVector (RotationVector this_gen);
 
 void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachRotationVectorCallback (RotationVector this_gen);
+
 void RotationVectorOn (RotationVector this_gen);
 
 void RotationVectorOff (RotationVector this_gen);
@@ -301,6 +321,8 @@ struct _Orientation
 {
 
     void(* addCallback) (Orientation this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Orientation this_gen);
 
     void(* On) (Orientation this_gen);
 
@@ -327,6 +349,8 @@ void DestroyOrientation (Orientation this_gen);
 
 void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachOrientationCallback (Orientation this_gen);
+
 void OrientationOn (Orientation this_gen);
 
 void OrientationOff (Orientation this_gen);
@@ -341,6 +365,8 @@ struct _Gyroscope
 {
 
     void(* addCallback) (Gyroscope this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Gyroscope this_gen);
 
     void(* On) (Gyroscope this_gen);
 
@@ -367,6 +393,8 @@ void DestroyGyroscope (Gyroscope this_gen);
 
 void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachGyroscopeCallback (Gyroscope this_gen);
+
 void GyroscopeOn (Gyroscope this_gen);
 
 void GyroscopeOff (Gyroscope this_gen);
@@ -381,6 +409,8 @@ struct _Light
 {
 
     void(* addCallback) (Light this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Light this_gen);
 
     void(* On) (Light this_gen);
 
@@ -407,6 +437,8 @@ void DestroyLight (Light this_gen);
 
 void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachLightCallback (Light this_gen);
+
 void LightOn (Light this_gen);
 
 void LightOff (Light this_gen);
@@ -421,6 +453,8 @@ struct _Proximity
 {
 
     void(* addCallback) (Proximity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Proximity this_gen);
 
     void(* On) (Proximity this_gen);
 
@@ -447,6 +481,8 @@ void DestroyProximity (Proximity this_gen);
 
 void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachProximityCallback (Proximity this_gen);
+
 void ProximityOn (Proximity this_gen);
 
 void ProximityOff (Proximity this_gen);
@@ -461,6 +497,8 @@ struct _Pressure
 {
 
     void(* addCallback) (Pressure this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Pressure this_gen);
 
     void(* On) (Pressure this_gen);
 
@@ -487,6 +525,8 @@ void DestroyPressure (Pressure this_gen);
 
 void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachPressureCallback (Pressure this_gen);
+
 void PressureOn (Pressure this_gen);
 
 void PressureOff (Pressure this_gen);
@@ -501,6 +541,8 @@ struct _UltraViolet
 {
 
     void(* addCallback) (UltraViolet this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (UltraViolet this_gen);
 
     void(* On) (UltraViolet this_gen);
 
@@ -527,6 +569,8 @@ void DestroyUltraViolet (UltraViolet this_gen);
 
 void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachUltraVioletCallback (UltraViolet this_gen);
+
 void UltraVioletOn (UltraViolet this_gen);
 
 void UltraVioletOff (UltraViolet this_gen);
@@ -541,6 +585,8 @@ struct _Temperature
 {
 
     void(* addCallback) (Temperature this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Temperature this_gen);
 
     void(* On) (Temperature this_gen);
 
@@ -567,6 +613,8 @@ void DestroyTemperature (Temperature this_gen);
 
 void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
 
+void detachTemperatureCallback (Temperature this_gen);
+
 void TemperatureOn (Temperature this_gen);
 
 void TemperatureOff (Temperature this_gen);
@@ -581,6 +629,8 @@ struct _Humidity
 {
 
     void(* addCallback) (Humidity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+    void(* detachCallback) (Humidity this_gen);
 
     void(* On) (Humidity this_gen);
 
@@ -606,6 +656,8 @@ Humidity NewHumidity ();
 void DestroyHumidity (Humidity this_gen);
 
 void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeenterval, void * data);
+
+void detachHumidityCallback (Humidity this_gen);
 
 void HumidityOn (Humidity this_gen);
 
