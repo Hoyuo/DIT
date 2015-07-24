@@ -1,7 +1,12 @@
+/*! 파일 주석
+ *  @file	DeviceStatus.c
+ *  @brief	Device Status API가 정의되어있다.
+ *  @note	Device Status API가 정의되어있다.
+ *  @see	DeviceStatus.h
+*/
+
 #include "Device/DeviceStatus.h"
-
 #include <stdlib.h>
-
 #include <device/battery.h>
 #include <device/display.h>
 #include <device/led.h>
@@ -33,7 +38,7 @@ const char * DeviceStatusErrorCheck (int errCode)
         return "DEVICE_ERROR_NOT_INITIALIZED : Not initialized";
 
     default:
-        return "DEVICE_ERROR_NOT_UNKWON";
+        return "DEVICE_ERROR_NOT_UNKNOWN";
     }
 }
 
@@ -56,10 +61,6 @@ void DestroyVibration (Vibration this_gen)
     if ( this_gen != NULL)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
-
-        //this->error = device_haptic_stop(this->handle, 0);
-        //this->error = device_haptic_close(this->handle);
-        // No Issue
 
         free (this);
     }
