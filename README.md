@@ -15,7 +15,7 @@ Tizen Native API Project
 */
 
 구조체 주석
-/*!	@struct	구조체 이름
+/*!	@struct		구조체 이름
  *	@brief		간략한 설명
  *	@note		자세한설명
  *	@see 		외부URL or Header or soucefile or Function or Struct등을 의미하며 추가 적으로 현재의 구조체와 연관된 것을 명시한다.
@@ -24,8 +24,8 @@ Tizen Native API Project
 
 함수 주석
 /*!	@fn 			함수 이름
- *	@brief 		간략한 설명
- *	@param[in]	인자 입력값
+ *	@brief 			간략한 설명
+ *	@param[in]		인자 입력값
  *	@param[out] 	인자로 출력값을 저장하는 장소
  *	@retval 		반환인자
  *	@note 			자세한 설명
