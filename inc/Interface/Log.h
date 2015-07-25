@@ -1,7 +1,7 @@
 /*! @file	Log.h
  *  @brief	Log API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Log의 Info / Debug / Warning / Error 관련 Log API를 제공한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DLOG.html
+ *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
 */
 
 #ifndef DIT_LOG_H
