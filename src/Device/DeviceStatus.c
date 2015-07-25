@@ -4,6 +4,7 @@
  *  @see	DeviceStatus.h
 */
 
+
 #include "Device/DeviceStatus.h"
 #include <stdlib.h>
 #include <device/battery.h>
