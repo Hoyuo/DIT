@@ -94,7 +94,6 @@ bool isBluetoothAccessible (Bluetooth this_gen)
 
 bool onBluetoothConnect (Bluetooth this_gen)
 {
-    dlog_print(DLOG_ERROR,"DIT","start");
 
 	if ( this_gen != NULL)
     {
@@ -105,13 +104,9 @@ bool onBluetoothConnect (Bluetooth this_gen)
             int res = 0;
 
             res = bt_initialize ();
-            dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(res));
             res = bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
-            dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(res));
             res = bt_adapter_foreach_bonded_device (adapter_bonded_device_cbx, this);
-            dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(res));
             res = bt_adapter_start_device_discovery ();
-            dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(res));
 
             if ( res == BT_ERROR_NONE )
             {
@@ -166,7 +161,6 @@ bool onBluetoothDisconnect (Bluetooth this_gen)
  *  @param[in] this_gen assign Bluetooth object
  *  @param[in] recvfile NULLABLE assign filename
  *
- *  @returns 0:sucess -1:failed
  */
 void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
 {
@@ -178,7 +172,6 @@ void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
         if ( this->connected )
         {
             int ret = bt_opp_server_initialize_by_connection_request (DOWNLOADSFOLDERPATH, connection_requested_cb_for_opp_serverx, recvBuffer);
-            dlog_print(DLOG_INFO,"DIT","%s",BluetoothErrorCheck(ret));
         }
     }
 }
@@ -199,8 +192,6 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             int ret = bt_opp_client_initialize ();
             if ( ret != BT_ERROR_NONE )
             {
-                dlog_print(DLOG_INFO,"DIT","%s",BluetoothErrorCheck(ret));
-
             	bt_opp_client_deinitialize();
                 return;
             }
@@ -209,8 +200,6 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 
             if ( ret != BT_ERROR_NONE )
             {
-                dlog_print(DLOG_INFO,"DIT","%s",BluetoothErrorCheck(ret));
-
             	bt_opp_client_deinitialize();
                 return;
             }
@@ -219,8 +208,6 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 
             if ( ret != BT_ERROR_NONE )
             {
-                dlog_print(DLOG_INFO,"DIT","%s",BluetoothErrorCheck(ret));
-
             	bt_opp_client_deinitialize();
                 return;
             }
@@ -229,8 +216,6 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 
             if ( ret != BT_ERROR_NONE )
             {
-                dlog_print(DLOG_INFO,"DIT","%s",BluetoothErrorCheck(ret));
-
             	bt_opp_client_deinitialize();
                 return;
             }
