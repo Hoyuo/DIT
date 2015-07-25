@@ -23,7 +23,14 @@ extern "C" {
  *  @brief 		Device Status API에서 발생하는 Error Code들을 확인 해준다.
  *  @param[in] 	errCode 확인 하고자 하는 Error Code
  *  @param[out]	null
- *  @retval 	String
+ *  @retval 	DEVICE_ERROR_NONE				 : Successful
+ *  @retval		DEVICE_ERROR_OPERATION_FAILED	 : Operation not permitted
+ *  @retval 	DEVICE_ERROR_PERMISSION_DENIED	 : Permission denied
+ *  @retval 	DEVICE_ERROR_INVALID_PARAMETER	 : Invalid parameter
+ *  @retval 	DEVICE_ERROR_ALREADY_IN_PROGRESS : Operation already in progress
+ *  @retval 	DEVICE_ERROR_NOT_SUPPORTED		 : Not supported in this device
+ *  @retval 	DEVICE_ERROR_NOT_INITIALIZED	 : Not initialized
+ *  @retval 	DEVICE_ERROR_NOT_UNKNOWN		 : Unknown error occurred
  *  @note 		Device Status API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			8가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__MODULE.html#ggaa7466207772dc4d17f6cb814d79cb789abeb24a4c3efe6ca49702f99a72217153
