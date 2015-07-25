@@ -58,11 +58,12 @@ struct _Vibration
 };
 
 /*!	@fn			Vibration NewVibration (void)
- *  @brief		새로운 Vibration 모듈을 생성한다.
+ *  @brief		새로운 Vibration 객체를 생성한다.
  *  @param[in]	null
  *  @param[out] null
  *  @retval 	Vibration
- *  @note 		새로운 Vibration 모듈을 생성한다. Vibration 구조체를 사용하기 전에 반드시 호출해야 한다.
+ *  @note 		새로운 Vibration 객체를 생성한다. \n
+ *  			Vibration 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestroyVibration \n
  *  			VibrationCustom \n
  *  			VibrationShort \n
@@ -73,23 +74,25 @@ struct _Vibration
 Vibration NewVibration (void);
 
 /*! @fn 		void DestroyVibration (Vibration this_gen)
- *  @brief 		생성한 Vibration 모듈을 소멸 시킨다.
- *  @param[in] 	this_gen 소멸시킬 Vibration 모듈
+ *  @brief 		생성한 Vibration 객체를 소멸 시킨다.
+ *  @param[in] 	this_gen 소멸시킬 Vibration 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		생성한 Vibration 모듈을 소멸 시킨다. Vibration 구조체를 사용한 후 반드시 호출해야 한다.
+ *  @note 		생성한 Vibration 객체를 소멸 시킨다. \n
+ *  			Vibration 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewVibration
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
 void      DestroyVibration (Vibration this_gen);
 
 /*! @fn 		void VibrationCustom (Vibration this_gen, int period)
- *  @brief 		사용자가 정의한 시간만큼 진동한다.
- *  @param[in] 	this_gen	진동 시킬 Vibration 모듈
+ *  @brief 		사용자가 정의한 시간만큼 device를 진동 시킨다.
+ *  @param[in] 	this_gen	진동 시킬 Vibration 객체
  *  @param[in] 	period		진동 시킬 시간 (Millisecond)
  *  @param[out] null
  *  @retval 	void
- *  @note 		Vibration 모듈을 period 만큼 진동 시킨다. 시간 단위는 Millisecond 이다.
+ *  @note 		사용자가 정의한 period 만큼 device를 진동시킨다. \n
+ *  			시간 단위는 Millisecond 이다.
  *  @see 		NewVibration \n
  *  			VibrationShort \n
  *  			VibrationMiddle \n
@@ -99,11 +102,11 @@ void      DestroyVibration (Vibration this_gen);
 void      VibrationCustom (Vibration this_gen, int period);
 
 /*! @fn 		void VibrationShort (Vibration this_gen)
- *  @brief 		짧은 시간만큼 진동한다. (0.1초)
- *  @param[in] 	this_gen	진동 시킬 Vibration 모듈
+ *  @brief 		짧은 시간만큼 device를 진동 시킨다. (0.1초)
+ *  @param[in] 	this_gen	진동 시킬 Vibration 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		Vibration 모듈을 짧은 시간만큼 진동 시킨다. (0.1초)
+ *  @note 		짧은 시간만큼 device를 진동 시킨다. (0.1초)
  *  @see 		NewVibration \n
  *  			VibrationCustom \n
  *  			VibrationMiddle \n
@@ -113,11 +116,11 @@ void      VibrationCustom (Vibration this_gen, int period);
 void      VibrationShort (Vibration this_gen);
 
 /*! @fn 		void VibrationMiddle (Vibration this_gen)
- *  @brief 		중간 시간만큼 진동한다. (0.5초)
- *  @param[in] 	this_gen	진동 시킬 Vibration 모듈
+ *  @brief 		중간 시간만큼 device를 진동 시킨다. (0.5초)
+ *  @param[in] 	this_gen	진동 시킬 Vibration 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		Vibration 모듈을 중간 시간만큼 진동 시킨다. (0.5초)
+ *  @note 		중간 시간만큼 device를 진동 시킨다. (0.5초)
  *  @see 		NewVibration \n
  *  			VibrationCustom \n
  *  			VibrationShort \n
@@ -127,11 +130,11 @@ void      VibrationShort (Vibration this_gen);
 void      VibrationMiddle (Vibration this_gen);
 
 /*! @fn 		void VibrationLong (Vibration this_gen)
- *  @brief 		긴 시간만큼 진동한다. (1.5초)
- *  @param[in] 	this_gen	진동 시킬 Vibration 모듈
+ *  @brief 		긴 시간만큼 device를 진동 시킨다. (1.5초)
+ *  @param[in] 	this_gen	진동 시킬 Vibration 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		Vibration 모듈을 긴 시간만큼 진동 시킨다. (1.5초)
+ *  @note 		긴 시간만큼 device를 진동 시킨다. (1.5초)
  *  @see 		NewVibration \n
  *  			VibrationCustom \n
  *  			VibrationShort \n
@@ -172,11 +175,12 @@ struct _Display
 };
 
 /*!	@fn			Display NewDisplay (void)
- *  @brief		새로운 Display 모듈을 생성한다.
+ *  @brief		새로운 Display 객체를 생성한다.
  *  @param[in]	null
  *  @param[out] null
  *  @retval 	Display
- *  @note 		새로운 Display 모듈을 생성한다. Display 구조체를 사용하기 전에 반드시 호출해야 한다.
+ *  @note 		새로운 Display 객체를 생성한다. \n
+ *  			Display 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestroyDisplay \n
  *  			DisplayLock \n
  *  			DisplayUnlock \n
@@ -188,11 +192,12 @@ struct _Display
 Display NewDisplay (void);
 
 /*! @fn 		void DestroyDisplay (Display this_gen)
- *  @brief 		생성한 Display 모듈을 소멸 시킨다.
- *  @param[in] 	this_gen 소멸시킬 Display 모듈
+ *  @brief 		생성한 Display 객체를 소멸 시킨다.
+ *  @param[in] 	this_gen 소멸시킬 Display 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		생성한 Display 모듈을 소멸 시킨다. Display 구조체를 사용한 후 반드시 호출해야 한다.
+ *  @note 		생성한 Display 객체를 소멸 시킨다. \n
+ *  			Display 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewDisplay
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
@@ -200,7 +205,7 @@ void    DestroyDisplay (Display this_gen);
 
 /*! @fn 		void DisplayLock (Display this_gen)
  *  @brief 		Device의 화면을 강제로 끈다.(잠금)
- *  @param[in] 	this_gen	강제로 끌 Display 모듈
+ *  @param[in] 	this_gen	강제로 끌 Display 객체
  *  @param[out] null
  *  @retval 	void
  *  @note 		Device의 화면을 강제로 끈다.
@@ -215,7 +220,7 @@ void    DisplayLock (Display this_gen);
 
 /*! @fn 		void DisplayUnlock (Display this_gen)
  *  @brief 		Device의 꺼진 화면을 다시 켠다.
- *  @param[in] 	this_gen	다시 켤 Display 모듈
+ *  @param[in] 	this_gen	다시 켤 Display 객체
  *  @param[out] null
  *  @retval 	void
  *  @note 		Device의 꺼진 화면을 다시 켠다.
@@ -230,10 +235,11 @@ void    DisplayUnlock (Display this_gen);
 
 /*! @fn 		void DisplayDim (Display this_gen)
  *  @brief 		Device의 화면을 어둡게 한다.
- *  @param[in] 	this_gen	어둡게 할 Display 모듈
+ *  @param[in] 	this_gen	어둡게 할 Display 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		Device의 화면을 어둡게 한다. 이 때의 밝기는 10% 이다.
+ *  @note 		Device의 화면을 어둡게 한다. \n
+ *  			이 때의 화면 밝기는 10% 이다.
  *  @see 		NewDisplay \n
  *  			DisplayLock \n
  *  			DisplayUnlock \n
@@ -245,10 +251,11 @@ void    DisplayDim (Display this_gen);
 
 /*! @fn 		int getDisplayBrightLevel (Display this_gen)
  *  @brief 		현재 화면의 밝기 값을 반환 한다.
- *  @param[in] 	this_gen	밝기 값을 반환 할 Display 모듈
+ *  @param[in] 	this_gen	밝기 값을 반환 할 Display 객체
  *  @param[out] null
- *  @retval 	int 밝기 값은 % 단위로 0 ~ 100의 값을 가진다.
- *  @note 		현재 화면의 밝기 값을 반환 한다.
+ *  @retval 	int 현재 화면 밝기(%)
+ *  @note 		현재 화면의 밝기 값을 반환 한다. \n
+ *  			밝기 값은 % 단위로 0 ~ 100의 값을 가진다.
  *  @see 		NewDisplay \n
  *  			DisplayLock \n
  *  			DisplayUnlock \n
@@ -260,11 +267,12 @@ int     getDisplayBrightLevel (Display this_gen);
 
 /*! @fn 		int setDisplayBrightLevel (Display this_gen, int brightLevel)
  *  @brief 		현재 화면의 밝기 값을 설정 한다.
- *  @param[in] 	this_gen	밝기 값을 설정 할 Display 모듈
+ *  @param[in] 	this_gen	밝기 값을 설정 할 Display 객체
  *  @param[in] 	brightLevel	밝기 값 (0 ~ 100)
  *  @param[out] null
  *  @retval 	int
- *  @note 		현재 화면의 밝기 값을 설정 한다. brightLevel은 % 단위로 0 ~ 100의 값을 가진다.
+ *  @note 		현재 화면의 밝기 값을 설정 한다. \n
+ *  			brightLevel은 % 단위로 0 ~ 100의 값을 가진다.
  *  @see 		NewDisplay \n
  *  			DisplayLock \n
  *  			DisplayUnlock \n
@@ -300,12 +308,12 @@ struct _Battery
 };
 
 /*!	@fn			Battery NewBattery (void)
- *  @brief		새로운 Battery 모듈을 생성한다.
+ *  @brief		새로운 Battery 객체를 생성한다.
  *  @param[in]	null
  *  @param[out] null
  *  @retval 	Battery
- *  @note 		새로운 Battery 모듈을 생성한다. \n
- *  			Battery 구조체를 사용하기 전에 반드시 호출해야 한다.
+ *  @note 		새로운 Battery 객체를 생성한다. \n
+ *  			Battery 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestoryBattery \n
  *  			getBatteryRemainsPercent \n
  *  			isBatteryCharging
@@ -313,19 +321,19 @@ struct _Battery
 Battery NewBattery (void);
 
 /*! @fn 		void DestoryBattery (Battery this_gen)
- *  @brief 		생성한 Battery 모듈을 소멸 시킨다.
- *  @param[in] 	this_gen 소멸시킬 Battery 모듈
+ *  @brief 		생성한 Battery 객체를 소멸 시킨다.
+ *  @param[in] 	this_gen 소멸시킬 Battery 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		생성한 Battery 모듈을 소멸 시킨다. \n
- *  			Battery 구조체를 사용한 후 반드시 호출해야 한다.
+ *  @note 		생성한 Battery 객체를 소멸 시킨다. \n
+ *  			Battery 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewBattery
 */
 void    DestoryBattery (Battery this_gen);
 
 /*! @fn 		int getBatteryRemainsPercent (Battery this_gen)
  *  @brief 		현재 배터리의 잔량을 반환 한다.
- *  @param[in] 	this_gen	배터리 잔량을 반환 할 Battery 모듈
+ *  @param[in] 	this_gen	배터리 잔량을 반환 할 Battery 객체
  *  @param[out] null
  *  @retval 	int 배터리 잔량은 % 단위로 0 ~ 100의 값을 가진다.
  *  @note 		현재 배터리의 잔량을 반환 한다.
@@ -336,7 +344,7 @@ int     getBatteryRemainsPercent (Battery this_gen);
 
 /*! @fn 		bool isBatteryCharging (Battery this_gen)
  *  @brief 		현재 배터리의 충전 상태 여부를 반환 한다.
- *  @param[in] 	this_gen	충전 상태 여부를 반환 할 Battery 모듈
+ *  @param[in] 	this_gen	충전 상태 여부를 반환 할 Battery 객체
  *  @param[out] null
  *  @retval 	bool
  *  @note 		현재 배터리의 충전 상태 여부를 반환 한다. \n
@@ -375,12 +383,12 @@ struct _Flash
 };
 
 /*!	@fn			Flash NewFlash (void)
- *  @brief		새로운 Flash 모듈을 생성한다.
+ *  @brief		새로운 Flash 객체를 생성한다.
  *  @param[in]	null
  *  @param[out] null
  *  @retval 	Flash
- *  @note 		새로운 Flash 모듈을 생성한다. \n
- *  			Display 구조체를 사용하기 전에 반드시 호출해야 한다.
+ *  @note 		새로운 Flash 객체를 생성한다. \n
+ *  			Display 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestoryFlash \n
  *  			onFlash \n
  *  			offFlash
@@ -391,12 +399,12 @@ struct _Flash
 Flash NewFlash (void);
 
 /*!	@fn			void DestoryFlash (Flash this_gen)
- *  @brief		생성한 Flash 모듈을 소멸 시킨다.
- *  @param[in]	this_gen 소멸시킬 Flash 모듈
+ *  @brief		생성한 Flash 객체를 소멸 시킨다.
+ *  @param[in]	this_gen 소멸시킬 Flash 객체
  *  @param[out] null
  *  @retval 	void
- *  @note 		생성한 Flash 모듈을 소멸 시킨다. \n
- *  			Flash 구조체를 사용한 후 반드시 호출해야 한다.
+ *  @note 		생성한 Flash 객체를 소멸 시킨다. \n
+ *  			Flash 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewFlash
  *  @remark 	privilege	: http://tizen.org/privilege/led \n
  *				features	: http://tizen.org/feature/led \n
