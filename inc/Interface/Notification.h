@@ -105,6 +105,7 @@ void         DestroyNotification (Notification this_gen);
  *  			이제 막 생성한 Notification은 Icon과 Sound 값에 기본 값이 설정되어 있지만 Title과 Text는 기본 값이 없기 때문에 \n
  *  			사용하기 전에 setNotificationTitle() 과 setNotificationText() 을 통해 설정을 미리 해야한다.
  *  @see 		NewNotification \n
+ *  			DestroyNotification \n
  *  			NotificationHide \n
  *  			setNotificationTitle \n
  *  			setNotificationText \n
@@ -122,9 +123,9 @@ void	NotificationShow (Notification this_gen);
  *  @retval 	void
  *  @note 		NotificationShow()를 통해 Notification 바에 등록 되어 있는 Notification을 삭제한다.
  *  @see 		NewNotification \n
+ *  			DestroyNotification \n
  *  			NotificationShow \n
  *  			setNotificationTitle \n
- *  			setNotificationText \n
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
@@ -142,6 +143,7 @@ void	NotificationHide (Notification this_gen);
  *  			기본으로 설정된 값은 없다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해줘야 적용된다.
  *  @see 		NewNotification \n
+ *   			DestroyNotification \n
  *  			NotificationShow \n
  *  			NotificationHide \n
  *  			setNotificationText \n
@@ -162,6 +164,7 @@ void	setNotificationTitle (Notification this_gen, String title);
  *  			기본으로 설정된 값은 없다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해줘야 적용된다.
  *  @see 		NewNotification \n
+ *   			DestroyNotification \n
  *  			NotificationShow \n
  *  			NotificationHide \n
  *  			setNotificationTitle \n
@@ -182,6 +185,7 @@ void	setNotificationText (Notification this_gen, String text);
  *  			기본으로 설정된 값은 tizen logo이다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해줘야 적용된다.
  *  @see 		NewNotification \n
+ *   			DestroyNotification \n
  *  			NotificationShow \n
  *  			NotificationHide \n
  *  			setNotificationTitle \n
@@ -202,6 +206,7 @@ void	setNotificationIcon (Notification this_gen, String imagePath);
  *  			기본으로 설정된 값은 tizen 알림 기본음이다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해줘야 적용된다.
  *  @see 		NewNotification \n
+ *   			DestroyNotification \n
  *  			NotificationShow \n
  *  			NotificationHide \n
  *  			setNotificationTitle \n
@@ -220,6 +225,7 @@ void	setNotificationSound (Notification this_gen, String soundPath);
  *  @note 		새로 설정한 Notification 객체의 정보들을 새로 적용 한다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification의 정보를 갱신할 때 사용한다.
  *  @see 		NewNotification \n
+ *   			DestroyNotification \n
  *  			NotificationShow \n
  *  			NotificationHide \n
  *  			setNotificationTitle \n
