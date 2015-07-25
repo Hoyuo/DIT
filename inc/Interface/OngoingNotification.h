@@ -67,9 +67,9 @@ struct _OngoingNotification
     void (* update) (OngoingNotification this_gen);
 };
 
-/*!	@fn			OngoingNotification NewOngoingNotification ()
+/*!	@fn			OngoingNotification NewOngoingNotification (void)
  *  @brief		새로운 OngoingNotification 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	OngoingNotification
  *  @note 		새로운 OngoingNotification 객체를 생성한다. \n
@@ -85,7 +85,7 @@ struct _OngoingNotification
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
 */
-OngoingNotification NewOngoingNotification ();
+OngoingNotification NewOngoingNotification (void);
 
 /*! @fn 		void DestroyOngoingNotification (OngoingNotification this_gen)
  *  @brief 		생성한 OngoingNotification 객체를 소멸 시킨다.
