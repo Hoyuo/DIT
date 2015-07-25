@@ -77,6 +77,12 @@ bool getPreferenceBoolean (String key, bool defValue)
          	return defValue;
         }
 }
+
+/*
+ *
+ * @remark return value must be released by using free();\n
+ * 		   whether return value equals defValue
+ * */
 String getPreferenceString (String key, String defValue)
 {
 	  String ret;
