@@ -43,8 +43,8 @@ struct _nfc
     NDEF (* Recv) (NFC this_gen);
 };
 
-NFC  newNFC (void);
-void deleteNFC (NFC this_gen);
+NFC  NewNFC (void);
+void DestroyNFC (NFC this_gen);
 bool isNFCAccessible (NFC this_gen);
 bool onNFCConnect (NFC this_gen);
 bool onNFCDisconnect (NFC this_gen);
