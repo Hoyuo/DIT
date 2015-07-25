@@ -1,5 +1,11 @@
-#include "Device/Preference.h"
+/*! @file	Preference.c
+ *  @brief	Preference API가 정의되어있다.
+ *  @note	Preference API가 정의되어있다.
+ *  @see	Preference.h
+*/
 
+
+#include "Device/Preference.h"
 #include <stdlib.h>
 #include <string.h>
 #include <app_preference.h>
@@ -152,6 +158,6 @@ const char * PreferenceErrorCheck (int errCode)
         return "PREFERENCE_ERROR_IO_ERROR : Internal I/O Error";
 
     default:
-        return "PREFERENCE_ERROR_UNKWON";
+        return "DEVICE_ERROR_NOT_UNKNOWN";
     }
 }
