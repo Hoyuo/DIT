@@ -25,6 +25,7 @@ Accelerometer NewAccelerometer ()
     this->type     = SENSOR_ACCELEROMETER;
     this->listener = NULL;
     this->sensor   = NULL;
+    this->activated =false;
 
     sensor_get_default_sensor(this->type,&this->sensor);
     sensor_create_listener(this->sensor,&this->listener);
@@ -64,14 +65,22 @@ void detachAccelerometerCallback (Accelerometer this_gen)
 void AccelerometerOn (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 
-    sensor_listener_start (this->listener);
 }
 
 void AccelerometerOff (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isAccelerometerSupported (Accelerometer this_gen)
@@ -86,6 +95,7 @@ Accelerometer_data getAccelerometerValue (Accelerometer this_gen)
     sensor_event_s data;
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
+
     Accelerometer_data vs;
     vs.x = data.values[0];
     vs.y = data.values[1];
@@ -94,6 +104,8 @@ Accelerometer_data getAccelerometerValue (Accelerometer this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
     return vs;
 
 }
@@ -161,14 +173,22 @@ void detachGravityCallback (Gravity this_gen)
 void GravityOn (Gravity this_gen)
 {
     GravityExtend * this = (GravityExtend *)this_gen;
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 
-    sensor_listener_start (this->listener);
 }
 
 void GravityOff (Gravity this_gen)
 {
     GravityExtend * this = (GravityExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isGravitySupported (Gravity this_gen)
@@ -191,6 +211,10 @@ Gravity_data getGravityValue (Gravity this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -257,14 +281,21 @@ void detachLinearAccelationCallback (LinearAccelation this_gen)
 void LinearAccelationOn (LinearAccelation this_gen)
 {
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void LinearAccelationOff (LinearAccelation this_gen)
 {
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isLinearAccelationSupported (LinearAccelation this_gen)
@@ -287,7 +318,10 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
-
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -354,14 +388,21 @@ void detachMagnetoMeterCallback (MagnetoMeter this_gen)
 void MagnetoMeterOn (MagnetoMeter this_gen)
 {
     MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void MagnetoMeterOff (MagnetoMeter this_gen)
 {
     MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isMagnetoMeterSupported (MagnetoMeter this_gen)
@@ -385,7 +426,10 @@ Magnetometer_data getMagnetoMeterValue (MagnetoMeter this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
-
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -453,14 +497,21 @@ void detachRotationVectorCallback (RotationVector this_gen)
 void RotationVectorOn (RotationVector this_gen)
 {
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void RotationVectorOff (RotationVector this_gen)
 {
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isRotationVectorSupported (RotationVector this_gen)
@@ -484,6 +535,10 @@ RotationVector_data getRotationVectorValue (RotationVector this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -551,15 +606,21 @@ void detachOrientationCallback (Orientation this_gen)
 void OrientationOn (Orientation this_gen)
 {
     OrientationExtend * this = (OrientationExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void OrientationOff (Orientation this_gen)
 {
     OrientationExtend * this = (OrientationExtend *)this_gen;
-    sensor_listener_stop (this->listener);
-}
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }}
 
 bool isOrientationSupported (Orientation this_gen)
 {
@@ -582,6 +643,10 @@ Orientation_data getOrientationValue (Orientation this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -649,15 +714,21 @@ void detachGyroscopeCallback (Gyroscope this_gen)
 void GyroscopeOn (Gyroscope this_gen)
 {
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
-    sensor_get_default_sensor(this->type,&this->sensor);
-
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void GyroscopeOff (Gyroscope this_gen)
 {
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
-    sensor_listener_stop (this->listener);
-}
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }}
 
 bool isGyroscopeSupported (Gyroscope this_gen)
 {
@@ -679,6 +750,10 @@ Gyroscope_data getGyroscopeValue (Gyroscope this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -746,15 +821,21 @@ void detachLightCallback (Light this_gen)
 void LightOn (Light this_gen)
 {
     LightExtend * this = (LightExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void LightOff (Light this_gen)
 {
     LightExtend * this = (LightExtend *)this_gen;
-    sensor_listener_stop (this->listener);
-}
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }}
 
 bool isLightSupported (Light this_gen)
 {
@@ -774,6 +855,10 @@ Light_data getLightValue (Light this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -841,15 +926,21 @@ void detachProximityCallback (Proximity this_gen)
 void ProximityOn (Proximity this_gen)
 {
     ProximityExtend * this = (ProximityExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void ProximityOff (Proximity this_gen)
 {
     ProximityExtend * this = (ProximityExtend *)this_gen;
-    sensor_listener_stop (this->listener);
-}
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }}
 
 bool isProximitySupported (Proximity this_gen)
 {
@@ -868,6 +959,10 @@ Proximity_data getProximityValue (Proximity this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -935,15 +1030,21 @@ void detachPressureCallback (Pressure this_gen)
 void PressureOn (Pressure this_gen)
 {
     PressureExtend * this = (PressureExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void PressureOff (Pressure this_gen)
 {
     PressureExtend * this = (PressureExtend *)this_gen;
-    sensor_listener_stop (this->listener);
-}
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }}
 
 bool isPressureSupported (Pressure this_gen)
 {
@@ -964,6 +1065,10 @@ Pressure_data getPressureValue (Pressure this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -1031,14 +1136,21 @@ void detachUltraVioletCallback (UltraViolet this_gen)
 void UltraVioletOn (UltraViolet this_gen)
 {
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void UltraVioletOff (UltraViolet this_gen)
 {
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isUltraVioletSupported (UltraViolet this_gen)
@@ -1059,6 +1171,10 @@ UltraViolet_data getUltraVioletValue (UltraViolet this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -1126,14 +1242,21 @@ void detachTemperatureCallback (Temperature this_gen)
 void TemperatureOn (Temperature this_gen)
 {
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void TemperatureOff (Temperature this_gen)
 {
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isTemperatureSupported (Temperature this_gen)
@@ -1154,6 +1277,10 @@ Temperature_data getTemperatureValue (Temperature this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }
     return vs;
 
 }
@@ -1220,14 +1347,21 @@ void detachHumidityCallback (Humidity this_gen)
 void HumidityOn (Humidity this_gen)
 {
     HumidityExtend * this = (HumidityExtend *)this_gen;
-
-    sensor_listener_start (this->listener);
+    sensor_error_e ison = sensor_listener_start (this->listener);
+    if ( ison == SENSOR_ERROR_NONE )
+    {
+    	this->activated = true;
+    }
 }
 
 void HumidityOff (Humidity this_gen)
 {
     HumidityExtend * this = (HumidityExtend *)this_gen;
-    sensor_listener_stop (this->listener);
+    sensor_error_e ison = sensor_listener_stop (this->listener);
+     if(ison==SENSOR_ERROR_NONE)
+     {
+         this->activated = false;
+     }
 }
 
 bool isHumiditySupported (Humidity this_gen)
@@ -1247,7 +1381,9 @@ Humidity_data getHumidityValue (Humidity this_gen)
     vs.value_count = data.value_count;
     vs.timestamp   = data.timestamp;
     vs.accuracy    = data.accuracy;
-    return vs;
-    return vs;
+    if(this->activated==false)
+    {
+       	vs.accuracy    = SENSOR_DATA_ACCURACY_BAD;
+    }    return vs;
 
 }
