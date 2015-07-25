@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-
+#include <system_info.h>
 #include <nfc.h>
 #include <app_control.h>
 
