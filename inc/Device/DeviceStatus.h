@@ -59,7 +59,7 @@ struct _Vibration
 
 /*!	@fn			Vibration NewVibration (void)
  *  @brief		새로운 Vibration 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Vibration
  *  @note 		새로운 Vibration 객체를 생성한다. \n
@@ -176,7 +176,7 @@ struct _Display
 
 /*!	@fn			Display NewDisplay (void)
  *  @brief		새로운 Display 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Display
  *  @note 		새로운 Display 객체를 생성한다. \n
@@ -309,7 +309,7 @@ struct _Battery
 
 /*!	@fn			Battery NewBattery (void)
  *  @brief		새로운 Battery 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Battery
  *  @note 		새로운 Battery 객체를 생성한다. \n
@@ -384,7 +384,7 @@ struct _Flash
 
 /*!	@fn			Flash NewFlash (void)
  *  @brief		새로운 Flash 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Flash
  *  @note 		새로운 Flash 객체를 생성한다. \n
@@ -414,7 +414,7 @@ void  DestoryFlash (Flash this_gen);
 
 /*!	@fn			void onFlash (void)
  *  @brief		후면 카메라의 플래시를 켠다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	void
  *  @note 		후면 카메라의 플래시를 켠다. \n
@@ -429,7 +429,7 @@ void  onFlash (void);
 
 /*!	@fn			void offFlash (void)
  *  @brief		후면 카메라의 플래시를 끈다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	void
  *  @note 		후면 카메라의 플래시를 끈다.
