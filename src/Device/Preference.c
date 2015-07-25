@@ -125,9 +125,9 @@ void setPreferenceString (String key, String value)
 
 void PreferenceRemove (String key)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( exiting )
+    bool existing;
+    preference_is_existing (key, &existing);
+    if ( existing )
     {
         preference_remove (key);
     }
