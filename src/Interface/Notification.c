@@ -1,3 +1,10 @@
+/*! @file	Notification.c
+ *  @brief	Notification API가 정의되어있다.
+ *  @note	Notification API가 정의되어있다.
+ *  @see	Notification.h
+*/
+
+
 #include "Interface/Notification.h"
 
 #include <stdlib.h>
