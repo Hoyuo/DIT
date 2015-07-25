@@ -120,7 +120,7 @@ typedef struct _AccelerometerExtend
     sensor_type_e         type;
     sensor_h              sensor;
     sensor_listener_h     listener;
-
+    bool activated;
 } AccelerometerExtend;
 
 Accelerometer NewAccelerometer ();
@@ -164,6 +164,7 @@ typedef struct _GravityExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } GravityExtend;
 
@@ -208,6 +209,7 @@ typedef struct _LinearAccelationExtend
     sensor_type_e            type;
     sensor_h                 sensor;
     sensor_listener_h        listener;
+    bool activated;
 
 } LinearAccelationExtend;
 
@@ -252,6 +254,7 @@ typedef struct _MagnetoMeterExtend
     sensor_type_e        type;
     sensor_h             sensor;
     sensor_listener_h    listener;
+    bool activated;
 
 } MagnetoMeterExtend;
 
@@ -296,6 +299,7 @@ typedef struct _RotationVectorExtend
     sensor_type_e          type;
     sensor_h               sensor;
     sensor_listener_h      listener;
+    bool activated;
 
 } RotationVectorExtend;
 
@@ -340,6 +344,7 @@ typedef struct _OrientationExtend
     sensor_type_e       type;
     sensor_h            sensor;
     sensor_listener_h   listener;
+    bool activated;
 
 } OrientationExtend;
 
@@ -384,6 +389,7 @@ typedef struct _GyroscopeExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } GyroscopeExtend;
 
@@ -428,6 +434,7 @@ typedef struct _LightExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } LightExtend;
 
@@ -472,6 +479,7 @@ typedef struct _ProximityExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } ProximityExtend;
 
@@ -516,6 +524,7 @@ typedef struct _PressureExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } PressureExtend;
 
@@ -560,6 +569,7 @@ typedef struct _UltraVioletExtend
     sensor_type_e       type;
     sensor_h            sensor;
     sensor_listener_h   listener;
+    bool activated;
 
 } UltraVioletExtend;
 
@@ -604,6 +614,7 @@ typedef struct _TemperatureExtend
     sensor_type_e       type;
     sensor_h            sensor;
     sensor_listener_h   listener;
+    bool activated;
 
 } TemperatureExtend;
 
@@ -648,6 +659,7 @@ typedef struct _HumidityExtend
     sensor_type_e     type;
     sensor_h          sensor;
     sensor_listener_h listener;
+    bool activated;
 
 } HumidityExtend;
 
