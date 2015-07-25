@@ -67,7 +67,7 @@ struct _Notification
 
 /*!	@fn			Notification NewNotification (void)
  *  @brief		새로운 Notification 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Notification
  *  @note 		새로운 Notification 객체를 생성한다. \n
@@ -94,7 +94,7 @@ Notification NewNotification (void);
  *  @see 		NewNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void         DestroyNotification (Notification this_gen);
+void	DestroyNotification (Notification this_gen);
 
 /*! @fn 		void NotificationShow (Notification this_gen)
  *  @brief 		생성한 Notification을 Notification 바에 등록한다.
