@@ -33,7 +33,7 @@ extern "C" {
  *  @retval 	DEVICE_ERROR_NOT_UNKNOWN		 : Unknown error occurred
  *  @note 		Device Status API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			8가지의 Error Code들을 확인 가능 하다.
- *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__MODULE.html#ggaa7466207772dc4d17f6cb814d79cb789abeb24a4c3efe6ca49702f99a72217153
+ *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__MODULE.html
 */
 const char * DeviceStatusErrorCheck (int errCode);
 
