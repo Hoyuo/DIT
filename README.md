@@ -31,6 +31,8 @@ Tizen Native API Project
  *	@note 			자세한 설명
  *	@see 			외부URL or Header or soucefile or Function or Struct등을 의미하며 추가 적으로 현재의 함수와 연관된 것을 명시한다. 관련 API 포함
  *	@remark 		Tizen의 features나 privileges 를 명시한다.
+ *	@code			Sample Codes
+ *	@endcode
 */
 ```
 
