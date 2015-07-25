@@ -1,3 +1,8 @@
+/*! @file	OngoingNotification.c
+ *  @brief	Ongoing Notification API가 정의되어있다.
+ *  @note	Ongoing Notification API가 정의되어있다.
+ *  @see	OngoingNotification.h
+*/
 #include "Interface/OngoingNotification.h"
 
 #include <stdlib.h>
