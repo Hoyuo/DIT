@@ -14,13 +14,13 @@ typedef struct _Preference * Preference;
 
 struct _Preference
 {
-    int (* getInt) (String key);
+    int (* getInt) (String key,int defValue);
 
-    double (* getDouble) (String key);
+    double (* getDouble) (String key,double defValue);
 
-    bool (* getBoolean) (String key);
+    bool (* getBoolean) (String key,bool defValue);
 
-    void (* getString) (String key, String * ret);
+    String (* getString) (String key, String defValue);
 
     void (* setInt) (String key, int value);
 
@@ -38,10 +38,10 @@ struct _Preference
 
 Preference NewPreference (void);
 void       DestroyPreference (Preference this_gen);
-int        getPreferenceInt (String key);
-double     getPreferenceDouble (String key);
-bool       getPreferenceBoolean (String key);
-void       getPreferenceString (String key, String * ret);
+int        getPreferenceInt (String key, int defValue);
+double     getPreferenceDouble (String key, double defValue);
+bool       getPreferenceBoolean (String key, bool defValue);
+String     getPreferenceString (String key, String defValue);
 void       setPreferenceInt (String key, int value);
 void       setPreferenceDouble (String key, double value);
 void       setPreferenceBoolean (String key, bool value);

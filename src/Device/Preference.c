@@ -1,7 +1,7 @@
 #include "Device/Preference.h"
 
 #include <stdlib.h>
-
+#include <string.h>
 #include <app_preference.h>
 
 Preference NewPreference (void)
@@ -35,90 +35,80 @@ void DestroyPreference (Preference this_gen)
     }
 }
 
-int getPreferenceInt (String key)
+int getPreferenceInt (String key, int defValue)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( exiting )
-    {
+
         int ret;
-        preference_get_int (key, &ret);
-        return ret;
-    }
+        preference_error_e error=preference_get_int (key, &ret);
+        if(error==PREFERENCE_ERROR_NONE)
+        {
+        	return ret;
+        }else
+        {
+        	return defValue;
+        }
 }
 
-double getPreferenceDouble (String key)
+double getPreferenceDouble (String key,double defValue)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( exiting )
-    {
+
         double ret;
-        preference_get_double (key, &ret);
-        return ret;
-    }
+        preference_error_e error=preference_get_double (key, &ret);
+        if(error==PREFERENCE_ERROR_NONE)
+        {
+        	return ret;
+        }
+        else
+        {
+        	return defValue;
+        }
 }
 
-bool getPreferenceBoolean (String key)
+bool getPreferenceBoolean (String key, bool defValue)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( exiting )
-    {
         bool ret;
-        preference_get_boolean (key, &ret);
-        return ret;
-    }
+        preference_error_e error=preference_get_boolean (key, &ret);
+        if(error==PREFERENCE_ERROR_NONE)
+        {
+        	return ret;
+        }
+        else
+        {
+         	return defValue;
+        }
 }
-
-void getPreferenceString (String key, String * ret)
+String getPreferenceString (String key, String defValue)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( exiting )
-    {
-        preference_get_string (key, ret);
-    }
+	  String ret;
+	  preference_error_e error=preference_get_string (key, &ret);
+	  if(error==PREFERENCE_ERROR_NONE)
+	  {
+	  return ret;
+	  }
+	  else
+	  {
+	  	return strdup((const String)defValue);
+	  }
 }
 
 void setPreferenceInt (String key, int value)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( !exiting )
-    {
-        preference_set_int (key, value);
-    }
+    preference_set_int (key, value);
 }
 
 void setPreferenceDouble (String key, double value)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( !exiting )
-    {
-        preference_set_double (key, value);
-    }
+    preference_set_double (key, value);
 }
 
 void setPreferenceBoolean (String key, bool value)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( !exiting )
-    {
-        preference_set_boolean (key, value);
-    }
+    preference_set_boolean (key, value);
 }
 
 void setPreferenceString (String key, String value)
 {
-    bool exiting;
-    preference_is_existing (key, &exiting);
-    if ( !exiting )
-    {
-        preference_set_string (key, value);
-    }
+    preference_set_string (key, value);
 }
 
 void PreferenceRemove (String key)
