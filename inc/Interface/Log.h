@@ -1,3 +1,9 @@
+/*! @file	Log.h
+ *  @brief	Log API 를 사용하기 위해 포함해야 하는 헤더이다.
+ *  @note	Log의 Info / Debug / Warning / Error 관련 Log API를 제공한다.
+ *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DLOG.html
+*/
+
 #ifndef DIT_LOG_H
 #define DIT_LOG_H
 
@@ -10,19 +16,85 @@
 extern "C" {
 #endif
 
+/*!	@def LOGINFO(tag, format, arg...)
+ *  @brief 		문자열에 특정 태그를 붙여서 Infomation log를 발생시킨다.
+ *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
+ *  @param[in] 	format 발생시키고자 하는 log의 문자열
+ *  @param[in] 	arg 발생시키고자 하는 log의 arguments
+ *  @param[out]	null
+ *  @note 		문자열에 특정 태그를 붙여서 Infomation log를 발생시킨다. \n
+ *  			arg는 가변인자이다.
+ *  @see 		LOGDEBUG \n
+ *  			LOGWARNING \n
+ *  			LOGERROR \n
+ *  			LOGIF
+*/
 #define LOGINFO(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_INFO, tag, format, ##arg)
 
+/*!	@def LOGDEBUG(tag, format, arg...)
+ *  @brief 		문자열에 특정 태그를 붙여서 Debug log를 발생시킨다.
+ *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
+ *  @param[in] 	format 발생시키고자 하는 log의 문자열
+ *  @param[in] 	arg 발생시키고자 하는 log의 arguments
+ *  @param[out]	null
+ *  @note 		문자열에 특정 태그를 붙여서 Debug log를 발생시킨다. \n
+ *  			arg 는 가변인자이다.
+ *  @see 		LOGINFO \n
+ *  			LOGWARNING \n
+ *  			LOGERROR \n
+ *  			LOGIF
+*/
 #define LOGDEBUG(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_DEBUG, tag, format, ##arg)
 
+/*!	@def LOGWARNING(tag, format, arg...)
+ *  @brief 		문자열에 특정 태그를 붙여서 Warning log를 발생시킨다.
+ *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
+ *  @param[in] 	format 발생시키고자 하는 log의 문자열
+ *  @param[in] 	arg 발생시키고자 하는 log의 arguments
+ *  @param[out]	null
+ *  @note 		문자열에 특정 태그를 붙여서 Warning log를 발생시킨다. \n
+ *  			arg 는 가변인자이다.
+ *  @see 		LOGINFO \n
+ *  			LOGDEBUG \n
+ *  			LOGERROR \n
+ *  			LOGIF
+*/
 #define LOGWARNING(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_WARN, tag, format, ##arg)
 
+/*!	@def LOGERROR(tag, format, arg...)
+ *  @brief 		문자열에 특정 태그를 붙여서 Error log를 발생시킨다.
+ *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
+ *  @param[in] 	format 발생시키고자 하는 log의 문자열
+ *  @param[in] 	arg 발생시키고자 하는 log의 arguments
+ *  @param[out]	null
+ *  @note 		문자열에 특정 태그를 붙여서 Error log를 발생시킨다. \n
+ *  			arg 는 가변인자이다.
+ *  @see 		LOGINFO \n
+ *  			LOGDEBUG \n
+ *  			LOGWARNING \n
+ *  			LOGIF
+*/
 #define LOGERROR(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_ERROR, tag, format, ##arg)
 
-#define LOGIF(expr, tag, fmt, arg...) \
+/*!	@def LOGIF(expr, tag, format, arg...)
+ *  @brief 		특정한 조건에서 문자열에 해당 태그를 붙여서 Error log를 발생시킨다.
+ *  @param[in] 	expr 발생시키고자 하는 log의 발생 조
+ *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
+ *  @param[in] 	format 발생시키고자 하는 log의 문자열
+ *  @param[in] 	arg 발생시키고자 하는 log의 arguments
+ *  @param[out]	null
+ *  @note 		특정한 조건에서 문자열에 해당 태그를 붙여서 Error log를 발생시킨다.
+ *  			arg 는 가변인자이다.
+ *  @see 		LOGINFO \n
+ *  			LOGDEBUG \n
+ *  			LOGWARNING \n
+ *  			LOGERROR
+*/
+#define LOGIF(expr, tag, format, arg...) \
 { \
     if (expr) \
     { \
-    	LOGERROR(tag, fmt, ##arg); \
+    	LOGERROR(tag, format, ##arg); \
         return; \
     } \
 }
