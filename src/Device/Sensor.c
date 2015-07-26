@@ -11,7 +11,7 @@
 #include <sensor.h>
 #include <string.h>
 
-Accelerometer NewAccelerometer ()
+Accelerometer NewAccelerometer (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_ACCELEROMETER, &supported);
@@ -63,12 +63,14 @@ void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
 
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
+
 void detachAccelerometerCallback (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
 
     sensor_listener_unset_event_cb(this->listener);
 }
+
 void AccelerometerOn (Accelerometer this_gen)
 {
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
@@ -117,7 +119,7 @@ Accelerometer_data getAccelerometerValue (Accelerometer this_gen)
 
 }
 
-Gravity NewGravity ()
+Gravity NewGravity (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_GRAVITY, &supported);
@@ -226,7 +228,7 @@ Gravity_data getGravityValue (Gravity this_gen)
 
 }
 
-LinearAccelation NewLinearAccelation ()
+LinearAccelation NewLinearAccelation (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_LINEAR_ACCELERATION, &supported);
@@ -333,7 +335,7 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen)
 
 }
 
-MagnetoMeter NewMagnetoMeter ()
+MagnetoMeter NewMagnetoMeter (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_MAGNETIC, &supported);
@@ -441,7 +443,7 @@ Magnetometer_data getMagnetoMeterValue (MagnetoMeter this_gen)
 
 }
 
-RotationVector NewRotationVector ()
+RotationVector NewRotationVector (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_ROTATION_VECTOR, &supported);
@@ -550,7 +552,7 @@ RotationVector_data getRotationVectorValue (RotationVector this_gen)
 
 }
 
-Orientation NewOrientation ()
+Orientation NewOrientation (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_ORIENTATION, &supported);
@@ -658,7 +660,7 @@ Orientation_data getOrientationValue (Orientation this_gen)
 
 }
 
-Gyroscope NewGyroscope ()
+Gyroscope NewGyroscope (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_GYROSCOPE, &supported);
@@ -765,7 +767,7 @@ Gyroscope_data getGyroscopeValue (Gyroscope this_gen)
 
 }
 
-Light NewLight ()
+Light NewLight (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_LIGHT, &supported);
@@ -870,7 +872,7 @@ Light_data getLightValue (Light this_gen)
 
 }
 
-Proximity NewProximity ()
+Proximity NewProximity (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_PROXIMITY, &supported);
@@ -974,7 +976,7 @@ Proximity_data getProximityValue (Proximity this_gen)
 
 }
 
-Pressure NewPressure ()
+Pressure NewPressure (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_PRESSURE, &supported);
@@ -1080,7 +1082,7 @@ Pressure_data getPressureValue (Pressure this_gen)
 
 }
 
-UltraViolet NewUltraViolet ()
+UltraViolet NewUltraViolet (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_ULTRAVIOLET, &supported);
@@ -1186,7 +1188,7 @@ UltraViolet_data getUltraVioletValue (UltraViolet this_gen)
 
 }
 
-Temperature NewTemperature ()
+Temperature NewTemperature (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_TEMPERATURE, &supported);
@@ -1292,7 +1294,7 @@ Temperature_data getTemperatureValue (Temperature this_gen)
 
 }
 
-Humidity NewHumidity ()
+Humidity NewHumidity (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_HUMIDITY, &supported);
