@@ -452,6 +452,6 @@ const char * BluetoothErrorCheck (int errCode)
         return "BT_ERROR_SERVICE_NOT_FOUND : Service Not Found";
 
     default:
-        return "BT_ERROR_UNKWON";
+        return "BT_ERROR_UNKNWON";
     };
 }
