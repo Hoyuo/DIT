@@ -48,6 +48,7 @@ const char * DeviceStatusErrorCheck (int errCode);
 typedef struct _Vibration * Vibration;
 struct _Vibration
 {
+
     void (* Custom) (Vibration this_gen, int period);
 
     void (* Short) (Vibration this_gen);
