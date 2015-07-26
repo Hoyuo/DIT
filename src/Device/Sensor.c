@@ -6,7 +6,7 @@
 
 
 #include "Device/Sensor.h"
-#include "sensor.h"
+
 #include <stdlib.h>
 #include <sensor.h>
 #include <string.h>
