@@ -23,6 +23,7 @@ typedef struct _location
     double                    horizontal;
     double                    vertical;
     time_t                    timestamp;
+    bool					  validation;
 
 } Location;
 
