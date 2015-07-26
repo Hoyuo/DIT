@@ -1,3 +1,10 @@
+/*! @file	GPS.c
+ *  @brief	GPS API가 정의되어있다.
+ *  @note	GPS API가 정의되어있다.
+ *  @see	GPS.h
+*/
+
+
 #include "Commnucation/GPS.h"
 #include "Interface/Log.h"
 
@@ -173,6 +180,6 @@ const char * GPSErrorChecker (int errCode)
         return "LOCATIONS_ERROR_SECURITY_RESTRICTED : Restricted by security system policy";
 
     default:
-        return "LOCATIONS_ERROR_UNKWON";
+        return "LOCATIONS_ERROR_UNKNWON";
     }
 }
