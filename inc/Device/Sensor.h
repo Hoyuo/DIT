@@ -105,7 +105,7 @@ typedef struct _Humidity_data
  *  @note	Accelerometer 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewAccelerometer() 함수를 사용해야 하며 사용이 끝났을 때 DestroyAccelerometer() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.accelerometer" 을 반드시 추가해야 한다.
  */
 typedef struct _Accelerometer * Accelerometer;
 struct _Accelerometer
@@ -148,19 +148,7 @@ typedef struct _AccelerometerExtend
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer
  */
 Accelerometer NewAccelerometer (void);
 
@@ -173,18 +161,6 @@ Accelerometer NewAccelerometer (void);
  *  			Accelerometer 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewAccelerometer
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void DestroyAccelerometer (Accelerometer this_gen);
 
@@ -206,18 +182,6 @@ void DestroyAccelerometer (Accelerometer this_gen);
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -235,18 +199,6 @@ void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void detachAccelerometerCallback (Accelerometer this_gen);
 
@@ -264,18 +216,6 @@ void detachAccelerometerCallback (Accelerometer this_gen);
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void AccelerometerOn (Accelerometer this_gen);
 
@@ -293,18 +233,6 @@ void AccelerometerOn (Accelerometer this_gen);
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void AccelerometerOff (Accelerometer this_gen);
 
@@ -322,18 +250,6 @@ void AccelerometerOff (Accelerometer this_gen);
  *  			AccelerometerOff \n
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 bool isAccelerometerSupported (Accelerometer this_gen);
 
@@ -351,18 +267,6 @@ bool isAccelerometerSupported (Accelerometer this_gen);
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 Accelerometer_data getAccelerometerValue (Accelerometer this_gen);
 /* Accelerometer */
@@ -374,7 +278,7 @@ Accelerometer_data getAccelerometerValue (Accelerometer this_gen);
  *  @note	Gravity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGravity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGravity() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.gravity" 을 반드시 추가해야 한다.
 */
 typedef struct _Gravity * Gravity;
 struct _Gravity
@@ -418,19 +322,7 @@ typedef struct _GravityExtend
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 Gravity NewGravity (void);
 
@@ -442,19 +334,7 @@ Gravity NewGravity (void);
  *  @note 		생성한 Gravity 객체를 소멸 시킨다. \n
  *  			Gravity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGravity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 void DestroyGravity (Gravity this_gen);
 
@@ -475,19 +355,7 @@ void DestroyGravity (Gravity this_gen);
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -504,19 +372,7 @@ void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int t
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 void detachGravityCallback (Gravity this_gen);
 
@@ -533,19 +389,7 @@ void detachGravityCallback (Gravity this_gen);
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 void GravityOn (Gravity this_gen);
 
@@ -562,19 +406,7 @@ void GravityOn (Gravity this_gen);
  *  			GravityOn \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 void GravityOff (Gravity this_gen);
 
@@ -591,19 +423,7 @@ void GravityOff (Gravity this_gen);
  *  			GravityOn \n
  *  			GravityOff \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 bool isGravitySupported (Gravity this_gen);
 
@@ -620,19 +440,7 @@ bool isGravitySupported (Gravity this_gen);
  *  			GravityOn \n
  *  			GravityOff \n
  *  			isGravitySupported
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
 Gravity_data getGravityValue (Gravity this_gen);
 /* Gravity */
@@ -688,19 +496,7 @@ typedef struct _LinearAccelationExtend
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration
  */
 LinearAccelation NewLinearAccelation (void);
 
@@ -712,19 +508,7 @@ LinearAccelation NewLinearAccelation (void);
  *  @note 		생성한 LinearAccelation 객체를 소멸 시킨다. \n
  *  			LinearAccelation 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewLinearAccelation
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 void DestroyLinearAccelation (LinearAccelation this_gen);
 
@@ -745,19 +529,7 @@ void DestroyLinearAccelation (LinearAccelation this_gen);
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -774,19 +546,7 @@ void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sen
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 void detachLinearAccelationCallback (LinearAccelation this_gen);
 
@@ -803,19 +563,7 @@ void detachLinearAccelationCallback (LinearAccelation this_gen);
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 void LinearAccelationOn (LinearAccelation this_gen);
 
@@ -832,19 +580,7 @@ void LinearAccelationOn (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 void LinearAccelationOff (LinearAccelation this_gen);
 
@@ -861,19 +597,7 @@ void LinearAccelationOff (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			LinearAccelationOff \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 bool isLinearAccelationSupported (LinearAccelation this_gen);
 
@@ -890,19 +614,7 @@ bool isLinearAccelationSupported (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			LinearAccelationOff \n
  *  			isAccelerometerSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
 LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen);
 /* LinearAccelation */
@@ -914,7 +626,7 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen);
  *  @note	Magnetometer 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewMagnetometer() 함수를 사용해야 하며 사용이 끝났을 때 DestroyMagnetometer() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.magnetometer" 을 반드시 추가해야 한다.
 */
 typedef struct _Magnetometer * Magnetometer;
 struct _Magnetometer
@@ -958,19 +670,7 @@ typedef struct _MagnetometerExtend
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 Magnetometer NewMagnetometer (void);
 
@@ -982,19 +682,7 @@ Magnetometer NewMagnetometer (void);
  *  @note 		생성한 Magnetometer 객체를 소멸 시킨다. \n
  *  			Magnetometer 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewMagnetometer
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 void DestroyMagnetometer (Magnetometer this_gen);
 
@@ -1015,19 +703,7 @@ void DestroyMagnetometer (Magnetometer this_gen);
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -1044,19 +720,7 @@ void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallb
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 void detachMagnetometerCallback (Magnetometer this_gen);
 
@@ -1073,19 +737,7 @@ void detachMagnetometerCallback (Magnetometer this_gen);
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 void MagnetometerOn (Magnetometer this_gen);
 
@@ -1102,19 +754,7 @@ void MagnetometerOn (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 void MagnetometerOff (Magnetometer this_gen);
 
@@ -1131,19 +771,7 @@ void MagnetometerOff (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			MagnetometerOff \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 bool isMagnetometerSupported (Magnetometer this_gen);
 
@@ -1160,19 +788,7 @@ bool isMagnetometerSupported (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
 Magnetometer_data getMagnetometerValue (Magnetometer this_gen);
 /* Magnetometer */
@@ -1184,7 +800,7 @@ Magnetometer_data getMagnetometerValue (Magnetometer this_gen);
  *  @note	RotationVector 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewRotationVector() 함수를 사용해야 하며 사용이 끝났을 때 DestroyRotationVector() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.rotation_vector" 들을 반드시 추가해야 한다.
  */
 typedef struct _RotationVector * RotationVector;
 struct _RotationVector
@@ -1228,19 +844,7 @@ typedef struct _RotationVectorExtend
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 RotationVector NewRotationVector (void);
 
@@ -1252,19 +856,7 @@ RotationVector NewRotationVector (void);
  *  @note 		생성한 RotationVector 객체를 소멸 시킨다. \n
  *  			RotationVector 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewRotationVector
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 void DestroyRotationVector (RotationVector this_gen);
 
@@ -1285,19 +877,7 @@ void DestroyRotationVector (RotationVector this_gen);
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -1314,19 +894,7 @@ void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorC
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 void detachRotationVectorCallback (RotationVector this_gen);
 
@@ -1343,19 +911,7 @@ void detachRotationVectorCallback (RotationVector this_gen);
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 void RotationVectorOn (RotationVector this_gen);
 
@@ -1372,19 +928,7 @@ void RotationVectorOn (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 void RotationVectorOff (RotationVector this_gen);
 
@@ -1401,19 +945,7 @@ void RotationVectorOff (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			RotationVectorOff \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 bool isRotationVectorSupported (RotationVector this_gen);
 
@@ -1430,19 +962,7 @@ bool isRotationVectorSupported (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
 RotationVector_data getRotationVectorValue (RotationVector this_gen);
 /* RotationVector */
@@ -1454,7 +974,7 @@ RotationVector_data getRotationVectorValue (RotationVector this_gen);
  *  @note	Orientation 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewOrientation() 함수를 사용해야 하며 사용이 끝났을 때 DestroyOrientation() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.accelerometer" 와 "http://tizen.org/feature/sensor.magnetometer" 을 반드시 추가해야 한다.
  */
 typedef struct _Orientation * Orientation;
 struct _Orientation
@@ -1499,18 +1019,7 @@ typedef struct _OrientationExtend
  *  			isOrientationSupported \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 Orientation NewOrientation (void);
 
@@ -1523,18 +1032,7 @@ Orientation NewOrientation (void);
  *  			Orientation 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewOrientation
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void DestroyOrientation (Orientation this_gen);
 
@@ -1556,18 +1054,7 @@ void DestroyOrientation (Orientation this_gen);
  *  			isOrientationSupported \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -1585,18 +1072,7 @@ void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallbac
  *  			isOrientationSupported \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void detachOrientationCallback (Orientation this_gen);
 
@@ -1614,18 +1090,7 @@ void detachOrientationCallback (Orientation this_gen);
  *  			isOrientationSupported \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void OrientationOn (Orientation this_gen);
 
@@ -1643,18 +1108,7 @@ void OrientationOn (Orientation this_gen);
  *  			isOrientationSupported \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 void OrientationOff (Orientation this_gen);
 
@@ -1672,18 +1126,7 @@ void OrientationOff (Orientation this_gen);
  *  			OrientationOff \n
  *  			getOrientationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 bool isOrientationSupported (Orientation this_gen);
 
@@ -1701,18 +1144,7 @@ bool isOrientationSupported (Orientation this_gen);
  *  			OrientationOff \n
  *  			isOrientationSupported \n
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
  *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
  */
 Orientation_data getOrientationValue (Orientation this_gen);
 /* Orientation */
@@ -1724,7 +1156,7 @@ Orientation_data getOrientationValue (Orientation this_gen);
  *  @note	Gyroscope 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGyroscope() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGyroscope() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.gyroscope" 을 반드시 추가해야 한다.
  */
 typedef struct _Gyroscope * Gyroscope;
 struct _Gyroscope
@@ -1768,19 +1200,7 @@ typedef struct _GyroscopeExtend
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope \n
  */
 Gyroscope NewGyroscope (void);
 
@@ -1792,19 +1212,7 @@ Gyroscope NewGyroscope (void);
  *  @note 		생성한 Gyroscope 객체를 소멸 시킨다. \n
  *  			Gyroscope 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGyroscope
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 void DestroyGyroscope (Gyroscope this_gen);
 
@@ -1825,19 +1233,7 @@ void DestroyGyroscope (Gyroscope this_gen);
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -1854,19 +1250,7 @@ void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, i
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 void detachGyroscopeCallback (Gyroscope this_gen);
 
@@ -1883,19 +1267,7 @@ void detachGyroscopeCallback (Gyroscope this_gen);
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 void GyroscopeOn (Gyroscope this_gen);
 
@@ -1912,19 +1284,7 @@ void GyroscopeOn (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 void GyroscopeOff (Gyroscope this_gen);
 
@@ -1941,19 +1301,7 @@ void GyroscopeOff (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			GyroscopeOff \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 bool isGyroscopeSupported (Gyroscope this_gen);
 
@@ -1970,19 +1318,7 @@ bool isGyroscopeSupported (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
 Gyroscope_data getGyroscopeValue (Gyroscope this_gen);
 /* Gyroscope */
@@ -1994,7 +1330,7 @@ Gyroscope_data getGyroscopeValue (Gyroscope this_gen);
  *  @note	Light 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewLight() 함수를 사용해야 하며 사용이 끝났을 때 DestroyLight() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.photometer" 들을 반드시 추가해야 한다.
  */
 typedef struct _Light * Light;
 struct _Light
@@ -2038,19 +1374,7 @@ typedef struct _LightExtend
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 Light NewLight (void);
 
@@ -2062,19 +1386,7 @@ Light NewLight (void);
  *  @note 		생성한 Light 객체를 소멸 시킨다. \n
  *  			Light 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewLight
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 void DestroyLight (Light this_gen);
 
@@ -2095,19 +1407,7 @@ void DestroyLight (Light this_gen);
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -2124,19 +1424,7 @@ void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timei
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 void detachLightCallback (Light this_gen);
 
@@ -2153,19 +1441,7 @@ void detachLightCallback (Light this_gen);
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 void LightOn (Light this_gen);
 
@@ -2182,19 +1458,7 @@ void LightOn (Light this_gen);
  *  			LightOn \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 void LightOff (Light this_gen);
 
@@ -2211,19 +1475,7 @@ void LightOff (Light this_gen);
  *  			LightOn \n
  *  			LightOff \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 bool isLightSupported (Light this_gen);
 
@@ -2240,19 +1492,7 @@ bool isLightSupported (Light this_gen);
  *  			LightOn \n
  *  			LightOff \n
  *  			isLightSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
 Light_data getLightValue (Light this_gen);
 
@@ -2265,7 +1505,7 @@ Light_data getLightValue (Light this_gen);
  *  @note	Proximity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewProximity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyProximity() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.proximity" 들을 반드시 추가해야 한다.
  */
 typedef struct _Proximity * Proximity;
 struct _Proximity
@@ -2309,19 +1549,7 @@ typedef struct _ProximityExtend
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 Proximity NewProximity (void);
 
@@ -2333,19 +1561,7 @@ Proximity NewProximity (void);
  *  @note 		생성한 Proximity 객체를 소멸 시킨다. \n
  *  			Proximity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewProximity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 void DestroyProximity (Proximity this_gen);
 
@@ -2366,19 +1582,7 @@ void DestroyProximity (Proximity this_gen);
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -2395,19 +1599,7 @@ void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, i
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 void detachProximityCallback (Proximity this_gen);
 
@@ -2424,19 +1616,7 @@ void detachProximityCallback (Proximity this_gen);
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 void ProximityOn (Proximity this_gen);
 
@@ -2453,19 +1633,7 @@ void ProximityOn (Proximity this_gen);
  *  			ProximityOn \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 void ProximityOff (Proximity this_gen);
 
@@ -2482,19 +1650,7 @@ void ProximityOff (Proximity this_gen);
  *  			ProximityOn \n
  *  			ProximityOff \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 bool isProximitySupported (Proximity this_gen);
 
@@ -2511,19 +1667,7 @@ bool isProximitySupported (Proximity this_gen);
  *  			ProximityOn \n
  *  			ProximityOff \n
  *  			isProximitySupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
 Proximity_data getProximityValue (Proximity this_gen);
 /* Proximity */
@@ -2805,7 +1949,7 @@ Pressure_data getPressureValue (Pressure this_gen);
  *  @note	UltraViolet 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewUltraViolet() 함수를 사용해야 하며 사용이 끝났을 때 DestroyUltraViolet() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.ultraviolet" 들을 반드시 추가해야 한다.
  */
 typedef struct _UltraViolet * UltraViolet;
 struct _UltraViolet
@@ -2849,19 +1993,7 @@ typedef struct _UltraVioletExtend
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 UltraViolet NewUltraViolet (void);
 
@@ -2873,19 +2005,7 @@ UltraViolet NewUltraViolet (void);
  *  @note 		생성한 UltraViolet 객체를 소멸 시킨다. \n
  *  			UltraViolet 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewUltraViolet
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 void DestroyUltraViolet (UltraViolet this_gen);
 
@@ -2906,19 +2026,7 @@ void DestroyUltraViolet (UltraViolet this_gen);
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -2935,19 +2043,7 @@ void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallbac
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 void detachUltraVioletCallback (UltraViolet this_gen);
 
@@ -2964,19 +2060,7 @@ void detachUltraVioletCallback (UltraViolet this_gen);
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 void UltraVioletOn (UltraViolet this_gen);
 
@@ -2993,19 +2077,7 @@ void UltraVioletOn (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 void UltraVioletOff (UltraViolet this_gen);
 
@@ -3022,19 +2094,7 @@ void UltraVioletOff (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			UltraVioletOff \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 bool isUltraVioletSupported (UltraViolet this_gen);
 
@@ -3051,19 +2111,7 @@ bool isUltraVioletSupported (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
 UltraViolet_data getUltraVioletValue (UltraViolet this_gen);
 /* UltraViolet */
@@ -3075,7 +2123,7 @@ UltraViolet_data getUltraVioletValue (UltraViolet this_gen);
  *  @note	Temperature 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewTemperature() 함수를 사용해야 하며 사용이 끝났을 때 DestroyTemperature() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.temperature" 들을 반드시 추가해야 한다.
  */
 typedef struct _Temperature * Temperature;
 struct _Temperature
@@ -3119,19 +2167,7 @@ typedef struct _TemperatureExtend
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 Temperature NewTemperature (void);
 
@@ -3143,19 +2179,7 @@ Temperature NewTemperature (void);
  *  @note 		생성한 Temperature 객체를 소멸 시킨다. \n
  *  			Temperature 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewTemperature
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 void DestroyTemperature (Temperature this_gen);
 
@@ -3176,19 +2200,7 @@ void DestroyTemperature (Temperature this_gen);
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -3205,19 +2217,7 @@ void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallbac
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 void detachTemperatureCallback (Temperature this_gen);
 
@@ -3234,19 +2234,7 @@ void detachTemperatureCallback (Temperature this_gen);
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 void TemperatureOn (Temperature this_gen);
 
@@ -3263,19 +2251,7 @@ void TemperatureOn (Temperature this_gen);
  *  			TemperatureOn \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 void TemperatureOff (Temperature this_gen);
 
@@ -3292,19 +2268,7 @@ void TemperatureOff (Temperature this_gen);
  *  			TemperatureOn \n
  *  			TemperatureOff \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 bool isTemperatureSupported (Temperature this_gen);
 
@@ -3321,19 +2285,7 @@ bool isTemperatureSupported (Temperature this_gen);
  *  			TemperatureOn \n
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
 Temperature_data getTemperatureValue (Temperature this_gen);
 /* Temperature */
@@ -3345,7 +2297,7 @@ Temperature_data getTemperatureValue (Temperature this_gen);
  *  @note	Humidity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewHumidity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyHumidity() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @todo	feature에 "http://tizen.org/feature/sensor.humidity" 들을 반드시 추가해야 한다.
  */
 typedef struct _Humidity * Humidity;
 struct _Humidity
@@ -3389,19 +2341,7 @@ typedef struct _HumidityExtend
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 Humidity NewHumidity (void);
 
@@ -3413,19 +2353,7 @@ Humidity NewHumidity (void);
  *  @note 		생성한 Humidity 객체를 소멸 시킨다. \n
  *  			Humidity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewHumidity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 void DestroyHumidity (Humidity this_gen);
 
@@ -3446,19 +2374,7 @@ void DestroyHumidity (Humidity this_gen);
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
@@ -3475,19 +2391,7 @@ void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 void detachHumidityCallback (Humidity this_gen);
 
@@ -3504,19 +2408,7 @@ void detachHumidityCallback (Humidity this_gen);
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 void HumidityOn (Humidity this_gen);
 
@@ -3533,19 +2425,7 @@ void HumidityOn (Humidity this_gen);
  *  			HumidityOn \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 void HumidityOff (Humidity this_gen);
 
@@ -3562,19 +2442,7 @@ void HumidityOff (Humidity this_gen);
  *  			HumidityOn \n
  *  			HumidityOff \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 bool isHumiditySupported (Humidity this_gen);
 
@@ -3591,19 +2459,7 @@ bool isHumiditySupported (Humidity this_gen);
  *  			HumidityOn \n
  *  			HumidityOff \n
  *  			isHumiditySupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
 Humidity_data getHumidityValue (Humidity this_gen);
 /* Humidity */
