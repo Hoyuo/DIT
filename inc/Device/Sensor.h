@@ -1512,7 +1512,7 @@ typedef struct _OrientationExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Orientation NewOrientation ();
+Orientation NewOrientation (void);
 
 /*!	@fn			void DestroyOrientation (Orientation this_gen)
  *  @brief 		생성한 Orientation 객체를 소멸 시킨다.
@@ -1782,7 +1782,7 @@ typedef struct _GyroscopeExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Gyroscope NewGyroscope ();
+Gyroscope NewGyroscope (void);
 
 /*!	@fn			void DestroyGyroscope (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope 객체를 소멸 시킨다.
@@ -2052,7 +2052,7 @@ typedef struct _LightExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Light NewLight ();
+Light NewLight (void);
 
 /*!	@fn			void DestroyLight (Light this_gen)
  *  @brief 		생성한 Light 객체를 소멸 시킨다.
@@ -2323,7 +2323,7 @@ typedef struct _ProximityExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Proximity NewProximity ();
+Proximity NewProximity (void);
 
 /*!	@fn			void DestroyProximity (Proximity this_gen)
  *  @brief 		생성한 Proximity 객체를 소멸 시킨다.
@@ -2593,7 +2593,7 @@ typedef struct _PressureExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Pressure NewPressure ();
+Pressure NewPressure (void);
 
 /*!	@fn			void DestroyPressure (Pressure this_gen)
  *  @brief 		생성한 Pressure 객체를 소멸 시킨다.
@@ -2863,7 +2863,7 @@ typedef struct _UltraVioletExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-UltraViolet NewUltraViolet ();
+UltraViolet NewUltraViolet (void);
 
 /*!	@fn			void DestroyUltraViolet (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet 객체를 소멸 시킨다.
@@ -3133,7 +3133,7 @@ typedef struct _TemperatureExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Temperature NewTemperature ();
+Temperature NewTemperature (void);
 
 /*!	@fn			void DestroyTemperature (Temperature this_gen)
  *  @brief 		생성한 Temperature 객체를 소멸 시킨다.
@@ -3403,7 +3403,7 @@ typedef struct _HumidityExtend
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-Humidity NewHumidity ();
+Humidity NewHumidity (void);
 
 /*!	@fn			void DestroyHumidity (Humidity this_gen)
  *  @brief 		생성한 Humidity 객체를 소멸 시킨다.
