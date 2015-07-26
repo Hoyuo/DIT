@@ -24,7 +24,7 @@ struct _Socket
 
     bool (* Send) (Socket this_gen, String msg);
 
-    bool (* Recv) (Socket this_gen, String msg);
+    bool (* Recv) (Socket this_gen, String* msg);
 
 };
 
@@ -38,15 +38,14 @@ bool   isSocketAccessible (Socket this_gen);
 bool   onSocketConnect (Socket this_gen, String url, int port);
 bool   onSocketDisconnect (Socket this_gen);
 bool   SocketMessageSend (Socket this_gen, String msg);
-bool   SocketMessageRecv (Socket this_gen, String msg);
+bool   SocketMessageRecv (Socket this_gen, String* msg);
 
 const char * SocketErrorCheck (CURLcode errorCode);
 
 typedef struct
 {
     struct _Socket socket;
-    String         url;
-    int            port;
+    CURL * 		   curl;
     bool           access;
     bool           conect;
 
