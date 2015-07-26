@@ -1,3 +1,10 @@
+/*! @file	Sensor.c
+ *  @brief	Sensor API가 정의되어있다.
+ *  @note	Sensor API가 정의되어있다.
+ *  @see	Sensor.h
+*/
+
+
 #include "Device/Sensor.h"
 #include "sensor.h"
 #include <stdlib.h>
