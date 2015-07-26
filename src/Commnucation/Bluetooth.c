@@ -200,6 +200,7 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 
             if ( ret != BT_ERROR_NONE )
             {
+            	bt_opp_client_clear_files ();
             	bt_opp_client_deinitialize();
                 return;
             }
@@ -208,6 +209,8 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 
             if ( ret != BT_ERROR_NONE )
             {
+            	bt_opp_client_cancel_push();
+            	bt_opp_client_clear_files ();
             	bt_opp_client_deinitialize();
                 return;
             }
@@ -219,6 +222,8 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             	bt_opp_client_deinitialize();
                 return;
             }
+        	bt_opp_client_deinitialize();
+
         }
     }
 }
@@ -233,27 +238,28 @@ static bool adapter_bonded_device_cbx (bt_device_info_s * device_info, void * us
 
     BluetoothExtends * this = (BluetoothExtends *)user_data;
 
-    if ( this->remoteMACAddr == NULL)
+    if ( this->remoteMACAddr != NULL)
     {
-        bt_device_info_s * paired_info;
-        paired_info = (bt_device_info_s *)malloc (sizeof (bt_device_info_s));
-        paired_info->remote_address = strdup (device_info->remote_address);
-        paired_info->remote_name    = strdup (device_info->remote_name);
+    	free(this->remoteMACAddr);
+    }
+
+
+//        paired_info = (bt_device_info_s *)malloc (sizeof (bt_device_info_s));
+//        paired_info->remote_address = strdup (device_info->remote_address);
+//        paired_info->remote_name    = strdup (device_info->remote_name);
 
         size_t size = strlen (device_info->remote_address);
         this->remoteMACAddr = (String)malloc (size + 1);
 
         strcpy (this->remoteMACAddr, device_info->remote_address);
-
-        return true;
+        dlog_print(DLOG_INFO,"DIT",this->remoteMACAddr);
+        return false;
     }
-    return false;
-}
 
 //Data Push
 static void __bt_opp_client_push_responded_cbx (int result, const char * remote_address, void * user_data)
 {
-    dlog_print (DLOG_INFO, "DIT", "result: %d", result);
+    dlog_print (DLOG_INFO, "DIT", "result: %s", BluetoothErrorCheck(result));
     dlog_print (DLOG_INFO, "DIT", "remote_address: %s", remote_address);
 }
 
@@ -313,7 +319,7 @@ static void adapter_state_changed_cbx (int result, bt_adapter_state_e adapter_st
 static void bt_opp_server_transfer_progress_cb_for_oppx (const char * file, long long size, int percent, void * user_data)
 {
     dlog_print (DLOG_INFO, "DIT", "file: %s", file);
-    dlog_print (DLOG_INFO, "DIT", "size: %ld", size);
+    dlog_print (DLOG_INFO, "DIT", "size: %lld", size);
     dlog_print (DLOG_INFO, "DIT", "percent: %d", percent);
 }
 
@@ -322,7 +328,7 @@ static void bt_opp_server_transfer_finished_cb_for_oppx (int result, const char 
 {
     dlog_print (DLOG_INFO, "DIT", "result: %d", result);
     dlog_print (DLOG_INFO, "DIT", "file: %s", file);
-    dlog_print (DLOG_INFO, "DIT", "size: %ld", size);
+    dlog_print (DLOG_INFO, "DIT", "size: %lld", size);
 
     String * recvBuffer = (String *)user_data;
 
