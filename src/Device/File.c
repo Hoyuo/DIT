@@ -19,7 +19,6 @@
 #include <Evas.h>
 #include <metadata_extractor.h>
 #include <media_content.h>
-//#include <dlog.h>
 
 File NewFile (void)
 {
