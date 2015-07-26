@@ -76,6 +76,10 @@ bool onHttpConnect (Http this_gen, String url, int port)
         if ( this->access )
         {
             int lenght = strlen (url);
+            if(this->url != NULL)
+            {
+            	free(this->url);
+            }
             this->url = (String)malloc (lenght + 1);
             strcpy(this->url, url);
             this->port = port;
@@ -151,6 +155,7 @@ void HttpDownload (Http this_gen, String filename)
             {
                 FILE * fp = fopen (path, "wb");
                 curl_easy_setopt (curl, CURLOPT_URL, url);
+                curl_easy_setopt (curl, CURLOPT_PORT, this->port);
                 curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_data);
                 curl_easy_setopt (curl, CURLOPT_WRITEDATA, fp);
                 curl_easy_perform (curl);
@@ -180,9 +185,8 @@ void HttpExcutePost (Http this_gen, String req, String * res)
             {
                 curl_easy_setopt (curl, CURLOPT_URL, this->url);
                 curl_easy_setopt (curl, CURLOPT_PORT, this->port);
-
                 curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
-                curl_easy_setopt (curl, CURLOPT_POSTFIELDSIZE, (long)strlen (req) + 1L);
+                curl_easy_setopt (curl, CURLOPT_POSTFIELDSIZE, (long)strlen (req) );
                 curl_easy_setopt (curl, CURLOPT_POSTFIELDS, req);
                 curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
 
@@ -208,13 +212,19 @@ void HttpExcuteGet (Http this_gen, String req, String * res)
             curl = curl_easy_init ();
             if ( curl )
             {
-                curl_easy_setopt (curl, CURLOPT_URL, this->url);
+            	String url = (String)malloc (FILENAME_MAX);
+            	strcpy(url, this->url);
+            	strcat(url, "/");
+            	strcat(url, req);
+
+            	curl_easy_setopt (curl, CURLOPT_URL, url);
                 curl_easy_setopt (curl, CURLOPT_PORT, this->port);
                 curl_easy_setopt (curl, CURLOPT_WRITEFUNCTION, write_callback);
                 curl_easy_setopt (curl, CURLOPT_WRITEDATA, res);
 
                 r = curl_easy_perform (curl);
                 curl_easy_cleanup (curl);
+                free(url);
             }
             curl_global_cleanup ();
         }
