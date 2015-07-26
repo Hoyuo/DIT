@@ -19,7 +19,7 @@
 #include <Evas.h>
 #include <metadata_extractor.h>
 #include <media_content.h>
-#include <dlog.h>
+//#include <dlog.h>
 
 File NewFile (void)
 {
@@ -349,7 +349,6 @@ void stopAudio (Audio this_gen)
 
 void recordAudio (Audio this_gen)
 {
-
     AudioExtends * this = (AudioExtends *)this_gen;
 }
 
