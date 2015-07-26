@@ -335,7 +335,7 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen)
 
 }
 
-MagnetoMeter NewMagnetoMeter (void)
+Magnetometer NewMagnetometer (void)
 {
     bool supported;
     sensor_is_supported (SENSOR_MAGNETIC, &supported);
@@ -344,14 +344,14 @@ MagnetoMeter NewMagnetoMeter (void)
         return NULL;
     }
 
-    MagnetoMeterExtend * this = malloc (sizeof (MagnetoMeterExtend));
+    MagnetometerExtend * this = malloc (sizeof (MagnetometerExtend));
 
-    this->magnetometer.Off         = MagnetoMeterOff;
-    this->magnetometer.On          = MagnetoMeterOn;
-    this->magnetometer.addCallback = addMagnetoMeterCallback;
-    this->magnetometer.getValue    = getMagnetoMeterValue;
-    this->magnetometer.isSupported = isMagnetoMeterSupported;
-    this->magnetometer.detachCallback = detachMagnetoMeterCallback;
+    this->magnetometer.Off         = MagnetometerOff;
+    this->magnetometer.On          = MagnetometerOn;
+    this->magnetometer.addCallback = addMagnetometerCallback;
+    this->magnetometer.getValue    = getMagnetometerValue;
+    this->magnetometer.isSupported = isMagnetometerSupported;
+    this->magnetometer.detachCallback = detachMagnetometerCallback;
     this->type     = SENSOR_MAGNETIC;
     this->listener = NULL;
     this->sensor   = NULL;
@@ -362,14 +362,14 @@ MagnetoMeter NewMagnetoMeter (void)
     return &this->magnetometer;
 }
 
-void DestroyMagnetoMeter (MagnetoMeter this_gen)
+void DestroyMagnetometer (Magnetometer this_gen)
 {
     if ( this_gen == NULL)
     {
         return;
     }
 
-    MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     if ( this->listener )
     {
         sensor_listener_unset_event_cb (this->listener);
@@ -380,23 +380,23 @@ void DestroyMagnetoMeter (MagnetoMeter this_gen)
     free (this_gen);
 }
 
-void addMagnetoMeterCallback (MagnetoMeter this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
-    MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
 
     sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
 }
 
-void detachMagnetoMeterCallback (MagnetoMeter this_gen)
+void detachMagnetometerCallback (Magnetometer this_gen)
 {
-	MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+	MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
 
     sensor_listener_unset_event_cb(this->listener);
 }
 
-void MagnetoMeterOn (MagnetoMeter this_gen)
+void MagnetometerOn (Magnetometer this_gen)
 {
-    MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
@@ -404,9 +404,9 @@ void MagnetoMeterOn (MagnetoMeter this_gen)
     }
 }
 
-void MagnetoMeterOff (MagnetoMeter this_gen)
+void MagnetometerOff (Magnetometer this_gen)
 {
-    MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
@@ -414,17 +414,17 @@ void MagnetoMeterOff (MagnetoMeter this_gen)
      }
 }
 
-bool isMagnetoMeterSupported (MagnetoMeter this_gen)
+bool isMagnetometerSupported (Magnetometer this_gen)
 {
     bool supported = false;
     sensor_is_supported (SENSOR_ACCELEROMETER, &supported);
     return supported;
 }
 
-Magnetometer_data getMagnetoMeterValue (MagnetoMeter this_gen)
+Magnetometer_data getMagnetometerValue (Magnetometer this_gen)
 {
     sensor_event_s data;
-    MagnetoMeterExtend * this = (MagnetoMeterExtend *)this_gen;
+    MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
     Magnetometer_data vs;
 
