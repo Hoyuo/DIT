@@ -1,3 +1,10 @@
+/*! @file	Bluetooth.c
+ *  @brief	Bluetooth API가 정의되어있다.
+ *  @note	Bluetooth API가 정의되어있다.
+ *  @see	Bluetooth.h
+*/
+
+
 #include "Commnucation/Bluetooth.h"
 
 #include <stdlib.h>
