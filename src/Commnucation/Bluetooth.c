@@ -94,19 +94,23 @@ bool isBluetoothAccessible (Bluetooth this_gen)
 
 bool onBluetoothConnect (Bluetooth this_gen)
 {
+    dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(0));
 
 	if ( this_gen != NULL)
     {
         BluetoothExtends * this = (BluetoothExtends *)this_gen;
 
-        if ( true )
+        if ( this->connected==false )
         {
             int res = 0;
 
-            res = bt_initialize ();
-            res = bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
-            res = bt_adapter_foreach_bonded_device (adapter_bonded_device_cbx, this);
-            res = bt_adapter_start_device_discovery ();
+            bt_initialize ();
+
+            bt_adapter_set_state_changed_cb (adapter_state_changed_cbx, this);
+
+            bt_adapter_foreach_bonded_device (adapter_bonded_device_cbx, this);
+
+            bt_adapter_start_device_discovery ();
 
             if ( res == BT_ERROR_NONE )
             {
@@ -133,14 +137,33 @@ bool isBluetoothConnected (Bluetooth this_gen)
 
 bool onBluetoothDisconnect (Bluetooth this_gen)
 {
+    dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(0));
+
     if ( this_gen != NULL)
     {
         BluetoothExtends * this = (BluetoothExtends *)this_gen;
 
-        if ( this->accessible )
+        if ( this->connected )
         {
             int ret = 0;
-            ret = bt_deinitialize ();
+            bt_opp_server_deinitialize ();
+            dlog_print(DLOG_ERROR,"DIT","%s",BluetoothErrorCheck(ret));
+
+             bt_adapter_stop_device_discovery ();
+
+            bt_adapter_unset_state_changed_cb ();
+
+            bt_adapter_unset_device_discovery_state_changed_cb ();
+
+            bt_device_unset_service_searched_cb ();
+
+            bt_socket_unset_data_received_cb ();
+
+            bt_socket_unset_connection_state_changed_cb ();
+
+            bt_adapter_unset_visibility_duration_changed_cb ();
+
+            bt_deinitialize ();
 
             if ( BT_ERROR_NONE == ret )
             {

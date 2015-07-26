@@ -62,7 +62,7 @@ static void gps_state_changed_cb (location_service_state_e state, void * user_da
     {
         Location location;
         int      err;
-
+        location.validation =true;
         err = location_manager_get_location (this->manager, &location.altitude,
                 &location.latitude, &location.longitude, &location.climb, &location.direction, &location.speed,
                 &location.level, &location.horizontal, &location.vertical, &location.timestamp);
@@ -134,6 +134,8 @@ Location GPSRecv (GPS this_gen)
             return this->location;
         }
     }
+    Location l = {0,};
+    return l;
 }
 
 const char * GPSErrorChecker (int errCode)
