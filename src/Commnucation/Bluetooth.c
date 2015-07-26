@@ -187,9 +187,9 @@ bool onBluetoothDisconnect (Bluetooth this_gen)
     return false;
 }
 
-/**
- *  @param[in] this_gen assign Bluetooth object
- *  @param[in] recvfile NULLABLE assign filename
+/*
+ * in : this_gen assign Bluetooth object
+ * in : recvfile NULLABLE assign filename
  *
  */
 void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
@@ -206,10 +206,8 @@ void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
     }
 }
 
-/**
- *
- *	param[in] sendfilepath fullpath of file to send
- */
+// sendfilepath fullpath of file to send
+
 void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 {
     if ( this_gen != NULL)
