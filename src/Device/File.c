@@ -1,3 +1,10 @@
+/*! @file	File.c
+ *  @brief	File API가 정의되어있다.
+ *  @note	File API가 정의되어있다.
+ *  @see	File.h
+*/
+
+
 #include "Device/File.h"
 
 #include <stdlib.h>
@@ -14,13 +21,7 @@
 #include <media_content.h>
 #include <dlog.h>
 
-/*
- *
- * @brief
- * @remark privilege:  http://tizen.org/privilege/mediastorage http://tizen.org/privilege/display/externalstorage needed
- *
- * */
-File NewFile ()
+File NewFile (void)
 {
     File this = malloc (sizeof (struct _File));
 
@@ -119,7 +120,6 @@ void search_recur (String src, String dest, GList ** searchList)
 
 GList * searchFile (String src, String dst)
 {
-    //todo : working
     GList * searchList = NULL;
     search_recur (src, dst, &searchList);
 
@@ -141,13 +141,8 @@ void deleteSearchedList (GList * searchList)
 
 }
 
-/*
- *
- * @brief
- * @remark privilege: http://tizen.org/privilege/display http://tizen.org/privilege/mediastorage http://tizen.org/privilege/display/externalstorage needed
- *
- * */
-Video NewVideo ()
+
+Video NewVideo (void)
 {
 
     VideoExtends * this = (VideoExtends *)malloc (sizeof (VideoExtends));
@@ -226,14 +221,8 @@ void stopVideo (Video this_gen)
 void recordVideo (Video this_gen)
 {
     VideoExtends * this = (VideoExtends *)this_gen;
-
 }
 
-/**
- *	@brief for use this function, caller must import <metadata_extractor.h>
- *
- *	@remark return value must be free()
- */
 String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
 {
     VideoExtends * this = (VideoExtends *)this_gen;
@@ -387,11 +376,6 @@ void setAudioURI (Audio this_gen, char * uri)
     metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
 }
 
-/**
- *	@brief for use this function, caller must import <metadata_extractor.h>
- *
- *	@remark return value must be free()
- */
 char * getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
 {
 
@@ -464,8 +448,6 @@ bool gallery_media_item_cbx (media_info_h media, void * user_data)
     return false;
 }
 
-
-// @param[in] src fullpath of image
 
 void getImageInfo (Image this_gen, String src)
 {
