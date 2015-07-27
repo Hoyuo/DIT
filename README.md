@@ -17,20 +17,20 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 ### 2. Doxygen Comment Rules
 #### FILE
 ```
-/*!	@file		파일명
+/*!	@file		파일 이름 (확장자까지 표기)
  *	@brief		간략한 설명
- *	@note		남기고 싶은 설명
- *	@see		외부URL or Header or soucefile or Function or Struct등을 의미하며 
- *				추가 적으로 현재의 파일과 연관된 것을 명시한다.
+ *	@note		자세한 설명 및 주의 사항
+ *	@see		참고 사항 및 현재 파일과 연관된 사항들 
+ *				( URL / Header / Soucefile / Function / Struct 등 
  */
 ```
 #### STRUCT
 ```
 /*!	@struct		구조체 이름
  *	@brief		간략한 설명
- *	@note		자세한설명
- *	@see 		외부URL or Header or soucefile or Function or Struct등을 의미하며 
- *				추가 적으로 현재의 구조체와 연관된 것을 명시한다.
+ *	@note		자세한 설명 및 주의 사항
+ *	@see 		참고 사항 및 현재 구조체와 연관된 사항들 
+ *				( URL / Header / Soucefile / Function / Struct 등 )
  *	@todo 		Tizen의 features나 privileges 를 명시한다.
  */
 ```
@@ -39,15 +39,14 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 ```
 /*!	@fn 			함수 이름
  *	@brief 			간략한 설명
- *	@param[in]		인자 입력값
- *	@param[out] 	인자로 출력값을 저장하는 장소
- *	@retval 		반환인자
- *	@note 			자세한 설명
- *	@see 			외부URL or Header or soucefile or Function or Struct등을 의미하며
- *					추가 적으로 현재의 함수와 연관된 것을 명시한다. 관련 API 포함
- *	@remark 		Tizen의 features나 privileges 를 명시한다.
- *	@code			Sample Codes [삭제 할수도...]
- *	@endcode
+ *	@param[in]		인자 입력 값
+ *	@param[out] 	인자로 출력 값을 저장하는 장소
+ *	@retval 		반환 인자 타입 및 간략한 설명
+ *	@note 			자세한 설명 및 주의 사항
+ *	@see 			참고 사항 및 현재 구조체와 연관된 사항들 
+ *					( URL / Header / Soucefile / Function / Struct 등 )
+ *					주로 같은 모듈 내부의 연관 함수들을 기재한다.
+ *	@remark 		Tizen의 features나 privileges 를 명시한다. 
  */
 ```
 
