@@ -1,3 +1,10 @@
+/*! @file	Http.c
+ *  @brief	HTTP API가 정의되어있다.
+ *  @note	HTTP API가 정의되어있다.
+ *  @see	Http.h
+*/
+
+
 #include "Commnucation/Http.h"
 
 #include <stdbool.h>
@@ -9,11 +16,6 @@
 
 static size_t write_callback (void * contents, size_t size, size_t nmemb, void ** res);
 static size_t write_data (void * ptr, size_t size, size_t nmemb, FILE * stream);
-
-/*
- * @privlevel public
- * @privilege %http://tizen.org/privilege/internet
- */
 
 Http NewHttp (void)
 {
@@ -128,11 +130,6 @@ bool onHttpDisconnect (Http this_gen)
     return false;
 }
 
-/*
- * @privlevel public
- * @privilege %http://tizne.org/privileges/mediastorage
- * @privilege %http://tizne.org/privileges/download
- */
 void HttpDownload (Http this_gen, String filename)
 {
     if ( this_gen != NULL)
