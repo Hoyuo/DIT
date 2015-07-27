@@ -38,7 +38,7 @@ typedef struct
  *  @retval 	NDEF
  *  @note 		새로운 NDEF 객체를 생성한다. \n
  *  			NDEF 객체를 사용하기 전에 반드시 호출해야 한다.
- *  @see 		DestroyNDEF
+ *  @see 		DeleteNDEF
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
 */
 NDEF CreateNDEF (String tag, String msg);
