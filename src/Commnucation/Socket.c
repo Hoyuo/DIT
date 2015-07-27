@@ -1,3 +1,10 @@
+/*! @file	Socket.c
+ *  @brief	Socket API가 정의되어있다.
+ *  @note	Socket API가 정의되어있다.
+ *  @see	Socket.h
+*/
+
+
 #include "Commnucation/Socket.h"
 
 #include <stdbool.h>
@@ -9,7 +16,8 @@
 
 static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms);
 
-Socket NewSocket(void) {
+Socket NewSocket(void)
+{
 	SocketExtends * this = (SocketExtends *) malloc(sizeof(SocketExtends));
 
 	this->socket.isAccessible = isSocketAccessible;
@@ -25,11 +33,14 @@ Socket NewSocket(void) {
 	return &this->socket;
 }
 
-void DestorySocket(Socket this_gen) {
-	if (this_gen != NULL) {
+void DestorySocket(Socket this_gen)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
-		if (this->curl != NULL) {
+		if (this->curl != NULL)
+		{
 			curl_easy_cleanup(this->curl);
 		}
 
@@ -37,8 +48,10 @@ void DestorySocket(Socket this_gen) {
 	}
 }
 
-bool isSocketAccessible(Socket this_gen) {
-	if (this_gen != NULL) {
+bool isSocketAccessible(Socket this_gen)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
 		bool check1, check2;
@@ -54,28 +67,34 @@ bool isSocketAccessible(Socket this_gen) {
 	return false;
 }
 
-bool onSocketConnect(Socket this_gen, String url, int port) {
-	if (this_gen != NULL) {
+bool onSocketConnect(Socket this_gen, String url, int port)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
-		if (this->access) {
+		if (this->access)
+		{
 			CURLcode r;
 			curl_global_init(CURL_GLOBAL_ALL);
 
-			if (this->curl != NULL) {
+			if (this->curl != NULL)
+			{
 				curl_easy_cleanup(this->curl);
 				this->curl = NULL;
 			}
 
 			this->curl = curl_easy_init();
-			if (this->curl) {
+			if (this->curl)
+			{
 				curl_easy_setopt(this->curl, CURLOPT_URL, url);
 				curl_easy_setopt(this->curl, CURLOPT_PORT, port);
 				curl_easy_setopt(this->curl, CURLOPT_CONNECT_ONLY, 1L);
 
 				r = curl_easy_perform(this->curl);
 
-				if (r == CURLE_OK) {
+				if (r == CURLE_OK)
+				{
 					this->conect = true;
 					return true;
 				}
@@ -85,12 +104,16 @@ bool onSocketConnect(Socket this_gen, String url, int port) {
 	return false;
 }
 
-bool onSocketDisconnect(Socket this_gen) {
-	if (this_gen != NULL) {
+bool onSocketDisconnect(Socket this_gen)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
-		if (this->access) {
-			if (this->curl != NULL) {
+		if (this->access)
+		{
+			if (this->curl != NULL)
+			{
 				curl_easy_cleanup(this->curl);
 				this->curl = NULL;
 			}
@@ -102,18 +125,22 @@ bool onSocketDisconnect(Socket this_gen) {
 	return false;
 }
 
-bool SocketMessageSend(Socket this_gen, String msg) {
-	if (this_gen != NULL) {
+bool SocketMessageSend(Socket this_gen, String msg)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
-		if (this->conect) {
+		if (this->conect)
+		{
 			CURLcode res;
 
 			size_t iolen = 0;
 
 			res = curl_easy_send(this->curl, msg, strlen(msg) + 1, &iolen);
 
-			if (res == CURLE_OK) {
+			if (res == CURLE_OK)
+			{
 				return true;
 			}
 		}
@@ -121,11 +148,14 @@ bool SocketMessageSend(Socket this_gen, String msg) {
 	return false;
 }
 
-bool SocketMessageRecv(Socket this_gen, String* msg) {
-	if (this_gen != NULL) {
+bool SocketMessageRecv(Socket this_gen, String* msg)
+{
+	if (this_gen != NULL)
+	{
 		SocketExtends * this = (SocketExtends *) this_gen;
 
-		if (this->conect) {
+		if (this->conect)
+		{
 			CURLcode res;
 
 				curl_socket_t sockfd;
@@ -138,7 +168,8 @@ bool SocketMessageRecv(Socket this_gen, String* msg) {
 				char buf[1024];
 				size_t iolen = 0;
 				res = curl_easy_recv(this->curl, buf, 1024, &iolen);
-				if (res) {
+				if (res)
+				{
 					return false;
 				}
 
@@ -149,10 +180,10 @@ bool SocketMessageRecv(Socket this_gen, String* msg) {
 			}
 		}
 		return false;
-
 }
 
-static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms) {
+static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms)
+{
 	struct timeval tv;
 	fd_set infd, outfd, errfd;
 	int res;
@@ -166,9 +197,12 @@ static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms) {
 
 	FD_SET(sockfd, &errfd);
 
-	if (for_recv) {
+	if (for_recv)
+	{
 		FD_SET(sockfd, &infd);
-	} else {
+	}
+	else
+	{
 		FD_SET(sockfd, &outfd);
 	}
 
@@ -176,6 +210,7 @@ static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms) {
 	return res;
 }
 
-const char * SocketErrorCheck(CURLcode errorCode) {
+const char * SocketErrorCheck(CURLcode errorCode)
+{
 	return curl_easy_strerror(errorCode);
 }
