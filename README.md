@@ -15,7 +15,7 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 * 파일의 시작부분, 구조체 시작부분, 함수 시작부분에는 주석을 추가한다.
 
 ### 2. Doxygen Comment Rules
-#### ==FILE==
+#### FILE
 ```
 /*!	@file		파일명
  *	@brief		간략한 설명
@@ -24,7 +24,7 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
  *				추가 적으로 현재의 파일과 연관된 것을 명시한다.
  */
 ```
-#### ==STRUCT==
+#### STRUCT
 ```
 /*!	@struct		구조체 이름
  *	@brief		간략한 설명
@@ -35,7 +35,7 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
  */
 ```
 
-#### ==FUNCTION==
+#### FUNCTION
 ```
 /*!	@fn 			함수 이름
  *	@brief 			간략한 설명
