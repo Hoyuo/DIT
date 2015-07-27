@@ -78,7 +78,7 @@ extern "C" {
 
 /*!	@def LOGIF(expr, tag, format, arg...)
  *  @brief 		특정한 조건에서 문자열에 해당 태그를 붙여서 Error log를 발생시킨다.
- *  @param[in] 	expr 발생시키고자 하는 log의 발생 조
+ *  @param[in] 	expr 발생시키고자 하는 log의 발생 조건
  *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
  *  @param[in] 	format 발생시키고자 하는 log의 문자열
  *  @param[in] 	arg 발생시키고자 하는 log의 arguments

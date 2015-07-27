@@ -230,11 +230,11 @@ void	setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
 /*! @fn 		setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
  *  @brief 		OngoingNotification 객체의 진행률을 설정 한다.
  *  @param[in] 	this_gen 진행률을 설정할 OngoingNotification 객체
- *  @param[in] 	progress OngoingNotification의 진행률 (0 ~ 100)
+ *  @param[in] 	progress OngoingNotification의 진행률 (0.0 ~ 1.0)
  *  @param[out] null
  *  @retval 	void
  *  @note 		OngoingNotification 객체의 진행률을 설정 한다.\n
- *  			progress은 % 단위로 0 ~ 100의 값을 가진다.
+ *  			progress은 0.0 ~ 1.0의 값을 가진다.
  *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
