@@ -95,7 +95,6 @@ extern "C" {
     if (expr) \
     { \
     	LOGERROR(tag, format, ##arg); \
-        return; \
     } \
 }
 
