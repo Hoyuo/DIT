@@ -2,7 +2,7 @@
  *  @brief	Bluetooth API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Bluetooth의 isAccessible / onConnect / isConnected / onDisconnect / FileSend / FileRecv API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_BLUETOOTH_H
 #define DIT_BLUETOOTH_H
@@ -50,7 +50,7 @@ extern "C" {
  *  @note 		Bluetooth API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			24가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html
-*/
+ */
 const char * BluetoothErrorCheck (int errCode);
 
 /* Bluetooth */
@@ -60,7 +60,7 @@ const char * BluetoothErrorCheck (int errCode);
     		구조체를 사용하기 전에 NewBluetooth() 함수를 사용해야 하며 사용이 끝났을 때 DestroyBluetooth() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/network.bluetooth" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Bluetooth * Bluetooth;
 struct _Bluetooth
 {
@@ -93,7 +93,7 @@ struct _Bluetooth
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
-*/
+ */
 Bluetooth NewBluetooth (void);
 
 /*! @fn 		void DestroyBluetooth (Bluetooth this_gen)
@@ -224,6 +224,7 @@ typedef struct
     String            remoteMACAddr;
 
 } BluetoothExtends;
+/* Bluetooth */
 
 #ifdef __cplusplus
 }

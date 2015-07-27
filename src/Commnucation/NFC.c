@@ -2,7 +2,7 @@
  *  @brief	NFC API가 정의되어있다.
  *  @note	NFC API가 정의되어있다.
  *  @see	NFC.h
-*/
+ */
 
 
 #include "Commnucation/NFC.h"

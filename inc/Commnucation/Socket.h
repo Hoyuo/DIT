@@ -256,6 +256,7 @@ typedef struct
     bool           conect;
 
 } SocketExtends;
+/* Socket */
 
 #ifdef __cplusplus
 }

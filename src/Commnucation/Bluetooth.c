@@ -2,7 +2,7 @@
  *  @brief	Bluetooth API가 정의되어있다.
  *  @note	Bluetooth API가 정의되어있다.
  *  @see	Bluetooth.h
-*/
+ */
 
 
 #include "Commnucation/Bluetooth.h"
@@ -205,8 +205,6 @@ void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
         }
     }
 }
-
-// sendfilepath fullpath of file to send
 
 void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 {

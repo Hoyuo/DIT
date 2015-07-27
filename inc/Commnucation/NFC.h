@@ -2,7 +2,7 @@
  *  @brief	NFC API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	NFC의 CreateNDEF / DeleteNDEF / isAccessible / onConnect / isConnected / onDisconnect / Send / Recv API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_NFC_H
 #define DIT_NFC_H
@@ -16,13 +16,14 @@
 extern "C" {
 #endif
 
+/* NDEF */
 /*! @struct	NDEF
  *  @brief	NFC통신에 필요한 NDEF (NFC Data Exchange Format)에 대한 구조체이다.
  *  @note	NFC통신에 필요한 NDEF (NFC Data Exchange Format)에 대한 구조체이다. \n
     		구조체를 사용하기 전에 CreateNDEF() 함수를 사용해야 하며 사용이 끝났을 때 DeleteNDEF() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__NDEF__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/network.nfc" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct
 {
 	String tag;
@@ -40,7 +41,7 @@ typedef struct
  *  			NDEF 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DeleteNDEF
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
-*/
+ */
 NDEF CreateNDEF (String tag, String msg);
 
 /*! @fn 		void DeleteNDEF (NDEF * ndef)
@@ -54,6 +55,8 @@ NDEF CreateNDEF (String tag, String msg);
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
  */
 void DeleteNDEF (NDEF * ndef);
+/* NDEF */
+
 
 /* NFC */
 /*! @struct _NFC
@@ -90,7 +93,7 @@ struct _NFC
  *  			NFCSend \n
  * 				NFCRecv
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
-*/
+ */
 NFC  NewNFC (void);
 
 /*! @fn 		void DestroyNFC (NFC this_gen)
@@ -203,6 +206,7 @@ typedef struct
     bool        access;
 
 } NFCExtends;
+/* NFC */
 
 #ifdef __cplusplus
 }

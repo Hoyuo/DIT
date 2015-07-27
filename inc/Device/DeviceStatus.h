@@ -2,7 +2,7 @@
  *  @brief	Device Status API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Device의 Vibration / Display / Battery / Flash 관련 API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_DEVICESTATUS_H
 #define DIT_DEVICESTATUS_H
@@ -34,7 +34,7 @@ extern "C" {
  *  @note 		Device Status API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			8가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__MODULE.html
-*/
+ */
 const char * DeviceStatusErrorCheck (int errCode);
 
 /* Vibration */
@@ -44,7 +44,7 @@ const char * DeviceStatusErrorCheck (int errCode);
     		구조체를 사용하기 전에 NewVibration() 함수를 사용해야 하며 사용이 끝났을 때 DestroyVibration() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__HAPTIC__MODULE.html
  *  @todo	privilege에 "http://tizen.org/privilege/haptic" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Vibration * Vibration;
 struct _Vibration
 {
@@ -71,7 +71,7 @@ struct _Vibration
  *  			VibrationMiddle \n
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
-*/
+ */
 Vibration NewVibration (void);
 
 /*! @fn 		void DestroyVibration (Vibration this_gen)
@@ -160,7 +160,7 @@ typedef struct _VibrationExtend
     		구조체를 사용하기 전에 NewDisplay() 함수를 사용해야 하며 사용이 끝났을 때 DestroyDisplay() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__DISPLAY__MODULE.html
  *  @todo	privilege에 "http://tizen.org/privilege/display" 를 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Display * Display;
 struct _Display
 {
@@ -189,7 +189,7 @@ struct _Display
  *  			getDisplayBrightLevel \n
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
-*/
+ */
 Display NewDisplay (void);
 
 /*! @fn 		void DestroyDisplay (Display this_gen)
@@ -299,7 +299,7 @@ typedef struct _DisplayExtend
  *  @note	Device Status의 Battery 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewBattery() 함수를 사용해야 하며 사용이 끝났을 때 DestoryBattery() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__DEVICE__BATTERY__MODULE.html
-*/
+ */
 typedef struct _Battery * Battery;
 struct _Battery
 {
@@ -318,7 +318,7 @@ struct _Battery
  *  @see 		DestoryBattery \n
  *  			getBatteryRemainsPercent \n
  *  			isBatteryCharging
-*/
+ */
 Battery NewBattery (void);
 
 /*! @fn 		void DestoryBattery (Battery this_gen)
@@ -329,7 +329,7 @@ Battery NewBattery (void);
  *  @note 		생성한 Battery 객체를 소멸 시킨다. \n
  *  			Battery 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewBattery
-*/
+ */
 void    DestoryBattery (Battery this_gen);
 
 /*! @fn 		int getBatteryRemainsPercent (Battery this_gen)
@@ -374,7 +374,7 @@ typedef struct _BatteryExtend
  *  @todo	privilege에 "http://tizen.org/privilege/led" 를 반드시 추가해야 한다. \n
  *			features에 "http://tizen.org/feature/led" 를 반드시 추가한다. \n
  *			features에 "http://tizen.org/feature/camera.back.flash" 를 반드시 추가한다.
-*/
+ */
 typedef struct _Flash * Flash;
 struct _Flash
 {
@@ -396,7 +396,7 @@ struct _Flash
  *  @remark 	privilege	: http://tizen.org/privilege/led \n
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
-*/
+ */
 Flash NewFlash (void);
 
 /*!	@fn			void DestoryFlash (Flash this_gen)
@@ -410,7 +410,7 @@ Flash NewFlash (void);
  *  @remark 	privilege	: http://tizen.org/privilege/led \n
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
-*/
+ */
 void  DestoryFlash (Flash this_gen);
 
 /*!	@fn			void onFlash (void)
@@ -425,7 +425,7 @@ void  DestoryFlash (Flash this_gen);
  *  @remark 	privilege	: http://tizen.org/privilege/led \n
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
-*/
+ */
 void  onFlash (void);
 
 /*!	@fn			void offFlash (void)
@@ -439,10 +439,10 @@ void  onFlash (void);
  *  @remark 	privilege	: http://tizen.org/privilege/led \n
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
-*/
+ */
 void  offFlash (void);
-
 /* Flash */
+
 
 #ifdef __cplusplus
 }

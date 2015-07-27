@@ -2,7 +2,7 @@
  *  @brief	HTTP API가 정의되어있다.
  *  @note	HTTP API가 정의되어있다.
  *  @see	Http.h
-*/
+ */
 
 
 #include "Commnucation/Http.h"

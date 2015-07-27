@@ -2,7 +2,7 @@
  *  @brief	File API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	File의 File / Video / Audio / Image 관련 API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef _FILE_H
 #define _FILE_H
@@ -161,6 +161,7 @@ GList * searchFile (String src, String dst);
  *  						: http://tizen.org/privilege/externalstorage
  */
 void deleteSearchedList (GList * searchedList);
+/* File */
 
 
 /* Video */
@@ -172,7 +173,7 @@ void deleteSearchedList (GList * searchedList);
  *  @todo	privilege에 "http://tizen.org/privilege/display" 을 반드시 추가해야 한다. \n
  *  		privilege에 "http://tizen.org/privilege/mediastorage" 을 반드시 추가해야 한다. \n
  *  		privilege에 "http://tizen.org/privilege/externalstorage" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Video * Video;
 struct _Video
 {
@@ -220,7 +221,7 @@ typedef struct _VideoExtends
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 Video  NewVideo (void);
 
 /*! @fn 		void DestroyVideo (Video this_gen)
@@ -234,7 +235,7 @@ Video  NewVideo (void);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 void   DestroyVideo (Video this_gen);
 
 /*! @fn 		void playVideo (Video this_gen)
@@ -256,7 +257,7 @@ void   DestroyVideo (Video this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 void   playVideo (Video this_gen);
 
 /*! @fn 		void pauseVideo (Video this_gen)
@@ -277,7 +278,7 @@ void   playVideo (Video this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 void   pauseVideo (Video this_gen);
 
 /*! @fn 		void stopVideo (Video this_gen)
@@ -297,7 +298,7 @@ void   pauseVideo (Video this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 void   stopVideo (Video this_gen);
 
 /*! @fn 		void recordVideo (Video this_gen)
@@ -317,7 +318,7 @@ void   stopVideo (Video this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 void   recordVideo (Video this_gen);
 
 /*! @fn 		String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
@@ -340,7 +341,7 @@ void   recordVideo (Video this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/display \n
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
-*/
+ */
 String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
 
 /*! @fn 		void setVideoURI (Video this_gen, String URI)
@@ -385,6 +386,7 @@ void   setVideoURI (Video this_gen, String URI);
  *							http://tizen.org/privilege/externalstorage
  */
 void   setEvasObject (Video this_gen, Evas_Object * EvasObject);
+/* Video */
 
 
 /* Audio */
@@ -396,7 +398,7 @@ void   setEvasObject (Video this_gen, Evas_Object * EvasObject);
  *  @todo	privilege에 "http://tizen.org/privilege/mediastorage" 을 반드시 추가해야 한다. \n
  *  		privilege에 "http://tizen.org/privilege/externalstorage" 을 반드시 추가해야 한다. \n
  *  		privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Audio * Audio;
 struct _Audio
 {
@@ -439,7 +441,7 @@ typedef struct _AudioExtends
  *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
-*/
+ */
 Audio  NewAudio (void);
 
 /*! @fn 		void DestroyAudio (Audio this_gen)
@@ -453,7 +455,7 @@ Audio  NewAudio (void);
  *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
-*/
+ */
 void   DestroyAudio (Audio this_gen);
 
 /*! @fn 		void playAudio (Audio this_gen)
@@ -474,7 +476,7 @@ void   DestroyAudio (Audio this_gen);
  *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
-*/
+ */
 void   playAudio (Audio this_gen);
 
 /*! @fn 		void pauseAudio (Audio this_gen)
@@ -577,6 +579,7 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *							http://tizen.org/privilege/internet
  */
 void   setAudioURI (Audio this_gen, String uri);
+/* Audio */
 
 
 /* Image */
@@ -585,7 +588,7 @@ void   setAudioURI (Audio this_gen, String uri);
  *  @note	File의 Image 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewImage() 함수를 사용해야 하며 사용이 끝났을 때 DestroyImage() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__CONTENT__MEDIA__IMAGE__MODULE.html
-*/
+ */
 typedef struct _Image * Image;
 struct _Image
 {
@@ -641,7 +644,7 @@ Image  NewImage (void);
  *  @note 		생성한 Image 객체를 소멸 시킨다. \n
  *  			Image 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewImage
-*/
+ */
 void   DestroyImage (Image this_gen);
 
 /*! @fn 		void getImageInfo (Image this_gen, String src)
@@ -747,6 +750,7 @@ int    getImageWidth (Image this_gen);
  *  			getImageWidth \n
  */
 int    getImageHeight (Image this_gen);
+/* Image */
 
 #ifdef __cplusplus
 }
