@@ -69,11 +69,12 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ####Due. 2015-07-29
 
 
-[GitBook : Manual](https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details)  
-[GitHub : Source](https://github.com/Hoyuo/DIT)  
-[Documents : Reference API](https://www.naver.com)  
-[Release Version](https://github.com/Hoyuo/DIT/releases)  
-[Donation : You can help me](https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true)	
+[GitBook : Manual][1]  
+[GitHub : Source][2]  
+[Documents : Reference API][3]  
+[Release Version][4]  
+[Donation : You can help me][5]
+	
 ##More Informarion
 [![GitBook](https://avatars2.githubusercontent.com/u/7111340?v=3&s=80)](https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details)
 
@@ -84,46 +85,11 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 
 
 
-## A Responsive Jekyll Theme: *Feeling Responsive*
-
-Do you want to get to know *Feeling Responsive*? Than check it out first and have a look on its home at  <http://phlow.github.io/feeling-responsive/>.
-
-To get to know *Feeling Responsive* check out all the features explained in the [documentation][1].
-
-And what license is *Feeling Responsive* released under? [This one][2].
-
-
-
-## Why use this theme?
-
-Feeling Responsive is heavily customizable.
-
-1. Language-Support :)
-2. Optimized for speed and it's responsive.
-3. Built on Foundation Framework.
-4. Six different Headers.
-5. Customizable navigation, footer,...
-
-**[More ›][3]**
-
-
-
-## Video Tutorial
-
-Click the image to [watch the YouTube-Video-Tutorial][4].
-
-[![Start Video](https://github.com/Phlow/feeling-responsive/blob/gh-pages/images/video-feeling-responsive-tutorial-frontpage.jpg)](https://www.youtube.com/watch?v=rLS-BEvlEyY)
-
-
-
-
-
-
- [1]: http://phlow.github.io/feeling-responsive/documentation/
- [2]: https://github.com/Phlow/feeling-responsive/blob/gh-pages/LICENSE
- [3]: http://phlow.github.io/feeling-responsive/info/
- [4]: https://www.youtube.com/watch?v=rLS-BEvlEyY
- [5]: #
+ [1]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
+ [2]: https://github.com/Hoyuo/DIT
+ [3]: https://www.naver.com
+ [4]: https://github.com/Hoyuo/DIT/releases
+ [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
  [6]: #
  [7]: #
  [8]: #
