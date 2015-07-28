@@ -1,6 +1,6 @@
 link of DIT video in embed style and 1280x720 resolution image file
 
-[![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](<iframe width="560" height="315" src="https://www.youtube.com/embed/MBfxQIz80Jk" frameborder="0" allowfullscreen></iframe>)
+[![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](https://www.youtube.com/embed/MBfxQIz80Jk)
 
 ## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
 ### Welcome to the *D.I.T.* GitHub page.
@@ -80,3 +80,52 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 [![GitHub](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
 
 [![Documents](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
+
+
+
+
+## A Responsive Jekyll Theme: *Feeling Responsive*
+
+Do you want to get to know *Feeling Responsive*? Than check it out first and have a look on its home at  <http://phlow.github.io/feeling-responsive/>.
+
+To get to know *Feeling Responsive* check out all the features explained in the [documentation][1].
+
+And what license is *Feeling Responsive* released under? [This one][2].
+
+
+
+## Why use this theme?
+
+Feeling Responsive is heavily customizable.
+
+1. Language-Support :)
+2. Optimized for speed and it's responsive.
+3. Built on Foundation Framework.
+4. Six different Headers.
+5. Customizable navigation, footer,...
+
+**[More ›][3]**
+
+
+
+## Video Tutorial
+
+Click the image to [watch the YouTube-Video-Tutorial][4].
+
+[![Start Video](https://github.com/Phlow/feeling-responsive/blob/gh-pages/images/video-feeling-responsive-tutorial-frontpage.jpg)](https://www.youtube.com/watch?v=rLS-BEvlEyY)
+
+
+
+
+
+
+ [1]: http://phlow.github.io/feeling-responsive/documentation/
+ [2]: https://github.com/Phlow/feeling-responsive/blob/gh-pages/LICENSE
+ [3]: http://phlow.github.io/feeling-responsive/info/
+ [4]: https://www.youtube.com/watch?v=rLS-BEvlEyY
+ [5]: #
+ [6]: #
+ [7]: #
+ [8]: #
+ [9]: #
+ [10]: #
