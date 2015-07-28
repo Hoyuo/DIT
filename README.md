@@ -2,7 +2,7 @@
 ---
 link of DIT video ()
 
-[![Start Video](https:/github.com/Phlow/feeling-responsive/blob/gh-pages/images/video-feeling-responsive-1280x720.jpg)](https://www.youtube.com/embed/3b5zCFSmVvU)
+[![Start Video](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)](https://www.youtube.com/embed/3b5zCFSmVvU)
 
 ## *!!! BEWARE !!!*
 
@@ -66,4 +66,4 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 	
 
 테스트
-![](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)
+![]()
