@@ -209,16 +209,16 @@ NDEF NFCRecv (NFC this_gen)
 
             char tagChar[1000];
             int  tagLength;
-            //todo Correct
+
             nfc_ndef_record_get_type (NULL, &tagChar, &tagLength);
             ret.tag = (String)malloc (tagLength + 1);
             strcpy(ret.tag, tagChar);
 
             char msgChar[1000];
             int  msgLength;
-            //todo Correct
+
             nfc_ndef_record_get_type (NULL, &msgChar, &msgLength);
-            ret.tag = (String)malloc (msgLength + 1);
+            ret.msg = (String)malloc (msgLength + 1);
             strcpy(ret.msg, msgChar);
         }
     }
