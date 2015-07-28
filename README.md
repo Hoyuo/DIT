@@ -1,14 +1,30 @@
 link of DIT video in embed style and 1280x720 resolution image file
 
-[![Start Video](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)](https://www.youtube.com/embed/3b5zCFSmVvU)
+[![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](<iframe width="560" height="315" src="https://www.youtube.com/embed/MBfxQIz80Jk" frameborder="0" allowfullscreen></iframe>)
 
-## The easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
-### Welcome to the DIT GitHub page.
-D.I.T. library is a light-weight library for manipulating Tizen Native API.  
-Our goal is to make Tizen Native coding simpler, easier, and more fun!  
-~~sorry, actually it's not fun...~~
+## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
+### Welcome to the *D.I.T.* GitHub page.
+D.I.T. library is a light-weight library for manipulating Tizen Native API. Our goal is to make Tizen Native coding simpler, easier, and more fun!  
+~~`sorry, actually it's not fun...`~~
 
-## DIT Library
+## Why use this library?
+1. 타이젠 겁내 꼬져서...ㄷㄷ [개발목적 부분???]
+2. ㅇㅇㅇ
+3. 333
+4. 456657
+5. 5
+6. 865
+7. 68
+8. D.I.T. is heavily customizable.  
+	If you want to edit D.I.T. for your taste, **please follow D.I.T. Library Rules**.
+
+## How to use this library?
+1. Tizen Native 개발환경 구축
+2. 릴리즈 버전 다운로드
+3. 파일 옮기기 뭐 그런거 설명충 등장
+
+
+## D.I.T. Library Rules
 ### 1. Modulation Rules
 * 각 서브 모듈은 파일로 만든다. 하나의 모듈당 하나의 c source file과 head file로 이루어져 있다.
 * 파일의 시작부분, 구조체 시작부분, 함수 시작부분에는 주석을 추가한다.
