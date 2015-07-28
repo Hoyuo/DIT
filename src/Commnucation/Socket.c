@@ -4,7 +4,6 @@
  *  @see	Socket.h
  */
 
-
 #include "Commnucation/Socket.h"
 
 #include <stdbool.h>
@@ -98,6 +97,11 @@ bool onSocketConnect(Socket this_gen, String url, int port)
 					this->conect = true;
 					return true;
 				}
+				else
+				{
+					curl_easy_cleanup(this->curl);
+					this->curl = NULL;
+				}
 			}
 		}
 	}
@@ -158,28 +162,28 @@ bool SocketMessageRecv(Socket this_gen, String* msg)
 		{
 			CURLcode res;
 
-				curl_socket_t sockfd;
-				long sockextr;
-				res = curl_easy_getinfo(this->curl, CURLINFO_LASTSOCKET, &sockextr);
-				sockfd = sockextr;
+			curl_socket_t sockfd;
+			long sockextr;
+			res = curl_easy_getinfo(this->curl, CURLINFO_LASTSOCKET, &sockextr);
+			sockfd = sockextr;
 
-				wait_on_socket(sockfd, 1, 10000L);
+			wait_on_socket(sockfd, 1, 10000L);
 
-				char buf[1024];
-				size_t iolen = 0;
-				res = curl_easy_recv(this->curl, buf, 1024, &iolen);
-				if (res)
-				{
-					return false;
-				}
-
-				*msg = (String) malloc(iolen + 1);
-				strcpy(*msg, buf);
-
-				return true;
+			char buf[1024];
+			size_t iolen = 0;
+			res = curl_easy_recv(this->curl, buf, 1024, &iolen);
+			if (res)
+			{
+				return false;
 			}
+
+			*msg = (String) malloc(iolen + 1);
+			strcpy(*msg, buf);
+
+			return true;
 		}
-		return false;
+	}
+	return false;
 }
 
 static int wait_on_socket(curl_socket_t sockfd, int for_recv, long timeout_ms)
