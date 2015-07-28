@@ -684,21 +684,46 @@ bool getImageInfo (Image this_gen, String src)
             }
             else
             {
-                image_meta_get_width (this->imageMetaHandle, &this->width);
+                ret=image_meta_get_width (this->imageMetaHandle, &this->width);
+                if ( ret != MEDIA_CONTENT_ERROR_NONE )
+                {
+                	g_list_free_full(all_item_list,deletemediaresult);
+                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+                    return false;
+                }
 
-                image_meta_get_height (this->imageMetaHandle, &this->height);
+
+                ret=image_meta_get_height (this->imageMetaHandle, &this->height);
+                if ( ret != MEDIA_CONTENT_ERROR_NONE )
+                {
+                	g_list_free_full(all_item_list,deletemediaresult);
+                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+                    return false;
+                }
 
                 if ( this->datetaken )
                 {
                     free (this->datetaken);
                 }
-                image_meta_get_date_taken (this->imageMetaHandle, &this->datetaken);
+                ret=image_meta_get_date_taken (this->imageMetaHandle, &this->datetaken);
+                if ( ret != MEDIA_CONTENT_ERROR_NONE )
+                {
+                	g_list_free_full(all_item_list,deletemediaresult);
+                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+                    return false;
+                }
 
                 if ( this->burst_id )
                 {
                     free (this->burst_id);
                 }
-                image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
+                ret=image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
+                if ( ret != MEDIA_CONTENT_ERROR_NONE )
+                {
+                	g_list_free_full(all_item_list,deletemediaresult);
+                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+                    return false;
+                }
 
                 media_content_disconnect ();
 
@@ -712,6 +737,8 @@ bool getImageInfo (Image this_gen, String src)
         	return false;
         }
     }
+	dlog_print(DLOG_INFO,"DIT","NULL Module");
+
     return false;
 }
 
