@@ -2,11 +2,11 @@ link of DIT video in embed style and 1280x720 resolution image file
 
 [![Start Video](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)](https://www.youtube.com/embed/3b5zCFSmVvU)
 
-# The easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
-<img align="center" width="10px" height="10px" src="https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png" alt="Test image">
+## The easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
+aaaaaaaaaaaa
 
 
-
+<br>
 ## Welcome to the DIT GitHub page.
 DIT library is a light-weight library for manipulating Tizen Native API.
 Our goal is to make Tizen Native coding simpler, easier, and more fun!
@@ -29,27 +29,27 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 ```
 #### STRUCT
 ```
-/*!	@struct		구조체 이름
- *	@brief		간략한 설명
- *	@note		자세한 설명 및 주의 사항
- *	@see 		참고 사항 및 현재 구조체와 연관된 사항들 
- *				( URL / Header / Soucefile / Function / Struct 등 )
- *	@todo 		Tizen의 features나 privileges 를 명시한다.
+/*!	@struct			구조체 이름
+ *	@brief			간략한 설명
+ *	@note			자세한 설명 및 주의 사항
+ *	@see 			참고 사항 및 현재 구조체와 연관된 사항들 
+ *					( URL / Header / Soucefile / Function / Struct 등 )
+ *	@todo			Tizen의 features나 privileges 를 명시한다.
  */
 ```
 
 #### FUNCTION
 ```
-/*!	@fn 			함수 이름
- *	@brief 			간략한 설명
+/*!	@fn				함수 이름
+ *	@brief			간략한 설명
  *	@param[in]		인자 입력 값
- *	@param[out] 	인자로 출력 값을 저장하는 장소
- *	@retval 		반환 인자 타입 및 간략한 설명
- *	@note 			자세한 설명 및 주의 사항
- *	@see 			참고 사항 및 현재 구조체와 연관된 사항들 
+ *	@param[out]		인자로 출력 값을 저장하는 장소
+ *	@retval			반환 인자 타입 및 간략한 설명
+ *	@note			자세한 설명 및 주의 사항
+ *	@see			참고 사항 및 현재 구조체와 연관된 사항들 
  *					( URL / Header / Soucefile / Function / Struct 등 )
  *					주로 같은 모듈 내부의 연관 함수들을 기재한다.
- *	@remark 		Tizen의 features나 privileges 를 명시한다. 
+ *	@remark			Tizen의 features나 privileges 를 명시한다. 
  */
 ```
 
@@ -57,12 +57,14 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 ####Due. 2015-07-29
 
 
-	깃북 : https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
-	깃헙 : https://github.com/Hoyuo/DIT
-	레퍼런스 : https://
-	릴리스 : https://github.com/Hoyuo/DIT/releases
-	기부 : https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
-	
+[GitBook : Manual](https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details)  
+[GitHub : Source](https://github.com/Hoyuo/DIT)  
+[Documents : Reference API](https://www.naver.com)  
+[Release Version](https://github.com/Hoyuo/DIT/releases)  
+[Donation : You can help me](https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true)	
+##More Informarion
+[![GitBook](https://avatars2.githubusercontent.com/u/7111340?v=3&s=80)](https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details)
 
-테스트
-![]()
+[![GitHub](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
+
+[![Documents](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
