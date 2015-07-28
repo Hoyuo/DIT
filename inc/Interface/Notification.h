@@ -2,7 +2,7 @@
  *  @brief	Notification API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Notification의 Show / Hide / setTitle / setText / setIcon / setSound / update Notification API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_NOTIFICATION_H
 #define DIT_NOTIFICATION_H
@@ -36,7 +36,7 @@ extern "C" {
  *  @note 		Notification API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html#gga59877a522577b6129d8a6175816a0867ace8d6426fa0e542f22d36e7b87bfe6c4
-*/
+ */
 const char * NotificationErrorCheck (int errCode);
 
 /* Notification */
@@ -46,7 +46,7 @@ const char * NotificationErrorCheck (int errCode);
     		구조체를 사용하기 전에 NewNotification() 함수를 사용해야 하며 사용이 끝났을 때 DestroyNotification() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
  *  @todo	privilege에 "http://tizen.org/privilege/notification" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Notification * Notification;
 struct _Notification
 {
@@ -81,7 +81,7 @@ struct _Notification
  *  			setNotificationSound \n
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
-*/
+ */
 Notification NewNotification (void);
 
 /*! @fn 		void DestroyNotification (Notification this_gen)
@@ -246,6 +246,7 @@ typedef struct
     String               soundPath;
     bool                 visible;
 } NotificationExtend;
+/* Notification */
 
 #ifdef __cplusplus
 }

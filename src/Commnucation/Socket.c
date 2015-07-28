@@ -2,7 +2,7 @@
  *  @brief	Socket API가 정의되어있다.
  *  @note	Socket API가 정의되어있다.
  *  @see	Socket.h
-*/
+ */
 
 
 #include "Commnucation/Socket.h"

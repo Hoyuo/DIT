@@ -2,7 +2,7 @@
  *  @brief	GPS API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	GPS의 isAccessible / onConnect / onDisconnect / Recv API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_GPS_H
 #define DIT_GPS_H
@@ -34,7 +34,7 @@ extern "C" {
  *  @note 		GPS API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
-*/
+ */
 const char * GPSErrorChecker (int errCode);
 
 typedef struct _location
@@ -60,7 +60,7 @@ typedef struct _location
     		구조체를 사용하기 전에 NewGps() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGps() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/location" , "http://tizen.org/feature/location.gps" 들을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _gps * GPS;
 struct _gps
 {
@@ -88,7 +88,7 @@ struct _gps
  *  			GPSRecv
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 GPS      NewGps (void);
 
 /*! @fn 		void DestroyGps (GPS this_gen)
@@ -101,7 +101,7 @@ GPS      NewGps (void);
  *  @see 		NewGps
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 void     DestroyGps (GPS this_gen);
 
 /*! @fn 		bool isGPSAccessible (GPS this_gen)
@@ -118,7 +118,7 @@ void     DestroyGps (GPS this_gen);
  *  			GPSRecv
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 bool     isGPSAccessible (GPS this_gen);
 
 /*! @fn 		bool onGPSConnect (GPS this_gen)
@@ -135,7 +135,7 @@ bool     isGPSAccessible (GPS this_gen);
  *  			GPSRecv
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 bool     onGPSConnect (GPS this_gen);
 
 /*! @fn 		bool onGPSDisconnect (GPS this_gen)
@@ -152,7 +152,7 @@ bool     onGPSConnect (GPS this_gen);
  *  			GPSRecv
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 bool     onGPSDisconnect (GPS this_gen);
 
 /*! @fn 		Location GPSRecv (GPS this_gen)
@@ -168,7 +168,7 @@ bool     onGPSDisconnect (GPS this_gen);
  *  			onGPSDisconnect
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
-*/
+ */
 Location GPSRecv (GPS this_gen);
 
 typedef struct
@@ -181,6 +181,7 @@ typedef struct
     bool                     connect;
 
 } GPSExtends;
+/* GPS */
 
 #ifdef __cplusplus
 }

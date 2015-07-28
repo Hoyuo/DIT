@@ -2,7 +2,7 @@
  *  @brief	Log API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Log의 Info / Debug / Warning / Error 관련 Log API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_LOG_H
 #define DIT_LOG_H
@@ -16,6 +16,7 @@
 extern "C" {
 #endif
 
+/* Log */
 /*!	@def LOGINFO(tag, format, arg...)
  *  @brief 		문자열에 특정 태그를 붙여서 Infomation log를 발생시킨다.
  *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
@@ -28,7 +29,7 @@ extern "C" {
  *  			LOGWARNING \n
  *  			LOGERROR \n
  *  			LOGIF
-*/
+ */
 #define LOGINFO(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_INFO, tag, format, ##arg)
 
 /*!	@def LOGDEBUG(tag, format, arg...)
@@ -43,7 +44,7 @@ extern "C" {
  *  			LOGWARNING \n
  *  			LOGERROR \n
  *  			LOGIF
-*/
+ */
 #define LOGDEBUG(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_DEBUG, tag, format, ##arg)
 
 /*!	@def LOGWARNING(tag, format, arg...)
@@ -58,7 +59,7 @@ extern "C" {
  *  			LOGDEBUG \n
  *  			LOGERROR \n
  *  			LOGIF
-*/
+ */
 #define LOGWARNING(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_WARN, tag, format, ##arg)
 
 /*!	@def LOGERROR(tag, format, arg...)
@@ -73,7 +74,7 @@ extern "C" {
  *  			LOGDEBUG \n
  *  			LOGWARNING \n
  *  			LOGIF
-*/
+ */
 #define LOGERROR(tag, format, arg...) LOG_(LOG_ID_MAIN, DLOG_ERROR, tag, format, ##arg)
 
 /*!	@def LOGIF(expr, tag, format, arg...)
@@ -89,7 +90,7 @@ extern "C" {
  *  			LOGDEBUG \n
  *  			LOGWARNING \n
  *  			LOGERROR
-*/
+ */
 #define LOGIF(expr, tag, format, arg...) \
 { \
     if (expr) \
@@ -97,10 +98,10 @@ extern "C" {
     	LOGERROR(tag, format, ##arg); \
     } \
 }
+/* Log */
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* LOG_H_ */
-

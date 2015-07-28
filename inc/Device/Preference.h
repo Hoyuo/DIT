@@ -2,7 +2,7 @@
  *  @brief	Preference API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Preference의 get Preference / set Preference / Remove / Clear 관련 Preference API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_PREFERENCE_H
 #define DIT_PREFERENCE_H
@@ -29,7 +29,7 @@ extern "C" {
  *  @note 		Preference API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			6가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html
-*/
+ */
 const char * PreferenceErrorCheck (int errCode);
 
 /* Preference */
@@ -38,7 +38,7 @@ const char * PreferenceErrorCheck (int errCode);
  *  @note	Preference 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewPreference() 함수를 사용해야 하며 사용이 끝났을 때 DestroyPreference() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html
-*/
+ */
 typedef struct _Preference * Preference;
 struct _Preference
 {
@@ -82,7 +82,7 @@ struct _Preference
  *  			setPreferenceString \n
  *  			PreferenceRemove \n
  *  			PreferenceClear
-*/
+ */
 Preference	NewPreference (void);
 
 /*!	@fn			void DestroyPreference (Preference this_gen)
@@ -93,7 +93,7 @@ Preference	NewPreference (void);
  *  @note 		생성한 Preference 객체를 소멸 시킨다. \n
  *  			Preference 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewPreference
-*/
+ */
 void	DestroyPreference (Preference this_gen);
 
 /*! @fn 		int getPreferenceInt (String key, int defValue)
@@ -303,6 +303,7 @@ void       PreferenceRemove (String key);
  *  			PreferenceRemove
  */
 void       PreferenceClear (void);
+/* Preference */
 
 #ifdef __cplusplus
 }

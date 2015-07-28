@@ -627,7 +627,7 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen);
     		구조체를 사용하기 전에 NewMagnetometer() 함수를 사용해야 하며 사용이 끝났을 때 DestroyMagnetometer() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/sensor.magnetometer" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _Magnetometer * Magnetometer;
 struct _Magnetometer
 {

@@ -2,7 +2,7 @@
  *  @brief	Ongoing Notification API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Ongoing Notification의 Show / Hide / setTitle / setText / setIcon / setSound / setProgress / update Notification API를 제공한다.
  *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ */
 
 #ifndef DIT_ONGOINGNOTIFICATION_H
 #define DIT_ONGOINGNOTIFICATION_H
@@ -36,7 +36,7 @@ extern "C" {
  *  @note 		ngoing Notification API에서 발생하는 Error Code들을 확인 해준다. \n
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
-*/
+ */
 const char * OngoingNotificationErrorCheck (int errCode);
 
 /* Ongoing Notification */
@@ -46,7 +46,7 @@ const char * OngoingNotificationErrorCheck (int errCode);
     		구조체를 사용하기 전에 NewOngoingNotification() 함수를 사용해야 하며 사용이 끝났을 때 DestroyOngoingNotification() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
  *  @todo	privilege에 "http://tizen.org/privilege/notification" 을 반드시 추가해야 한다.
-*/
+ */
 typedef struct _OngoingNotification * OngoingNotification;
 struct _OngoingNotification
 {
@@ -84,7 +84,7 @@ struct _OngoingNotification
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
-*/
+ */
 OngoingNotification NewOngoingNotification (void);
 
 /*! @fn 		void DestroyOngoingNotification (OngoingNotification this_gen)
@@ -279,6 +279,7 @@ typedef struct _OngoingNotificationExtend
     String                      soundPath;
     bool                        visible;
 } OngoingNotificationExtend;
+/* Ongoing Notification */
 
 #ifdef __cplusplus
 }
