@@ -37,11 +37,11 @@ typedef struct _File * File;
 struct _File
 {
 
-    void (* Delete) (String src);
+	bool (* Delete) (String src);
 
-    void (* Copy) (String src, String dst);
+	bool (* Copy) (String src, String dst);
 
-    void (* Move) (String src, String dst);
+	bool (* Move) (String src, String dst);
 
     GList * (* Search) (String src, String dst);
 
@@ -89,7 +89,7 @@ void DestroyFile (File this_gen);
  *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
  *  						: http://tizen.org/privilege/externalstorage
  */
-void deleteFile (String src);
+bool deleteFile (String src);
 
 /*! @fn 		void copyFile (String src, String dst);
  *  @brief 		해당 파일을 복사한다.
@@ -108,7 +108,7 @@ void deleteFile (String src);
  *  						: http://tizen.org/privilege/externalstorage
  */
 
-void copyFile (String src, String dst);
+bool copyFile (String src, String dst);
 /*! @fn 		void moveFile (String src, String dst);
  *  @brief 		해당 파일을 이동 시킨다.
  *  @param[in] 	src 복사할 파일의 path
@@ -125,7 +125,7 @@ void copyFile (String src, String dst);
  *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
  *  						: http://tizen.org/privilege/externalstorage
  */
-void moveFile (String src, String dst);
+bool moveFile (String src, String dst);
 
 /*! @fn 		GList * searchFile (String src, String dst)
  *  @brief 		파일을 검색한다.
@@ -177,19 +177,17 @@ void deleteSearchedList (GList * searchedList);
 typedef struct _Video * Video;
 struct _Video
 {
-    void (* Play) (Video this_gen);
+	bool (* Play) (Video this_gen);
 
-    void (* Pause) (Video this_gen);
+	bool (* Pause) (Video this_gen);
 
-    void (* Stop) (Video this_gen);
-
-    void (* Record) (Video this_gen);
+	bool (* Stop) (Video this_gen);
 
     String (* getInfo) (Video this_gen, metadata_extractor_attr_e element);
 
-    void (* setURI) (Video this_gen, String uri);
+    bool (* setURI) (Video this_gen, String uri);
 
-    void (* setObject) (Video this_gen, Evas_Object * EvasObject);
+    bool (* setObject) (Video this_gen, Evas_Object * EvasObject);
 
 };
 
@@ -258,7 +256,7 @@ void   DestroyVideo (Video this_gen);
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
  */
-void   playVideo (Video this_gen);
+bool   playVideo (Video this_gen);
 
 /*! @fn 		void pauseVideo (Video this_gen)
  *  @brief 		동영상 파일을 일시 정지한다.
@@ -279,7 +277,7 @@ void   playVideo (Video this_gen);
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
  */
-void   pauseVideo (Video this_gen);
+bool   pauseVideo (Video this_gen);
 
 /*! @fn 		void stopVideo (Video this_gen)
  *  @brief 		동영상 파일을 정지한다.
@@ -299,27 +297,7 @@ void   pauseVideo (Video this_gen);
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
  */
-void   stopVideo (Video this_gen);
-
-/*! @fn 		void recordVideo (Video this_gen)
- *  @brief 		동영상을 녹화한다.
- *  @param[in] 	this_gen 녹화할 Video 객체
- *  @param[out] null
- *  @retval 	void
- *  @note 		해당 Video 객체를 녹화한다. \n
- *  @see 		NewVideo \n
- *  			DestroyVideo \n
- *  			playVideo \n
- *  			pauseVideo \n
- *  			stopVideo \n
- *  			getVideoInfo \n
- *  			setVideoURI \n
- *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
- */
-void   recordVideo (Video this_gen);
+bool   stopVideo (Video this_gen);
 
 /*! @fn 		String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
  *  @brief 		동영상 파일의 meta data를 가져온다.
@@ -364,7 +342,7 @@ String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
  */
-void   setVideoURI (Video this_gen, String URI);
+bool   setVideoURI (Video this_gen, String URI);
 
 /*! @fn 		void setEvasObject (Video this_gen, Evas_Object * EvasObject)
  *  @brief 		생성한 Video 객체의 Evas Object를 설정한다.
@@ -385,7 +363,7 @@ void   setVideoURI (Video this_gen, String URI);
  * 							http://tizen.org/privilege/mediastorage \n
  *							http://tizen.org/privilege/externalstorage
  */
-void   setEvasObject (Video this_gen, Evas_Object * EvasObject);
+bool   setEvasObject (Video this_gen, Evas_Object * EvasObject);
 /* Video */
 
 
@@ -402,17 +380,15 @@ void   setEvasObject (Video this_gen, Evas_Object * EvasObject);
 typedef struct _Audio * Audio;
 struct _Audio
 {
-    void (* Play) (Audio this_gen);
+	bool (* Play) (Audio this_gen);
 
-    void (* Pause) (Audio this_gen);
+	bool (* Pause) (Audio this_gen);
 
-    void (* Stop) (Audio this_gen);
-
-    void (* Record) (Audio this_gen);
+	bool (* Stop) (Audio this_gen);
 
     String (* getInfo) (Audio this_gen, metadata_extractor_attr_e metadataKey);
 
-    void (* setURI) (Audio this_gen, String uri);
+    bool (* setURI) (Audio this_gen, String uri);
 };
 
 typedef struct _AudioExtends
@@ -477,7 +453,7 @@ void   DestroyAudio (Audio this_gen);
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
  */
-void   playAudio (Audio this_gen);
+bool   playAudio (Audio this_gen);
 
 /*! @fn 		void pauseAudio (Audio this_gen)
  *  @brief 		음악 파일을 일시 정지한다.
@@ -497,7 +473,7 @@ void   playAudio (Audio this_gen);
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
  */
-void   pauseAudio (Audio this_gen);
+bool   pauseAudio (Audio this_gen);
 
 /*! @fn 		void stopAudio (Audio this_gen)
  *  @brief 		동영상 파일을 정지한다.
@@ -516,26 +492,7 @@ void   pauseAudio (Audio this_gen);
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
  */
-void   stopAudio (Audio this_gen);
-
-/*! @fn 		void recordAudio (Audio this_gen)
- *  @brief 		음악파일을 녹음한다.
- *  @param[in] 	this_gen 녹음할 Audio 객체
- *  @param[out] null
- *  @retval 	void
- *  @note 		해당 Audio 객체를 녹음한다. \n
- *  @see 		NewAudio \n
- *  			DestroyAudio \n
- *  			playAudio \n
- *  			pauseAudio \n
- *  			stopAudio \n
- *  			getAudioInfo \n
- *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
- */
-void   recordAudio (Audio this_gen);
+bool   stopAudio (Audio this_gen);
 
 /*! @fn 		String getAudioInfo (Audio this_gen, metadata_extractor_attr_e element)
  *  @brief 		음악 파일의 meta data를 가져온다.
@@ -578,7 +535,7 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *							http://tizen.org/privilege/externalstorage \n
  *							http://tizen.org/privilege/internet
  */
-void   setAudioURI (Audio this_gen, String uri);
+bool   setAudioURI (Audio this_gen, String uri);
 /* Audio */
 
 
@@ -592,7 +549,7 @@ void   setAudioURI (Audio this_gen, String uri);
 typedef struct _Image * Image;
 struct _Image
 {
-    void       (* extractInfo) (Image this_gen, String src);
+    bool       (* extractInfo) (Image this_gen, String src);
 
     String     (* getBurstId) (Image this_gen);
 
@@ -662,7 +619,7 @@ void   DestroyImage (Image this_gen);
  *  			getImageWidth \n
  *  			getImageHeight
  */
-void   getImageInfo (Image this_gen, String src);
+bool   getImageInfo (Image this_gen, String src);
 
 /*! @fn 		String getImageBurstId (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 Burst Id를 가져온다.
