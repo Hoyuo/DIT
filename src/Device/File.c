@@ -19,6 +19,14 @@
 #include <Evas.h>
 #include <metadata_extractor.h>
 #include <media_content.h>
+#include <dlog.h>
+
+const char * PlayerErrorCheck(int ret);
+const char* MetadataExtractorErrorCheck(int ret);
+
+
+static void deletemediaresult		(gpointer data);
+static void deleteSearchListElement (gpointer data);
 
 File NewFile (void)
 {
@@ -40,35 +48,75 @@ void DestroyFile (File this_gen)
     }
 }
 
-void deleteFile (String src)
+bool deleteFile (String src)
 {
-
     if ( src != NULL)
     {
-        remove (src);
+    	int ret =0;
+    	ret= remove (src);
+    	if(ret==-1)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
+    		return false;
+    	}
+    	else
+    	{
+    		return true;
+    	}
+    }
+    else
+    {
+    	dlog_print(DLOG_INFO,"","srcfilename NULL");
+    	return false;
+    }
+}
+
+bool moveFile (String src, String dst)
+{
+    if ( src != NULL||dst!=NULL)
+    {
+    	bool b = copyFile(src,dst);
+    	if(b==true)
+    	{
+    		remove(src);
+    	}
+    	else
+    	{
+    		dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
+    		return false;
+    	}
+
     }
 
+    dlog_print(DLOG_INFO,"","src filename / dst filename not valid");
+    return false;
+
+
 }
 
-void moveFile (String src, String dst)
-{
-    rename (src, dst);
-}
-
-void copyFile (String src, String dst)
+bool copyFile (String src, String dst)
 {
     char buff[BUFSIZ];
     FILE * in, * out;
-    size_t     n;
-
+    size_t n;
+    size_t error;
     in  = fopen (src, "rb");
     out = fopen (dst, "wb");
     while ((n = fread (buff, 1, BUFSIZ, in)) != 0)
     {
-        fwrite (buff, 1, n, out);
+        error=fwrite (buff, 1, n, out);
+        if(error==-1)
+        {
+        	fclose (in);
+        	fclose (out);
+        	remove(dst);
+    		dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
+        	return false;
+        }
     }
     fclose (in);
     fclose (out);
+    return true;
 }
 
 // file search recursion Function using GList
@@ -126,12 +174,16 @@ GList * searchFile (String src, String dst)
 }
 
 //callbacking function
-void deleteSearchListElement (gpointer data)
+static void deleteSearchListElement (gpointer data)
 {
-
     free (data);
 
 }
+static void deletemediaresult		(gpointer data)
+{
+	free (data);
+}
+
 
 void deleteSearchedList (GList * searchList)
 {
@@ -149,7 +201,6 @@ Video NewVideo (void)
     this->video.getInfo   = getVideoInfo;
     this->video.Pause     = pauseVideo;
     this->video.Play      = playVideo;
-    this->video.Record    = recordVideo;
     this->video.Stop      = stopVideo;
     this->video.setURI    = setVideoURI;
     this->video.setObject = setEvasObject;
@@ -186,63 +237,120 @@ void DestroyVideo (Video this_gen)
     free (this);
 }
 
-void playVideo (Video this_gen)
+bool playVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
+	if(this_gen != NULL){
+		VideoExtends * this = (VideoExtends *)this_gen;
 
-    player_error_e res;
-    res = player_set_uri (this->player_handle, this->uri);
-    res = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
+		player_error_e ret=PLAYER_ERROR_NONE;
+		ret = player_set_uri (this->player_handle, this->uri);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+		ret = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+		ret = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+		ret = player_prepare (this->player_handle);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+		ret = player_start (this->player_handle);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+     	}
+    	return true;
+	}
 
-    res = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
-
-    res = player_prepare (this->player_handle);
-
-    res = player_start (this->player_handle);
+	dlog_print(DLOG_INFO,"DIT","NULL MODULE");
+	return false;
 }
 
-void pauseVideo (Video this_gen)
+bool pauseVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
-    player_error_e res;
-    res = player_pause (this->player_handle);
+	if(this_gen!=NULL)
+	{
+		VideoExtends * this = (VideoExtends *)this_gen;
+		player_error_e ret;
+		ret = player_pause (this->player_handle);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+		return true;
+	}
+
+		dlog_print(DLOG_INFO,"DIT","NULL module");
+		return false;
 
 }
 
-void stopVideo (Video this_gen)
+bool stopVideo (Video this_gen)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
-    player_error_e res;
-    res = player_stop (this->player_handle);
-
+	if(this_gen != NULL)
+	{
+		VideoExtends * this = (VideoExtends *)this_gen;
+		player_error_e ret;
+		ret = player_stop (this->player_handle);
+		if(ret !=PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+		}
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return false;
 }
 
-void recordVideo (Video this_gen)
-{
-    VideoExtends * this = (VideoExtends *)this_gen;
-}
+
 
 String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
 {
-    VideoExtends * this = (VideoExtends *)this_gen;
-    String resultInfo;
-
-    metadata_extractor_get_metadata (this->videoMetadataHandle, element, &resultInfo);
-
-    return resultInfo;
+	if(this_gen != NULL)
+	{
+		VideoExtends * this = (VideoExtends *)this_gen;
+		String resultInfo;
+		player_error_e ret = PLAYER_ERROR_NONE;
+		ret=metadata_extractor_get_metadata (this->videoMetadataHandle, element, &resultInfo);
+		if(ret!= PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return NULL;
+		}
+		return resultInfo;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return NULL;
 }
 
-void setVideoURI (Video this_gen, char * uri)
+bool setVideoURI (Video this_gen, char * uri)
 {
 
     if ( this_gen == NULL)
     {
-        return;
+    	dlog_print(DLOG_INFO,"DIT","NULL module");
+        return false;
     }
 
     if ( NULL == uri )
     {
-        return;
+    	dlog_print(DLOG_INFO,"DIT","NULL URI");
+        return false;
     }
 
     VideoExtends * this = (VideoExtends *)this_gen;
@@ -255,18 +363,21 @@ void setVideoURI (Video this_gen, char * uri)
     strcpy (this->uri, uri);
     this->uri[strlen (uri)] = 0;
     metadata_extractor_set_path (this->videoMetadataHandle, this->uri);
+
 }
 
-void setEvasObject (Video this_gen, Evas_Object * EvasObject)
+bool setEvasObject (Video this_gen, Evas_Object * EvasObject)
 {
 
     if ( this_gen == NULL)
     {
-        return;
+        return false;
     }
     VideoExtends * this = (VideoExtends *)this_gen;
 
     this->EvasObject = EvasObject;
+
+    return true;
 
 }
 
@@ -278,7 +389,6 @@ Audio NewAudio ()
     this->audio.getInfo = getAudioInfo;
     this->audio.Pause   = pauseAudio;
     this->audio.Play    = playAudio;
-    this->audio.Record  = recordAudio;
     this->audio.Stop    = stopAudio;
     this->audio.setURI  = setAudioURI;
 
@@ -299,6 +409,7 @@ void DestroyAudio (Audio this_gen)
 
     if ( this_gen == NULL)
     {
+    	dlog_print(DLOG_INFO,"DIT","NULL module");
         return;
     }
     AudioExtends * this = (AudioExtends *)this_gen;
@@ -307,62 +418,101 @@ void DestroyAudio (Audio this_gen)
         free (this->uri);
     }
 
-    player_error_e res;
     metadata_extractor_destroy (this->audioMetadataHandle);
-    res = player_unprepare (this->player_handle);
-    res = player_destroy (this->player_handle);
+    player_unprepare (this->player_handle);
+    player_destroy (this->player_handle);
     free (this);
 
 }
 
-void playAudio (Audio this_gen)
+bool playAudio (Audio this_gen)
 {
-    player_error_e res;
+	if(this_gen != NULL)
+	{
+		player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
+		AudioExtends * this = (AudioExtends *)this_gen;
 
-    res = player_set_uri (this->player_handle, this->uri);
+		res = player_set_uri (this->player_handle, this->uri);
+		if(res != PLAYER_ERROR_NONE)
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+			return false;
+		}
+		res = player_prepare (this->player_handle);
+    	if(res != PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+ 			return false;
+    	}
+    	res = player_start (this->player_handle);
+    	if(res != PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+    		return false;
+    	}
+	}
 
-    res = player_prepare (this->player_handle);
-
-    res = player_start (this->player_handle);
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return false;
 }
 
-void pauseAudio (Audio this_gen)
+bool pauseAudio (Audio this_gen)
 {
-    player_error_e res;
+	if(this_gen != NULL)
+	{
+		player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
-    res = player_pause (this->player_handle);
+    	AudioExtends * this = (AudioExtends *)this_gen;
+    	res = player_pause (this->player_handle);
+    	if(res != PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+    		return false;
+    	}
+    	return true;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return false;
 
 }
 
-void stopAudio (Audio this_gen)
+bool stopAudio (Audio this_gen)
 {
-    player_error_e res;
+	if(this_gen != NULL)
+	{
+		player_error_e res;
 
-    AudioExtends * this = (AudioExtends *)this_gen;
-    res = player_stop (this->player_handle);
+    	AudioExtends * this = (AudioExtends *)this_gen;
+    	res = player_stop (this->player_handle);
+    	if(res != PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+    		return false;
+    	}
+    	return true;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return false;
 
 }
 
-void recordAudio (Audio this_gen)
-{
-    AudioExtends * this = (AudioExtends *)this_gen;
-}
 
-void setAudioURI (Audio this_gen, char * uri)
+bool setAudioURI (Audio this_gen, char * uri)
 {
 
     if ( this_gen == NULL)
     {
-        return;
+    	dlog_print(DLOG_INFO,"DIT","NULL module");
+        return false;
     }
     AudioExtends * this = (AudioExtends *)this_gen;
+    player_error_e res =PLAYER_ERROR_NONE;
 
     if ( NULL == uri )
     {
-        return;
+    	dlog_print(DLOG_INFO,"DIT","NULL URI");
+        return false;
     }
     if ( NULL != this->uri )
     {
@@ -371,12 +521,21 @@ void setAudioURI (Audio this_gen, char * uri)
     this->uri = malloc (strlen (uri) + sizeof (char));
     strcpy (this->uri, uri);
     this->uri[strlen (uri)] = 0;
-    metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
+
+    res = metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
+    if(res != PLAYER_ERROR_NONE)
+    {
+    	dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+    	return false;
+    }
+    return true;
 }
 
-char * getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
+String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
 {
 
+	if(this_gen != NULL)
+	{
     AudioExtends * this = (AudioExtends *)this_gen;
     metadata_extractor_error_e error_value;
 
@@ -384,6 +543,9 @@ char * getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
     error_value = metadata_extractor_get_metadata (this->audioMetadataHandle, metadataKey, &res);
 
     return res;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return NULL;
 }
 
 Image NewImage ()
@@ -447,21 +609,27 @@ bool gallery_media_item_cbx (media_info_h media, void * user_data)
 }
 
 
-void getImageInfo (Image this_gen, String src)
+bool getImageInfo (Image this_gen, String src)
 {
-    media_content_connect ();
+	if(this_gen ==NULL)
+	{
+		dlog_print(DLOG_INFO,"DIT","NULL module");
+		return false;
+	}
 
     GList * all_item_list = NULL; // Include glib.h
-    media_content_type_e media_type   = MEDIA_CONTENT_COLLATE_DEFAULT;
-    media_info_h         media_handle = NULL;
-
+    media_info_h         	 media_handle  = NULL;
+    media_content_type_e	  media_type   =	0;
     char                      buf[1024]    = {'\0'};
-    int                       ret          = MEDIA_CONTENT_ERROR_NONE;
+    media_content_error_e     ret          = MEDIA_CONTENT_ERROR_NONE;
     filter_h                  filter       = NULL;
     media_content_collation_e collate_type = MEDIA_CONTENT_COLLATE_NOCASE;
     media_content_order_e     order_type   = MEDIA_CONTENT_ORDER_DESC;
 
     ImageExtends * this = (ImageExtends *)this_gen;
+
+    media_content_connect ();
+
     media_filter_create (&filter);
 
     String filterpath = calloc (strlen (src) + 3, sizeof (char));
@@ -475,35 +643,44 @@ void getImageInfo (Image this_gen, String src)
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
         media_filter_destroy (filter);
-
-        return;
+        dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+        return false;
     }
     ret = media_filter_set_order (filter, order_type, MEDIA_DISPLAY_NAME, collate_type);
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
-        media_filter_destroy (filter);
 
-        return;
+        media_filter_destroy (filter);
+        dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+        return false;
     }
 
     ret = media_info_foreach_media_from_db (filter, gallery_media_item_cbx, &all_item_list);
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
-        return;
+        dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+        return false;
     }
     else
     {
         media_handle = (media_info_h)g_list_nth_data (all_item_list, 0);
 
-        media_info_get_media_id (media_handle, &this->media_id);
-
+        ret = media_info_get_media_id (media_handle, &this->media_id);
+        if(ret != MEDIA_CONTENT_ERROR_NONE)
+        {
+        	g_list_free_full(all_item_list,deletemediaresult);
+            dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+            return false;
+        }
         if ( media_type == MEDIA_CONTENT_TYPE_IMAGE )
         {
 
             ret = media_info_get_image (media_handle, &this->imageMetaHandle);
             if ( ret != MEDIA_CONTENT_ERROR_NONE )
             {
-                // Error handling
+            	g_list_free_full(all_item_list,deletemediaresult);
+                dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+                return false;
             }
             else
             {
@@ -523,11 +700,19 @@ void getImageInfo (Image this_gen, String src)
                 }
                 image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
 
+                media_content_disconnect ();
+
+                return true;
             }
 
         }
+        else
+        {
+        	dlog_print(DLOG_INFO,"DIT","not image");
+        	return false;
+        }
     }
-    media_content_disconnect ();
+    return false;
 }
 
 String getImageBurstId (Image this_gen)
@@ -560,4 +745,140 @@ int getImageHeight (Image this_gen)
 {
     ImageExtends * this = (ImageExtends *)this_gen;
     return this->height;
+}
+
+const char * PlayerErrorCheck(int ret)
+{
+	switch(ret){
+	case PLAYER_ERROR_NONE:
+		return "PLAYER_ERROR_NONE: Successful";
+
+	case PLAYER_ERROR_OUT_OF_MEMORY:
+		return "PLAYER_ERROR_OUT_OF_MEMORY: Out of memory";
+
+	case PLAYER_ERROR_INVALID_PARAMETER:
+		return "PLAYER_ERROR_INVALID_PARAMETER: Invalid parameter";
+
+	case PLAYER_ERROR_NO_SUCH_FILE:
+		return "PLAYER_ERROR_NO_SUCH_FILE: No such file or directory";
+
+	case PLAYER_ERROR_INVALID_OPERATION:
+		return "PLAYER_ERROR_INVALID_OPERATION: Invalid operation";
+
+	case PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE:
+		return "PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE: No space left on the device";
+
+	case PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE:
+		return "PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE: Not supported";
+
+	case PLAYER_ERROR_SEEK_FAILED:
+		return "PLAYER_ERROR_SEEK_FAILED: Seek operation failure";
+
+	case PLAYER_ERROR_INVALID_STATE:
+		return "PLAYER_ERROR_INVALID_STATE: Invalid state";
+
+	case PLAYER_ERROR_NOT_SUPPORTED_FILE:
+		return "PLAYER_ERROR_NOT_SUPPORTED_FILE: File format not supported";
+
+	case PLAYER_ERROR_INVALID_URI:
+		return "PLAYER_ERROR_INVALID_URI: Invalid URI";
+
+	case PLAYER_ERROR_SOUND_POLICY:
+		return "PLAYER_ERROR_SOUND_POLICY: Sound policy error";
+
+	case PLAYER_ERROR_CONNECTION_FAILED:
+		return "PLAYER_ERROR_CONNECTION_FAILED: Streaming connection failed";
+
+	case PLAYER_ERROR_VIDEO_CAPTURE_FAILED:
+		return "PLAYER_ERROR_VIDEO_CAPTURE_FAILED: Video capture failed";
+
+	case PLAYER_ERROR_DRM_EXPIRED:
+		return "PLAYER_ERROR_DRM_EXPIRED: Expired license";
+
+	case PLAYER_ERROR_DRM_NO_LICENSE:
+		return "PLAYER_ERROR_DRM_NO_LICENSE: No license";
+
+	case PLAYER_ERROR_DRM_FUTURE_USE:
+		return "PLAYER_ERROR_DRM_FUTURE_USE: License for future use";
+
+	case PLAYER_ERROR_DRM_NOT_PERMITTED:
+		return "PLAYER_ERROR_DRM_NOT_PERMITTED: Format not permitted";
+
+	case PLAYER_ERROR_RESOURCE_LIMIT:
+		return "PLAYER_ERROR_RESOURCE_LIMIT: Resource limit";
+
+	case PLAYER_ERROR_PERMISSION_DENIED:
+		return "PLAYER_ERROR_PERMISSION_DENIED: Permission denied";
+
+	default:
+		return "UNKNOWN ERROR";
+	}
+
+}
+
+const char* MetadataExtractorErrorCheck(int ret)
+{
+	switch(ret)
+	{
+
+	case METADATA_EXTRACTOR_ERROR_NONE:
+		return "METADATA_EXTRACTOR_ERROR_NONE: Successful";
+
+	case METADATA_EXTRACTOR_ERROR_INVALID_PARAMETER:
+		return "METADATA_EXTRACTOR_ERROR_INVALID_PARAMETER: Invalid parameter";
+
+	case METADATA_EXTRACTOR_ERROR_OUT_OF_MEMORY:
+		return "METADATA_EXTRACTOR_ERROR_OUT_OF_MEMORY: Out of memory";
+
+	case METADATA_EXTRACTOR_ERROR_FILE_EXISTS:
+		return "METADATA_EXTRACTOR_ERROR_FILE_EXISTS: File does not exist";
+
+	case METADATA_EXTRACTOR_ERROR_PERMISSION_DENIED:
+		return "METADATA_EXTRACTOR_ERROR_PERMISSION_DENIED: Permission denied";
+
+	case METADATA_EXTRACTOR_ERROR_OPERATION_FAILED:
+		return "METADATA_EXTRACTOR_ERROR_OPERATION_FAILED: Invalid internal operation";
+
+	default:
+		return "UNKNOWN ERROR";
+	}
+}
+
+const char * MediaContentErrorCheck(int ret)
+{
+	switch(ret)
+	{
+	case MEDIA_CONTENT_ERROR_NONE:
+		return "MEDIA_CONTENT_ERROR_NONE: Successful";
+
+	case MEDIA_CONTENT_ERROR_INVALID_PARAMETER:
+		return "MEDIA_CONTENT_ERROR_INVALID_PARAMETER: Invalid parameter";
+
+	case MEDIA_CONTENT_ERROR_OUT_OF_MEMORY:
+		return "MEDIA_CONTENT_ERROR_OUT_OF_MEMORY: Out of memory";
+
+	case MEDIA_CONTENT_ERROR_INVALID_OPERATION:
+		return "MEDIA_CONTENT_ERROR_INVALID_OPERATION: Invalid Operation";
+
+	case MEDIA_CONTENT_FILE_NO_SPACE_ON_DEVICE:
+		return "MEDIA_CONTENT_FILE_NO_SPACE_ON_DEVICE: No space left on device";
+
+	case MEDIA_CONTENT_ERROR_PERMISSION_DENIED:
+		return "MEDIA_CONTENT_ERROR_PERMISSION_DENIED: Permission denied";
+
+	case MEDIA_CONTENT_ERROR_DB_FAILED:
+		return "MEDIA_CONTENT_ERROR_DB_FAILED: DB operation failed";
+
+	case MEDIA_CONTENT_ERROR_DB_BUSY:
+		return "MEDIA_CONTENT_ERROR_DB_BUSY: DB operation BUSY";
+
+	case MEDIA_CONTENT_ERROR_NETWORK:
+		return "MEDIA_CONTENT_ERROR_NETWORK: Network Fail";
+
+	case MEDIA_CONTENT_ERROR_UNSUPPORTED_CONTENT:
+		return "MEDIA_CONTENT_ERROR_UNSUPPORTED_CONTENT: Unsupported Content";
+
+	default:
+		return "UNKNOWN ERROR";
+	}
 }

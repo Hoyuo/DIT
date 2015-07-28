@@ -49,13 +49,13 @@ typedef struct _Vibration * Vibration;
 struct _Vibration
 {
 
-    void (* Custom) (Vibration this_gen, int period);
+    bool (* Custom) (Vibration this_gen, int period);
 
-    void (* Short) (Vibration this_gen);
+    bool (* Short) (Vibration this_gen);
 
-    void (* Middle) (Vibration this_gen);
+    bool (* Middle) (Vibration this_gen);
 
-    void (* Long) (Vibration this_gen);
+    bool (* Long) (Vibration this_gen);
 };
 
 /*!	@fn			Vibration NewVibration (void)
@@ -100,9 +100,9 @@ void      DestroyVibration (Vibration this_gen);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-void      VibrationCustom (Vibration this_gen, int period);
+bool      VibrationCustom (Vibration this_gen, int period);
 
-/*! @fn 		void VibrationShort (Vibration this_gen)
+/*! @fn 		bool VibrationShort (Vibration this_gen)
  *  @brief 		짧은 시간만큼 device를 진동 시킨다. (0.1초)
  *  @param[in] 	this_gen	진동 시킬 Vibration 객체
  *  @param[out] null
@@ -114,7 +114,7 @@ void      VibrationCustom (Vibration this_gen, int period);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-void      VibrationShort (Vibration this_gen);
+bool      VibrationShort (Vibration this_gen);
 
 /*! @fn 		void VibrationMiddle (Vibration this_gen)
  *  @brief 		중간 시간만큼 device를 진동 시킨다. (0.5초)
@@ -128,7 +128,7 @@ void      VibrationShort (Vibration this_gen);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-void      VibrationMiddle (Vibration this_gen);
+bool      VibrationMiddle (Vibration this_gen);
 
 /*! @fn 		void VibrationLong (Vibration this_gen)
  *  @brief 		긴 시간만큼 device를 진동 시킨다. (1.5초)
@@ -142,7 +142,7 @@ void      VibrationMiddle (Vibration this_gen);
  *  			VibrationMiddle
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-void      VibrationLong (Vibration this_gen);
+bool      VibrationLong (Vibration this_gen);
 
 typedef struct _VibrationExtend
 {
@@ -164,15 +164,15 @@ typedef struct _VibrationExtend
 typedef struct _Display * Display;
 struct _Display
 {
-    void (* Lock) (Display this_gen);
+	bool (* Lock) (Display this_gen);
 
-    void (* Unlock) (Display this_gen);
+	bool (* Unlock) (Display this_gen);
 
-    void (* Dim) (Display this_gen);
+	bool (* Dim) (Display this_gen);
 
     int (* getBright) (Display this_gen);
 
-    void (* setBright) (Display this_gen, int bright);
+    bool (* setBright) (Display this_gen, int bright);
 };
 
 /*!	@fn			Display NewDisplay (void)
@@ -217,7 +217,7 @@ void    DestroyDisplay (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-void    DisplayLock (Display this_gen);
+bool    DisplayLock (Display this_gen);
 
 /*! @fn 		void DisplayUnlock (Display this_gen)
  *  @brief 		Device의 꺼진 화면을 다시 켠다.
@@ -232,7 +232,7 @@ void    DisplayLock (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-void    DisplayUnlock (Display this_gen);
+bool    DisplayUnlock (Display this_gen);
 
 /*! @fn 		void DisplayDim (Display this_gen)
  *  @brief 		Device의 화면을 어둡게 한다.
@@ -248,7 +248,7 @@ void    DisplayUnlock (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-void    DisplayDim (Display this_gen);
+bool    DisplayDim (Display this_gen);
 
 /*! @fn 		int getDisplayBrightLevel (Display this_gen)
  *  @brief 		현재 화면의 밝기 값을 반환 한다.
@@ -281,7 +281,7 @@ int     getDisplayBrightLevel (Display this_gen);
  *  			getDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-void    setDisplayBrightLevel (Display this_gen, int brightLevel);
+bool    setDisplayBrightLevel (Display this_gen, int brightLevel);
 
 typedef struct _DisplayExtend
 {
@@ -378,9 +378,9 @@ typedef struct _BatteryExtend
 typedef struct _Flash * Flash;
 struct _Flash
 {
-    void (* On) (void);
+    bool (* On) (void);
 
-    void (* Off) (void);
+    bool (* Off) (void);
 };
 
 /*!	@fn			Flash NewFlash (void)
@@ -426,7 +426,7 @@ void  DestoryFlash (Flash this_gen);
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
  */
-void  onFlash (void);
+bool  onFlash (void);
 
 /*!	@fn			void offFlash (void)
  *  @brief		후면 카메라의 플래시를 끈다.
@@ -440,7 +440,7 @@ void  onFlash (void);
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
  */
-void  offFlash (void);
+bool  offFlash (void);
 /* Flash */
 
 
