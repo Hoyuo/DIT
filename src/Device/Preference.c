@@ -44,44 +44,45 @@ void DestroyPreference (Preference this_gen)
 int getPreferenceInt (String key, int defValue)
 {
 
-        int ret;
-        preference_error_e error=preference_get_int (key, &ret);
-        if(error==PREFERENCE_ERROR_NONE)
-        {
-        	return ret;
-        }else
-        {
-        	return defValue;
-        }
+    int                ret;
+    preference_error_e error = preference_get_int (key, &ret);
+    if ( error == PREFERENCE_ERROR_NONE )
+    {
+        return ret;
+    }
+    else
+    {
+        return defValue;
+    }
 }
 
-double getPreferenceDouble (String key,double defValue)
+double getPreferenceDouble (String key, double defValue)
 {
 
-        double ret;
-        preference_error_e error=preference_get_double (key, &ret);
-        if(error==PREFERENCE_ERROR_NONE)
-        {
-        	return ret;
-        }
-        else
-        {
-        	return defValue;
-        }
+    double             ret;
+    preference_error_e error = preference_get_double (key, &ret);
+    if ( error == PREFERENCE_ERROR_NONE )
+    {
+        return ret;
+    }
+    else
+    {
+        return defValue;
+    }
 }
 
 bool getPreferenceBoolean (String key, bool defValue)
 {
-        bool ret;
-        preference_error_e error=preference_get_boolean (key, &ret);
-        if(error==PREFERENCE_ERROR_NONE)
-        {
-        	return ret;
-        }
-        else
-        {
-         	return defValue;
-        }
+    bool               ret;
+    preference_error_e error = preference_get_boolean (key, &ret);
+    if ( error == PREFERENCE_ERROR_NONE )
+    {
+        return ret;
+    }
+    else
+    {
+        return defValue;
+    }
 }
 
 /*
@@ -91,16 +92,16 @@ bool getPreferenceBoolean (String key, bool defValue)
  * */
 String getPreferenceString (String key, String defValue)
 {
-	  String ret;
-	  preference_error_e error=preference_get_string (key, &ret);
-	  if(error==PREFERENCE_ERROR_NONE)
-	  {
-	  return ret;
-	  }
-	  else
-	  {
-	  	return strdup((const String)defValue);
-	  }
+    String             ret;
+    preference_error_e error = preference_get_string (key, &ret);
+    if ( error == PREFERENCE_ERROR_NONE )
+    {
+        return ret;
+    }
+    else
+    {
+        return strdup ((const String)defValue);
+    }
 }
 
 void setPreferenceInt (String key, int value)
