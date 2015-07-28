@@ -3,13 +3,9 @@ link of DIT video in embed style and 1280x720 resolution image file
 [![Start Video](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)](https://www.youtube.com/embed/3b5zCFSmVvU)
 
 ## The easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
-aaaaaaaaaaaa
-
-
-<br>
-## Welcome to the DIT GitHub page.
-DIT library is a light-weight library for manipulating Tizen Native API.
-Our goal is to make Tizen Native coding simpler, easier, and more fun!
+### Welcome to the DIT GitHub page.
+D.I.T. library is a light-weight library for manipulating Tizen Native API.  
+Our goal is to make Tizen Native coding simpler, easier, and more fun!  
 ~~sorry, actually it's not fun...~~
 
 ## DIT Library
