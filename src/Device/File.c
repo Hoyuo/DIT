@@ -466,7 +466,7 @@ void getImageInfo (Image this_gen, String src)
 
     String filterpath = calloc (strlen (src) + 3, sizeof (char));
 
-    snprintf(filterpath, strlen (src) + 3, "'%s'\0", src);
+    snprintf(filterpath, strlen (src) + 3, "'%s'", src);
     // Set the condition
     snprintf(buf, 1024, "%s = %d AND %s = %s", MEDIA_TYPE, MEDIA_CONTENT_TYPE_IMAGE, MEDIA_PATH, filterpath);
 
@@ -499,30 +499,29 @@ void getImageInfo (Image this_gen, String src)
 
         if ( media_type == MEDIA_CONTENT_TYPE_IMAGE )
         {
-            image_meta_h image_handle;
 
-            ret = media_info_get_image (media_handle, &image_handle);
+            ret = media_info_get_image (media_handle, &this->imageMetaHandle);
             if ( ret != MEDIA_CONTENT_ERROR_NONE )
             {
                 // Error handling
             }
             else
             {
-                image_meta_get_width (image_handle, &this->width);
+                image_meta_get_width (this->imageMetaHandle, &this->width);
 
-                image_meta_get_height (image_handle, &this->height);
+                image_meta_get_height (this->imageMetaHandle, &this->height);
 
                 if ( this->datetaken )
                 {
                     free (this->datetaken);
                 }
-                image_meta_get_date_taken (image_handle, &this->datetaken);
+                image_meta_get_date_taken (this->imageMetaHandle, &this->datetaken);
 
                 if ( this->burst_id )
                 {
                     free (this->burst_id);
                 }
-                image_meta_get_burst_id (image_handle, &this->burst_id);
+                image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
 
             }
 
