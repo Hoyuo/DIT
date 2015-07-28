@@ -72,9 +72,9 @@ struct _Bluetooth
 
     bool (* onDisconnect) (Bluetooth this_gen);
 
-    void (* FileSend) (Bluetooth this_gen, String sendBuffer);
+    bool (* FileSend) (Bluetooth this_gen, String sendBuffer);
 
-    void (* FileRecv) (Bluetooth this_gen, String * recvBuffer);
+    bool (* FileRecv) (Bluetooth this_gen, String * recvBuffer);
 
 };
 
@@ -196,7 +196,7 @@ bool      onBluetoothDisconnect (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-void      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
+bool      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
 
 /*! @fn 		void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
  *  @brief 		Bluetooth기기로 부터 데이터를 수신한다.
@@ -214,7 +214,7 @@ void      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
  * 				BluetoothFileSend
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-void      BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
+bool      BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
 
 typedef struct
 {

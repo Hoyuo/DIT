@@ -9,6 +9,7 @@
 
 #include <stdlib.h>
 
+#include <system_info.h>
 #include <bluetooth.h>
 #include <app_control.h>
 #include <dlog.h>
@@ -192,7 +193,7 @@ bool onBluetoothDisconnect (Bluetooth this_gen)
  * in : recvfile NULLABLE assign filename
  *
  */
-void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
+bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
 {
     //todo 파일만 처리 가능한 상황
     if ( this_gen != NULL)
@@ -202,11 +203,24 @@ void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
         if ( this->connected )
         {
             int ret = bt_opp_server_initialize_by_connection_request (DOWNLOADSFOLDERPATH, connection_requested_cb_for_opp_serverx, recvBuffer);
+            if(ret==BT_ERROR_NONE)
+            {
+            	return true;
+            }
+        }
+        else
+        {
+        	return false;
         }
     }
+    else
+    {
+    	return false;
+    }
+    return false;
 }
 
-void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
+bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 {
     if ( this_gen != NULL)
     {
@@ -219,7 +233,7 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             if ( ret != BT_ERROR_NONE )
             {
             	bt_opp_client_deinitialize();
-                return;
+                return false;
             }
 
             ret = bt_opp_client_add_file (sendbuffer);
@@ -228,7 +242,7 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             {
             	bt_opp_client_clear_files ();
             	bt_opp_client_deinitialize();
-                return;
+                return false;
             }
 
             ret = bt_opp_client_push_files (this->remoteMACAddr, __bt_opp_client_push_responded_cbx, __bt_opp_client_push_progress_cbx, __bt_opp_client_push_finished_cbx, NULL);
@@ -238,7 +252,7 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             	bt_opp_client_cancel_push();
             	bt_opp_client_clear_files ();
             	bt_opp_client_deinitialize();
-                return;
+                return false;
             }
 
             ret = bt_opp_client_clear_files ();
@@ -246,12 +260,19 @@ void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
             if ( ret != BT_ERROR_NONE )
             {
             	bt_opp_client_deinitialize();
-                return;
+                return false;
             }
-        	bt_opp_client_deinitialize();
-
+            ret =bt_opp_client_deinitialize();
+            if ( ret == BT_ERROR_NONE )
+            {
+              	return true;
+            }
+        	return false;
         }
     }
+
+    return false;
+
 }
 
 //페어링된 Device iter callback
@@ -361,9 +382,9 @@ static void bt_opp_server_transfer_finished_cb_for_oppx (int result, const char 
     size_t fileLen = strlen (file);
     size_t downloadLen = strlen (DOWNLOADSFOLDERPATH);
     *recvBuffer = (String)malloc (fileLen + downloadLen + 2);
-    strcpy (recvBuffer, DOWNLOADSFOLDERPATH);
-    strcat (recvBuffer, "/");
-    strcat (recvBuffer, file);
+    strcpy (*recvBuffer, DOWNLOADSFOLDERPATH);
+    strcat (*recvBuffer, "/");
+    strcat (*recvBuffer, file);
 }
 
 //Data Recv
