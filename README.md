@@ -4,10 +4,10 @@
 
 > **This Document is *under construction*.**
 
-## Welcome to the DIT GitHuh page.
+## Welcome to the DIT GitHub page.
 DIT library is a light-weight library for manipulating Tizen Native API.
 Our goal is to make Tizen Native coding simpler, easier, and more fun!
-~~`sorry, actually it's not fun...`~~
+~~sorry, actually it's not fun...~~
 
 ## DIT Library
 ### 1. Modulation Rules
@@ -54,6 +54,12 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 ####Due. 2015-07-29
 
 
+	깃북 : https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
+	깃헙 : https://github.com/Hoyuo/DIT
+	레퍼런스 : https://
+	릴리스 : https://github.com/Hoyuo/DIT/releases
+	기부 : https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
+	
 
-
----
+테스트
+![오예](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)
