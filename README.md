@@ -62,4 +62,4 @@ Our goal is to make Tizen Native coding simpler, easier, and more fun!
 	
 
 테스트
-![오예](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)
+![](https://cloud.githubusercontent.com/assets/8381373/8943209/a90dfaf0-35b4-11e5-9ed5-55db28e22f9d.png)
