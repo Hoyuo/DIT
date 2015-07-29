@@ -74,11 +74,12 @@ bool audioRecorderInit(AudioRecorder this_gen, const char * filename)
 			return false;
 		}
 
-		ret = recorder_set_file_format(this->audiorecorderhandle, RECORDER_FILE_FORMAT_MP4);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
+		audio_recorder_define_fileformat(this->audiorecorderhandle,filename);
+//		ret = recorder_set_file_format(this->audiorecorderhandle, RECORDER_FILE_FORMAT_MP4);
+//		if(ret!= RECORDER_ERROR_NONE)
+//		{
+//			return false;
+//		}
 
 		ret=recorder_attr_set_audio_encoder_bitrate(this->audiorecorderhandle,MEDIA_DEFAULT_BITRATE);
 		if(ret!= RECORDER_ERROR_NONE)
