@@ -99,8 +99,7 @@ GPS NewGps (void);
  *  @note 		생성한 GPS 객체를 소멸 시킨다. \n
  *  			GPS 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGps
- *  @pre        feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 void DestroyGps (GPS this_gen);
 

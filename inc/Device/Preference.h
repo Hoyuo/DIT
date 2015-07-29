@@ -69,7 +69,7 @@ struct _Preference
 
 /*!	@fn			Preference NewPreference (void)
  *  @brief		새로운 Preference 객체를 생성한다.
- *  @param[in]	null
+ *  @param[in]	void
  *  @param[out] null
  *  @retval 	Preference
  *  @note 		새로운 Preference 객체를 생성한다. \n

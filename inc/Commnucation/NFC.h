@@ -109,7 +109,7 @@ struct _NFC
 
     bool (* onDisconnect) (NFC this_gen);
 
-    void (* Send) (NFC this_gen, NDEF message);
+    bool (* Send) (NFC this_gen, NDEF message);
 
     NDEF (* Recv) (NFC this_gen);
 };
