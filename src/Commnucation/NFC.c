@@ -314,7 +314,7 @@ const char * NFCErrorChecker (int errorcode)
         return "NFC_ERROR_INVALID_RECORD_TYPE: Invalid record type";
 
     case NFC_ERROR_TIMED_OUT:
-        return "TNFC_ERROR_TIMED_OUT: Timeout error, no answer";
+        return "NFC_ERROR_TIMED_OUT: Timeout error, no answer";
 
     case NFC_ERROR_DEVICE_BUSY:
         return "NFC_ERROR_DEVICE_BUSY: Previous operation is not finished still busy";
@@ -360,5 +360,8 @@ const char * NFCErrorChecker (int errorcode)
 
     case NFC_ERROR_TAG_NOT_SUPPORTED:
         return "NFC_ERROR_TAG_NOT_SUPPORTED: Tag is not supported";
+
+    default:
+        return "NFC_ERROR_UNKNOWN";
     }
 }
