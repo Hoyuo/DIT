@@ -24,11 +24,11 @@ extern "C" {
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__NDEF__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/network.nfc" 을 반드시 추가해야 한다.
  */
-const char * NFCErrorChecker(int errorcode);
+const char * NFCErrorChecker (int errorcode);
 
 typedef struct
 {
-	String tag;
+    String tag;
     String msg;
 
 } NDEF;
@@ -96,7 +96,7 @@ struct _NFC
  * 				NFCRecv
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
  */
-NFC  NewNFC (void);
+NFC NewNFC (void);
 
 /*! @fn 		void DestroyNFC (NFC this_gen)
  *  @brief 		생성한 NFC 객체를 소멸 시킨다.
