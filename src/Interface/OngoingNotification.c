@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <dlog.h>
 #include <notification.h>
 
 OngoingNotification NewOngoingNotification (void)
@@ -81,32 +82,47 @@ void DestroyOngoingNotification (OngoingNotification this_gen)
     }
 }
 
-void OngoingNotificationShow (OngoingNotification this_gen)
+bool OngoingNotificationShow (OngoingNotification this_gen)
 {
     if ( this_gen != NULL)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
 
-
-        notification_post (this->ongoingnotification_handle);
-
+        ret = notification_post (this->ongoingnotification_handle);
+        if(ret != NOTIFICATION_ERROR_NONE)
+        {
+        	dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+        	return false;
+        }
         this->visible = true;
+        return true;
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void OngoingNotificationHide (OngoingNotification this_gen)
+bool OngoingNotificationHide (OngoingNotification this_gen)
 {
     if ( this_gen != NULL)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
 
-        notification_delete (this->ongoingnotification_handle);
-
+        ret = notification_delete (this->ongoingnotification_handle);
+        if(ret != NOTIFICATION_ERROR_NONE)
+        {
+           	dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+           	return false;
+        }
         this->visible = false;
+        return true;
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void setOngoingNotificationTitle (OngoingNotification this_gen, String title)
+bool setOngoingNotificationTitle (OngoingNotification this_gen, String title)
 {
     if ( this_gen != NULL)
     {
@@ -114,7 +130,8 @@ void setOngoingNotificationTitle (OngoingNotification this_gen, String title)
 
         if ( NULL == title )
         {
-            return;
+        	dlog_print(DLOG_INFO,"DIT","NULL Title");
+            return false;
         }
 
         if ( NULL != this->title )
@@ -124,12 +141,20 @@ void setOngoingNotificationTitle (OngoingNotification this_gen, String title)
 
         this->title = malloc (strlen (title) + sizeof (char));
         strcpy(this->title, title);
-
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
+        ret = notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        if(ret != NOTIFICATION_ERROR_NONE)
+             {
+                	dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+                	return false;
+             }
+        return true;
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void setOngoingNotificationText (OngoingNotification this_gen, String text)
+bool setOngoingNotificationText (OngoingNotification this_gen, String text)
 {
     if ( this_gen != NULL)
     {
@@ -137,7 +162,8 @@ void setOngoingNotificationText (OngoingNotification this_gen, String text)
 
         if ( NULL == text )
         {
-            return;
+        	dlog_print(DLOG_INFO,"DIT","NULL Text");
+            return false;
         }
 
         if ( NULL != this->text )
@@ -148,11 +174,20 @@ void setOngoingNotificationText (OngoingNotification this_gen, String text)
         this->text = malloc (strlen (text) + sizeof (char));
         strcpy(this->text, text);
 
-        notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
+        ret=notification_set_text (this->ongoingnotification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
+ 		   if(ret != NOTIFICATION_ERROR_NONE)
+ 		   {
+ 			   dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+ 			   return false;
+ 		   }
+ 		   return true;
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
+bool setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
 {
     if ( this_gen != NULL)
     {
@@ -161,7 +196,8 @@ void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
 
         if ( NULL == imagePath )
         {
-            return;
+        	dlog_print(DLOG_INFO,"DIT","NULL Iconpath");
+            return false;
         }
 
         if ( NULL != this->imagePath )
@@ -172,12 +208,21 @@ void setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
         this->imagePath = malloc (strlen (imagePath) + sizeof (char));
         strcpy(this->imagePath, imagePath);
 
-        notification_set_image (this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
+        ret = notification_set_image (this->ongoingnotification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
+        if(ret != NOTIFICATION_ERROR_NONE)
+      	{
+      	   dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+      	   return false;
+      	}
+      	return true;
 
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
+bool setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
 {
     if ( this_gen != NULL)
     {
@@ -186,7 +231,8 @@ void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
 
         if ( NULL == soundPath )
         {
-            return;
+        	dlog_print(DLOG_INFO,"DIT","NULL Soundpath");
+            return false;
         }
 
         if ( NULL != this->soundPath )
@@ -196,29 +242,57 @@ void setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
 
         this->soundPath = malloc (strlen (soundPath) + sizeof (char));
         strcpy(this->soundPath, soundPath);
-
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
         notification_set_sound (this->ongoingnotification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA, this->soundPath);
+        if(ret != NOTIFICATION_ERROR_NONE)
+      		   {
+      			   dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+      			   return false;
+      		   }
+      		   return true;
+
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
+bool setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
 {
     if ( this_gen != NULL)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
 
-        notification_set_progress (this->ongoingnotification_handle, progress);
+        notification_error_e ret= NOTIFICATION_ERROR_NONE;
+        ret=notification_set_progress (this->ongoingnotification_handle, progress);
+        if(ret != NOTIFICATION_ERROR_NONE)
+      		   {
+      			   dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+      			   return false;
+      		   }
+      		   return true;
+
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
-void updateOngoingNotification (OngoingNotification this_gen)
+bool updateOngoingNotification (OngoingNotification this_gen)
 {
     if ( this_gen != NULL)
     {
         OngoingNotificationExtend * this = (OngoingNotificationExtend *)this_gen;
+        notification_error_e ret = NOTIFICATION_ERROR_NONE;
+       ret = notification_update (this->ongoingnotification_handle);
+       if(ret != NOTIFICATION_ERROR_NONE)
+     		   {
+     			   dlog_print(DLOG_INFO,"DIT","%s",OngoingNotificationErrorCheck(ret));
+     			   return false;
+     		   }
+     		   return true;
 
-        notification_update (this->ongoingnotification_handle);
     }
+    dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 }
 
 const char * OngoingNotificationErrorCheck (int errCode)
