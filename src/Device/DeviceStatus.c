@@ -49,15 +49,12 @@ bool VibrationCustom (Vibration this_gen, int period)
         device_error_e ret = DEVICE_ERROR_NONE;
 
         ret=device_haptic_vibrate (this->handle, period, 0, 0);
-        if(ret==DEVICE_ERROR_NONE)
-        {
-        	return true;
-        }
-        else
+        if(ret!=DEVICE_ERROR_NONE)
         {
         	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
         	return false;
         }
+        return true;
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -71,15 +68,12 @@ bool VibrationShort (Vibration this_gen)
         device_error_e ret = DEVICE_ERROR_NONE;
 
         ret=device_haptic_vibrate (this->handle, 100, 0, 0);
-        if(ret==DEVICE_ERROR_NONE)
-         {
-         	return true;
-         }
-         else
-         {
-         	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
+        if(ret!=DEVICE_ERROR_NONE)
+        {
+        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
          	return false;
-         }
+        }
+        return true;
 
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
@@ -94,15 +88,12 @@ bool VibrationMiddle (Vibration this_gen)
         device_error_e ret = DEVICE_ERROR_NONE;
 
         ret=device_haptic_vibrate (this->handle, 500, 0, 0);
-        if(ret==DEVICE_ERROR_NONE)
-         {
-         	return true;
-         }
-         else
-         {
+        if(ret!=DEVICE_ERROR_NONE)
+        {
          	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
          	return false;
-         }
+        }
+        return true;
 
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
@@ -117,16 +108,12 @@ bool VibrationLong (Vibration this_gen)
         device_error_e ret = DEVICE_ERROR_NONE;
 
         ret=device_haptic_vibrate (this->handle, 1500, 0, 0);
-        if(ret==DEVICE_ERROR_NONE)
-         {
-         	return true;
-         }
-         else
-         {
-         	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
+        if(ret!=DEVICE_ERROR_NONE)
+        {
+        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
          	return false;
          }
-
+        return true;
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -177,11 +164,8 @@ bool DisplayLock (Display this_gen)
             }
             return true;
         }
-        else
-        {
-        	dlog_print(DLOG_INFO,"DIT","already locked");
-        	return false;
-        }
+        dlog_print(DLOG_INFO,"DIT","already locked");
+        return false;
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -210,11 +194,8 @@ bool DisplayUnlock (Display this_gen)
             }
             return true;
         }
-        else
-        {
-        	dlog_print(DLOG_INFO,"DIT","already Unlocked");
-        	return false;
-        }
+        dlog_print(DLOG_INFO,"DIT","already Unlocked");
+        return false;
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -243,6 +224,9 @@ bool DisplayDim (Display this_gen)
             }
             return true;
         }
+       	dlog_print(DLOG_INFO,"DIT","already Dimmed");
+       	return false;
+
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -292,10 +276,8 @@ bool setDisplayBrightLevel (Display this_gen, int brightLevel)
     	   dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
     	   return false;
        }
-       else
-       {
-    	   return true;
-       }
+          return true;
+
     }
     dlog_print(DLOG_INFO,"DIT","NULL module");
     return false;
@@ -393,7 +375,7 @@ bool onFlash (void)
 
     ret = device_flash_set_brightness (value);
     if(ret != DEVICE_ERROR_NONE)
-    	{
+    {
     	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
      	return false;
     }
