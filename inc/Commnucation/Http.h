@@ -124,11 +124,11 @@ struct _Http
 
     bool (* onDisconnect) (Http this_gen);
 
-    void (* Download) (Http this_gen, String filename);
+    bool (* Download) (Http this_gen, String filename);
 
-    void (* Post) (Http this_gen, String res, String * req);
+    bool (* Post) (Http this_gen, String res, String * req);
 
-    void (* Get) (Http this_gen, String res, String * req);
+    bool (* Get) (Http this_gen, String res, String * req);
 
 };
 
@@ -236,7 +236,7 @@ bool onHttpDisconnect (Http this_gen);
  *  						: http://tizne.org/privileges/mediastorage \n
  *  						: http://tizne.org/privileges/download
  */
-void HttpDownload (Http this_gen, String filename);
+bool HttpDownload (Http this_gen, String filename);
 
 /*! @fn 		void HttpExcutePost (Http this_gen, String req, String * res)
  *  @brief 		@b POST 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다.
@@ -255,7 +255,7 @@ void HttpDownload (Http this_gen, String filename);
  * 				HttpExcuteGet
  *  @remark 	privilege	: http://tizen.org/privilege/internet \n
  */
-void HttpExcutePost (Http this_gen, String req, String * res);
+bool HttpExcutePost (Http this_gen, String req, String * res);
 
 /*! @fn 		void HttpExcuteGet (Http this_gen, String req, String * res)
  *  @brief 		@b GET 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다.
@@ -274,7 +274,7 @@ void HttpExcutePost (Http this_gen, String req, String * res);
  * 				HttpExcutePost
  *  @remark 	privilege	: http://tizen.org/privilege/internet \n
  */
-void HttpExcuteGet (Http this_gen, String req, String * res);
+bool HttpExcuteGet (Http this_gen, String req, String * res);
 
 typedef struct
 {
