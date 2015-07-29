@@ -126,7 +126,7 @@ struct _Socket
 
     bool (* Send) (Socket this_gen, String msg);
 
-    bool (* Recv) (Socket this_gen, String* msg);
+    bool (* Recv) (Socket this_gen, String * msg);
 
 };
 
@@ -157,7 +157,7 @@ Socket NewSocket (void);
  *  @see 		NewSocket
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-void   DestorySocket (Socket this_gen);
+void DestorySocket (Socket this_gen);
 
 /*! @fn 		bool isSocketAccessible (Socket this_gen)
  *  @brief 		TCP/UDP 연결 지원 여부를 반환한다.
@@ -174,7 +174,7 @@ void   DestorySocket (Socket this_gen);
  *  			SocketMessageRecv
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-bool   isSocketAccessible (Socket this_gen);
+bool isSocketAccessible (Socket this_gen);
 
 /*! @fn 		bool onSocketConnect (Socket this_gen, String url, int port)
  *  @brief 		TCP/UDP 로 연결을 시도하며 이의 성공 여부를 반환한다.
@@ -193,7 +193,7 @@ bool   isSocketAccessible (Socket this_gen);
  *  			SocketMessageRecv
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-bool   onSocketConnect (Socket this_gen, String url, int port);
+bool onSocketConnect (Socket this_gen, String url, int port);
 
 /*! @fn 		bool onSocketDisconnect (Socket this_gen)
  *  @brief 		TCP/UDP 로 연결 해제하며 이의 성공 여부를 반환한다.
@@ -210,7 +210,7 @@ bool   onSocketConnect (Socket this_gen, String url, int port);
  *  			SocketMessageRecv
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-bool   onSocketDisconnect (Socket this_gen);
+bool onSocketDisconnect (Socket this_gen);
 
 /*! @fn 		bool SocketMessageSend (Socket this_gen, String msg)
  *  @brief 		TCP/UDP 연결로 데이터를 송신하며 이의 성공 여부를 반환한다.
@@ -228,7 +228,7 @@ bool   onSocketDisconnect (Socket this_gen);
  *  			SocketMessageRecv
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-bool   SocketMessageSend (Socket this_gen, String msg);
+bool SocketMessageSend (Socket this_gen, String msg);
 
 /*! @fn 		bool SocketMessageRecv (Socket this_gen, String* msg)
  *  @brief 		TCP/UDP 연결로 데이터를 수신하며 이의 성공 여부를 반환한다.
@@ -246,12 +246,12 @@ bool   SocketMessageSend (Socket this_gen, String msg);
  *  			SocketMessageSend
  *  @remark 	privilege	: http://tizen.org/privilege/internet
  */
-bool   SocketMessageRecv (Socket this_gen, String* msg);
+bool SocketMessageRecv (Socket this_gen, String * msg);
 
 typedef struct
 {
     struct _Socket socket;
-    CURL * 		   curl;
+    CURL *         curl;
     bool           access;
     bool           conect;
 
