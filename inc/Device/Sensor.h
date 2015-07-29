@@ -18,6 +18,8 @@
 extern "C" {
 #endif
 
+const char* SensorErrorCheck(int errorCode);
+
 typedef void (* sensor_callback) (sensor_h sensor, sensor_event_s * event, void * user_data);
 
 typedef struct _3d_data
