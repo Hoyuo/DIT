@@ -32,6 +32,7 @@ extern "C" {
  *  @retval 	LOCATIONS_ERROR_SECURITY_RESTRICTED			 : Restricted by security system policy
  *  @retval 	LOCATIONS_ERROR_UNKNWON						 : Unknown error occurred
  *  @note 		GPS API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다. \n
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
  */
@@ -59,7 +60,7 @@ typedef struct _location
  *  @note	GPS의 GPS 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGps() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGps() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/location" , "http://tizen.org/feature/location.gps" 들을 반드시 추가해야 한다.
+ *  @pre	feature에 "http://tizen.org/feature/location" , "http://tizen.org/feature/location.gps" 들을 반드시 추가해야 한다.
  */
 typedef struct _gps * GPS;
 struct _gps
@@ -86,8 +87,7 @@ struct _gps
  *  			onGPSConnect \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @remark 	feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 GPS NewGps (void);
 
@@ -99,7 +99,7 @@ GPS NewGps (void);
  *  @note 		생성한 GPS 객체를 소멸 시킨다. \n
  *  			GPS 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGps
- *  @remark 	feature	: http://tizen.org/feature/location \n
+ *  @pre        feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
 void DestroyGps (GPS this_gen);
@@ -108,16 +108,17 @@ void DestroyGps (GPS this_gen);
  *  @brief 		현재 GPS 기능 지원 여부를 반환 한다.
  *  @param[in] 	this_gen 사용 가능 여부를 반환 할 GPS 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		현재 GPS 기능 지원 여부를 반환 한다. \n
- *  			지원 가능 이라면 true, 지원 가능이 아니라면 false를 반환한다.
+ *  			지원 가능 이라면 @c true, 지원 가능이 아니라면 @c false를 반환한다.
  *  @see 		NewGps \n
  *  			DestroyGps \n
  *  			onGPSConnect \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @remark 	feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature : http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 bool isGPSAccessible (GPS this_gen);
 
@@ -125,16 +126,17 @@ bool isGPSAccessible (GPS this_gen);
  *  @brief 		GPS로 연결을 시도하며 이의 성공 여부를 반환한다.
  *  @param[in] 	this_gen 연결 성공 여부를 확인할 GPS 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		GPS로 연결을 시도하며 이의 성공 여부를 반환한다. \n
- *  			연결에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewGps \n
  *  			DestroyGps \n
  *  			isGPSAccessible \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @remark 	feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 bool onGPSConnect (GPS this_gen);
 
@@ -142,16 +144,17 @@ bool onGPSConnect (GPS this_gen);
  *  @brief 		GPS로의 연결을 해제하며 이의 성공 여부를 반환한다.
  *  @param[in] 	this_gen 연결 해제 여부를 확인할 GPS 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		GPS로의 연결을 해제하며 이의 성공 여부를 반환한다. \n
- *  			연결 해제에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결 해제에 성공하면 @ true, 실패하면 @c false를 반환한다.
  *  @see 		NewGps \n
  *  			DestroyGps \n
  *  			isGPSAccessible \n
  *  			onGPSConnect \n
  *  			GPSRecv
- *  @remark 	feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 bool onGPSDisconnect (GPS this_gen);
 
@@ -159,19 +162,20 @@ bool onGPSDisconnect (GPS this_gen);
  *  @brief 		GPS로 부터 위치 정보를 수신한다.
  *  @param[in] 	this_gen 데이터를 수신할 GPS 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		GPS로 부터 위치 정보를 수신한다.
  *  @see 		NewGps \n
  *  			DestroyGps \n
  *  			isGPSAccessible \n
  *  			onGPSConnect \n
  *  			onGPSDisconnect
- *  @remark 	feature	: http://tizen.org/feature/location \n
- *  					: http://tizen.org/feature/location.gps
+ *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
  */
 Location GPSRecv (GPS this_gen);
 
-typedef struct
+typedef struct _GPSExtends
 {
     struct _gps              gps;
     location_manager_h       manager;
