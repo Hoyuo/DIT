@@ -23,6 +23,9 @@
 
 const char * PlayerErrorCheck(int ret);
 const char* MetadataExtractorErrorCheck(int ret);
+const char * MediaContentErrorCheck(int ret);
+
+
 
 
 static void deletemediaresult		(gpointer data);
@@ -52,6 +55,13 @@ bool deleteFile (String src)
 {
     if ( src != NULL)
     {
+
+    	if(access(src,F_OK)==-1)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","source file doesn't exist");
+    		return false;
+    	}
+
     	int ret =0;
     	ret= remove (src);
     	if(ret==-1)
@@ -73,12 +83,13 @@ bool deleteFile (String src)
 
 bool moveFile (String src, String dst)
 {
-    if ( src != NULL||dst!=NULL)
+    if ( src != NULL && dst!=NULL)
     {
     	bool b = copyFile(src,dst);
     	if(b==true)
     	{
     		remove(src);
+    		return true;
     	}
     	else
     	{
@@ -96,6 +107,13 @@ bool moveFile (String src, String dst)
 
 bool copyFile (String src, String dst)
 {
+
+	if(access(src,F_OK)==-1)
+	{
+		dlog_print(DLOG_INFO,"DIT","source file doesn't exist");
+	    return false;
+	}
+
     char buff[BUFSIZ];
     FILE * in, * out;
     size_t n;
@@ -261,12 +279,13 @@ bool playVideo (Video this_gen)
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
 		}
+
 		ret = player_prepare (this->player_handle);
-		if(ret !=PLAYER_ERROR_NONE)
-		{
-			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
-			return false;
-		}
+		if(ret !=PLAYER_ERROR_NONE && ret != PLAYER_ERROR_INVALID_STATE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+				return false;
+	     	}
 		ret = player_start (this->player_handle);
 		if(ret !=PLAYER_ERROR_NONE)
 		{
@@ -312,6 +331,7 @@ bool stopVideo (Video this_gen)
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
 		}
+		return true;
 	}
 	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
@@ -364,6 +384,7 @@ bool setVideoURI (Video this_gen, char * uri)
     this->uri[strlen (uri)] = 0;
     metadata_extractor_set_path (this->videoMetadataHandle, this->uri);
 
+    return true;
 }
 
 bool setEvasObject (Video this_gen, Evas_Object * EvasObject)
@@ -440,10 +461,9 @@ bool playAudio (Audio this_gen)
 			return false;
 		}
 		res = player_prepare (this->player_handle);
-    	if(res != PLAYER_ERROR_NONE)
+    	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
- 			return false;
     	}
     	res = player_start (this->player_handle);
     	if(res != PLAYER_ERROR_NONE)
@@ -451,6 +471,7 @@ bool playAudio (Audio this_gen)
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     		return false;
     	}
+    	return true;
 	}
 
 	dlog_print(DLOG_INFO,"DIT","NULL module");
