@@ -23,12 +23,6 @@
 #include <media_content.h>
 #include <dlog.h>
 
-const String PlayerErrorCheck (int ret);
-
-const String MetadataExtractorErrorCheck (int ret);
-
-const String MediaContentErrorCheck (int ret);
-
 static void player_completed_callback (void * user_data);
 
 static void deletemediaresult (gpointer data);
@@ -871,7 +865,7 @@ static void player_completed_callback (void * user_data)
     player_stop (player_handle);
 }
 
-const String PlayerErrorCheck (int ret)
+const char * PlayerErrorCheck (int ret)
 {
     switch (ret)
     {
@@ -941,7 +935,7 @@ const String PlayerErrorCheck (int ret)
 
 }
 
-const String MetadataExtractorErrorCheck (int ret)
+const char * MetadataExtractorErrorCheck (int ret)
 {
     switch (ret)
     {
@@ -969,7 +963,7 @@ const String MetadataExtractorErrorCheck (int ret)
     }
 }
 
-const String MediaContentErrorCheck (int ret)
+const char * MediaContentErrorCheck (int ret)
 {
     switch (ret)
     {

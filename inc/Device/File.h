@@ -23,6 +23,11 @@
 extern "C" {
 #endif
 
+const char * PlayerErrorCheck (int ret);
+
+const char * MetadataExtractorErrorCheck (int ret);
+
+const char * MediaContentErrorCheck (int ret);
 
 /* File */
 /*! @struct	_File
