@@ -97,7 +97,7 @@ OngoingNotification NewOngoingNotification (void);
  *  @see 		NewOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	DestroyOngoingNotification (OngoingNotification this_gen);
+void DestroyOngoingNotification (OngoingNotification this_gen);
 
 /*! @fn 		void OngoingNotificationShow (OngoingNotification this_gen)
  *  @brief 		생성한 OngoingNotification을 Notification 바에 등록한다.
@@ -118,7 +118,7 @@ bool	DestroyOngoingNotification (OngoingNotification this_gen);
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	OngoingNotificationShow (OngoingNotification this_gen);
+bool OngoingNotificationShow (OngoingNotification this_gen);
 
 /*! @fn 		void OngoingNotificationHide (OngoingNotification this_gen)
  *  @brief 		Notification 바에 등록되어 있는 OngoingNotification을 삭제한다.
@@ -137,7 +137,7 @@ bool	OngoingNotificationShow (OngoingNotification this_gen);
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	OngoingNotificationHide (OngoingNotification this_gen);
+bool OngoingNotificationHide (OngoingNotification this_gen);
 
 /*! @fn 		setOngoingNotificationTitle (OngoingNotification this_gen, String title)
  *  @brief 		OngoingNotification 객체의 title을 설정 한다.
@@ -159,7 +159,7 @@ bool	OngoingNotificationHide (OngoingNotification this_gen);
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	setOngoingNotificationTitle (OngoingNotification this_gen, String title);
+bool setOngoingNotificationTitle (OngoingNotification this_gen, String title);
 
 /*! @fn 		setOngoingNotificationText (OngoingNotification this_gen, String text)
  *  @brief 		OngoingNotification 객체의 text를 설정 한다.
@@ -181,7 +181,7 @@ bool	setOngoingNotificationTitle (OngoingNotification this_gen, String title);
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	setOngoingNotificationText (OngoingNotification this_gen, String text);
+bool setOngoingNotificationText (OngoingNotification this_gen, String text);
 
 /*! @fn 		setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
  *  @brief 		OngoingNotification 객체의 아이콘 이미지를 설정 한다.
@@ -203,7 +203,7 @@ bool	setOngoingNotificationText (OngoingNotification this_gen, String text);
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
+bool setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
 
 /*! @fn 		setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
  *  @brief 		OngoingNotification 객체의 알림음을 설정 한다.
@@ -225,7 +225,7 @@ bool	setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
+bool setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
 
 /*! @fn 		setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
  *  @brief 		OngoingNotification 객체의 진행률을 설정 한다.
@@ -247,7 +247,7 @@ bool	setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
  *  			updateOngoingNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
+bool setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
 
 /*! @fn 		updateOngoingNotification (OngoingNotification this_gen)
  *  @brief 		새로 설정한 OngoingNotification 객체의 정보들을 새로 적용 한다.
@@ -267,7 +267,7 @@ bool	setOngoingNotificationProgress (OngoingNotification this_gen, double progre
  *  			setOngoingNotificationProgress
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-bool	updateOngoingNotification (OngoingNotification this_gen);
+bool updateOngoingNotification (OngoingNotification this_gen);
 
 typedef struct _OngoingNotificationExtend
 {
@@ -278,7 +278,7 @@ typedef struct _OngoingNotificationExtend
     String                      imagePath;
     String                      soundPath;
     bool                        visible;
-} OngoingNotificationExtend;
+}    OngoingNotificationExtend;
 /* Ongoing Notification */
 
 #ifdef __cplusplus
