@@ -5,22 +5,21 @@ link of DIT video in embed style and 1280x720 resolution image file
 ## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
 ### Welcome to the *D.I.T.* GitHub page.
 D.I.T. library is a light-weight library for manipulating Tizen Native API. Our goal is to make Tizen Native coding simpler, easier, and more fun!  
-~~`sorry, actually it's not fun...`~~
 
 ## Why use this library?
-1. 타이젠 겁내 꼬져서...ㄷㄷ [개발목적 부분???]
-2. ㅇㅇㅇ
-3. 333
-4. 456657
-5. 5
-6. 865
-7. 68
-8. D.I.T. is heavily customizable.  
-	If you want to edit D.I.T. for your taste, **please follow D.I.T. Library Rules**.
+1. We're *not used to* developing Tizen Native.
+2. We need more easier Tizen Native Library.
+3. _Some of sample codes of Tizen Native in 'tizen.org' is not working._
+3. D.I.T. library makes tizen seems like Android.
+8. D.I.T. is heavily customizable.
+	* If you want to edit D.I.T. for your taste, [***please follow D.I.T. Library Rules***][2]
+
+**[More ›][2]**
+
 
 ## How to use this library?
-1. Tizen Native 개발환경 구축
-2. 릴리즈 버전 다운로드
+1. Download Tizen IDE and Tizen SDK. --- **[Click ›](https://developer.tizen.org/development/tools/download)**
+2. You can download release version of D.I.T. --- **[Click ›][4]**
 3. 파일 옮기기 뭐 그런거 설명충 등장
 
 
@@ -67,26 +66,27 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 
 ### 3. Working Rules
 ####Due. 2015-07-29
-
-
-[GitBook : Manual][1]  
-[GitHub : Source][2]  
+[GitHub : Source][1]  
+[GitBook : Manual][2]  
 [Documents : Reference API][3]  
 [Release Version][4]  
 [Donation : You can help me][5]
 	
 ##More Informarion
-[![GitBook](https://avatars2.githubusercontent.com/u/7111340?v=3&s=80)](https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details)
+[![GitHub](http://cdn.flaticon.com/png/256/25231.png)][1]
 
-[![GitHub](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
+[![GitBook](https://avatars2.githubusercontent.com/u/7111340?v=3&s=80)][2]
 
-[![Documents](http://cdn.flaticon.com/png/256/25231.png)](https://github.com/Hoyuo/DIT)
+[![Documents](http://cdn.flaticon.com/png/256/25231.png)][3]
+
+[![Release](http://cdn.flaticon.com/png/256/25231.png)][4]
+
+[![Donation](http://cdn.flaticon.com/png/256/25231.png)][5]
 
 
 
-
- [1]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
- [2]: https://github.com/Hoyuo/DIT
+ [1]: https://github.com/Hoyuo/DIT
+ [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
  [3]: https://www.naver.com
  [4]: https://github.com/Hoyuo/DIT/releases
  [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
