@@ -74,11 +74,11 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 [Donation : You can help me][5]
 	
 ##More Informarion
-[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8947623/0d663904-35d8-11e5-8d77-31083477c045.png)][1]
-[![GitBook](https://cloud.githubusercontent.com/assets/8381373/8947741/94cca5b2-35d9-11e5-84c2-49d1f105fcd3.png)][2]
-[![Documents](https://cloud.githubusercontent.com/assets/8381373/8947703/15c25ee2-35d9-11e5-90d4-0081ec9f6888.PNG)][3]
-[![Release](https://cloud.githubusercontent.com/assets/8381373/8947929/15cbddde-35dc-11e5-8dbc-96b86b656724.png)][4]
-[![Donation](https://cloud.githubusercontent.com/assets/8381373/8947648/605d4756-35d8-11e5-8c24-0c2992c1c42e.PNG)][5]
+[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][1]
+[![GitBook](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][2]
+[![Documents](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][3]
+[![Release](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][4]
+[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][5]
 
 
 
