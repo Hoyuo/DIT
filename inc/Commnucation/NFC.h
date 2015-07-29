@@ -24,6 +24,8 @@ extern "C" {
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__NFC__NDEF__MODULE.html
  *  @todo	feature에 "http://tizen.org/feature/network.nfc" 을 반드시 추가해야 한다.
  */
+const char * NFCErrorChecker(int errorcode);
+
 typedef struct
 {
 	String tag;
@@ -174,7 +176,7 @@ bool onNFCDisconnect (NFC this_gen);
  * 				NFCRecv
  *  @remark 	feature	: http://tizen.org/feature/network.nfc
  */
-void NFCSend (NFC this_gen, NDEF message);
+bool NFCSend (NFC this_gen, NDEF message);
 
 /*! @fn 		NDEF NFCRecv (NFC this_gen)
  *  @brief 		NFC 장치에서 NDEF를 읽어온다.
