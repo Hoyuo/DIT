@@ -236,7 +236,7 @@ bool setNotificationSound (Notification this_gen, String soundPath);
  */
 bool updateNotification (Notification this_gen);
 
-typedef struct
+typedef struct _NotificationExtend
 {
     struct _Notification notification;
     notification_h       notification_handle;
