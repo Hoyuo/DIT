@@ -60,7 +60,7 @@ bool isGPSAccessible (GPS this_gen)
 
         return this->access;
     }
-    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -114,7 +114,7 @@ bool onGPSConnect (GPS this_gen)
             return this->connect = false;
         }
     }
-    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -135,7 +135,7 @@ bool onGPSDisconnect (GPS this_gen)
             return false;
         }
     }
-    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -153,11 +153,11 @@ Location GPSRecv (GPS this_gen)
         }
         else
         {
-            dlog_print (DEBUG_INFO, "DIT", "GPS NOT RECEIVED");
+            dlog_print (DLOG_INFO, "DIT", "GPS NOT RECEIVED");
             return l;
         }
     }
-    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return l;
 }
 
