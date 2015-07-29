@@ -59,6 +59,8 @@ bool isGPSAccessible (GPS this_gen)
 
         return this->access;
     }
+    dlog_print(DEBUG_INFO,"DIT","NULL module");
+    return false;
 }
 
 static void gps_state_changed_cb (location_service_state_e state, void * user_data)
@@ -96,7 +98,7 @@ bool onGPSConnect (GPS this_gen)
     if ( this_gen != NULL)
     {
         GPSExtends * this = (GPSExtends *)this_gen;
-        int error;
+        int error = LOCATIONS_ERROR_NONE;
         error = location_manager_set_service_state_changed_cb (this->manager, gps_state_changed_cb, this);
 
         error = location_manager_start (this->manager);
@@ -107,9 +109,12 @@ bool onGPSConnect (GPS this_gen)
         }
         else
         {
+        	dlog_print(DLOG_INFO,"DIT","%s",GPSErrorChecker(error));
             return this->connect = false;
         }
     }
+    dlog_print(DEBUG_INFO,"DIT","NULL module");
+        return false;
 }
 
 bool onGPSDisconnect (GPS this_gen)
@@ -125,13 +130,18 @@ bool onGPSDisconnect (GPS this_gen)
         }
         else
         {
+        	dlog_print(DLOG_INFO,"DIT","%s",GPSErrorChecker(error));
             return false;
         }
     }
+    dlog_print(DEBUG_INFO,"DIT","NULL module");
+         return false;
 }
 
 Location GPSRecv (GPS this_gen)
 {
+    Location l = {0,};
+
     if ( this_gen != NULL)
     {
         GPSExtends * this = (GPSExtends *)this_gen;
@@ -140,8 +150,12 @@ Location GPSRecv (GPS this_gen)
         {
             return this->location;
         }
+        else{
+            dlog_print(DEBUG_INFO,"DIT","GPS NOT RECEIVED");
+        	return l;
+        }
     }
-    Location l = {0,};
+    dlog_print(DEBUG_INFO,"DIT","NULL module");
     return l;
 }
 
