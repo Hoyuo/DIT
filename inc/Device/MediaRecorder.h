@@ -5,22 +5,25 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+
 #include <recorder.h>
 #include <camera.h>
 #include <Elementary.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-const char* recorderErrorCheck(int result);
-const char* cameraErrorCheck(int result);
+const char * recorderErrorCheck (int result);
+
+const char * cameraErrorCheck (int result);
 
 typedef struct _AudioRecorder * AudioRecorder;
 
 struct _AudioRecorder
 {
 
-    bool (* Init) (AudioRecorder this_gen, const char * filename);
+    bool (* Init) (AudioRecorder this_gen, const String filename);
 
     bool (* Start) (AudioRecorder this_gen);
 
@@ -32,38 +35,39 @@ struct _AudioRecorder
 
 };
 
-AudioRecorder NewAudioRecroder(void);
+AudioRecorder NewAudioRecroder (void);
 
-void DestroyAudioRecorder(AudioRecorder this_gen);
+void DestroyAudioRecorder (AudioRecorder this_gen);
 
-bool audioRecorderInit(AudioRecorder this_gen, const char * filename);
+bool audioRecorderInit (AudioRecorder this_gen, const String filename);
 
-bool audioRecorderStart(AudioRecorder this_gen);
+bool audioRecorderStart (AudioRecorder this_gen);
 
-bool audioRecorderPause(AudioRecorder this_gen);
+bool audioRecorderPause (AudioRecorder this_gen);
 
-bool audioRecorderEnd(AudioRecorder this_gen);
+bool audioRecorderEnd (AudioRecorder this_gen);
 
-bool audioRecorderCancel(AudioRecorder this_gen);
+bool audioRecorderCancel (AudioRecorder this_gen);
 
 typedef struct _AudioRecorderExtends
 {
     struct _AudioRecorder audiorecorder;
-    recorder_h   audiorecorderhandle;
+    recorder_h            audiorecorderhandle;
 
 } AudioRecorderExtends;
 
-typedef enum{
-	CAMERA_BACK = 0,
-	CAMERA_FRONT
-}camera_type;
+typedef enum
+{
+    CAMERA_BACK = 0,
+    CAMERA_FRONT
+} camera_type;
 
 typedef struct _CameraRecorder * CameraRecorder;
 
 struct _CameraRecorder
 {
 
-    bool (* Init) (CameraRecorder this_gen, const char * filename, camera_type camera, Evas_Object* evasObject);
+    bool (* Init) (CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object * evasObject);
 
     bool (* Start) (CameraRecorder this_gen);
 
@@ -75,25 +79,25 @@ struct _CameraRecorder
 
 };
 
-CameraRecorder NewCameraRecroder(void);
+CameraRecorder NewCameraRecroder (void);
 
-void DestroyCameraRecroder(CameraRecorder this_gen);
+void DestroyCameraRecroder (CameraRecorder this_gen);
 
-bool cameraRecorderInit(CameraRecorder this_gen, const char * filename, camera_type camera, Evas_Object* evasObject);
+bool cameraRecorderInit (CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object * evasObject);
 
-bool cameraRecorderStart(CameraRecorder this_gen);
+bool cameraRecorderStart (CameraRecorder this_gen);
 
-bool cameraRecorderPause(CameraRecorder this_gen);
+bool cameraRecorderPause (CameraRecorder this_gen);
 
-bool cameraRecorderEnd(CameraRecorder this_gen);
+bool cameraRecorderEnd (CameraRecorder this_gen);
 
-bool cameraRecorderCancel(CameraRecorder this_gen);
+bool cameraRecorderCancel (CameraRecorder this_gen);
 
 typedef struct _CameraRecorderExtends
 {
     struct _CameraRecorder camerarecorder;
-    recorder_h   camerarecorderhandle;
-    camera_h	 camerahandle;
+    recorder_h             camerarecorderhandle;
+    camera_h               camerahandle;
 
 } CameraRecorderExtends;
 #ifdef __cplusplus
