@@ -94,7 +94,7 @@ bool NotificationShow (Notification this_gen)
         ret=notification_post (this->notification_handle);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
-        	dlog_print(DLOG_INFO,"DIT",NotificationErrorCheck(ret));
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
         	return false;
         }
         this->visible = true;
@@ -114,7 +114,7 @@ bool NotificationHide (Notification this_gen)
         ret=notification_delete (this->notification_handle);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
-            dlog_print(DLOG_INFO,"DIT",NotificationErrorCheck(ret));
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
             return false;
          }
         this->visible = false;
@@ -149,7 +149,7 @@ bool setNotificationTitle (Notification this_gen, String title)
         ret = notification_set_text (this->notification_handle, NOTIFICATION_TEXT_TYPE_TITLE, this->title, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
-        	dlog_print(DLOG_INFO,"DIT",NotificationErrorCheck(ret));
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
         	return false;
         }
         return true;
@@ -183,7 +183,7 @@ bool setNotificationText (Notification this_gen, String text)
         ret =notification_set_text (this->notification_handle, NOTIFICATION_TEXT_TYPE_CONTENT, this->text, NULL, NOTIFICATION_VARIABLE_TYPE_NONE);
         if(ret != NOTIFICATION_ERROR_NONE)
                {
-               	dlog_print(DLOG_INFO,"DIT",NotificationErrorCheck(ret));
+        		dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
                	return false;
                }
         return true;
@@ -217,7 +217,7 @@ bool setNotificationIcon (Notification this_gen, String imagePath)
         ret = notification_set_image (this->notification_handle, NOTIFICATION_IMAGE_TYPE_ICON, this->imagePath);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
-        	dlog_print(DLOG_INFO,"DIT",NotificationErrorCheck(ret));
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
         	return false;
         }
         return true;
@@ -251,6 +251,7 @@ bool setNotificationSound (Notification this_gen, String soundPath)
         ret = notification_set_sound (this->notification_handle, NOTIFICATION_SOUND_TYPE_USER_DATA, this->soundPath);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
         	return false;
         }
         return true;
@@ -269,6 +270,7 @@ bool updateNotification (Notification this_gen)
         ret = notification_update (this->notification_handle);
         if(ret != NOTIFICATION_ERROR_NONE)
         {
+        	dlog_print(DLOG_INFO,"DIT","%s",NotificationErrorCheck(ret));
         	return false;
         }
         return true;
