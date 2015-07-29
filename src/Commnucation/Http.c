@@ -133,7 +133,6 @@ bool onHttpDisconnect (Http this_gen)
             if ( this->url != NULL)
             {
                 free (this->url);
-                curl_easy_cleanup(this->curl);
                 this->url = NULL;
             }
 
