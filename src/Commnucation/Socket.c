@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <dlog.h>
 #include <curl.h>
 #include <system_info.h>
 
@@ -61,8 +62,13 @@ bool isSocketAccessible(Socket this_gen)
 				"http://tizen.org/feature/network.telephony", &check2);
 
 		this->access = check1 || check2;
+		if(this->access == false)
+		{
+		   dlog_print(DLOG_INFO,"DIT","cannot access internet");
+		}
 		return this->access;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -99,11 +105,18 @@ bool onSocketConnect(Socket this_gen, String url, int port)
 				}
 				else
 				{
+					dlog_print(DLOG_INFO,"DIT","%s",SocketErrorCheck(r));
 					curl_easy_cleanup(this->curl);
 					this->curl = NULL;
+					this->conect = false;
+					return false;
 				}
 			}
+			dlog_print(DLOG_INFO,"DIT","can't make curl");
+            return this->conect =false;
 		}
+		   dlog_print(DLOG_INFO,"DIT","cannot access internet");
+		   return this->conect =false;
 	}
 	return false;
 }
@@ -125,7 +138,10 @@ bool onSocketDisconnect(Socket this_gen)
 			this->conect = false;
 			return true;
 		}
+		dlog_print(DLOG_INFO,"DIT","cannot access internet");
+		return this->conect =false;
 	}
+    dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -147,8 +163,13 @@ bool SocketMessageSend(Socket this_gen, String msg)
 			{
 				return true;
 			}
+			dlog_print(DLOG_INFO,"DIT","%s",SocketErrorCheck(res));
+			return false;
 		}
+		 dlog_print(DLOG_INFO,"DIT","not connected");
+			return false;
 	}
+    dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -174,6 +195,7 @@ bool SocketMessageRecv(Socket this_gen, String* msg)
 			res = curl_easy_recv(this->curl, buf, 1024, &iolen);
 			if (res)
 			{
+				dlog_print(DLOG_INFO,"DIT","%s",SocketErrorCheck(res));
 				return false;
 			}
 
@@ -182,7 +204,10 @@ bool SocketMessageRecv(Socket this_gen, String* msg)
 
 			return true;
 		}
+		dlog_print(DLOG_INFO,"DIT","not connected");
+		return false;
 	}
+    dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
