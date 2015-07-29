@@ -32,11 +32,11 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ### 2. Doxygen Comment Rules
 #### FILE
 ```
-/*!	@file		파일 이름 (확장자까지 표기)
- *	@brief		간략한 설명
- *	@note		자세한 설명 및 주의 사항
- *	@see		참고 사항 및 현재 파일과 연관된 사항
- *				( URL / Header / Soucefile / Function / Struct 등 
+/*!	@file			파일 이름 (확장자까지 표기)
+ *	@brief			간략한 설명
+ *	@note			자세한 설명 및 주의 사항
+ *	@see			참고 사항 및 현재 파일과 연관된 사항
+ *					( URL / Header / Soucefile / Function / Struct 등 
  */
 ```
 #### STRUCT
@@ -46,7 +46,7 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
  *	@note			자세한 설명 및 주의 사항
  *	@see 			참고 사항 및 현재 구조체와 연관된 사항
  *					( URL / Header / Soucefile / Function / Struct 등 )
- *	@pre			Tizen의 features나 privileges 를 명시한다.
+ *	@pre			Tizen의 features나 privileges 를 명시
  */
 ```
 
