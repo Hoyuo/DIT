@@ -50,19 +50,19 @@ const char * NotificationErrorCheck (int errCode);
 typedef struct _Notification * Notification;
 struct _Notification
 {
-    void (* Show) (Notification this_gen);
+    bool (* Show) (Notification this_gen);
 
-    void (* Hide) (Notification this_gen);
+    bool (* Hide) (Notification this_gen);
 
-    void (* setTitle) (Notification this_gen, String title);
+    bool (* setTitle) (Notification this_gen, String title);
 
-    void (* setText) (Notification this_gen, String text);
+    bool (* setText) (Notification this_gen, String text);
 
-    void (* setIcon) (Notification this_gen, String imagePath);
+    bool (* setIcon) (Notification this_gen, String imagePath);
 
-    void (* setSound) (Notification this_gen, String soundPath);
+    bool (* setSound) (Notification this_gen, String soundPath);
 
-    void (* update) (Notification this_gen);
+    bool (* update) (Notification this_gen);
 };
 
 /*!	@fn			Notification NewNotification (void)
@@ -114,7 +114,7 @@ void	DestroyNotification (Notification this_gen);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	NotificationShow (Notification this_gen);
+bool	NotificationShow (Notification this_gen);
 
 /*! @fn 		void NotificationHide (Notification this_gen)
  *  @brief 		Notification 바에 등록되어 있는 Notification을 삭제한다.
@@ -131,7 +131,7 @@ void	NotificationShow (Notification this_gen);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	NotificationHide (Notification this_gen);
+bool	NotificationHide (Notification this_gen);
 
 /*! @fn 		setNotificationTitle (Notification this_gen, String title)
  *  @brief 		Notification 객체의 title을 설정 한다.
@@ -152,7 +152,7 @@ void	NotificationHide (Notification this_gen);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	setNotificationTitle (Notification this_gen, String title);
+bool	setNotificationTitle (Notification this_gen, String title);
 
 /*! @fn 		setNotificationText (Notification this_gen, String text)
  *  @brief 		Notification 객체의 text를 설정 한다.
@@ -173,7 +173,7 @@ void	setNotificationTitle (Notification this_gen, String title);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	setNotificationText (Notification this_gen, String text);
+bool	setNotificationText (Notification this_gen, String text);
 
 /*! @fn 		setNotificationIcon (Notification this_gen, String imagePath)
  *  @brief 		Notification 객체의 아이콘 이미지를 설정 한다.
@@ -194,7 +194,7 @@ void	setNotificationText (Notification this_gen, String text);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	setNotificationIcon (Notification this_gen, String imagePath);
+bool	setNotificationIcon (Notification this_gen, String imagePath);
 
 /*! @fn 		setNotificationSound (Notification this_gen, String soundPath)
  *  @brief 		Notification 객체의 알림음을 설정 한다.
@@ -215,7 +215,7 @@ void	setNotificationIcon (Notification this_gen, String imagePath);
  *  			updateNotification
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	setNotificationSound (Notification this_gen, String soundPath);
+bool	setNotificationSound (Notification this_gen, String soundPath);
 
 /*! @fn 		updateNotification (Notification this_gen)
  *  @brief 		새로 설정한 Notification 객체의 정보들을 새로 적용 한다.
@@ -234,7 +234,7 @@ void	setNotificationSound (Notification this_gen, String soundPath);
  *  			setNotificationSound
  *  @remark 	privilege	: http://tizen.org/privilege/notification
  */
-void	updateNotification (Notification this_gen);
+bool	updateNotification (Notification this_gen);
 
 typedef struct
 {
