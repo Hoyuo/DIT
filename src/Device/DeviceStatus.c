@@ -4,17 +4,18 @@
  *  @see	DeviceStatus.h
 */
 
-
 #include "Device/DeviceStatus.h"
+
+#include <stdbool.h>
 #include <stdlib.h>
+
 #include <device/battery.h>
 #include <device/display.h>
 #include <device/led.h>
 #include <device/haptic.h>
 #include <dlog.h>
+
 const char * DeviceStatusErrorCheck (int errCode);
-
-
 
 Vibration NewVibration (void)
 {
@@ -46,17 +47,19 @@ bool VibrationCustom (Vibration this_gen, int period)
     if ( this_gen != NULL)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_haptic_vibrate (this->handle, period, 0, 0);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_haptic_vibrate (this->handle, period, 0, 0);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
         return true;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -65,18 +68,20 @@ bool VibrationShort (Vibration this_gen)
     if ( this_gen != NULL)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_haptic_vibrate (this->handle, 100, 0, 0);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_haptic_vibrate (this->handle, 100, 0, 0);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-         	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
         return true;
 
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -85,18 +90,20 @@ bool VibrationMiddle (Vibration this_gen)
     if ( this_gen != NULL)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_haptic_vibrate (this->handle, 500, 0, 0);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_haptic_vibrate (this->handle, 500, 0, 0);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-         	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-         	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
         return true;
 
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -105,17 +112,19 @@ bool VibrationLong (Vibration this_gen)
     if ( this_gen != NULL)
     {
         VibrationExtend * this = (VibrationExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_haptic_vibrate (this->handle, 1500, 0, 0);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_haptic_vibrate (this->handle, 1500, 0, 0);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-         	return false;
-         }
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
+        }
         return true;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -146,28 +155,31 @@ bool DisplayLock (Display this_gen)
     if ( this_gen != NULL)
     {
         DisplayExtend * this = (DisplayExtend *)this_gen;
-        device_error_e ret= DEVICE_ERROR_NONE;
-        ret= device_display_get_state (&this->state);
-        if(ret != DEVICE_ERROR_NONE)
+
+        device_error_e ret = DEVICE_ERROR_NONE;
+
+        ret = device_display_get_state (&this->state);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
 
         if ( this->state != DISPLAY_STATE_SCREEN_OFF )
         {
-            ret=device_display_change_state (DISPLAY_STATE_SCREEN_OFF);
-            if(ret != DEVICE_ERROR_NONE)
+            ret = device_display_change_state (DISPLAY_STATE_SCREEN_OFF);
+            if ( ret != DEVICE_ERROR_NONE )
             {
-              	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-              	return false;
+                dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+                return false;
             }
             return true;
         }
-        dlog_print(DLOG_INFO,"DIT","already locked");
+        dlog_print (DLOG_INFO, "DIT", "already locked");
         return false;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -176,28 +188,31 @@ bool DisplayUnlock (Display this_gen)
     if ( this_gen != NULL)
     {
         DisplayExtend * this = (DisplayExtend *)this_gen;
-        device_error_e ret= DEVICE_ERROR_NONE;
-        ret= device_display_get_state (&this->state);
-        if(ret != DEVICE_ERROR_NONE)
+
+        device_error_e ret = DEVICE_ERROR_NONE;
+
+        ret = device_display_get_state (&this->state);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
 
         if ( this->state != DISPLAY_STATE_NORMAL )
         {
-            ret=device_display_change_state (DISPLAY_STATE_NORMAL);
-            if(ret != DEVICE_ERROR_NONE)
+            ret = device_display_change_state (DISPLAY_STATE_NORMAL);
+            if ( ret != DEVICE_ERROR_NONE )
             {
-              	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-              	return false;
+                dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+                return false;
             }
             return true;
         }
-        dlog_print(DLOG_INFO,"DIT","already Unlocked");
+        dlog_print (DLOG_INFO, "DIT", "already Unlocked");
         return false;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -206,29 +221,32 @@ bool DisplayDim (Display this_gen)
     if ( this_gen != NULL)
     {
         DisplayExtend * this = (DisplayExtend *)this_gen;
-        device_error_e ret= DEVICE_ERROR_NONE;
-        ret= device_display_get_state (&this->state);
-        if(ret != DEVICE_ERROR_NONE)
+
+        device_error_e ret = DEVICE_ERROR_NONE;
+
+        ret = device_display_get_state (&this->state);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
 
         if ( this->state != DISPLAY_STATE_SCREEN_DIM )
         {
-            ret=device_display_change_state (DISPLAY_STATE_SCREEN_DIM);
-            if(ret != DEVICE_ERROR_NONE)
+            ret = device_display_change_state (DISPLAY_STATE_SCREEN_DIM);
+            if ( ret != DEVICE_ERROR_NONE )
             {
-              	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-              	return false;
+                dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+                return false;
             }
             return true;
         }
-       	dlog_print(DLOG_INFO,"DIT","already Dimmed");
-       	return false;
+        dlog_print (DLOG_INFO, "DIT", "already Dimmed");
+        return false;
 
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -237,18 +255,20 @@ int getDisplayBrightLevel (Display this_gen)
     if ( this_gen != NULL)
     {
         DisplayExtend * this = (DisplayExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret= device_display_get_brightness (0, &this->brightLevel);
-        if(ret != DEVICE_ERROR_NONE)
+        ret = device_display_get_brightness (0, &this->brightLevel);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return -1;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return -1;
         }
 
         return this->brightLevel;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return -1;
 }
 
@@ -258,7 +278,9 @@ bool setDisplayBrightLevel (Display this_gen, int brightLevel)
     if ( this_gen != NULL)
     {
         DisplayExtend * this = (DisplayExtend *)this_gen;
+
         device_error_e ret = DEVICE_ERROR_NONE;
+
         if ( brightLevel > 100 )
         {
             brightLevel = 100;
@@ -270,16 +292,17 @@ bool setDisplayBrightLevel (Display this_gen, int brightLevel)
 
         this->brightLevel = brightLevel;
 
-       ret= device_display_set_brightness (0, this->brightLevel);
-       if(ret != DEVICE_ERROR_NONE)
-       {
-    	   dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-    	   return false;
-       }
-          return true;
+        ret = device_display_set_brightness (0, this->brightLevel);
+
+        if ( ret != DEVICE_ERROR_NONE )
+        {
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
+        }
+        return true;
 
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 
 }
@@ -311,15 +334,16 @@ int getBatteryRemainsPercent (Battery this_gen)
         BatteryExtend * this = (BatteryExtend *)this_gen;
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_battery_get_percent (&this->batteryLevel);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_battery_get_percent (&this->batteryLevel);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return -1;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return -1;
         }
         return this->batteryLevel;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return -1;
 }
 
@@ -330,18 +354,18 @@ bool isBatteryCharging (Battery this_gen)
         BatteryExtend * this = (BatteryExtend *)this_gen;
         device_error_e ret = DEVICE_ERROR_NONE;
 
-        ret=device_battery_is_charging (&this->charging);
-        if(ret!=DEVICE_ERROR_NONE)
+        ret = device_battery_is_charging (&this->charging);
+
+        if ( ret != DEVICE_ERROR_NONE )
         {
-        	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-        	return false;
+            dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+            return false;
         }
         return this->charging;
     }
-    dlog_print(DLOG_INFO,"DIT","NULL module");
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
     return false;
 }
-
 
 Flash NewFlash (void)
 {
@@ -364,20 +388,23 @@ void DestoryFlash (Flash this_gen)
 bool onFlash (void)
 {
     int value;
+
     device_error_e ret = DEVICE_ERROR_NONE;
 
     ret = device_flash_get_max_brightness (&value);
-    if(ret != DEVICE_ERROR_NONE)
+
+    if ( ret != DEVICE_ERROR_NONE )
     {
-    	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-    	return false;
+        dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+        return false;
     }
 
     ret = device_flash_set_brightness (value);
-    if(ret != DEVICE_ERROR_NONE)
+
+    if ( ret != DEVICE_ERROR_NONE )
     {
-    	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-     	return false;
+        dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+        return false;
     }
     return true;
 }
@@ -387,10 +414,11 @@ bool offFlash (void)
     device_error_e ret = DEVICE_ERROR_NONE;
 
     ret = device_flash_set_brightness (0);
-    if(ret != DEVICE_ERROR_NONE)
+
+    if ( ret != DEVICE_ERROR_NONE )
     {
-    	dlog_print(DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck(ret));
-     	return false;
+        dlog_print (DLOG_INFO, "DIT", "%s", DeviceStatusErrorCheck (ret));
+        return false;
     }
     return true;
 }

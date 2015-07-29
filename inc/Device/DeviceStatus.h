@@ -84,7 +84,7 @@ Vibration NewVibration (void);
  *  @see 		NewVibration
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-void      DestroyVibration (Vibration this_gen);
+void DestroyVibration (Vibration this_gen);
 
 /*! @fn 		void VibrationCustom (Vibration this_gen, int period)
  *  @brief 		사용자가 정의한 시간만큼 device를 진동 시킨다.
@@ -100,7 +100,7 @@ void      DestroyVibration (Vibration this_gen);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-bool      VibrationCustom (Vibration this_gen, int period);
+bool VibrationCustom (Vibration this_gen, int period);
 
 /*! @fn 		bool VibrationShort (Vibration this_gen)
  *  @brief 		짧은 시간만큼 device를 진동 시킨다. (0.1초)
@@ -114,7 +114,7 @@ bool      VibrationCustom (Vibration this_gen, int period);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-bool      VibrationShort (Vibration this_gen);
+bool VibrationShort (Vibration this_gen);
 
 /*! @fn 		void VibrationMiddle (Vibration this_gen)
  *  @brief 		중간 시간만큼 device를 진동 시킨다. (0.5초)
@@ -128,7 +128,7 @@ bool      VibrationShort (Vibration this_gen);
  *  			VibrationLong
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-bool      VibrationMiddle (Vibration this_gen);
+bool VibrationMiddle (Vibration this_gen);
 
 /*! @fn 		void VibrationLong (Vibration this_gen)
  *  @brief 		긴 시간만큼 device를 진동 시킨다. (1.5초)
@@ -142,7 +142,7 @@ bool      VibrationMiddle (Vibration this_gen);
  *  			VibrationMiddle
  *  @remark 	privilege	: http://tizen.org/privilege/haptic
  */
-bool      VibrationLong (Vibration this_gen);
+bool VibrationLong (Vibration this_gen);
 
 typedef struct _VibrationExtend
 {
@@ -164,11 +164,11 @@ typedef struct _VibrationExtend
 typedef struct _Display * Display;
 struct _Display
 {
-	bool (* Lock) (Display this_gen);
+    bool (* Lock) (Display this_gen);
 
-	bool (* Unlock) (Display this_gen);
+    bool (* Unlock) (Display this_gen);
 
-	bool (* Dim) (Display this_gen);
+    bool (* Dim) (Display this_gen);
 
     int (* getBright) (Display this_gen);
 
@@ -202,7 +202,7 @@ Display NewDisplay (void);
  *  @see 		NewDisplay
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-void    DestroyDisplay (Display this_gen);
+void DestroyDisplay (Display this_gen);
 
 /*! @fn 		void DisplayLock (Display this_gen)
  *  @brief 		Device의 화면을 강제로 끈다.(잠금)
@@ -217,7 +217,7 @@ void    DestroyDisplay (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-bool    DisplayLock (Display this_gen);
+bool DisplayLock (Display this_gen);
 
 /*! @fn 		void DisplayUnlock (Display this_gen)
  *  @brief 		Device의 꺼진 화면을 다시 켠다.
@@ -232,7 +232,7 @@ bool    DisplayLock (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-bool    DisplayUnlock (Display this_gen);
+bool DisplayUnlock (Display this_gen);
 
 /*! @fn 		void DisplayDim (Display this_gen)
  *  @brief 		Device의 화면을 어둡게 한다.
@@ -248,7 +248,7 @@ bool    DisplayUnlock (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-bool    DisplayDim (Display this_gen);
+bool DisplayDim (Display this_gen);
 
 /*! @fn 		int getDisplayBrightLevel (Display this_gen)
  *  @brief 		현재 화면의 밝기 값을 반환 한다.
@@ -264,7 +264,7 @@ bool    DisplayDim (Display this_gen);
  *  			setDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-int     getDisplayBrightLevel (Display this_gen);
+int getDisplayBrightLevel (Display this_gen);
 
 /*! @fn 		int setDisplayBrightLevel (Display this_gen, int brightLevel)
  *  @brief 		현재 화면의 밝기 값을 설정 한다.
@@ -281,7 +281,7 @@ int     getDisplayBrightLevel (Display this_gen);
  *  			getDisplayBrightLevel
  *  @remark 	privilege	: http://tizen.org/privilege/display
  */
-bool    setDisplayBrightLevel (Display this_gen, int brightLevel);
+bool setDisplayBrightLevel (Display this_gen, int brightLevel);
 
 typedef struct _DisplayExtend
 {
@@ -330,7 +330,7 @@ Battery NewBattery (void);
  *  			Battery 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewBattery
  */
-void    DestoryBattery (Battery this_gen);
+void DestoryBattery (Battery this_gen);
 
 /*! @fn 		int getBatteryRemainsPercent (Battery this_gen)
  *  @brief 		현재 배터리의 잔량을 반환 한다.
@@ -341,7 +341,7 @@ void    DestoryBattery (Battery this_gen);
  *  @see 		NewBattery \n
  *  			isBatteryCharging
  */
-int     getBatteryRemainsPercent (Battery this_gen);
+int getBatteryRemainsPercent (Battery this_gen);
 
 /*! @fn 		bool isBatteryCharging (Battery this_gen)
  *  @brief 		현재 배터리의 충전 상태 여부를 반환 한다.
@@ -353,7 +353,7 @@ int     getBatteryRemainsPercent (Battery this_gen);
  *  @see 		NewBattery \n
  *  			getBatteryRemainsPercent
  */
-bool    isBatteryCharging (Battery this_gen);
+bool isBatteryCharging (Battery this_gen);
 
 typedef struct _BatteryExtend
 {
@@ -411,7 +411,7 @@ Flash NewFlash (void);
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
  */
-void  DestoryFlash (Flash this_gen);
+void DestoryFlash (Flash this_gen);
 
 /*!	@fn			void onFlash (void)
  *  @brief		후면 카메라의 플래시를 켠다.
@@ -426,7 +426,7 @@ void  DestoryFlash (Flash this_gen);
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
  */
-bool  onFlash (void);
+bool onFlash (void);
 
 /*!	@fn			void offFlash (void)
  *  @brief		후면 카메라의 플래시를 끈다.
@@ -440,7 +440,7 @@ bool  onFlash (void);
  *				features	: http://tizen.org/feature/led \n
  *				features	: http://tizen.org/feature/camera.back.flash
  */
-bool  offFlash (void);
+bool offFlash (void);
 /* Flash */
 
 
