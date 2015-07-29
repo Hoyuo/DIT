@@ -11,14 +11,16 @@
 
 #include <stdbool.h>
 #include <stdalign.h>
+
 #include <recorder.h>
 #include <camera.h>
 #include <Elementary.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/*! @fn         const char * recorderErrorCheck (int errCode)
+/*! @fn         const char * RecorderErrorCheck (int errCode)
  *  @brief      Media Recoder에서 발생하는 Error Code들을 확인 해준다.
  *  @param[in]  errCode 확인 하고자 하는 Error Code
  *  @param[out] null
@@ -42,9 +44,9 @@ extern "C" {
  *              15가지의 Error Code들을 확인 가능 하다.
  *  @see        [Tizen Native API Document - Recoder Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html#ga9edb84cd056c6c6e09190e924f0a2617)
  */
-const char* recorderErrorCheck(int result);
+const char* RecorderErrorCheck(int result);
 
-/*! @fn         const char * cameraErrorCheck (int errCode)
+/*! @fn         const char * CameraErrorCheck (int errCode)
  *  @brief      Camera에서 발생하는 Error Code들을 확인 해준다.
  *  @param[in]  errCode 확인 하고자 하는 Error Code
  *  @param[out] null
@@ -69,7 +71,7 @@ const char* recorderErrorCheck(int result);
  *              15가지의 Error Code들을 확인 가능 하다.
  *  @see        [Tizen Native API Document - Camera Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CAMERA__MODULE.html#ga2ef5666f3fa5a86c28347623dba6fd39)
  */
-const char* cameraErrorCheck(int result);
+const char* CameraErrorCheck(int result);
 
 /* AudioRecorder */
 /*! @struct _AudioRecorder
@@ -88,7 +90,7 @@ typedef struct _AudioRecorder * AudioRecorder;
 struct _AudioRecorder
 {
 
-    bool (* Init) (AudioRecorder this_gen, const char * filename);
+    bool (* Init) (AudioRecorder this_gen, const String filename);
 
     bool (* Start) (AudioRecorder this_gen);
 
@@ -140,7 +142,7 @@ AudioRecorder NewAudioRecorder(void);
  */
 void DestroyAudioRecorder(AudioRecorder this_gen);
 
-/*! @fn         bool audioRecorderInit(AudioRecorder this_gen, const char * filename)
+/*! @fn         bool audioRecorderInit(AudioRecorder this_gen, const String filename)
  *  @brief      녹음을 시작하기전 녹음할 Audio Recorder 객체를 초기화 한다.
  *  @param[in]  this_gen 초기화할 AudioRecorder 객체
  *  @param[in]  filename 녹음한 결과를 저장할 파일 이름
@@ -162,7 +164,7 @@ void DestroyAudioRecorder(AudioRecorder this_gen);
  *              * http://tizen.org/feature/microphone
  *  @warning    audioRecorderStart() 를 통해 녹음을 시작하기 전 반드시 실행 해야 한다.
  */
-bool audioRecorderInit(AudioRecorder this_gen, const char * filename);
+bool audioRecorderInit(AudioRecorder this_gen, const String filename);
 
 /*! @fn         bool audioRecorderStart(AudioRecorder this_gen)
  *  @brief      녹음을 시작한다.
@@ -256,7 +258,7 @@ bool audioRecorderCancel(AudioRecorder this_gen);
 typedef struct _AudioRecorderExtends
 {
     struct _AudioRecorder audiorecorder;
-    recorder_h   audiorecorderhandle;
+    recorder_h            audiorecorderhandle;
 
 } AudioRecorderExtends;
 
@@ -284,7 +286,7 @@ typedef struct _CameraRecorder * CameraRecorder;
 struct _CameraRecorder
 {
 
-    bool (* Init) (CameraRecorder this_gen, const char * filename, camera_type camera, Evas_Object* evasObject);
+    bool (* Init) (CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object * evasObject);
 
     bool (* Start) (CameraRecorder this_gen);
 
@@ -338,7 +340,7 @@ CameraRecorder NewCameraRecorder(void);
  */
 void DestroyCameraRecorder(CameraRecorder this_gen);
 
-/*! @fn         bool cameraRecorderInit(CameraRecorder this_gen, const char * filename, camera_type camera, Evas_Object* evasObject)
+/*! @fn         bool cameraRecorderInit(CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object* evasObject)
  *  @brief      녹화를 시작하기전 녹화할 Camera Recorder 객체를 초기화 한다.
  *  @param[in]  this_gen 초기화할 CameraRecorder 객체
  *  @param[in]  filename 녹화한 결과를 저장할 파일 이름
@@ -363,7 +365,7 @@ void DestroyCameraRecorder(CameraRecorder this_gen);
  *              * http://tizen.org/feature/microphone
  *  @warning    cameraRecorderStart() 를 통해 녹화를 시작하기 전 반드시 실행 해야 한다.
  */
-bool cameraRecorderInit(CameraRecorder this_gen, const char * filename, camera_type camera, Evas_Object* evasObject);
+bool cameraRecorderInit(CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object* evasObject);
 
 /*! @fn         bool cameraRecorderStart(CameraRecorder this_gen)
  *  @brief      녹화를 시작한다.
@@ -461,8 +463,8 @@ bool cameraRecorderCancel(CameraRecorder this_gen);
 typedef struct _CameraRecorderExtends
 {
     struct _CameraRecorder camerarecorder;
-    recorder_h   camerarecorderhandle;
-    camera_h	 camerahandle;
+    recorder_h             camerarecorderhandle;
+    camera_h               camerahandle;
 
 } CameraRecorderExtends;
 #ifdef __cplusplus
