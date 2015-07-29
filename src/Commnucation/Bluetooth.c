@@ -90,7 +90,7 @@ bool isBluetoothAccessible (Bluetooth this_gen)
 
 			int re = bt_adapter_get_state (&adapter_state);
 
-			if ( re == BT_ERROR_NONE )
+			if ( re == BT_ERROR_NONE && adapter_state == BT_ADAPTER_DEVICE_DISCOVERY_STARTED)
 			{
 				this->accessible = true;
 				return true;
@@ -101,7 +101,6 @@ bool isBluetoothAccessible (Bluetooth this_gen)
 				return false;
 			}
 		}
-		//todo : NO
 		dlog_print(DLOG_INFO, "DIT", "Bluetooth doesn't supported");
 		return false;
 	}
@@ -138,20 +137,18 @@ bool onBluetoothConnect (Bluetooth this_gen)
 				return false;
 			}
 			res=bt_adapter_start_device_discovery ();
-
-			if ( res == BT_ERROR_NONE )
+			if ( res != BT_ERROR_NONE )
 			{
-				this->connected = true;
-				return this->connected;
+				dlog_print(DLOG_INFO, "DIT", "%s", BluetoothErrorCheck(res));
+				return false;
 			}
+			return this->connected = true;
 		}
-		else
-		{
+
 		dlog_print(DLOG_INFO,"DIT","already connected");
 		return false;
-		}
-	}
 
+	}
 	dlog_print(DLOG_INFO, "DIT", "NULL Module");
 	return false;
 
@@ -230,16 +227,15 @@ bool onBluetoothDisconnect (Bluetooth this_gen)
 				 dlog_print(DLOG_INFO, "DIT", "%s", BluetoothErrorCheck(ret));
 				 return false;
 			 }
-			if ( BT_ERROR_NONE == ret )
+
+			this->connected = false;
+			if ( this->remoteMACAddr != NULL)
 			{
-				this->connected = false;
-				if ( this->remoteMACAddr != NULL)
-				{
-					free (this->remoteMACAddr);
-					this->remoteMACAddr = NULL;
-				}
-				return true;
+				free (this->remoteMACAddr);
+				this->remoteMACAddr = NULL;
 			}
+			return true;
+
 		}
 		else{
 			dlog_print(DLOG_INFO,"DIT","not connected");
@@ -265,21 +261,18 @@ bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
 		if ( this->connected )
 		{
 			int ret = bt_opp_server_initialize_by_connection_request (DOWNLOADSFOLDERPATH, connection_requested_cb_for_opp_serverx, recvBuffer);
-			if(ret==BT_ERROR_NONE)
+			if(ret !=BT_ERROR_NONE)
 			{
 				dlog_print(DLOG_INFO, "DIT", "%s", BluetoothErrorCheck(ret));
-				return true;
+				return false;
 			}
+			return true;
 		}
-		else
-		{
-			dlog_print(DLOG_INFO, "DIT", "not connected");
-			return false;
-		}
-	}
-	else
-		dlog_print(DLOG_INFO, "DIT", "NULL module");
+		dlog_print(DLOG_INFO, "DIT", "not connected");
 		return false;
+	}
+	dlog_print(DLOG_INFO, "DIT", "NULL module");
+	return false;
 
 }
 
@@ -315,7 +308,7 @@ bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
 			if ( ret != BT_ERROR_NONE )
 			{
 				dlog_print(DLOG_INFO, "DIT", "%s", BluetoothErrorCheck(ret));
-				bt_opp_client_cancel_push();
+				bt_opp_client_cancel_push ();
 				bt_opp_client_clear_files ();
 				bt_opp_client_deinitialize();
 				return false;
