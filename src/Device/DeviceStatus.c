@@ -449,6 +449,6 @@ const char * DeviceStatusErrorCheck (int errCode)
         return "DEVICE_ERROR_NOT_INITIALIZED : Not initialized";
 
     default:
-        return "DEVICE_ERROR_NOT_UNKNOWN";
+        return "DEVICE_ERROR_UNKNOWN";
     }
 }

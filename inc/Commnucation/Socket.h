@@ -1,8 +1,8 @@
 /*! @file	Socket.h
  *  @brief	Socket API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Socket의 isAccessible / onConnect  / Send / Recv API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
-*/
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
+ */
 
 #ifndef DIT_SOCKET_H
 #define DIT_SOCKET_H
@@ -104,8 +104,8 @@ extern "C" {
  *  @retval 	CURL_LAST
  *  @note 		Socket API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다.   \n
- *  @see 		http://curl.haxx.se/libcurl/c/libcurl-errors.html
-*/
+ *  @see 		[Libcurl Error Document](http://curl.haxx.se/libcurl/c/libcurl-errors.html)
+ */
 const char * SocketErrorCheck (CURLcode errorCode);
 
 /* Socket */
@@ -113,9 +113,10 @@ const char * SocketErrorCheck (CURLcode errorCode);
  *  @brief	Socket 모듈에 대한 구조체이다. Socket 모듈은 다양한 방식으로 Socket 통신을 할 수 있다.
  *  @note	Socket의 Socket 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewSocket() 함수를 사용해야 하며 사용이 끝났을 때 DestorySocket() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html
- *  @pre	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
-*/
+ *  @see	[Tizen Native API Document - CURL part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/internet
+ */
 typedef struct _Socket * Socket;
 struct _Socket
 {
@@ -144,7 +145,9 @@ struct _Socket
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
+ *  @warning    사용이 끝났을 때 DestorySocket() 함수를 꼭 사용해야 한다.
  */
 Socket NewSocket (void);
 
@@ -156,7 +159,8 @@ Socket NewSocket (void);
  *  @note 		생성한 Socket 객체를 소멸 시킨다. \n
  *  			Socket 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewSocket
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 void DestorySocket (Socket this_gen);
 
@@ -175,7 +179,8 @@ void DestorySocket (Socket this_gen);
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool isSocketAccessible (Socket this_gen);
 
@@ -196,7 +201,8 @@ bool isSocketAccessible (Socket this_gen);
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool onSocketConnect (Socket this_gen, String url, int port);
 
@@ -215,7 +221,8 @@ bool onSocketConnect (Socket this_gen, String url, int port);
  *  			onSocketConnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool onSocketDisconnect (Socket this_gen);
 
@@ -235,7 +242,8 @@ bool onSocketDisconnect (Socket this_gen);
  *  			onSocketConnect \n
  *  			onSocketDisconnect \n
  *  			SocketMessageRecv
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool SocketMessageSend (Socket this_gen, String msg);
 
@@ -255,7 +263,8 @@ bool SocketMessageSend (Socket this_gen, String msg);
  *  			onSocketConnect \n
  *  			onSocketDisconnect \n
  *  			SocketMessageSend
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool SocketMessageRecv (Socket this_gen, String * msg);
 

@@ -79,7 +79,7 @@ Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
- [3]: https://www.naver.com
+ [3]: http://dee-j.github.io/html
  [4]: https://github.com/Hoyuo/DIT/releases
  [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
  [6]: #

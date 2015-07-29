@@ -1,7 +1,7 @@
 /*! @file	Preference.h
  *  @brief	Preference API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Preference의 get Preference / set Preference / Remove / Clear 관련 Preference API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_PREFERENCE_H
@@ -31,7 +31,7 @@ const char * PreferenceErrorCheck (int errCode);
  *  @note 		Preference API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다. \n
  *  			6가지의 Error Code들을 확인 가능 하다.
- *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html
+ *  @see 		[Tizen Native API Document - Preference part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html)
  */
 const char * PreferenceErrorCheck (int errCode);
 
@@ -40,7 +40,7 @@ const char * PreferenceErrorCheck (int errCode);
  *  @brief	Preference 모듈에 대한 구조체이다. Preference 모듈은 다양한 형식으로 key값을 제어 할 수 있다.
  *  @note	Preference 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewPreference() 함수를 사용해야 하며 사용이 끝났을 때 DestroyPreference() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html
+ *  @see	[Tizen Native API Document - Preference part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__PREFERENCE__MODULE.html)
  */
 typedef struct _Preference * Preference;
 struct _Preference
@@ -85,6 +85,7 @@ struct _Preference
  *  			setPreferenceString \n
  *  			PreferenceRemove \n
  *  			PreferenceClear
+ *  @warning    사용이 끝났을 때 DestroyPreference() 함수를 꼭 사용해야 한다.
  */
 Preference NewPreference (void);
 
@@ -180,11 +181,11 @@ bool getPreferenceBoolean (String key, bool defValue);
  *  			setPreferenceString \n
  *  			PreferenceRemove \n
  *  			PreferenceClear
- *  @warning    반환된 @c string 값은 이후 반드시 @a free()를 통해 메모리 해제를 해줘야 한다.
+ *  @warning    반환된 @c string 값은 이후 반드시 @a free()를 통해 메모리 해제를 해야 한다.
  */
 String getPreferenceString (String key, String defValue);
 
-/*! @fn 		void setPreferenceInt (String key, int value)
+/*! @fn 		bool setPreferenceInt (String key, int value)
  *  @brief 		키 값에 대응하는 Preference에 @c int 값을 저장한다.
  *  @param[in] 	key	키 값
  *  @param[in] 	value 키 값에 대응하는 Preference에 저장할 @c int 값
@@ -207,7 +208,7 @@ String getPreferenceString (String key, String defValue);
  */
 bool setPreferenceInt (String key, int value);
 
-/*! @fn 		void setPreferenceDouble (String key, double value)
+/*! @fn 		bool setPreferenceDouble (String key, double value)
  *  @brief 		키 값에 대응하는 Preference에 @c double 값을 저장한다.
  *  @param[in] 	key	키 값
  *  @param[in] 	value 키 값에 대응하는 Preference에 저장할 @c double 값
@@ -230,7 +231,7 @@ bool setPreferenceInt (String key, int value);
  */
 bool setPreferenceDouble (String key, double value);
 
-/*! @fn 		void setPreferenceBoolean (String key, bool value)
+/*! @fn 		bool setPreferenceBoolean (String key, bool value)
  *  @brief 		키 값에 대응하는 Preference에 @c boolean 값을 저장한다.
  *  @param[in] 	key	키 값
  *  @param[in] 	value 키 값에 대응하는 Preference에 저장할 @c boolean 값
@@ -253,7 +254,7 @@ bool setPreferenceDouble (String key, double value);
  */
 bool setPreferenceBoolean (String key, bool value);
 
-/*! @fn 		void setPreferenceString (String key, String value)
+/*! @fn 		bool setPreferenceString (String key, String value)
  *  @brief 		키 값에 대응하는 Preference에 @c string 값을 저장한다.
  *  @param[in] 	key	키 값
  *  @param[in] 	value 키 값에 대응하는 Preference에 저장할 @c string 값
@@ -276,7 +277,7 @@ bool setPreferenceBoolean (String key, bool value);
  */
 bool setPreferenceString (String key, String value);
 
-/*! @fn 		void PreferenceRemove (String key)
+/*! @fn 		bool PreferenceRemove (String key)
  *  @brief 		키 값에 대응하는 Preference의 값을 삭제한다.
  *  @param[in] 	key	키 값
  *  @param[out] null
@@ -298,7 +299,7 @@ bool setPreferenceString (String key, String value);
  */
 bool PreferenceRemove (String key);
 
-/*! @fn 		void PreferenceClear (void)
+/*! @fn 		bool PreferenceClear (void)
  *  @brief 		모든 Preference의 값을 삭제한다.
  *  @param[in] 	void
  *  @param[out] null

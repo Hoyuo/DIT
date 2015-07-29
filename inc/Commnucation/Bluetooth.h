@@ -1,7 +1,7 @@
 /*! @file	Bluetooth.h
  *  @brief	Bluetooth API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Bluetooth의 isAccessible / onConnect / isConnected / onDisconnect / FileSend / FileRecv API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see	[Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_BLUETOOTH_H
@@ -50,7 +50,7 @@ extern "C" {
  *  @note 		Bluetooth API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다.  \n
  *  			24가지의 Error Code들을 확인 가능 하다.
- *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html
+ *  @see 		[Tizen Native API Document - Bluetooth part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html)
  */
 const char * BluetoothErrorCheck (int errCode);
 
@@ -58,9 +58,10 @@ const char * BluetoothErrorCheck (int errCode);
 /*! @struct	_Bluetooth
  *  @brief	Bluetooth 모듈에 대한 구조체이다. Bluetooth 모듈은 다양한 방식으로 Bluetooth 통신을 할 수 있다.
  *  @note	Bluetooth의 Bluetooth 모듈에 대한 구조체이다. \n
-    		구조체를 사용하기 전에 NewBluetooth() 함수를 사용해야 하며 사용이 끝났을 때 DestroyBluetooth() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html
- *  @pre	feature에 "http://tizen.org/feature/network.bluetooth" 을 반드시 추가해야 한다.
+ *    		구조체를 사용하기 전에 NewBluetooth() 함수를 사용해야 하며 사용이 끝났을 때 DestroyBluetooth() 함수를 꼭 사용해야 한다.
+ *  @see    [Tizen Native API Document - Bluetooth part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__NETWORK__BLUETOOTH__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/network.bluetooth
  */
 typedef struct _Bluetooth * Bluetooth;
 struct _Bluetooth
@@ -93,7 +94,9 @@ struct _Bluetooth
  *  			onBluetoothDisconnect \n
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
+ *  @warning    사용이 끝났을 때 DestroyBluetooth() 함수를 꼭 사용해야 한다.
  */
 Bluetooth NewBluetooth (void);
 
@@ -105,7 +108,8 @@ Bluetooth NewBluetooth (void);
  *  @note 		생성한 Bluetooth 객체를 소멸 시킨다. \n
  *  			Bluetooth 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewBluetooth
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 void DestroyBluetooth (Bluetooth this_gen);
 
@@ -125,7 +129,8 @@ void DestroyBluetooth (Bluetooth this_gen);
  *  			onBluetoothDisconnect \n
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool isBluetoothAccessible (Bluetooth this_gen);
 
@@ -145,7 +150,8 @@ bool isBluetoothAccessible (Bluetooth this_gen);
  *  			onBluetoothDisconnect \n
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool onBluetoothConnect (Bluetooth this_gen);
 
@@ -165,7 +171,8 @@ bool onBluetoothConnect (Bluetooth this_gen);
  *  			onBluetoothDisconnect \n
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool isBluetoothConnected (Bluetooth this_gen);
 
@@ -185,11 +192,12 @@ bool isBluetoothConnected (Bluetooth this_gen);
  *  			isBluetoothConnected \n
  *  			BluetoothFileSend \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool onBluetoothDisconnect (Bluetooth this_gen);
 
-/*! @fn 		void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
+/*! @fn 		bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
  *  @brief 		Bluetooth기기로 데이터를 송신한다.
  *  @param[in] 	this_gen 데이터를 송신할 Bluetooth 객체
  *  @param[in] 	sendbuffer 송신할 파일 path
@@ -205,11 +213,12 @@ bool onBluetoothDisconnect (Bluetooth this_gen);
  *  			isBluetoothConnected \n
  *  			onBluetoothDisconnect \n
  * 				BluetoothFileRecv
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
 
-/*! @fn 		void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
+/*! @fn 		bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
  *  @brief 		Bluetooth기기로 부터 데이터를 수신한다.
  *  @param[in] 	this_gen 데이터를 수신할 Bluetooth 객체
  *  @param[in] 	recvBuffer 수신할 데이터 주소
@@ -225,7 +234,8 @@ bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
  *  			isBluetoothConnected \n
  *  			onBluetoothDisconnect \n
  * 				BluetoothFileSend
- *  @pre        feature	: http://tizen.org/feature/network.bluetooth
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/network.bluetooth
  */
 bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
 

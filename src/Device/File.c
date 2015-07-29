@@ -930,7 +930,7 @@ const char * PlayerErrorCheck (int ret)
         return "PLAYER_ERROR_PERMISSION_DENIED: Permission denied";
 
     default:
-        return "UNKNOWN ERROR";
+        return "PLAYER_ERROR_UNKNOWN";
     }
 
 }
@@ -959,7 +959,7 @@ const char * MetadataExtractorErrorCheck (int ret)
         return "METADATA_EXTRACTOR_ERROR_OPERATION_FAILED: Invalid internal operation";
 
     default:
-        return "UNKNOWN ERROR";
+        return "METADATA_ERROR_UNKNOWN";
     }
 }
 
@@ -998,6 +998,6 @@ const char * MediaContentErrorCheck (int ret)
         return "MEDIA_CONTENT_ERROR_UNSUPPORTED_CONTENT: Unsupported Content";
 
     default:
-        return "UNKNOWN ERROR";
+        return "MEDIA_ERROR_UNKNOWN";
     }
 }

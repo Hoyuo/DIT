@@ -1,7 +1,7 @@
 /*! @file	Sensor.h
  *  @brief	Sensor API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Sensor의 다양한 센서의 addCallback / detachCallback / On / Off / isSupported / getValue API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see	[Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_SENSOR_H
@@ -18,6 +18,24 @@
 extern "C" {
 #endif
 
+/*! @fn         const char * SensorErrorCheck (int errCode)
+ *  @brief      Device Status API에서 발생하는 Error Code들을 확인 해준다.
+ *  @param[in]  errCode 확인 하고자 하는 Error Code
+ *  @param[out] null
+ *  @retval     SENSOR_ERROR_NONE                   : Successful
+ *  @retval     SENSOR_ERROR_IO_ERROR               : I/O error
+ *  @retval     SENSOR_ERROR_INVALID_PARAMETER      : Invalid parameter
+ *  @retval     SENSOR_ERROR_NOT_SUPPORTED          : Unsupported sensor in the current device
+ *  @retval     SENSOR_ERROR_PERMISSION_DENIED      : Permission denied
+ *  @retval     SENSOR_ERROR_OUT_OF_MEMORY          : Out of memory
+ *  @retval     SENSOR_ERROR_NOT_NEED_CALIBRATION   : Sensor doesn't need calibration
+ *  @retval     SENSOR_ERROR_OPERATION_FAILED       : Operation failed
+ *  @retval     SENSOR_ERROR_UNKNOWN                : Unknown error occurred
+ *  @note       Sensor API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.    
+ *              9가지의 Error Code들을 확인 가능 하다.
+ *  @see        [Tizen Native API Document - Sensor Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html#ga1e7aa4addd02f92677c9e7f916c2fb7b)
+ */
 const char * SensorErrorCheck (int errorCode);
 
 typedef void (* sensor_callback) (sensor_h sensor, sensor_event_s * event, void * user_data);
@@ -113,8 +131,9 @@ typedef struct _Humidity_data
  *  @brief	Accelerometer 모듈에 대한 구조체이다. Accelerometer 모듈은 Accelerometer Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Accelerometer 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewAccelerometer() 함수를 사용해야 하며 사용이 끝났을 때 DestroyAccelerometer() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.accelerometer" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.accelerometer
  */
 typedef struct _Accelerometer * Accelerometer;
 
@@ -158,7 +177,9 @@ typedef struct _AccelerometerExtend
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
+ *  @warning    사용이 끝났을 때 DestroyAccelerometer() 함수를 꼭 사용해야 한다.
  */
 Accelerometer NewAccelerometer (void);
 
@@ -170,20 +191,23 @@ Accelerometer NewAccelerometer (void);
  *  @note 		생성한 Accelerometer 객체를 소멸 시킨다. \n
  *  			Accelerometer 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewAccelerometer
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 void DestroyAccelerometer (Accelerometer this_gen);
 
-/*!	@fn			void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Accelerometer에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Accelerometer 객체
  *  @param[in] 	sensorCallback 등록할 callback 함수
  *  @param[in] 	timeinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Accelerometer에 callback 함수를 등록한다. \n
- *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
+ *  			@a interval 의 단위는 @c milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewAccelerometer \n
  *  			DestroyAccelerometer \n
  *  			detachAccelerometerCallback \n
@@ -191,15 +215,18 @@ void DestroyAccelerometer (Accelerometer this_gen);
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 bool addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachAccelerometerCallback (Accelerometer this_gen)
+/*!	@fn			bool detachAccelerometerCallback (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Accelerometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Accelerometer에서 callback 함수를 삭제한다. \n
  *  @see 		NewAccelerometer \n
  *  			DestroyAccelerometer \n
@@ -208,15 +235,18 @@ bool addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 bool detachAccelerometerCallback (Accelerometer this_gen);
 
-/*!	@fn			void AccelerometerOn (Accelerometer this_gen)
+/*!	@fn			bool AccelerometerOn (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Accelerometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Accelerometer를 활성화 시킨다.
  *  @see 		NewAccelerometer \n
  *  			DestroyAccelerometer \n
@@ -225,15 +255,18 @@ bool detachAccelerometerCallback (Accelerometer this_gen);
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 bool AccelerometerOn (Accelerometer this_gen);
 
-/*!	@fn			void AccelerometerOff (Accelerometer this_gen)
+/*!	@fn			bool AccelerometerOff (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Accelerometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Accelerometer를 비활성화 시킨다.
  *  @see 		NewAccelerometer \n
  *  			DestroyAccelerometer \n
@@ -242,7 +275,8 @@ bool AccelerometerOn (Accelerometer this_gen);
  *  			AccelerometerOn \n
  *  			isAccelerometerSupported \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 bool AccelerometerOff (Accelerometer this_gen);
 
@@ -250,7 +284,9 @@ bool AccelerometerOff (Accelerometer this_gen);
  *  @brief 		Accelerometer의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Accelerometer 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Accelerometer의 사용 가능 여부를 판단한다.
  *  @see 		NewAccelerometer \n
  *  			DestroyAccelerometer \n
@@ -259,7 +295,8 @@ bool AccelerometerOff (Accelerometer this_gen);
  *  			AccelerometerOn \n
  *  			AccelerometerOff \n
  *  			getAccelerometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 bool isAccelerometerSupported (Accelerometer this_gen);
 
@@ -276,7 +313,8 @@ bool isAccelerometerSupported (Accelerometer this_gen);
  *  			AccelerometerOn \n
  *  			AccelerometerOff \n
  *  			isAccelerometerSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer
  */
 Accelerometer_data getAccelerometerValue (Accelerometer this_gen);
 /* Accelerometer */
@@ -287,8 +325,9 @@ Accelerometer_data getAccelerometerValue (Accelerometer this_gen);
  *  @brief	Gravity 모듈에 대한 구조체이다. Gravity 모듈은 Gravity Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Gravity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGravity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGravity() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.gravity" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.gravity
 */
 typedef struct _Gravity * Gravity;
 
@@ -333,7 +372,9 @@ typedef struct _GravityExtend
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
+ *  @warning    사용이 끝났을 때 DestroyGravity() 함수를 꼭 사용해야 한다.
  */
 Gravity NewGravity (void);
 
@@ -345,18 +386,21 @@ Gravity NewGravity (void);
  *  @note 		생성한 Gravity 객체를 소멸 시킨다. \n
  *  			Gravity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGravity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 void DestroyGravity (Gravity this_gen);
 
-/*!	@fn			void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Gravity에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Gravity 객체
  *  @param[in] 	sensorCallback 등록할 callback 함수
  *  @param[in] 	timeinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gravity에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewGravity \n
@@ -366,15 +410,18 @@ void DestroyGravity (Gravity this_gen);
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachGravityCallback (Gravity this_gen)
+/*!	@fn			bool detachGravityCallback (Gravity this_gen)
  *  @brief 		생성한 Gravity에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Gravity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gravity에서 callback 함수를 삭제한다. \n
  *  @see 		NewGravity \n
  *  			DestroyGravity \n
@@ -383,15 +430,18 @@ bool addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int t
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool detachGravityCallback (Gravity this_gen);
 
-/*!	@fn			void GravityOn (Gravity this_gen)
+/*!	@fn			bool GravityOn (Gravity this_gen)
  *  @brief 		생성한 Gravity를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Gravity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gravity를 활성화 시킨다.
  *  @see 		NewGravity \n
  *  			DestroyGravity \n
@@ -400,15 +450,18 @@ bool detachGravityCallback (Gravity this_gen);
  *  			GravityOff \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool GravityOn (Gravity this_gen);
 
-/*!	@fn			void GravityOff (Gravity this_gen)
+/*!	@fn			bool GravityOff (Gravity this_gen)
  *  @brief 		생성한 Gravity를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Gravity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gravity를 비활성화 시킨다.
  *  @see 		NewGravity \n
  *  			DestroyGravity \n
@@ -417,7 +470,8 @@ bool GravityOn (Gravity this_gen);
  *  			GravityOn \n
  *  			isGravitySupported \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool GravityOff (Gravity this_gen);
 
@@ -425,7 +479,9 @@ bool GravityOff (Gravity this_gen);
  *  @brief 		Gravity의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Gravity 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.\
  *  @note 		Gravity의 사용 가능 여부를 판단한다.
  *  @see 		NewGravity \n
  *  			DestroyGravity \n
@@ -434,7 +490,8 @@ bool GravityOff (Gravity this_gen);
  *  			GravityOn \n
  *  			GravityOff \n
  *  			getGravityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool isGravitySupported (Gravity this_gen);
 
@@ -451,7 +508,8 @@ bool isGravitySupported (Gravity this_gen);
  *  			GravityOn \n
  *  			GravityOff \n
  *  			isGravitySupported
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 Gravity_data getGravityValue (Gravity this_gen);
 /* Gravity */
@@ -462,8 +520,9 @@ Gravity_data getGravityValue (Gravity this_gen);
  *  @brief	LinearAccelation 모듈에 대한 구조체이다. LinearAccelation 모듈은 LinearAccelation Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	LinearAccelation 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewLinearAccelation() 함수를 사용해야 하며 사용이 끝났을 때 DestroyLinearAccelation() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.linear_acceleration" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.linear_acceleration
  */
 typedef struct _LinearAccelation * LinearAccelation;
 
@@ -508,7 +567,9 @@ typedef struct _LinearAccelationExtend
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
+ *  @warning    사용이 끝났을 때 DestroyLinearAccelation() 함수를 꼭 사용해야 한다.
  */
 LinearAccelation NewLinearAccelation (void);
 
@@ -520,18 +581,21 @@ LinearAccelation NewLinearAccelation (void);
  *  @note 		생성한 LinearAccelation 객체를 소멸 시킨다. \n
  *  			LinearAccelation 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewLinearAccelation
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 void DestroyLinearAccelation (LinearAccelation this_gen);
 
-/*!	@fn			void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeenterval, void * data)
+/*!	@fn			bool addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeenterval, void * data)
  *  @brief 		생성한 LinearAccelation에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 LinearAccelation 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	timeinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 LinearAccelation에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewLinearAccelation \n
@@ -541,15 +605,18 @@ void DestroyLinearAccelation (LinearAccelation this_gen);
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 bool addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachLinearAccelationCallback (LinearAccelation this_gen)
+/*!	@fn			bool detachLinearAccelationCallback (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 LinearAccelation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 LinearAccelation에서 callback 함수를 삭제한다. \n
  *  @see 		NewLinearAccelation \n
  *  			DestroyLinearAccelation \n
@@ -558,15 +625,18 @@ bool addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sen
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 bool detachLinearAccelationCallback (LinearAccelation this_gen);
 
-/*!	@fn			void LinearAccelationOn (LinearAccelation this_gen)
+/*!	@fn			bool LinearAccelationOn (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 LinearAccelation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 LinearAccelation를 활성화 시킨다.
  *  @see 		NewLinearAccelation \n
  *  			DestroyLinearAccelation \n
@@ -575,15 +645,18 @@ bool detachLinearAccelationCallback (LinearAccelation this_gen);
  *  			LinearAccelationOff \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 bool LinearAccelationOn (LinearAccelation this_gen);
 
-/*!	@fn			void LinearAccelationOff (LinearAccelation this_gen)
+/*!	@fn			bool LinearAccelationOff (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 LinearAccelation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 LinearAccelation를 비활성화 시킨다.
  *  @see 		NewLinearAccelation \n
  *  			DestroyLinearAccelation \n
@@ -592,7 +665,8 @@ bool LinearAccelationOn (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			isLinearAccelationSupported \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 bool LinearAccelationOff (LinearAccelation this_gen);
 
@@ -600,7 +674,9 @@ bool LinearAccelationOff (LinearAccelation this_gen);
  *  @brief 		LinearAccelation의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 LinearAccelation 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		LinearAccelation의 사용 가능 여부를 판단한다.
  *  @see 		NewLinearAccelation \n
  *  			DestroyLinearAccelation \n
@@ -609,7 +685,8 @@ bool LinearAccelationOff (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			LinearAccelationOff \n
  *  			getLinearAccelationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 bool isLinearAccelationSupported (LinearAccelation this_gen);
 
@@ -626,7 +703,8 @@ bool isLinearAccelationSupported (LinearAccelation this_gen);
  *  			LinearAccelationOn \n
  *  			LinearAccelationOff \n
  *  			isAccelerometerSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration
  */
 LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen);
 /* LinearAccelation */
@@ -637,8 +715,9 @@ LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen);
  *  @brief	Magnetometer 모듈에 대한 구조체이다. Magnetometer 모듈은 Magnetometer Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Magnetometer 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewMagnetometer() 함수를 사용해야 하며 사용이 끝났을 때 DestroyMagnetometer() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.magnetometer" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.magnetometer
  */
 typedef struct _Magnetometer * Magnetometer;
 
@@ -683,7 +762,9 @@ typedef struct _MagnetometerExtend
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
+ *  @warning    사용이 끝났을 때 DestroyMagnetometer() 함수를 꼭 사용해야 한다.
  */
 Magnetometer NewMagnetometer (void);
 
@@ -695,18 +776,21 @@ Magnetometer NewMagnetometer (void);
  *  @note 		생성한 Magnetometer 객체를 소멸 시킨다. \n
  *  			Magnetometer 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewMagnetometer
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 void DestroyMagnetometer (Magnetometer this_gen);
 
-/*!	@fn			void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeenterval, void * data)
+/*!	@fn			bool addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeenterval, void * data)
  *  @brief 		생성한 Magnetometer에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Magnetometer 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	timeinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Magnetometer에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewMagnetometer \n
@@ -716,15 +800,18 @@ void DestroyMagnetometer (Magnetometer this_gen);
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachMagnetometerCallback (Magnetometer this_gen)
+/*!	@fn			bool detachMagnetometerCallback (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Magnetometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Magnetometer에서 callback 함수를 삭제한다. \n
  *  @see 		NewMagnetometer \n
  *  			DestroyMagnetometer \n
@@ -733,15 +820,18 @@ bool addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallb
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool detachMagnetometerCallback (Magnetometer this_gen);
 
-/*!	@fn			void MagnetometerOn (Magnetometer this_gen)
+/*!	@fn			bool MagnetometerOn (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Magnetometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Magnetometer를 활성화 시킨다.
  *  @see 		NewMagnetometer \n
  *  			DestroyMagnetometer \n
@@ -750,15 +840,18 @@ bool detachMagnetometerCallback (Magnetometer this_gen);
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool MagnetometerOn (Magnetometer this_gen);
 
-/*!	@fn			void MagnetometerOff (Magnetometer this_gen)
+/*!	@fn			bool MagnetometerOff (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Magnetometer 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Magnetometer를 비활성화 시킨다.
  *  @see 		NewMagnetometer \n
  *  			DestroyMagnetometer \n
@@ -767,7 +860,8 @@ bool MagnetometerOn (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			isMagnetometerSupported \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool MagnetometerOff (Magnetometer this_gen);
 
@@ -775,7 +869,9 @@ bool MagnetometerOff (Magnetometer this_gen);
  *  @brief 		Magnetometer의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Magnetometer 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Magnetometer의 사용 가능 여부를 판단한다.
  *  @see 		NewMagnetometer \n
  *  			DestroyMagnetometer \n
@@ -784,7 +880,8 @@ bool MagnetometerOff (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			MagnetometerOff \n
  *  			getMagnetometerValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool isMagnetometerSupported (Magnetometer this_gen);
 
@@ -801,7 +898,8 @@ bool isMagnetometerSupported (Magnetometer this_gen);
  *  			MagnetometerOn \n
  *  			MagnetometerOff \n
  *  			isMagnetometerSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 Magnetometer_data getMagnetometerValue (Magnetometer this_gen);
 /* Magnetometer */
@@ -812,8 +910,9 @@ Magnetometer_data getMagnetometerValue (Magnetometer this_gen);
  *  @brief	RotationVector 모듈에 대한 구조체이다. RotationVector 모듈은 RotationVector Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	RotationVector 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewRotationVector() 함수를 사용해야 하며 사용이 끝났을 때 DestroyRotationVector() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.rotation_vector" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.rotation_vector
  */
 typedef struct _RotationVector * RotationVector;
 
@@ -858,7 +957,9 @@ typedef struct _RotationVectorExtend
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
+ *  @warning    사용이 끝났을 때 DestroyRotationVector() 함수를 꼭 사용해야 한다.
  */
 RotationVector NewRotationVector (void);
 
@@ -870,18 +971,21 @@ RotationVector NewRotationVector (void);
  *  @note 		생성한 RotationVector 객체를 소멸 시킨다. \n
  *  			RotationVector 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewRotationVector
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 void DestroyRotationVector (RotationVector this_gen);
 
-/*!	@fn			void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 RotationVector에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 RotationVector 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	timeinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 RotationVector에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewRotationVector \n
@@ -891,15 +995,18 @@ void DestroyRotationVector (RotationVector this_gen);
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 bool addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachRotationVectorCallback (RotationVector this_gen)
+/*!	@fn			bool detachRotationVectorCallback (RotationVector this_gen)
  *  @brief 		생성한 RotationVector에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 RotationVector 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 RotationVector에서 callback 함수를 삭제한다. \n
  *  @see 		NewRotationVector \n
  *  			DestroyRotationVector \n
@@ -908,15 +1015,18 @@ bool addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorC
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 bool detachRotationVectorCallback (RotationVector this_gen);
 
-/*!	@fn			void RotationVectorOn (RotationVector this_gen)
+/*!	@fn			bool RotationVectorOn (RotationVector this_gen)
  *  @brief 		생성한 RotationVector를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 RotationVector 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 RotationVector를 활성화 시킨다.
  *  @see 		NewRotationVector \n
  *  			DestroyRotationVector \n
@@ -925,11 +1035,12 @@ bool detachRotationVectorCallback (RotationVector this_gen);
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 bool RotationVectorOn (RotationVector this_gen);
 
-/*!	@fn			void RotationVectorOff (RotationVector this_gen)
+/*!	@fn			bool RotationVectorOff (RotationVector this_gen)
  *  @brief 		생성한 RotationVector를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 RotationVector 객체
  *  @param[out] null
@@ -942,7 +1053,8 @@ bool RotationVectorOn (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			isRotationVectorSupported \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 bool RotationVectorOff (RotationVector this_gen);
 
@@ -950,7 +1062,9 @@ bool RotationVectorOff (RotationVector this_gen);
  *  @brief 		RotationVector의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 RotationVector 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		RotationVector의 사용 가능 여부를 판단한다.
  *  @see 		NewRotationVector \n
  *  			DestroyRotationVector \n
@@ -959,7 +1073,8 @@ bool RotationVectorOff (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			RotationVectorOff \n
  *  			getRotationVectorValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 bool isRotationVectorSupported (RotationVector this_gen);
 
@@ -976,7 +1091,8 @@ bool isRotationVectorSupported (RotationVector this_gen);
  *  			RotationVectorOn \n
  *  			RotationVectorOff \n
  *  			isRotationVectorSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.rotation_vector
  */
 RotationVector_data getRotationVectorValue (RotationVector this_gen);
 /* RotationVector */
@@ -987,8 +1103,10 @@ RotationVector_data getRotationVectorValue (RotationVector this_gen);
  *  @brief	Orientation 모듈에 대한 구조체이다. Orientation 모듈은 Orientation Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Orientation 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewOrientation() 함수를 사용해야 하며 사용이 끝났을 때 DestroyOrientation() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.accelerometer" 와 "http://tizen.org/feature/sensor.magnetometer" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.accelerometer \n
+ *          * http://tizen.org/feature/sensor.magnetometer
  */
 typedef struct _Orientation * Orientation;
 
@@ -1033,8 +1151,10 @@ typedef struct _OrientationExtend
  *  			OrientationOff \n
  *  			isOrientationSupported \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *				* http://tizen.org/feature/sensor.magnetometer
+ *  @warning    사용이 끝났을 때 DestroyOrientation() 함수를 꼭 사용해야 한다.
  */
 Orientation NewOrientation (void);
 
@@ -1046,19 +1166,22 @@ Orientation NewOrientation (void);
  *  @note 		생성한 Orientation 객체를 소멸 시킨다. \n
  *  			Orientation 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewOrientation
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 void DestroyOrientation (Orientation this_gen);
 
-/*!	@fn			void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Orientation에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Orientation 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Orientation에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewOrientation \n
@@ -1068,16 +1191,19 @@ void DestroyOrientation (Orientation this_gen);
  *  			OrientationOff \n
  *  			isOrientationSupported \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachOrientationCallback (Orientation this_gen)
+/*!	@fn			bool detachOrientationCallback (Orientation this_gen)
  *  @brief 		생성한 Orientation에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Orientation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Orientation에서 callback 함수를 삭제한다. \n
  *  @see 		NewOrientation \n
  *  			DestroyOrientation \n
@@ -1086,16 +1212,19 @@ bool addOrientationCallback (Orientation this_gen, sensor_callback sensorCallbac
  *  			OrientationOff \n
  *  			isOrientationSupported \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool detachOrientationCallback (Orientation this_gen);
 
-/*!	@fn			void OrientationOn (Orientation this_gen)
+/*!	@fn			bool OrientationOn (Orientation this_gen)
  *  @brief 		생성한 Orientation를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Orientation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Orientation를 활성화 시킨다.
  *  @see 		NewOrientation \n
  *  			DestroyOrientation \n
@@ -1104,16 +1233,19 @@ bool detachOrientationCallback (Orientation this_gen);
  *  			OrientationOff \n
  *  			isOrientationSupported \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool OrientationOn (Orientation this_gen);
 
-/*!	@fn			void OrientationOff (Orientation this_gen)
+/*!	@fn			bool OrientationOff (Orientation this_gen)
  *  @brief 		생성한 Orientation를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Orientation 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Orientation를 비활성화 시킨다.
  *  @see 		NewOrientation \n
  *  			DestroyOrientation \n
@@ -1122,8 +1254,9 @@ bool OrientationOn (Orientation this_gen);
  *  			OrientationOn \n
  *  			isOrientationSupported \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool OrientationOff (Orientation this_gen);
 
@@ -1131,7 +1264,9 @@ bool OrientationOff (Orientation this_gen);
  *  @brief 		Orientation의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Orientation 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Orientation의 사용 가능 여부를 판단한다.
  *  @see 		NewOrientation \n
  *  			DestroyOrientation \n
@@ -1140,8 +1275,9 @@ bool OrientationOff (Orientation this_gen);
  *  			OrientationOn \n
  *  			OrientationOff \n
  *  			getOrientationValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 bool isOrientationSupported (Orientation this_gen);
 
@@ -1158,8 +1294,9 @@ bool isOrientationSupported (Orientation this_gen);
  *  			OrientationOn \n
  *  			OrientationOff \n
  *  			isOrientationSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.magnetometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.magnetometer
  */
 Orientation_data getOrientationValue (Orientation this_gen);
 /* Orientation */
@@ -1170,8 +1307,9 @@ Orientation_data getOrientationValue (Orientation this_gen);
  *  @brief	Gyroscope 모듈에 대한 구조체이다. Gyroscope 모듈은 Gyroscope Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Gyroscope 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGyroscope() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGyroscope() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.gyroscope" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.gyroscope
  */
 typedef struct _Gyroscope * Gyroscope;
 
@@ -1216,7 +1354,9 @@ typedef struct _GyroscopeExtend
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope \n
+ *  @pre     	@b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
+ *  @warning    사용이 끝났을 때 DestroyGyroscope() 함수를 꼭 사용해야 한다.
  */
 Gyroscope NewGyroscope (void);
 
@@ -1228,18 +1368,21 @@ Gyroscope NewGyroscope (void);
  *  @note 		생성한 Gyroscope 객체를 소멸 시킨다. \n
  *  			Gyroscope 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGyroscope
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 void DestroyGyroscope (Gyroscope this_gen);
 
-/*!	@fn			void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Gyroscope에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Gyroscope 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gyroscope에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewGyroscope \n
@@ -1249,15 +1392,18 @@ void DestroyGyroscope (Gyroscope this_gen);
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 bool addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachGyroscopeCallback (Gyroscope this_gen)
+/*!	@fn			bool detachGyroscopeCallback (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Gyroscope 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gyroscope에서 callback 함수를 삭제한다. \n
  *  @see 		NewGyroscope \n
  *  			DestroyGyroscope \n
@@ -1266,15 +1412,18 @@ bool addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, i
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 bool detachGyroscopeCallback (Gyroscope this_gen);
 
-/*!	@fn			void GyroscopeOn (Gyroscope this_gen)
+/*!	@fn			bool GyroscopeOn (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Gyroscope 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gyroscope를 활성화 시킨다.
  *  @see 		NewGyroscope \n
  *  			DestroyGyroscope \n
@@ -1283,15 +1432,18 @@ bool detachGyroscopeCallback (Gyroscope this_gen);
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 bool GyroscopeOn (Gyroscope this_gen);
 
-/*!	@fn			void GyroscopeOff (Gyroscope this_gen)
+/*!	@fn			bool GyroscopeOff (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Gyroscope 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Gyroscope를 비활성화 시킨다.
  *  @see 		NewGyroscope \n
  *  			DestroyGyroscope \n
@@ -1300,7 +1452,8 @@ bool GyroscopeOn (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			isGyroscopeSupported \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 bool GyroscopeOff (Gyroscope this_gen);
 
@@ -1308,7 +1461,9 @@ bool GyroscopeOff (Gyroscope this_gen);
  *  @brief 		Gyroscope의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Gyroscope 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Gyroscope의 사용 가능 여부를 판단한다.
  *  @see 		NewGyroscope \n
  *  			DestroyGyroscope \n
@@ -1317,7 +1472,8 @@ bool GyroscopeOff (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			GyroscopeOff \n
  *  			getGyroscopeValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 bool isGyroscopeSupported (Gyroscope this_gen);
 
@@ -1334,7 +1490,8 @@ bool isGyroscopeSupported (Gyroscope this_gen);
  *  			GyroscopeOn \n
  *  			GyroscopeOff \n
  *  			isGyroscopeSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
+ *  @pre        @b feature \n
+ *              http://tizen.org/feature/sensor.gyroscope
  */
 Gyroscope_data getGyroscopeValue (Gyroscope this_gen);
 /* Gyroscope */
@@ -1345,8 +1502,9 @@ Gyroscope_data getGyroscopeValue (Gyroscope this_gen);
  *  @brief	Light 모듈에 대한 구조체이다. Light 모듈은 Photometer Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Light 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewLight() 함수를 사용해야 하며 사용이 끝났을 때 DestroyLight() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.photometer" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.photometer
  */
 typedef struct _Light * Light;
 
@@ -1391,7 +1549,9 @@ typedef struct _LightExtend
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
+ *  @warning    사용이 끝났을 때 DestroyLight() 함수를 꼭 사용해야 한다.
  */
 Light NewLight (void);
 
@@ -1403,18 +1563,21 @@ Light NewLight (void);
  *  @note 		생성한 Light 객체를 소멸 시킨다. \n
  *  			Light 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewLight
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 void DestroyLight (Light this_gen);
 
-/*!	@fn			void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Light에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Light 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Light에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewLight \n
@@ -1424,15 +1587,18 @@ void DestroyLight (Light this_gen);
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 bool addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachLightCallback (Light this_gen)
+/*!	@fn			bool detachLightCallback (Light this_gen)
  *  @brief 		생성한 Light에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Light 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Light에서 callback 함수를 삭제한다. \n
  *  @see 		NewLight \n
  *  			DestroyLight \n
@@ -1441,15 +1607,18 @@ bool addLightCallback (Light this_gen, sensor_callback sensorCallback, int timei
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 bool detachLightCallback (Light this_gen);
 
-/*!	@fn			void LightOn (Light this_gen)
+/*!	@fn			bool LightOn (Light this_gen)
  *  @brief 		생성한 Light를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Light 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Light를 활성화 시킨다.
  *  @see 		NewLight \n
  *  			DestroyLight \n
@@ -1458,15 +1627,18 @@ bool detachLightCallback (Light this_gen);
  *  			LightOff \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 bool LightOn (Light this_gen);
 
-/*!	@fn			void LightOff (Light this_gen)
+/*!	@fn			bool LightOff (Light this_gen)
  *  @brief 		생성한 Light를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Light 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Light를 비활성화 시킨다.
  *  @see 		NewLight \n
  *  			DestroyLight \n
@@ -1475,7 +1647,8 @@ bool LightOn (Light this_gen);
  *  			LightOn \n
  *  			isLightSupported \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 bool LightOff (Light this_gen);
 
@@ -1483,7 +1656,9 @@ bool LightOff (Light this_gen);
  *  @brief 		Light의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Light 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Light의 사용 가능 여부를 판단한다.
  *  @see 		NewLight \n
  *  			DestroyLight \n
@@ -1492,7 +1667,8 @@ bool LightOff (Light this_gen);
  *  			LightOn \n
  *  			LightOff \n
  *  			getLightValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 bool isLightSupported (Light this_gen);
 
@@ -1509,7 +1685,8 @@ bool isLightSupported (Light this_gen);
  *  			LightOn \n
  *  			LightOff \n
  *  			isLightSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.photometer
  */
 Light_data getLightValue (Light this_gen);
 
@@ -1521,8 +1698,9 @@ Light_data getLightValue (Light this_gen);
  *  @brief	Proximity 모듈에 대한 구조체이다. Proximity 모듈은 Proximity Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Proximity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewProximity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyProximity() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.proximity" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.proximity
  */
 typedef struct _Proximity * Proximity;
 
@@ -1567,7 +1745,9 @@ typedef struct _ProximityExtend
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
+ *  @warning    사용이 끝났을 때 DestroyProximity() 함수를 꼭 사용해야 한다.
  */
 Proximity NewProximity (void);
 
@@ -1579,18 +1759,21 @@ Proximity NewProximity (void);
  *  @note 		생성한 Proximity 객체를 소멸 시킨다. \n
  *  			Proximity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewProximity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 void DestroyProximity (Proximity this_gen);
 
-/*!	@fn			void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Proximity에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Proximity 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Proximity에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewProximity \n
@@ -1600,15 +1783,18 @@ void DestroyProximity (Proximity this_gen);
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 bool addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachProximityCallback (Proximity this_gen)
+/*!	@fn			bool detachProximityCallback (Proximity this_gen)
  *  @brief 		생성한 Proximity에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Proximity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Proximity에서 callback 함수를 삭제한다. \n
  *  @see 		NewProximity \n
  *  			DestroyProximity \n
@@ -1617,15 +1803,18 @@ bool addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, i
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 bool detachProximityCallback (Proximity this_gen);
 
-/*!	@fn			void ProximityOn (Proximity this_gen)
+/*!	@fn			bool ProximityOn (Proximity this_gen)
  *  @brief 		생성한 Proximity를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Proximity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Proximity를 활성화 시킨다.
  *  @see 		NewProximity \n
  *  			DestroyProximity \n
@@ -1634,15 +1823,18 @@ bool detachProximityCallback (Proximity this_gen);
  *  			ProximityOff \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 bool ProximityOn (Proximity this_gen);
 
-/*!	@fn			void ProximityOff (Proximity this_gen)
+/*!	@fn			bool ProximityOff (Proximity this_gen)
  *  @brief 		생성한 Proximity를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Proximity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Proximity를 비활성화 시킨다.
  *  @see 		NewProximity \n
  *  			DestroyProximity \n
@@ -1651,7 +1843,8 @@ bool ProximityOn (Proximity this_gen);
  *  			ProximityOn \n
  *  			isProximitySupported \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 bool ProximityOff (Proximity this_gen);
 
@@ -1659,7 +1852,9 @@ bool ProximityOff (Proximity this_gen);
  *  @brief 		Proximity의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Proximity 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Proximity의 사용 가능 여부를 판단한다.
  *  @see 		NewProximity \n
  *  			DestroyProximity \n
@@ -1668,7 +1863,8 @@ bool ProximityOff (Proximity this_gen);
  *  			ProximityOn \n
  *  			ProximityOff \n
  *  			getProximityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 bool isProximitySupported (Proximity this_gen);
 
@@ -1685,7 +1881,8 @@ bool isProximitySupported (Proximity this_gen);
  *  			ProximityOn \n
  *  			ProximityOff \n
  *  			isProximitySupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.proximity
  */
 Proximity_data getProximityValue (Proximity this_gen);
 /* Proximity */
@@ -1696,8 +1893,22 @@ Proximity_data getProximityValue (Proximity this_gen);
  *  @brief	Pressure 모듈에 대한 구조체이다. Pressure 모듈은 Pressure Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Pressure 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewPressure() 함수를 사용해야 하며 사용이 끝났을 때 DestroyPressure() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.*" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.accelerometer \n
+ *          * http://tizen.org/feature/sensor.barometer \n
+ *          * http://tizen.org/feature/sensor.gyroscope \n
+ *          * http://tizen.org/feature/sensor.magnetometer \n
+ *          * http://tizen.org/feature/sensor.photometer \n
+ *          * http://tizen.org/feature/sensor.proximity \n
+ *          * http://tizen.org/feature/sensor.tiltmeter \n
+ *          * http://tizen.org/feature/sensor.ultraviolet \n
+ *          * http://tizen.org/feature/sensor.temperature \n
+ *          * http://tizen.org/feature/sensor.humidity \n
+ *          * http://tizen.org/feature/sensor.linear_acceleration \n
+ *          * http://tizen.org/feature/sensor.rotation_vector \n
+ *          * http://tizen.org/feature/sensor.gravity
+ *  @warning    Pressure Sensor의 경우 device에 있는 다양한 센서들을 조합해서 사용하므로 모든 Sensor를 추가해야 한다.
  */
 typedef struct _Pressure * Pressure;
 
@@ -1742,19 +1953,22 @@ typedef struct _PressureExtend
  *  			PressureOff \n
  *  			isPressureSupported \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
+ *  @warning    사용이 끝났을 때 DestroyPressure() 함수를 꼭 사용해야 한다. \n
+ *              Pressure Sensor의 경우 device에 있는 다양한 센서들을 조합해서 사용하므로 모든 Sensor를 추가해야 한다.              
  */
 Pressure NewPressure (void);
 
@@ -1766,30 +1980,33 @@ Pressure NewPressure (void);
  *  @note 		생성한 Pressure 객체를 소멸 시킨다. \n
  *  			Pressure 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewPressure
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 void DestroyPressure (Pressure this_gen);
 
-/*!	@fn			void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Pressure에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Pressure 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Pressure에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewPressure \n
@@ -1799,27 +2016,30 @@ void DestroyPressure (Pressure this_gen);
  *  			PressureOff \n
  *  			isPressureSupported \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachPressureCallback (Pressure this_gen)
+/*!	@fn			bool detachPressureCallback (Pressure this_gen)
  *  @brief 		생성한 Pressure에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Pressure 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Pressure에서 callback 함수를 삭제한다. \n
  *  @see 		NewPressure \n
  *  			DestroyPressure \n
@@ -1828,27 +2048,30 @@ bool addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int
  *  			PressureOff \n
  *  			isPressureSupported \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool detachPressureCallback (Pressure this_gen);
 
-/*!	@fn			void PressureOn (Pressure this_gen)
+/*!	@fn			bool PressureOn (Pressure this_gen)
  *  @brief 		생성한 Pressure를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Pressure 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Pressure를 활성화 시킨다.
  *  @see 		NewPressure \n
  *  			DestroyPressure \n
@@ -1857,27 +2080,30 @@ bool detachPressureCallback (Pressure this_gen);
  *  			PressureOff \n
  *  			isPressureSupported \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool PressureOn (Pressure this_gen);
 
-/*!	@fn			void PressureOff (Pressure this_gen)
+/*!	@fn			bool PressureOff (Pressure this_gen)
  *  @brief 		생성한 Pressure를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Pressure 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Pressure를 비활성화 시킨다.
  *  @see 		NewPressure \n
  *  			DestroyPressure \n
@@ -1886,19 +2112,20 @@ bool PressureOn (Pressure this_gen);
  *  			PressureOn \n
  *  			isPressureSupported \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool PressureOff (Pressure this_gen);
 
@@ -1906,7 +2133,9 @@ bool PressureOff (Pressure this_gen);
  *  @brief 		Pressure의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Pressure 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Pressure의 사용 가능 여부를 판단한다.
  *  @see 		NewPressure \n
  *  			DestroyPressure \n
@@ -1915,19 +2144,20 @@ bool PressureOff (Pressure this_gen);
  *  			PressureOn \n
  *  			PressureOff \n
  *  			getPressureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 bool isPressureSupported (Pressure this_gen);
 
@@ -1944,19 +2174,20 @@ bool isPressureSupported (Pressure this_gen);
  *  			PressureOn \n
  *  			PressureOff \n
  *  			isPressureSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
- *							http://tizen.org/feature/sensor.barometer \n
- *							http://tizen.org/feature/sensor.gyroscope \n
- *							http://tizen.org/feature/sensor.magnetometer \n
- *							http://tizen.org/feature/sensor.photometer \n
- *							http://tizen.org/feature/sensor.proximity \n
- *							http://tizen.org/feature/sensor.tiltmeter \n
- *							http://tizen.org/feature/sensor.ultraviolet \n
- *							http://tizen.org/feature/sensor.temperature \n
- *							http://tizen.org/feature/sensor.humidity \n
- *							http://tizen.org/feature/sensor.linear_acceleration \n
- *							http://tizen.org/feature/sensor.rotation_vector \n
- *							http://tizen.org/feature/sensor.gravity
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.accelerometer \n
+ *              * http://tizen.org/feature/sensor.barometer \n
+ *              * http://tizen.org/feature/sensor.gyroscope \n
+ *              * http://tizen.org/feature/sensor.magnetometer \n
+ *              * http://tizen.org/feature/sensor.photometer \n
+ *              * http://tizen.org/feature/sensor.proximity \n
+ *              * http://tizen.org/feature/sensor.tiltmeter \n
+ *              * http://tizen.org/feature/sensor.ultraviolet \n
+ *              * http://tizen.org/feature/sensor.temperature \n
+ *              * http://tizen.org/feature/sensor.humidity \n
+ *              * http://tizen.org/feature/sensor.linear_acceleration \n
+ *              * http://tizen.org/feature/sensor.rotation_vector \n
+ *              * http://tizen.org/feature/sensor.gravity
  */
 Pressure_data getPressureValue (Pressure this_gen);
 /* Pressure */
@@ -1967,8 +2198,9 @@ Pressure_data getPressureValue (Pressure this_gen);
  *  @brief	UltraViolet 모듈에 대한 구조체이다. UltraViolet 모듈은 UltraViolet Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	UltraViolet 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewUltraViolet() 함수를 사용해야 하며 사용이 끝났을 때 DestroyUltraViolet() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.ultraviolet" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.ultraviolet
  */
 typedef struct _UltraViolet * UltraViolet;
 
@@ -2013,7 +2245,9 @@ typedef struct _UltraVioletExtend
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
+ *  @warning    사용이 끝났을 때 DestroyUltraViolet() 함수를 꼭 사용해야 한다.
  */
 UltraViolet NewUltraViolet (void);
 
@@ -2025,18 +2259,21 @@ UltraViolet NewUltraViolet (void);
  *  @note 		생성한 UltraViolet 객체를 소멸 시킨다. \n
  *  			UltraViolet 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewUltraViolet
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 void DestroyUltraViolet (UltraViolet this_gen);
 
-/*!	@fn			void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 UltraViolet에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 UltraViolet 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 UltraViolet에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewUltraViolet \n
@@ -2046,15 +2283,18 @@ void DestroyUltraViolet (UltraViolet this_gen);
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 bool addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachUltraVioletCallback (UltraViolet this_gen)
+/*!	@fn			bool detachUltraVioletCallback (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 UltraViolet 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 UltraViolet에서 callback 함수를 삭제한다. \n
  *  @see 		NewUltraViolet \n
  *  			DestroyUltraViolet \n
@@ -2063,15 +2303,18 @@ bool addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallbac
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 bool detachUltraVioletCallback (UltraViolet this_gen);
 
-/*!	@fn			void UltraVioletOn (UltraViolet this_gen)
+/*!	@fn			bool UltraVioletOn (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 UltraViolet 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 UltraViolet를 활성화 시킨다.
  *  @see 		NewUltraViolet \n
  *  			DestroyUltraViolet \n
@@ -2080,15 +2323,18 @@ bool detachUltraVioletCallback (UltraViolet this_gen);
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 bool UltraVioletOn (UltraViolet this_gen);
 
-/*!	@fn			void UltraVioletOff (UltraViolet this_gen)
+/*!	@fn			bool UltraVioletOff (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 UltraViolet 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 UltraViolet를 비활성화 시킨다.
  *  @see 		NewUltraViolet \n
  *  			DestroyUltraViolet \n
@@ -2097,7 +2343,8 @@ bool UltraVioletOn (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			isUltraVioletSupported \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 bool UltraVioletOff (UltraViolet this_gen);
 
@@ -2105,7 +2352,9 @@ bool UltraVioletOff (UltraViolet this_gen);
  *  @brief 		UltraViolet의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 UltraViolet 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		UltraViolet의 사용 가능 여부를 판단한다.
  *  @see 		NewUltraViolet \n
  *  			DestroyUltraViolet \n
@@ -2114,7 +2363,8 @@ bool UltraVioletOff (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			UltraVioletOff \n
  *  			getUltraVioletValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 bool isUltraVioletSupported (UltraViolet this_gen);
 
@@ -2131,7 +2381,8 @@ bool isUltraVioletSupported (UltraViolet this_gen);
  *  			UltraVioletOn \n
  *  			UltraVioletOff \n
  *  			isUltraVioletSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.ultraviolet
  */
 UltraViolet_data getUltraVioletValue (UltraViolet this_gen);
 /* UltraViolet */
@@ -2142,8 +2393,9 @@ UltraViolet_data getUltraVioletValue (UltraViolet this_gen);
  *  @brief	Temperature 모듈에 대한 구조체이다. Temperature 모듈은 Temperature Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Temperature 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewTemperature() 함수를 사용해야 하며 사용이 끝났을 때 DestroyTemperature() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.temperature" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.temperature
  */
 typedef struct _Temperature * Temperature;
 
@@ -2188,7 +2440,9 @@ typedef struct _TemperatureExtend
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
+ *  @warning    사용이 끝났을 때 DestroyTemperature() 함수를 꼭 사용해야 한다.
  */
 Temperature NewTemperature (void);
 
@@ -2200,18 +2454,21 @@ Temperature NewTemperature (void);
  *  @note 		생성한 Temperature 객체를 소멸 시킨다. \n
  *  			Temperature 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewTemperature
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 void DestroyTemperature (Temperature this_gen);
 
-/*!	@fn			void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Temperature에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Temperature 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Temperature에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewTemperature \n
@@ -2221,15 +2478,18 @@ void DestroyTemperature (Temperature this_gen);
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 bool addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachTemperatureCallback (Temperature this_gen)
+/*!	@fn			bool detachTemperatureCallback (Temperature this_gen)
  *  @brief 		생성한 Temperature에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Temperature 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Temperature에서 callback 함수를 삭제한다. \n
  *  @see 		NewTemperature \n
  *  			DestroyTemperature \n
@@ -2238,15 +2498,18 @@ bool addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallbac
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 bool detachTemperatureCallback (Temperature this_gen);
 
-/*!	@fn			void TemperatureOn (Temperature this_gen)
+/*!	@fn			bool TemperatureOn (Temperature this_gen)
  *  @brief 		생성한 Temperature를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Temperature 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Temperature를 활성화 시킨다.
  *  @see 		NewTemperature \n
  *  			DestroyTemperature \n
@@ -2255,15 +2518,18 @@ bool detachTemperatureCallback (Temperature this_gen);
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 bool TemperatureOn (Temperature this_gen);
 
-/*!	@fn			void TemperatureOff (Temperature this_gen)
+/*!	@fn			bool TemperatureOff (Temperature this_gen)
  *  @brief 		생성한 Temperature를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Temperature 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Temperature를 비활성화 시킨다.
  *  @see 		NewTemperature \n
  *  			DestroyTemperature \n
@@ -2272,7 +2538,8 @@ bool TemperatureOn (Temperature this_gen);
  *  			TemperatureOn \n
  *  			isTemperatureSupported \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 bool TemperatureOff (Temperature this_gen);
 
@@ -2280,7 +2547,9 @@ bool TemperatureOff (Temperature this_gen);
  *  @brief 		Temperature의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Temperature 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Temperature의 사용 가능 여부를 판단한다.
  *  @see 		NewTemperature \n
  *  			DestroyTemperature \n
@@ -2289,7 +2558,8 @@ bool TemperatureOff (Temperature this_gen);
  *  			TemperatureOn \n
  *  			TemperatureOff \n
  *  			getTemperatureValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 bool isTemperatureSupported (Temperature this_gen);
 
@@ -2306,7 +2576,8 @@ bool isTemperatureSupported (Temperature this_gen);
  *  			TemperatureOn \n
  *  			TemperatureOff \n
  *  			isTemperatureSupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.temperature
  */
 Temperature_data getTemperatureValue (Temperature this_gen);
 /* Temperature */
@@ -2317,8 +2588,9 @@ Temperature_data getTemperatureValue (Temperature this_gen);
  *  @brief	Humidity 모듈에 대한 구조체이다. Humidity 모듈은 Humidity Sensor를 다양한 방식으로 제어할 수 있다.
  *  @note	Humidity 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewHumidity() 함수를 사용해야 하며 사용이 끝났을 때 DestroyHumidity() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html
- *  @todo	feature에 "http://tizen.org/feature/sensor.humidity" 들을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Sensor part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__SENSOR__MODULE.html)
+ *  @pre	@b feature \n
+ *          * http://tizen.org/feature/sensor.humidity
  */
 typedef struct _Humidity * Humidity;
 
@@ -2363,7 +2635,9 @@ typedef struct _HumidityExtend
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre     	@b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
+ *  @warning    사용이 끝났을 때 DestroyHumidity() 함수를 꼭 사용해야 한다.
  */
 Humidity NewHumidity (void);
 
@@ -2375,18 +2649,21 @@ Humidity NewHumidity (void);
  *  @note 		생성한 Humidity 객체를 소멸 시킨다. \n
  *  			Humidity 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewHumidity
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 void DestroyHumidity (Humidity this_gen);
 
-/*!	@fn			void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+/*!	@fn			bool addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
  *  @brief 		생성한 Humidity에 callback 함수를 등록한다.
  *  @param[in] 	this_gen callback 함수를 등록할 Humidity 객체
  *  @param[in] 	sensor callback 등록할 callback 함수
  *  @param[in] 	voiceinterval callback 함수가 수행될 시간 간격
- *  @param[in] 	data callback 함수에 전달될 사용자 data
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	data callback 함수에 전달될 사용자 data 주소
+ *  @param[out] data callback 함수에 전달될 사용자 data
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Humidity에 callback 함수를 등록한다. \n
  *  			@a interval 의 단위는 milliseconds 이며 만약 @c 0 으로 설정하면 기본 값인 100ms로 설정된다.
  *  @see 		NewHumidity \n
@@ -2396,15 +2673,18 @@ void DestroyHumidity (Humidity this_gen);
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 bool addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-/*!	@fn			void detachHumidityCallback (Humidity this_gen)
+/*!	@fn			bool detachHumidityCallback (Humidity this_gen)
  *  @brief 		생성한 Humidity에서 callback 함수를 삭제한다.
  *  @param[in] 	this_gen callback 함수를 삭제할 Humidity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Humidity에서 callback 함수를 삭제한다. \n
  *  @see 		NewHumidity \n
  *  			DestroyHumidity \n
@@ -2413,15 +2693,18 @@ bool addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 bool detachHumidityCallback (Humidity this_gen);
 
-/*!	@fn			void HumidityOn (Humidity this_gen)
+/*!	@fn			bool HumidityOn (Humidity this_gen)
  *  @brief 		생성한 Humidity를 활성화 시킨다.
  *  @param[in] 	this_gen 활성화 시킬 Humidity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Humidity를 활성화 시킨다.
  *  @see 		NewHumidity \n
  *  			DestroyHumidity \n
@@ -2430,15 +2713,18 @@ bool detachHumidityCallback (Humidity this_gen);
  *  			HumidityOff \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 bool HumidityOn (Humidity this_gen);
 
-/*!	@fn			void HumidityOff (Humidity this_gen)
+/*!	@fn			bool HumidityOff (Humidity this_gen)
  *  @brief 		생성한 Humidity를 비활성화 시킨다.
  *  @param[in] 	this_gen 비활성화 시킬 Humidity 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Humidity를 비활성화 시킨다.
  *  @see 		NewHumidity \n
  *  			DestroyHumidity \n
@@ -2447,7 +2733,8 @@ bool HumidityOn (Humidity this_gen);
  *  			HumidityOn \n
  *  			isHumiditySupported \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 bool HumidityOff (Humidity this_gen);
 
@@ -2455,7 +2742,9 @@ bool HumidityOff (Humidity this_gen);
  *  @brief 		Humidity의 사용 가능 여부를 판단한다.
  *  @param[in] 	this_gen 사용 가능 여부를 판단할 Humidity 객체
  *  @param[out] null
- *  @retval 	bool 사용 가능 여부
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Humidity의 사용 가능 여부를 판단한다.
  *  @see 		NewHumidity \n
  *  			DestroyHumidity \n
@@ -2464,7 +2753,8 @@ bool HumidityOff (Humidity this_gen);
  *  			HumidityOn \n
  *  			HumidityOff \n
  *  			getHumidityValue
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 bool isHumiditySupported (Humidity this_gen);
 
@@ -2481,7 +2771,8 @@ bool isHumiditySupported (Humidity this_gen);
  *  			HumidityOn \n
  *  			HumidityOff \n
  *  			isHumiditySupported \n
- *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/sensor.humidity
  */
 Humidity_data getHumidityValue (Humidity this_gen);
 /* Humidity */

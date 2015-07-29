@@ -1,7 +1,7 @@
 /*! @file	Notification.h
  *  @brief	Notification API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	Notification의 Show / Hide / setTitle / setText / setIcon / setSound / update Notification API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_NOTIFICATION_H
@@ -36,7 +36,7 @@ extern "C" {
  *  @note 		Notification API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다. \n   
  *  			11가지의 Error Code들을 확인 가능 하다.
- *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html#gga59877a522577b6129d8a6175816a0867ace8d6426fa0e542f22d36e7b87bfe6c4
+ *  @see        [Tizen Native API Document - Notification part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html#gga59877a522577b6129d8a6175816a0867ace8d6426fa0e542f22d36e7b87bfe6c4)
  */
 const char * NotificationErrorCheck (int errCode);
 
@@ -45,8 +45,9 @@ const char * NotificationErrorCheck (int errCode);
  *  @brief	Notification 모듈에 대한 구조체이다. Notification 모듈은 다양한 방식으로 알림을 설정 할 수 있다.
  *  @note	Notification 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewNotification() 함수를 사용해야 하며 사용이 끝났을 때 DestroyNotification() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
- *  @pre	privilege에 "http://tizen.org/privilege/notification" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Notification part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/notification
  */
 typedef struct _Notification * Notification;
 struct _Notification
@@ -81,7 +82,9 @@ struct _Notification
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre    	privilege	: http://tizen.org/privilege/notification
+ *  @pre    	@b privilege \n
+ *              * http://tizen.org/privilege/notification
+ *  @warning    사용이 끝났을 때 DestroyNotification() 함수를 꼭 사용해야 한다.
  */
 Notification NewNotification (void);
 
@@ -93,7 +96,8 @@ Notification NewNotification (void);
  *  @note 		생성한 Notification 객체를 소멸 시킨다. \n
  *  			Notification 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 void DestroyNotification (Notification this_gen);
 
@@ -104,9 +108,7 @@ void DestroyNotification (Notification this_gen);
  *  @retval 	bool \n
  *              함수의 성공 여부를 반환한다. \n
  *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
- *  @note 		생성한 Notification을 Notification 바에 등록한다. \n
- *  			이제 막 생성한 Notification은 Icon과 Sound 값에 기본 값이 설정되어 있지만 Title과 Text는 기본 값이 없기 때문에 \n
- *  			사용하기 전에 setNotificationTitle() 과 setNotificationText() 을 통해 설정을 미리 해야한다.
+ *  @note 		생성한 Notification을 Notification 바에 등록한다. 
  *  @see 		NewNotification \n
  *  			DestroyNotification \n
  *  			NotificationHide \n
@@ -115,7 +117,10 @@ void DestroyNotification (Notification this_gen);
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
+ *  @warning    이제 막 생성한 Notification은 Icon과 Sound 값에 기본 값이 설정되어 있지만 Title과 Text는 기본 값이 없기 때문에 \n
+ *              사용하기 전에 setNotificationTitle() 과 setNotificationText() 을 통해 설정을 미리 해야한다.
  */
 bool NotificationShow (Notification this_gen);
 
@@ -134,7 +139,8 @@ bool NotificationShow (Notification this_gen);
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool NotificationHide (Notification this_gen);
 
@@ -146,7 +152,7 @@ bool NotificationHide (Notification this_gen);
  *  @retval 	bool \n
  *              함수의 성공 여부를 반환한다. \n
  *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
- *  @note 		Notification 객체의 title을 설정 한다. \n
+ *  @note 		Notification 객체의 @a title을 설정 한다. \n
  *  			기본으로 설정된 값은 없다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewNotification \n
@@ -157,7 +163,8 @@ bool NotificationHide (Notification this_gen);
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool setNotificationTitle (Notification this_gen, String title);
 
@@ -169,7 +176,7 @@ bool setNotificationTitle (Notification this_gen, String title);
  *  @retval 	bool \n
  *              함수의 성공 여부를 반환한다. \n
  *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
- *  @note 		Notification 객체의 text을 설정 한다. \n
+ *  @note 		Notification 객체의 @a text을 설정 한다. \n
  *  			기본으로 설정된 값은 없다. \n
  *  			현재 Notification 바에 등록되어 있는 Notification이라면 updateNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewNotification \n
@@ -180,7 +187,8 @@ bool setNotificationTitle (Notification this_gen, String title);
  *  			setNotificationIcon \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool setNotificationText (Notification this_gen, String text);
 
@@ -203,7 +211,8 @@ bool setNotificationText (Notification this_gen, String text);
  *  			setNotificationText \n
  *  			setNotificationSound \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool setNotificationIcon (Notification this_gen, String imagePath);
 
@@ -226,7 +235,8 @@ bool setNotificationIcon (Notification this_gen, String imagePath);
  *  			setNotificationText \n
  *  			setNotificationIcon \n
  *  			updateNotification
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool setNotificationSound (Notification this_gen, String soundPath);
 
@@ -247,7 +257,8 @@ bool setNotificationSound (Notification this_gen, String soundPath);
  *  			setNotificationText \n
  *  			setNotificationIcon \n
  *  			setNotificationSound
- *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/notification
  */
 bool updateNotification (Notification this_gen);
 

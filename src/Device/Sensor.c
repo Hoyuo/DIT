@@ -2280,7 +2280,7 @@ const char * SensorErrorCheck (int errorCode)
         return "SENSOR_ERROR_OPERATION_FAILED: Operation failed";
 
     default:
-        return "SENSOR_UNKNOWN_ERROR";
+        return "SENSOR_ERROR_UNKNOWN";
 
     }
 }

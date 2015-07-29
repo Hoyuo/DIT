@@ -1,7 +1,7 @@
 /*! @file	File.h
  *  @brief	File API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	File의 File / Video / Audio / Image 관련 API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef _FILE_H
@@ -23,10 +23,76 @@
 extern "C" {
 #endif
 
+/*! @fn         const char * PlayerErrorCheck (int errCode)
+ *  @brief      Audio / Video를 play하는 API에서 발생하는 Error Code들을 확인 해준다.
+ *  @param[in]  errCode 확인 하고자 하는 Error Code
+ *  @param[out] null
+ *  @retval     PLAYER_ERROR_NONE                            : Successful
+ *  @retval     PLAYER_ERROR_OUT_OF_MEMORY                   : Out of memory
+ *  @retval     PLAYER_ERROR_INVALID_PARAMETER               : Invalid parameter
+ *  @retval     PLAYER_ERROR_NO_SUCH_FILE                    : No such file or directory
+ *  @retval     PLAYER_ERROR_INVALID_OPERATION               : Invalid operation
+ *  @retval     PLAYER_ERROR_FILE_NO_SPACE_ON_DEVICE         : No space left on the device
+ *  @retval     PLAYER_ERROR_FEATURE_NOT_SUPPORTED_ON_DEVICE : Not supported
+ *  @retval     PLAYER_ERROR_SEEK_FAILED                     : Seek operation failure
+ *  @retval     PLAYER_ERROR_INVALID_STATE                   : Invalid state
+ *  @retval     PLAYER_ERROR_NOT_SUPPORTED_FILE              : File format not supported
+ *  @retval     PLAYER_ERROR_INVALID_URI                     : Invalid URI
+ *  @retval     PLAYER_ERROR_SOUND_POLICY                    : Sound policy error
+ *  @retval     PLAYER_ERROR_CONNECTION_FAILED               : Streaming connection failed
+ *  @retval     PLAYER_ERROR_VIDEO_CAPTURE_FAILED            : Video capture failed
+ *  @retval     PLAYER_ERROR_DRM_EXPIRED                     : Expired license
+ *  @retval     PLAYER_ERROR_DRM_NO_LICENSE                  : No license
+ *  @retval     PLAYER_ERROR_DRM_FUTURE_USE                  : License for future use
+ *  @retval     PLAYER_ERROR_DRM_NOT_PERMITTED               : Format not permitted
+ *  @retval     PLAYER_ERROR_RESOURCE_LIMIT                  : Resource limit
+ *  @retval     PLAYER_ERROR_PERMISSION_DENIED               : Permission denied
+ *  @retval     PLAYER_ERROR_UNKNOWN                         : Unknown error occurred 
+ *  @note       Audio / Video를 play하는 API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.    \n
+ *              21가지의 Error Code들을 확인 가능 하다.
+ *  @see        [Tizen Native API Document - Player Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__PLAYER__MODULE.html#ga777e585d4ffacf5740aaeeddfd9853aa)
+ */
 const char * PlayerErrorCheck (int ret);
 
+/*! @fn         const char * MetadataExtractorErrorCheck (int errCode)
+ *  @brief      Metadata를 읽어올 때 사용하는 API에서 발생하는 Error Code들을 확인 해준다.
+ *  @param[in]  errCode 확인 하고자 하는 Error Code
+ *  @param[out] null
+ *  @retval     METADATA_EXTRACTOR_ERROR_NONE               : Successful
+ *  @retval     METADATA_EXTRACTOR_ERROR_INVALID_PARAMETER  : Invalid parameter
+ *  @retval     METADATA_EXTRACTOR_ERROR_OUT_OF_MEMORY      : Out of memory
+ *  @retval     METADATA_EXTRACTOR_ERROR_FILE_EXISTS        : File does not exist
+ *  @retval     METADATA_EXTRACTOR_ERROR_PERMISSION_DENIED  : Permission denied
+ *  @retval     METADATA_EXTRACTOR_ERROR_OPERATION_FAILED   : Invalid internal operation
+ *  @retval     METADATA_ERROR_UNKNOWN                      : Unknown error occurred 
+ *  @note       Metadata를 읽어올 때 사용하는 API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.    \n
+ *              7가지의 Error Code들을 확인 가능 하다.
+ *  @see        [Tizen Native API Document - Metadata Extractor Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__METADATA__EXTRACTOR__MODULE.html#gab7dface72c18d3653f15f3dd219f0e71)
+ */
 const char * MetadataExtractorErrorCheck (int ret);
 
+/*! @fn         const char * MediaContentErrorCheck (int errCode)
+ *  @brief      Media Content Information을 읽어올 때 사용하는 API에서 발생하는 Error Code들을 확인 해준다.
+ *  @param[in]  errCode 확인 하고자 하는 Error Code
+ *  @param[out] null
+ *  @retval     MEDIA_CONTENT_ERROR_NONE                : Successful
+ *  @retval     MEDIA_CONTENT_ERROR_INVALID_PARAMETER   : Invalid parameter
+ *  @retval     MEDIA_CONTENT_ERROR_OUT_OF_MEMORY       : Out of memory
+ *  @retval     MEDIA_CONTENT_ERROR_INVALID_OPERATION   : Invalid Operation
+ *  @retval     MEDIA_CONTENT_FILE_NO_SPACE_ON_DEVICE   : No space left on device
+ *  @retval     MEDIA_CONTENT_ERROR_PERMISSION_DENIED   : Permission denied
+ *  @retval     MEDIA_CONTENT_ERROR_DB_FAILED           : DB operation failed
+ *  @retval     MEDIA_CONTENT_ERROR_DB_BUSY             : DB operation BUSY
+ *  @retval     MEDIA_CONTENT_ERROR_NETWORK             : Network Fail
+ *  @retval     MEDIA_CONTENT_ERROR_UNSUPPORTED_CONTENT : Unsupported Content
+ *  @retval     MEDIA_ERROR_UNKNOWN                     : Unknown error occurred 
+ *  @note       Media Content Information을 읽어올 때 사용하는 API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.    
+ *              11가지의 Error Code들을 확인 가능 하다.
+ *  @see        [Tizen Native API Document - Media Content Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CONTENT__MODULE.html#ga7021a96fec7bb8becfe524c95af347ba)
+ */
 const char * MediaContentErrorCheck (int ret);
 
 /* File */
@@ -34,9 +100,10 @@ const char * MediaContentErrorCheck (int ret);
  *  @brief	File 모듈에 대한 구조체이다. File 모듈은 다양한 방식으로 파일을 제어 할 수 있다.
  *  @note	File의 File 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewFile() 함수를 사용해야 하며 사용이 끝났을 때 DestroyFile() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__STORAGE__MODULE.html
- *  @todo	privilege에 "http://tizen.org/privilege/mediastorage" 을 반드시 추가해야 한다. \n
- *  		privilege에 "http://tizen.org/privilege/externalstorage" 을 반드시 추가해야 한다.
+ *  @see    [Tizen Native API Document - File part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__SYSTEM__STORAGE__MODULE.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/mediastorage \n
+ *  		* http://tizen.org/privilege/externalstorage
  */
 typedef struct _File * File;
 struct _File
@@ -66,8 +133,10 @@ struct _File
  *  			moveFile \n
  *  			searchFile \n
  *  			deleteSearchedList
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre    	@b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
+ *  @warning    사용이 끝났을 때 DestroyFile() 함수를 꼭 사용해야 한다.
  */
 File NewFile (void);
 
@@ -79,29 +148,35 @@ File NewFile (void);
  *  @note 		생성한 File 객체를 소멸 시킨다. \n
  *  			File 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewFile
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 void DestroyFile (File this_gen);
 
-/*! @fn 		void deleteFile (String src)
+/*! @fn 		bool deleteFile (String src)
  *  @brief 		해당 파일을 삭제한다.
  *  @param[in] 	src 삭제할 파일의 path
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 파일을 삭제한다. \n
  *  @see 		NewFile
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool deleteFile (String src);
 
-/*! @fn 		void copyFile (String src, String dst);
+/*! @fn 		bool copyFile (String src, String dst);
  *  @brief 		해당 파일을 복사한다.
  *  @param[in] 	src 복사할 파일의 path
  *  @param[in] 	dst 붙여넣을 위치의 파일의 path
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 파일을 복사한다. \n
  *  @see 		NewFile \n
  *  			DestroyFile \n
@@ -109,17 +184,20 @@ bool deleteFile (String src);
  *  			moveFile \n
  *  			searchFile \n
  *  			deleteSearchedList
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 
 bool copyFile (String src, String dst);
-/*! @fn 		void moveFile (String src, String dst);
+/*! @fn 		bool moveFile (String src, String dst);
  *  @brief 		해당 파일을 이동 시킨다.
  *  @param[in] 	src 복사할 파일의 path
  *  @param[in] 	dst 이동시킬 위치의 파일의 path
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 파일을 이동 시킨다. \n
  *  @see 		NewFile \n
  *  			DestroyFile \n
@@ -127,8 +205,9 @@ bool copyFile (String src, String dst);
  *  			copyFile \n
  *  			searchFile \n
  *  			deleteSearchedList
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool moveFile (String src, String dst);
 
@@ -145,8 +224,9 @@ bool moveFile (String src, String dst);
  *  			copyFile \n
  *  			moveFile \n
  *  			deleteSearchedList
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 GList * searchFile (String src, String dst);
 
@@ -162,8 +242,9 @@ GList * searchFile (String src, String dst);
  *  			copyFile \n
  *  			moveFile \n
  *  			searchFile
- *  @remark 	privilege	: http://tizen.org/privilege/mediastorage \n
- *  						: http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 void deleteSearchedList (GList * searchedList);
 /* File */
@@ -174,10 +255,11 @@ void deleteSearchedList (GList * searchedList);
  *  @brief	Video 모듈에 대한 구조체이다. Video 모듈은 다양한 방식으로 동영상 파일을 제어 할 수 있다.
  *  @note	File의 Video 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewVideo() 함수를 사용해야 하며 사용이 끝났을 때 DestroyVideo() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CONTENT__MODULE.html
- *  @todo	privilege에 "http://tizen.org/privilege/display" 을 반드시 추가해야 한다. \n
- *  		privilege에 "http://tizen.org/privilege/mediastorage" 을 반드시 추가해야 한다. \n
- *  		privilege에 "http://tizen.org/privilege/externalstorage" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Video part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CONTENT__MODULE.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/display \n
+ *          * http://tizen.org/privilege/mediastorage \n
+ *          * http://tizen.org/privilege/externalstorage
  */
 typedef struct _Video * Video;
 struct _Video
@@ -221,9 +303,11 @@ typedef struct _VideoExtends
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre    	@b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
+ *  @warning    사용이 끝났을 때 DestoryVideo() 함수를 꼭 사용해야 한다.
  */
 Video  NewVideo (void);
 
@@ -235,17 +319,20 @@ Video  NewVideo (void);
  *  @note 		생성한 Video 객체를 소멸 시킨다. \n
  *  			Video 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewVideo
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 void   DestroyVideo (Video this_gen);
 
-/*! @fn 		void playVideo (Video this_gen)
+/*! @fn 		bool playVideo (Video this_gen)
  *  @brief 		동영상 파일을 재생한다.
  *  @param[in] 	this_gen 재생할 Video 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 Video 객체를 재생한다. \n
  *  			동영상 파일을 재생하기 전 NewVideo() 함수를 통해 Video 객체를 생성한 후 \n
  *  			setEvasObject()과 setVideoURI()를 통해 Video 객체의 설정을 하고 사용해야한다.
@@ -257,17 +344,20 @@ void   DestroyVideo (Video this_gen);
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool   playVideo (Video this_gen);
 
-/*! @fn 		void pauseVideo (Video this_gen)
+/*! @fn 		bool pauseVideo (Video this_gen)
  *  @brief 		동영상 파일을 일시 정지한다.
  *  @param[in] 	this_gen 일시 정지할 Video 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 Video 객체를 일시 정지한다. \n
  *  			동영상 파일을 일시 정지하기 전 해당 Video 객체는 playVideo()를 통해 현재 재생 중이여야 한다.
  *  @see 		NewVideo \n
@@ -278,17 +368,20 @@ bool   playVideo (Video this_gen);
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool   pauseVideo (Video this_gen);
 
-/*! @fn 		void stopVideo (Video this_gen)
+/*! @fn 		bool stopVideo (Video this_gen)
  *  @brief 		동영상 파일을 정지한다.
  *  @param[in] 	this_gen 정지할 Video 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 Video 객체를 정지한다. \n
  *  @see 		NewVideo \n
  *  			DestroyVideo \n
@@ -298,9 +391,10 @@ bool   pauseVideo (Video this_gen);
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool   stopVideo (Video this_gen);
 
@@ -311,8 +405,6 @@ bool   stopVideo (Video this_gen);
  *  @param[out] null
  *  @retval 	String
  *  @note 		동영상 파일의 meta data를 가져온다. \n
- *  			사용전 setVideoURI() 를 통해 meta data 를 가져올 Video 객체의 URI를 설정해야한다. \n
- *				또한 @a <metadata_extractor.h> 를 반드시 include해야 하며 meta data가 저장된 String은 @c free() 해야한다.
  *  @see 		NewVideo \n
  *  			DestroyVideo \n
  *  			playVideo \n
@@ -321,20 +413,24 @@ bool   stopVideo (Video this_gen);
  *  			recordVideo \n
  *  			setVideoURI \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
+ *  @warning    사용전 setVideoURI() 를 통해 meta data 를 가져올 Video 객체의 URI를 설정해야한다. \n
+ *              또한 @a <metadata_extractor.h> 를 반드시 include해야 하며 meta data가 저장된 String은 @c free() 해야한다.
  */
 String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
 
-/*! @fn 		void setVideoURI (Video this_gen, String URI)
+/*! @fn 		bool setVideoURI (Video this_gen, String URI)
  *  @brief 		생성한 Video 객체의 URI를 설정한다.
  *  @param[in] 	this_gen URI를 설정할 Video 객체
  *  @param[in] 	URI 설정할 URI
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Video 객체의 URI를 설정한다. \n
- *				playVideo() , pauseVideo() , stopVideo() ,  recordVideo() , getVideoInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  *  @see 		NewVideo \n
  *  			DestroyVideo \n
  *  			playVideo \n
@@ -343,18 +439,22 @@ String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
  *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setEvasObject
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
+ *  @warning    playVideo() , pauseVideo() , stopVideo() ,  recordVideo() , getVideoInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
 bool   setVideoURI (Video this_gen, String URI);
 
-/*! @fn 		void setEvasObject (Video this_gen, Evas_Object * EvasObject)
+/*! @fn 		bool setEvasObject (Video this_gen, Evas_Object * EvasObject)
  *  @brief 		생성한 Video 객체의 Evas Object를 설정한다.
  *  @param[in] 	this_gen Evas Object를 설정할 Video 객체
  *  @param[in] 	EvasObject 설정할 Evas Object
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Video 객체의 Evas Object를 설정한다. \n
  *  @see 		NewVideo \n
  *  			DestroyVideo \n
@@ -364,9 +464,10 @@ bool   setVideoURI (Video this_gen, String URI);
  *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI
- *  @remark 	privilege :	http://tizen.org/privilege/display \n
- * 							http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/display \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage
  */
 bool   setEvasObject (Video this_gen, Evas_Object * EvasObject);
 /* Video */
@@ -377,10 +478,11 @@ bool   setEvasObject (Video this_gen, Evas_Object * EvasObject);
  *  @brief	Audio 모듈에 대한 구조체이다. Audio 모듈은 다양한 방식으로 음악 파일을 제어 할 수 있다.
  *  @note	File의 Audio 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewAudio() 함수를 사용해야 하며 사용이 끝났을 때 DestroyAudio() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CONTENT__MODULE.html
- *  @todo	privilege에 "http://tizen.org/privilege/mediastorage" 을 반드시 추가해야 한다. \n
- *  		privilege에 "http://tizen.org/privilege/externalstorage" 을 반드시 추가해야 한다. \n
- *  		privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
+ *  @see	[Tizen Native API Document - Audio part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CONTENT__MODULE.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/mediastorage \n
+ *          * http://tizen.org/privilege/externalstorage \n
+ *          * http://tizen.org/privilege/internet
  */
 typedef struct _Audio * Audio;
 struct _Audio
@@ -419,9 +521,11 @@ typedef struct _AudioExtends
  *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre    	@b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
+ *  @warning    사용이 끝났을 때 DestoryAudio() 함수를 꼭 사용해야 한다.
  */
 Audio  NewAudio (void);
 
@@ -433,20 +537,21 @@ Audio  NewAudio (void);
  *  @note 		생성한 Audio 객체를 소멸 시킨다. \n
  *  			Audio 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewAudio
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
  */
 void   DestroyAudio (Audio this_gen);
 
-/*! @fn 		void playAudio (Audio this_gen)
+/*! @fn 		bool playAudio (Audio this_gen)
  *  @brief 		음악 파일을 재생한다.
  *  @param[in] 	this_gen 재생할 Audio 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 Audio 객체를 재생한다. \n
- *  			음악 파일을 재생하기 전 NewAudio() 함수를 통해 Audio 객체를 생성한 후 \n
- *  			setAudioURI()를 통해 Audio 객체의 설정을 하고 사용해야한다.
  *  @see 		NewAudio \n
  *  			DestroyAudio \n
  *  			pauseAudio \n
@@ -454,19 +559,23 @@ void   DestroyAudio (Audio this_gen);
  *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
+ *  @warning    음악 파일을 재생하기 전 NewAudio() 함수를 통해 Audio 객체를 생성한 후 \n
+ *              setAudioURI()를 통해 Audio 객체의 설정을 하고 사용해야한다.
  */
 bool   playAudio (Audio this_gen);
 
-/*! @fn 		void pauseAudio (Audio this_gen)
+/*! @fn 		bool pauseAudio (Audio this_gen)
  *  @brief 		음악 파일을 일시 정지한다.
  *  @param[in] 	this_gen 일시 정지할 Audio 객체
  *  @param[out] null
- *  @retval 	void
- *  @note 		해당 Audio 객체를 일시 정지한다. \n
- *  			음악 파일을 일시 정지하기 전 해당 Audio 객체는 playAudio()를 통해 현재 재생 중이여야 한다.
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
+ *  @note 		해당 Audio 객체를 일시 정지한다. \n 
  *  @see 		NewAudio \n
  *  			DestroyAudio \n
  *  			playAudio \n
@@ -474,17 +583,21 @@ bool   playAudio (Audio this_gen);
  *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
+ *  @warning    음악 파일을 일시 정지하기 전 해당 Audio 객체는 playAudio()를 통해 현재 재생 중이여야 한다.
  */
 bool   pauseAudio (Audio this_gen);
 
-/*! @fn 		void stopAudio (Audio this_gen)
+/*! @fn 		bool stopAudio (Audio this_gen)
  *  @brief 		동영상 파일을 정지한다.
  *  @param[in] 	this_gen 정지할 Audio 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		해당 Audio 객체를 정지한다. \n
  *  @see 		NewAudio \n
  *  			DestroyAudio \n
@@ -493,9 +606,10 @@ bool   pauseAudio (Audio this_gen);
  *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
  */
 bool   stopAudio (Audio this_gen);
 
@@ -506,8 +620,6 @@ bool   stopAudio (Audio this_gen);
  *  @param[out] null
  *  @retval 	String
  *  @note 		음악 파일의 meta data를 가져온다. \n
- *  			사용전 setAudioURI() 를 통해 meta data 를 가져올 Audio 객체의 URI를 설정해야한다. \n
- *				또한 @a <metadata_extractor.h> 를 반드시 include해야 하며 meta data가 저장된 String은 @c free() 해야한다.
  *  @see 		NewAudio \n
  *  			DestroyAudio \n
  *  			playAudio \n
@@ -515,20 +627,24 @@ bool   stopAudio (Audio this_gen);
  *  			stopAudio \n
  *  			recordAudio \n
  *  			setAudioURI
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
+ *  @warming    사용전 setAudioURI() 를 통해 meta data 를 가져올 Audio 객체의 URI를 설정해야한다. \n
+ *              또한 @a <metadata_extractor.h> 를 반드시 include해야 하며 meta data가 저장된 String은 @c free() 해야한다.
  */
 String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
 
-/*! @fn 		void setAudioURI (Audio this_gen, String URI)
+/*! @fn 		bool setAudioURI (Audio this_gen, String URI)
  *  @brief 		생성한 Audio 객체의 URI를 설정한다.
  *  @param[in] 	this_gen URI를 설정할 Audio 객체
  *  @param[in] 	URI 설정할 URI
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		생성한 Audio 객체의 URI를 설정한다. \n
- *				playAudio() , pauseAudio() , stopAudio() ,  recordAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  *  @see 		NewAudio \n
  *  			DestroyAudio \n
  *  			playAudio \n
@@ -536,9 +652,11 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *  			stopAudio \n
  *  			recordAudio \n
  *  			getAudioInfo
- *  @remark 	privilege :	http://tizen.org/privilege/mediastorage \n
- *							http://tizen.org/privilege/externalstorage \n
- *							http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/mediastorage \n
+ *              * http://tizen.org/privilege/externalstorage \n
+ *              * http://tizen.org/privilege/internet
+ *  @warming    playAudio() , pauseAudio() , stopAudio() ,  recordAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
 bool   setAudioURI (Audio this_gen, String uri);
 /* Audio */
@@ -549,7 +667,7 @@ bool   setAudioURI (Audio this_gen, String uri);
  *  @brief	Image 모듈에 대한 구조체이다. Image 모듈은 다양한 방식으로 동영상 파일을 제어 할 수 있다.
  *  @note	File의 Image 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewImage() 함수를 사용해야 하며 사용이 끝났을 때 DestroyImage() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__CONTENT__MEDIA__IMAGE__MODULE.html
+ *  @see	[Tizen Native API Document - Image part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__CONTENT__MEDIA__IMAGE__MODULE.html)
  */
 typedef struct _Image * Image;
 struct _Image
@@ -595,6 +713,7 @@ typedef struct _ImageExtends
  *  			getImageDateTaken \n
  *  			getImageWidth \n
  *  			getImageHeight
+ *  @warning    사용이 끝났을 때 DestoryImage() 함수를 꼭 사용해야 한다.
  */
 Image  NewImage (void);
 
@@ -609,12 +728,14 @@ Image  NewImage (void);
  */
 void   DestroyImage (Image this_gen);
 
-/*! @fn 		void getImageInfo (Image this_gen, String src)
+/*! @fn 		bool getImageInfo (Image this_gen, String src)
  *  @brief 		사진 파일의 meta data를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[in] 	src meta data를 가져올 사진 파일의 path
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		사진 파일의 meta data를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
@@ -632,7 +753,6 @@ bool   getImageInfo (Image this_gen, String src);
  *  @param[out] null
  *  @retval 	String
  *  @note 		사진 파일의 meta data 중 Burst Id를 가져온다. \n
- *  			사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			getImageInfo \n
@@ -640,6 +760,7 @@ bool   getImageInfo (Image this_gen, String src);
  *  			getImageDateTaken \n
  *  			getImageWidth \n
  *  			getImageHeight
+ *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  */
 String getImageBurstId (Image this_gen);
 
@@ -649,7 +770,6 @@ String getImageBurstId (Image this_gen);
  *  @param[out] null
  *  @retval 	String
  *  @note 		사진 파일의 meta data 중 Media Id를 가져온다. \n
- *  			사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			getImageInfo \n
@@ -657,6 +777,7 @@ String getImageBurstId (Image this_gen);
  *  			getImageDateTaken \n
  *  			getImageWidth \n
  *  			getImageHeight
+ *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  */
 String getImageMediaId (Image this_gen);
 
@@ -666,7 +787,6 @@ String getImageMediaId (Image this_gen);
  *  @param[out] null
  *  @retval 	String
  *  @note 		사진 파일의 meta data 중 찍은 날짜 정보를 가져온다. \n
- *  			사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			getImageInfo \n
@@ -674,16 +794,16 @@ String getImageMediaId (Image this_gen);
  *  			getImageMediaId \n
  *  			getImageWidth \n
  *  			getImageHeight
+ *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  */
 String getImageDateTaken (Image this_gen);
 
 /*! @fn 		int getImageWidth (Image this_gen)
- *  @brief 		사진 파일의 meta data 중 찍은 width 정보를 가져온다.
+ *  @brief 		사진 파일의 meta data 중 width 정보를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[out] null
  *  @retval 	int (픽셀 단위)
- *  @note 		사진 파일의 meta data 중 찍은 width 정보를 가져온다. \n
- *  			사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다. \n
+ *  @note 		사진 파일의 meta data 중 width 정보를 가져온다. \n
  *				단위는 픽셀이다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
@@ -692,16 +812,16 @@ String getImageDateTaken (Image this_gen);
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
  *  			getImageHeight
+ *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  */
 int    getImageWidth (Image this_gen);
 
 /*! @fn 		int getImageHeight (Image this_gen)
- *  @brief 		사진 파일의 meta data 중 찍은 height 정보를 가져온다.
+ *  @brief 		사진 파일의 meta data 중 height 정보를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[out] null
  *  @retval 	int (픽셀 단위)
- *  @note 		사진 파일의 meta data 중 찍은 height 정보를 가져온다. \n
- *  			사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다. \n
+ *  @note 		사진 파일의 meta data 중 height 정보를 가져온다. \n
  *				단위는 픽셀이다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
@@ -710,6 +830,7 @@ int    getImageWidth (Image this_gen);
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
  *  			getImageWidth \n
+ *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
  */
 int    getImageHeight (Image this_gen);
 /* Image */

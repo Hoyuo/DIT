@@ -1,7 +1,7 @@
 /*! @file	GPS.h
  *  @brief	GPS API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	GPS의 isAccessible / onConnect / onDisconnect / Recv API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_GPS_H
@@ -34,7 +34,7 @@ extern "C" {
  *  @note 		GPS API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다. \n
  *  			11가지의 Error Code들을 확인 가능 하다.
- *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
+ *  @see        [Tizen Native API Document - GPS part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html)
  */
 const char * GPSErrorChecker (int errCode);
 
@@ -55,12 +55,14 @@ typedef struct _location
 } Location;
 
 /* GPS */
-/*! @struct	_Bluetooth
+/*! @struct	_gps
  *  @brief	GPS 모듈에 대한 구조체이다. GPS 모듈은 다양한 방식으로 GPS를 사용할 수 있다.
  *  @note	GPS의 GPS 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewGps() 함수를 사용해야 하며 사용이 끝났을 때 DestroyGps() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__LOCATION__GPS__STATUS__MODULE.html
- *  @pre	feature에 "http://tizen.org/feature/location" , "http://tizen.org/feature/location.gps" 들을 반드시 추가해야 한다.
+ *  @pre    @b feature \n
+ *          * http://tizen.org/feature/location \n
+ *          * http://tizen.org/feature/location.gps
  */
 typedef struct _gps * GPS;
 struct _gps
@@ -87,7 +89,10 @@ struct _gps
  *  			onGPSConnect \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
+ *  @warning    사용이 끝났을 때 DestroyGps() 함수를 꼭 사용해야 한다.
  */
 GPS NewGps (void);
 
@@ -99,7 +104,9 @@ GPS NewGps (void);
  *  @note 		생성한 GPS 객체를 소멸 시킨다. \n
  *  			GPS 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewGps
- *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
  */
 void DestroyGps (GPS this_gen);
 
@@ -117,7 +124,9 @@ void DestroyGps (GPS this_gen);
  *  			onGPSConnect \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @pre        feature : http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
  */
 bool isGPSAccessible (GPS this_gen);
 
@@ -135,7 +144,9 @@ bool isGPSAccessible (GPS this_gen);
  *  			isGPSAccessible \n
  *  			onGPSDisconnect \n
  *  			GPSRecv
- *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
  */
 bool onGPSConnect (GPS this_gen);
 
@@ -153,7 +164,9 @@ bool onGPSConnect (GPS this_gen);
  *  			isGPSAccessible \n
  *  			onGPSConnect \n
  *  			GPSRecv
- *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
  */
 bool onGPSDisconnect (GPS this_gen);
 
@@ -170,7 +183,9 @@ bool onGPSDisconnect (GPS this_gen);
  *  			isGPSAccessible \n
  *  			onGPSConnect \n
  *  			onGPSDisconnect
- *  @pre        feature	: http://tizen.org/feature/location / http://tizen.org/feature/location.gps
+ *  @pre        @b feature \n
+ *              * http://tizen.org/feature/location \n
+ *              * http://tizen.org/feature/location.gps
  */
 Location GPSRecv (GPS this_gen);
 

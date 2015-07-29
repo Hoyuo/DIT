@@ -1,7 +1,7 @@
 /*! @file	Http.h
  *  @brief	HTTP API 를 사용하기 위해 포함해야 하는 헤더이다.
  *  @note	HTTP의 isAccessible / onConnect / onDisconnect / Download / Post / Get API를 제공한다.
- *  @see	https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html
+ *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
 #ifndef DIT_HTTP_H
@@ -104,7 +104,7 @@ extern "C" {
  *  @retval 	CURL_LAST
  *  @note 		Http API에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다.
- *  @see 		http://curl.haxx.se/libcurl/c/libcurl-errors.html
+ *  @see 		[Libcurl Error Document](http://curl.haxx.se/libcurl/c/libcurl-errors.html)
  */
 const char * HttpErrorCheck (CURLcode errorCode);
 
@@ -113,8 +113,9 @@ const char * HttpErrorCheck (CURLcode errorCode);
  *  @brief	Http 모듈에 대한 구조체이다. Http 모듈은 다양한 방식으로 Http 통신을 할 수 있다.
  *  @note	Http의 Http 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewHttp() 함수를 사용해야 하며 사용이 끝났을 때 DestoryHttp() 함수를 꼭 사용해야 한다.
- *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html
- *  @pre	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
+ *  @see    [Tizen Native API Document - HTTP part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html)
+ *  @pre	@b privilege \n
+ *          * http://tizen.org/privilege/internet
  */
 typedef struct _Http * Http;
 struct _Http
@@ -147,7 +148,9 @@ struct _Http
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
+ *  @warning    사용이 끝났을 때 DestoryHttp() 함수를 꼭 사용해야 한다.
  */
 Http NewHttp (void);
 
@@ -159,7 +162,8 @@ Http NewHttp (void);
  *  @note 		생성한 Http 객체를 소멸 시킨다. \n
  *  			Http 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewHttp
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 void DestoryHttp (Http this_gen);
 
@@ -179,7 +183,8 @@ void DestoryHttp (Http this_gen);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool isHttpAccessible (Http this_gen);
 
@@ -201,7 +206,8 @@ bool isHttpAccessible (Http this_gen);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool onHttpConnect (Http this_gen, String url, int port);
 
@@ -221,7 +227,8 @@ bool onHttpConnect (Http this_gen, String url, int port);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool onHttpDisconnect (Http this_gen);
 
@@ -241,7 +248,10 @@ bool onHttpDisconnect (Http this_gen);
  *  			onHttpDisconnect \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet / http://tizne.org/privileges/mediastorage / http://tizne.org/privileges/download
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet \n
+ *              * http://tizne.org/privileges/mediastorage \n
+ *              * http://tizne.org/privileges/download
  */
 bool HttpDownload (Http this_gen, String filename);
 
@@ -262,7 +272,8 @@ bool HttpDownload (Http this_gen, String filename);
  *  			onHttpDisconnect \n
  *  			HttpDownload \n
  * 				HttpExcuteGet
- *  @pre        privilege	: http://tizen.org/privilege/internet
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool HttpExcutePost (Http this_gen, String req, String * res);
 
@@ -283,7 +294,8 @@ bool HttpExcutePost (Http this_gen, String req, String * res);
  *  			onHttpDisconnect \n
  *  			HttpDownload \n
  * 				HttpExcutePost
- *  @pre        privilege	: http://tizen.org/privilege/internet \n
+ *  @pre        @b privilege \n
+ *              * http://tizen.org/privilege/internet
  */
 bool HttpExcuteGet (Http this_gen, String req, String * res);
 
