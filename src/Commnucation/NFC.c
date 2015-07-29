@@ -268,14 +268,14 @@ NDEF NFCRecv (NFC this_gen)
             nfc_tag_h tag;
             nfc_tag_read_ndef (tag, NULL, NULL);
 
-            char tagChar[1000];
+            char* tagChar;
             int  tagLength;
 
             nfc_ndef_record_get_type (NULL, &tagChar, &tagLength);
             ret.tag = (String)malloc (tagLength + 1);
             strcpy(ret.tag, tagChar);
 
-            char msgChar[1000];
+            char* msgChar;
             int  msgLength;
 
             nfc_ndef_record_get_type (NULL, &msgChar, &msgLength);
