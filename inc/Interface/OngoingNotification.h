@@ -33,7 +33,8 @@ extern "C" {
  * 	@retval		NOTIFICATION_ERROR_NOT_EXIST_ID		 : Not exist private ID
  *  @retval 	NOTIFICATION_ERROR_SERVICE_NOT_READY : No response from notification service
  *  @retval 	NOTIFICATION_ERROR_UNKNOWN			 : Unknown error occurred
- *  @note 		ngoing Notification API에서 발생하는 Error Code들을 확인 해준다. \n
+ *  @note 		Ongoing Notification API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.    
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
  */
@@ -45,7 +46,7 @@ const char * OngoingNotificationErrorCheck (int errCode);
  *  @note	OngoingNotification 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewOngoingNotification() 함수를 사용해야 하며 사용이 끝났을 때 DestroyOngoingNotification() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html
- *  @todo	privilege에 "http://tizen.org/privilege/notification" 을 반드시 추가해야 한다.
+ *  @pre	privilege에 "http://tizen.org/privilege/notification" 을 반드시 추가해야 한다.
  */
 typedef struct _OngoingNotification * OngoingNotification;
 struct _OngoingNotification
@@ -83,7 +84,7 @@ struct _OngoingNotification
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 OngoingNotification NewOngoingNotification (void);
 
@@ -95,18 +96,18 @@ OngoingNotification NewOngoingNotification (void);
  *  @note 		생성한 OngoingNotification 객체를 소멸 시킨다. \n
  *  			OngoingNotification 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 void DestroyOngoingNotification (OngoingNotification this_gen);
 
-/*! @fn 		void OngoingNotificationShow (OngoingNotification this_gen)
+/*! @fn 		bool OngoingNotificationShow (OngoingNotification this_gen)
  *  @brief 		생성한 OngoingNotification을 Notification 바에 등록한다.
  *  @param[in] 	this_gen Notification 바에 등록할 OngoingNotification 객체
  *  @param[out] null
- *  @retval 	void
- *  @note 		생성한 OngoingNotification을 Notification 바에 등록한다. \n
- *  			이제 막 생성한 OngoingNotification은 Icon과 Sound 값에 기본 값이 설정되어 있지만 Title과 Text는 기본 값이 없기 때문에 \n
- *  			사용하기 전에 setOngoingNotificationTitle() 과 setOngoingNotificationText() 을 통해 설정을 미리 해야한다.
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
+ *  @note 		생성한 OngoingNotification을 Notification 바에 등록한다.  
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationHide \n
@@ -116,15 +117,19 @@ void DestroyOngoingNotification (OngoingNotification this_gen);
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
+ *  @warning    이제 막 생성한 OngoingNotification은 Icon과 Sound 값에 기본 값이 설정되어 있지만 Title과 Text는 기본 값이 없기 때문에 \n
+ *              사용하기 전에 setOngoingNotificationTitle() 과 setOngoingNotificationText() 을 통해 설정을 미리 해야한다.
  */
 bool OngoingNotificationShow (OngoingNotification this_gen);
 
-/*! @fn 		void OngoingNotificationHide (OngoingNotification this_gen)
+/*! @fn 		bool OngoingNotificationHide (OngoingNotification this_gen)
  *  @brief 		Notification 바에 등록되어 있는 OngoingNotification을 삭제한다.
  *  @param[in] 	this_gen Notification 바에서 삭제할 OngoingNotification 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotificationShow()를 통해 Notification 바에 등록 되어 있는 OngoingNotification을 삭제한다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
@@ -135,19 +140,21 @@ bool OngoingNotificationShow (OngoingNotification this_gen);
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool OngoingNotificationHide (OngoingNotification this_gen);
 
-/*! @fn 		setOngoingNotificationTitle (OngoingNotification this_gen, String title)
+/*! @fn 		bool setOngoingNotificationTitle (OngoingNotification this_gen, String title)
  *  @brief 		OngoingNotification 객체의 title을 설정 한다.
  *  @param[in] 	this_gen title을 설정할 OngoingNotification 객체
  *  @param[in] 	title OngoingNotification의 title
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotification 객체의 title을 설정 한다. \n
  *  			기본으로 설정된 값은 없다. \n
- *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
+ *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationShow \n
@@ -157,19 +164,21 @@ bool OngoingNotificationHide (OngoingNotification this_gen);
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool setOngoingNotificationTitle (OngoingNotification this_gen, String title);
 
-/*! @fn 		setOngoingNotificationText (OngoingNotification this_gen, String text)
+/*! @fn 		bool setOngoingNotificationText (OngoingNotification this_gen, String text)
  *  @brief 		OngoingNotification 객체의 text를 설정 한다.
  *  @param[in] 	this_gen text를 설정할 OngoingNotification 객체
  *  @param[in] 	text OngoingNotification의 text
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotification 객체의 text을 설정 한다. \n
  *  			기본으로 설정된 값은 없다. \n
- *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
+ *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationShow \n
@@ -179,19 +188,21 @@ bool setOngoingNotificationTitle (OngoingNotification this_gen, String title);
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool setOngoingNotificationText (OngoingNotification this_gen, String text);
 
-/*! @fn 		setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
+/*! @fn 		bool setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
  *  @brief 		OngoingNotification 객체의 아이콘 이미지를 설정 한다.
  *  @param[in] 	this_gen image를 설정할 OngoingNotification 객체
  *  @param[in] 	imagePath OngoingNotification의 image 파일 경로
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotification 객체의 아이콘 이미지를 설정 한다. \n
  *  			기본으로 설정된 값은 tizen logo이다. \n
- *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
+ *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationShow \n
@@ -201,19 +212,21 @@ bool setOngoingNotificationText (OngoingNotification this_gen, String text);
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath);
 
-/*! @fn 		setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
+/*! @fn 		bool setOngoingNotificationSound (OngoingNotification this_gen, String soundPath)
  *  @brief 		OngoingNotification 객체의 알림음을 설정 한다.
  *  @param[in] 	this_gen 알림음을 설정할 OngoingNotification 객체
  *  @param[in] 	soundPath OngoingNotification의 sound 파일 경로
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotification 객체의 알림음을 설정 한다.\n
  *  			기본으로 설정된 값은 tizen 알림 기본음이다. \n
- *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
+ *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationShow \n
@@ -223,19 +236,21 @@ bool setOngoingNotificationIcon (OngoingNotification this_gen, String imagePath)
  *  			setOngoingNotificationIcon \n
  *  			setOngoingNotificationProgress \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool setOngoingNotificationSound (OngoingNotification this_gen, String soundPath);
 
-/*! @fn 		setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
+/*! @fn 		bool setOngoingNotificationProgress (OngoingNotification this_gen, double progress)
  *  @brief 		OngoingNotification 객체의 진행률을 설정 한다.
  *  @param[in] 	this_gen 진행률을 설정할 OngoingNotification 객체
  *  @param[in] 	progress OngoingNotification의 진행률 (0.0 ~ 1.0)
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		OngoingNotification 객체의 진행률을 설정 한다.\n
- *  			progress은 0.0 ~ 1.0의 값을 가진다.
- *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해줘야 적용된다.
+ *  			@a progress은 @a 0.0 ~ @a 1.0의 값을 가진다. \n
+ *  			현재 Notification 바에 등록되어 있는 OngoingNotification이라면 updateOngoingNotification()를 통해 업데이트 해야 적용된다.
  *  @see 		NewOngoingNotification \n
  *  			DestroyOngoingNotification \n
  *  			OngoingNotificationShow \n
@@ -245,15 +260,17 @@ bool setOngoingNotificationSound (OngoingNotification this_gen, String soundPath
  *  			setOngoingNotificationIcon \n
  *  			setOngoingNotificationSound \n
  *  			updateOngoingNotification
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool setOngoingNotificationProgress (OngoingNotification this_gen, double progress);
 
-/*! @fn 		updateOngoingNotification (OngoingNotification this_gen)
+/*! @fn 		bool updateOngoingNotification (OngoingNotification this_gen)
  *  @brief 		새로 설정한 OngoingNotification 객체의 정보들을 새로 적용 한다.
  *  @param[in] 	this_gen 정보를 새로 적용 할 OngoingNotsification 객체
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		새로 설정한 OngoingNotification 객체의 정보들을 새로 적용 한다. \n
  *  			현재 Notification 바에 등록되어 있는 OngoingNotification의 정보를 갱신할 때 사용한다.
  *  @see 		NewOngoingNotification \n
@@ -265,7 +282,7 @@ bool setOngoingNotificationProgress (OngoingNotification this_gen, double progre
  *  			setOngoingNotificationIcon \n
  *  			setOngoingNotificationSound \n
  *  			setOngoingNotificationProgress
- *  @remark 	privilege	: http://tizen.org/privilege/notification
+ *  @pre        privilege	: http://tizen.org/privilege/notification
  */
 bool updateOngoingNotification (OngoingNotification this_gen);
 
