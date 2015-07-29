@@ -111,13 +111,13 @@ typedef struct _Accelerometer * Accelerometer;
 struct _Accelerometer
 {
 
-    void(* addCallback) (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+    bool(* addCallback) (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Accelerometer this_gen);
+    bool(* detachCallback) (Accelerometer this_gen);
 
-    void(* On) (Accelerometer this_gen);
+    bool(* On) (Accelerometer this_gen);
 
-    void(* Off) (Accelerometer this_gen);
+    bool(* Off) (Accelerometer this_gen);
 
     bool(* isSupported) (Accelerometer this_gen);
 
@@ -183,7 +183,7 @@ void DestroyAccelerometer (Accelerometer this_gen);
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  */
-void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachAccelerometerCallback (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer에서 callback 함수를 삭제한다.
@@ -200,7 +200,7 @@ void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCal
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  */
-void detachAccelerometerCallback (Accelerometer this_gen);
+bool detachAccelerometerCallback (Accelerometer this_gen);
 
 /*!	@fn			void AccelerometerOn (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer를 활성화 시킨다.
@@ -217,7 +217,7 @@ void detachAccelerometerCallback (Accelerometer this_gen);
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  */
-void AccelerometerOn (Accelerometer this_gen);
+bool AccelerometerOn (Accelerometer this_gen);
 
 /*!	@fn			void AccelerometerOff (Accelerometer this_gen)
  *  @brief 		생성한 Accelerometer를 비활성화 시킨다.
@@ -234,7 +234,7 @@ void AccelerometerOn (Accelerometer this_gen);
  *  			getAccelerometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  */
-void AccelerometerOff (Accelerometer this_gen);
+bool AccelerometerOff (Accelerometer this_gen);
 
 /*!	@fn			bool isAccelerometerSupported (Accelerometer this_gen)
  *  @brief 		Accelerometer의 사용 가능 여부를 판단한다.
@@ -284,13 +284,13 @@ typedef struct _Gravity * Gravity;
 struct _Gravity
 {
 
-    void(* addCallback) (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+    bool(* addCallback) (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Gravity this_gen);
+    bool(* detachCallback) (Gravity this_gen);
 
-    void(* On) (Gravity this_gen);
+    bool(* On) (Gravity this_gen);
 
-    void(* Off) (Gravity this_gen);
+    bool(* Off) (Gravity this_gen);
 
     bool(* isSupported) (Gravity this_gen);
 
@@ -357,7 +357,7 @@ void DestroyGravity (Gravity this_gen);
  *  			getGravityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
-void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachGravityCallback (Gravity this_gen)
  *  @brief 		생성한 Gravity에서 callback 함수를 삭제한다.
@@ -374,7 +374,7 @@ void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int t
  *  			getGravityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
-void detachGravityCallback (Gravity this_gen);
+bool detachGravityCallback (Gravity this_gen);
 
 /*!	@fn			void GravityOn (Gravity this_gen)
  *  @brief 		생성한 Gravity를 활성화 시킨다.
@@ -391,7 +391,7 @@ void detachGravityCallback (Gravity this_gen);
  *  			getGravityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
-void GravityOn (Gravity this_gen);
+bool GravityOn (Gravity this_gen);
 
 /*!	@fn			void GravityOff (Gravity this_gen)
  *  @brief 		생성한 Gravity를 비활성화 시킨다.
@@ -408,7 +408,7 @@ void GravityOn (Gravity this_gen);
  *  			getGravityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gravity \n
  */
-void GravityOff (Gravity this_gen);
+bool GravityOff (Gravity this_gen);
 
 /*!	@fn			bool isGravitySupported (Gravity this_gen)
  *  @brief 		Gravity의 사용 가능 여부를 판단한다.
@@ -458,13 +458,13 @@ typedef struct _LinearAccelation * LinearAccelation;
 struct _LinearAccelation
 {
 
-    void(* addCallback) (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (LinearAccelation this_gen);
+	bool(* detachCallback) (LinearAccelation this_gen);
 
-    void(* On) (LinearAccelation this_gen);
+	bool(* On) (LinearAccelation this_gen);
 
-    void(* Off) (LinearAccelation this_gen);
+	bool(* Off) (LinearAccelation this_gen);
 
     bool(* isSupported) (LinearAccelation this_gen);
 
@@ -531,7 +531,7 @@ void DestroyLinearAccelation (LinearAccelation this_gen);
  *  			getLinearAccelationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
-void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachLinearAccelationCallback (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation에서 callback 함수를 삭제한다.
@@ -548,7 +548,7 @@ void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sen
  *  			getLinearAccelationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
-void detachLinearAccelationCallback (LinearAccelation this_gen);
+bool detachLinearAccelationCallback (LinearAccelation this_gen);
 
 /*!	@fn			void LinearAccelationOn (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation를 활성화 시킨다.
@@ -565,7 +565,7 @@ void detachLinearAccelationCallback (LinearAccelation this_gen);
  *  			getLinearAccelationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
-void LinearAccelationOn (LinearAccelation this_gen);
+bool LinearAccelationOn (LinearAccelation this_gen);
 
 /*!	@fn			void LinearAccelationOff (LinearAccelation this_gen)
  *  @brief 		생성한 LinearAccelation를 비활성화 시킨다.
@@ -582,7 +582,7 @@ void LinearAccelationOn (LinearAccelation this_gen);
  *  			getLinearAccelationValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.linear_acceleration \n
  */
-void LinearAccelationOff (LinearAccelation this_gen);
+bool LinearAccelationOff (LinearAccelation this_gen);
 
 /*!	@fn			bool isLinearAccelationSupported (LinearAccelation this_gen)
  *  @brief 		LinearAccelation의 사용 가능 여부를 판단한다.
@@ -632,13 +632,13 @@ typedef struct _Magnetometer * Magnetometer;
 struct _Magnetometer
 {
 
-    void(* addCallback) (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Magnetometer this_gen);
+	bool(* detachCallback) (Magnetometer this_gen);
 
-    void(* On) (Magnetometer this_gen);
+	bool(* On) (Magnetometer this_gen);
 
-    void(* Off) (Magnetometer this_gen);
+	bool(* Off) (Magnetometer this_gen);
 
     bool(* isSupported) (Magnetometer this_gen);
 
@@ -705,7 +705,7 @@ void DestroyMagnetometer (Magnetometer this_gen);
  *  			getMagnetometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
-void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachMagnetometerCallback (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer에서 callback 함수를 삭제한다.
@@ -722,7 +722,7 @@ void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallb
  *  			getMagnetometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
-void detachMagnetometerCallback (Magnetometer this_gen);
+bool detachMagnetometerCallback (Magnetometer this_gen);
 
 /*!	@fn			void MagnetometerOn (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer를 활성화 시킨다.
@@ -739,7 +739,7 @@ void detachMagnetometerCallback (Magnetometer this_gen);
  *  			getMagnetometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
-void MagnetometerOn (Magnetometer this_gen);
+bool MagnetometerOn (Magnetometer this_gen);
 
 /*!	@fn			void MagnetometerOff (Magnetometer this_gen)
  *  @brief 		생성한 Magnetometer를 비활성화 시킨다.
@@ -756,7 +756,7 @@ void MagnetometerOn (Magnetometer this_gen);
  *  			getMagnetometerValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.magnetometer \n
  */
-void MagnetometerOff (Magnetometer this_gen);
+bool MagnetometerOff (Magnetometer this_gen);
 
 /*!	@fn			bool isMagnetometerSupported (Magnetometer this_gen)
  *  @brief 		Magnetometer의 사용 가능 여부를 판단한다.
@@ -806,13 +806,13 @@ typedef struct _RotationVector * RotationVector;
 struct _RotationVector
 {
 
-    void(* addCallback) (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (RotationVector this_gen);
+	bool(* detachCallback) (RotationVector this_gen);
 
-    void(* On) (RotationVector this_gen);
+	bool(* On) (RotationVector this_gen);
 
-    void(* Off) (RotationVector this_gen);
+	bool(* Off) (RotationVector this_gen);
 
     bool(* isSupported) (RotationVector this_gen);
 
@@ -879,7 +879,7 @@ void DestroyRotationVector (RotationVector this_gen);
  *  			getRotationVectorValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
-void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachRotationVectorCallback (RotationVector this_gen)
  *  @brief 		생성한 RotationVector에서 callback 함수를 삭제한다.
@@ -896,7 +896,7 @@ void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorC
  *  			getRotationVectorValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
-void detachRotationVectorCallback (RotationVector this_gen);
+bool detachRotationVectorCallback (RotationVector this_gen);
 
 /*!	@fn			void RotationVectorOn (RotationVector this_gen)
  *  @brief 		생성한 RotationVector를 활성화 시킨다.
@@ -913,7 +913,7 @@ void detachRotationVectorCallback (RotationVector this_gen);
  *  			getRotationVectorValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
-void RotationVectorOn (RotationVector this_gen);
+bool RotationVectorOn (RotationVector this_gen);
 
 /*!	@fn			void RotationVectorOff (RotationVector this_gen)
  *  @brief 		생성한 RotationVector를 비활성화 시킨다.
@@ -930,7 +930,7 @@ void RotationVectorOn (RotationVector this_gen);
  *  			getRotationVectorValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.rotation_vector \n
  */
-void RotationVectorOff (RotationVector this_gen);
+bool RotationVectorOff (RotationVector this_gen);
 
 /*!	@fn			bool isRotationVectorSupported (RotationVector this_gen)
  *  @brief 		RotationVector의 사용 가능 여부를 판단한다.
@@ -980,13 +980,13 @@ typedef struct _Orientation * Orientation;
 struct _Orientation
 {
 
-    void(* addCallback) (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Orientation this_gen);
+	bool(* detachCallback) (Orientation this_gen);
 
-    void(* On) (Orientation this_gen);
+	bool(* On) (Orientation this_gen);
 
-    void(* Off) (Orientation this_gen);
+	bool(* Off) (Orientation this_gen);
 
     bool(* isSupported) (Orientation this_gen);
 
@@ -1056,7 +1056,7 @@ void DestroyOrientation (Orientation this_gen);
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  *							http://tizen.org/feature/sensor.magnetometer \n
  */
-void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachOrientationCallback (Orientation this_gen)
  *  @brief 		생성한 Orientation에서 callback 함수를 삭제한다.
@@ -1074,7 +1074,7 @@ void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallbac
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  *							http://tizen.org/feature/sensor.magnetometer \n
  */
-void detachOrientationCallback (Orientation this_gen);
+bool detachOrientationCallback (Orientation this_gen);
 
 /*!	@fn			void OrientationOn (Orientation this_gen)
  *  @brief 		생성한 Orientation를 활성화 시킨다.
@@ -1092,7 +1092,7 @@ void detachOrientationCallback (Orientation this_gen);
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  *							http://tizen.org/feature/sensor.magnetometer \n
  */
-void OrientationOn (Orientation this_gen);
+bool OrientationOn (Orientation this_gen);
 
 /*!	@fn			void OrientationOff (Orientation this_gen)
  *  @brief 		생성한 Orientation를 비활성화 시킨다.
@@ -1110,7 +1110,7 @@ void OrientationOn (Orientation this_gen);
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.accelerometer \n
  *							http://tizen.org/feature/sensor.magnetometer \n
  */
-void OrientationOff (Orientation this_gen);
+bool OrientationOff (Orientation this_gen);
 
 /*!	@fn			bool isOrientationSupported (Orientation this_gen)
  *  @brief 		Orientation의 사용 가능 여부를 판단한다.
@@ -1162,13 +1162,13 @@ typedef struct _Gyroscope * Gyroscope;
 struct _Gyroscope
 {
 
-    void(* addCallback) (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+    bool(* addCallback) (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Gyroscope this_gen);
+    bool(* detachCallback) (Gyroscope this_gen);
 
-    void(* On) (Gyroscope this_gen);
+    bool(* On) (Gyroscope this_gen);
 
-    void(* Off) (Gyroscope this_gen);
+    bool(* Off) (Gyroscope this_gen);
 
     bool(* isSupported) (Gyroscope this_gen);
 
@@ -1235,7 +1235,7 @@ void DestroyGyroscope (Gyroscope this_gen);
  *  			getGyroscopeValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
-void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachGyroscopeCallback (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope에서 callback 함수를 삭제한다.
@@ -1252,7 +1252,7 @@ void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, i
  *  			getGyroscopeValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
-void detachGyroscopeCallback (Gyroscope this_gen);
+bool detachGyroscopeCallback (Gyroscope this_gen);
 
 /*!	@fn			void GyroscopeOn (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope를 활성화 시킨다.
@@ -1269,7 +1269,7 @@ void detachGyroscopeCallback (Gyroscope this_gen);
  *  			getGyroscopeValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
-void GyroscopeOn (Gyroscope this_gen);
+bool GyroscopeOn (Gyroscope this_gen);
 
 /*!	@fn			void GyroscopeOff (Gyroscope this_gen)
  *  @brief 		생성한 Gyroscope를 비활성화 시킨다.
@@ -1286,7 +1286,7 @@ void GyroscopeOn (Gyroscope this_gen);
  *  			getGyroscopeValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.gyroscope
  */
-void GyroscopeOff (Gyroscope this_gen);
+bool GyroscopeOff (Gyroscope this_gen);
 
 /*!	@fn			bool isGyroscopeSupported (Gyroscope this_gen)
  *  @brief 		Gyroscope의 사용 가능 여부를 판단한다.
@@ -1336,13 +1336,13 @@ typedef struct _Light * Light;
 struct _Light
 {
 
-    void(* addCallback) (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Light this_gen);
+	bool(* detachCallback) (Light this_gen);
 
-    void(* On) (Light this_gen);
+	bool(* On) (Light this_gen);
 
-    void(* Off) (Light this_gen);
+	bool(* Off) (Light this_gen);
 
     bool(* isSupported) (Light this_gen);
 
@@ -1409,7 +1409,7 @@ void DestroyLight (Light this_gen);
  *  			getLightValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
-void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachLightCallback (Light this_gen)
  *  @brief 		생성한 Light에서 callback 함수를 삭제한다.
@@ -1426,7 +1426,7 @@ void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timei
  *  			getLightValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
-void detachLightCallback (Light this_gen);
+bool detachLightCallback (Light this_gen);
 
 /*!	@fn			void LightOn (Light this_gen)
  *  @brief 		생성한 Light를 활성화 시킨다.
@@ -1443,7 +1443,7 @@ void detachLightCallback (Light this_gen);
  *  			getLightValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
-void LightOn (Light this_gen);
+bool LightOn (Light this_gen);
 
 /*!	@fn			void LightOff (Light this_gen)
  *  @brief 		생성한 Light를 비활성화 시킨다.
@@ -1460,7 +1460,7 @@ void LightOn (Light this_gen);
  *  			getLightValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.photometer \n
  */
-void LightOff (Light this_gen);
+bool LightOff (Light this_gen);
 
 /*!	@fn			bool isLightSupported (Light this_gen)
  *  @brief 		Light의 사용 가능 여부를 판단한다.
@@ -1511,13 +1511,13 @@ typedef struct _Proximity * Proximity;
 struct _Proximity
 {
 
-    void(* addCallback) (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Proximity this_gen);
+	bool(* detachCallback) (Proximity this_gen);
 
-    void(* On) (Proximity this_gen);
+	bool(* On) (Proximity this_gen);
 
-    void(* Off) (Proximity this_gen);
+	bool(* Off) (Proximity this_gen);
 
     bool(* isSupported) (Proximity this_gen);
 
@@ -1584,7 +1584,7 @@ void DestroyProximity (Proximity this_gen);
  *  			getProximityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
-void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachProximityCallback (Proximity this_gen)
  *  @brief 		생성한 Proximity에서 callback 함수를 삭제한다.
@@ -1601,7 +1601,7 @@ void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, i
  *  			getProximityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
-void detachProximityCallback (Proximity this_gen);
+bool detachProximityCallback (Proximity this_gen);
 
 /*!	@fn			void ProximityOn (Proximity this_gen)
  *  @brief 		생성한 Proximity를 활성화 시킨다.
@@ -1618,7 +1618,7 @@ void detachProximityCallback (Proximity this_gen);
  *  			getProximityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
-void ProximityOn (Proximity this_gen);
+bool ProximityOn (Proximity this_gen);
 
 /*!	@fn			void ProximityOff (Proximity this_gen)
  *  @brief 		생성한 Proximity를 비활성화 시킨다.
@@ -1635,7 +1635,7 @@ void ProximityOn (Proximity this_gen);
  *  			getProximityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.proximity \n
  */
-void ProximityOff (Proximity this_gen);
+bool ProximityOff (Proximity this_gen);
 
 /*!	@fn			bool isProximitySupported (Proximity this_gen)
  *  @brief 		Proximity의 사용 가능 여부를 판단한다.
@@ -1685,13 +1685,13 @@ typedef struct _Pressure * Pressure;
 struct _Pressure
 {
 
-    void(* addCallback) (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Pressure this_gen);
+	bool(* detachCallback) (Pressure this_gen);
 
-    void(* On) (Pressure this_gen);
+	bool(* On) (Pressure this_gen);
 
-    void(* Off) (Pressure this_gen);
+	bool(* Off) (Pressure this_gen);
 
     bool(* isSupported) (Pressure this_gen);
 
@@ -1794,7 +1794,7 @@ void DestroyPressure (Pressure this_gen);
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachPressureCallback (Pressure this_gen)
  *  @brief 		생성한 Pressure에서 callback 함수를 삭제한다.
@@ -1823,7 +1823,7 @@ void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-void detachPressureCallback (Pressure this_gen);
+bool detachPressureCallback (Pressure this_gen);
 
 /*!	@fn			void PressureOn (Pressure this_gen)
  *  @brief 		생성한 Pressure를 활성화 시킨다.
@@ -1852,7 +1852,7 @@ void detachPressureCallback (Pressure this_gen);
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-void PressureOn (Pressure this_gen);
+bool PressureOn (Pressure this_gen);
 
 /*!	@fn			void PressureOff (Pressure this_gen)
  *  @brief 		생성한 Pressure를 비활성화 시킨다.
@@ -1881,7 +1881,7 @@ void PressureOn (Pressure this_gen);
  *							http://tizen.org/feature/sensor.rotation_vector \n
  *							http://tizen.org/feature/sensor.gravity
  */
-void PressureOff (Pressure this_gen);
+bool PressureOff (Pressure this_gen);
 
 /*!	@fn			bool isPressureSupported (Pressure this_gen)
  *  @brief 		Pressure의 사용 가능 여부를 판단한다.
@@ -1955,13 +1955,13 @@ typedef struct _UltraViolet * UltraViolet;
 struct _UltraViolet
 {
 
-    void(* addCallback) (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (UltraViolet this_gen);
+	bool(* detachCallback) (UltraViolet this_gen);
 
-    void(* On) (UltraViolet this_gen);
+	bool(* On) (UltraViolet this_gen);
 
-    void(* Off) (UltraViolet this_gen);
+	bool(* Off) (UltraViolet this_gen);
 
     bool(* isSupported) (UltraViolet this_gen);
 
@@ -2028,7 +2028,7 @@ void DestroyUltraViolet (UltraViolet this_gen);
  *  			getUltraVioletValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
-void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachUltraVioletCallback (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet에서 callback 함수를 삭제한다.
@@ -2045,7 +2045,7 @@ void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallbac
  *  			getUltraVioletValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
-void detachUltraVioletCallback (UltraViolet this_gen);
+bool detachUltraVioletCallback (UltraViolet this_gen);
 
 /*!	@fn			void UltraVioletOn (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet를 활성화 시킨다.
@@ -2062,7 +2062,7 @@ void detachUltraVioletCallback (UltraViolet this_gen);
  *  			getUltraVioletValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
-void UltraVioletOn (UltraViolet this_gen);
+bool UltraVioletOn (UltraViolet this_gen);
 
 /*!	@fn			void UltraVioletOff (UltraViolet this_gen)
  *  @brief 		생성한 UltraViolet를 비활성화 시킨다.
@@ -2079,7 +2079,7 @@ void UltraVioletOn (UltraViolet this_gen);
  *  			getUltraVioletValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.ultraviolet \n
  */
-void UltraVioletOff (UltraViolet this_gen);
+bool UltraVioletOff (UltraViolet this_gen);
 
 /*!	@fn			bool isUltraVioletSupported (UltraViolet this_gen)
  *  @brief 		UltraViolet의 사용 가능 여부를 판단한다.
@@ -2129,13 +2129,13 @@ typedef struct _Temperature * Temperature;
 struct _Temperature
 {
 
-    void(* addCallback) (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Temperature this_gen);
+	bool(* detachCallback) (Temperature this_gen);
 
-    void(* On) (Temperature this_gen);
+	bool(* On) (Temperature this_gen);
 
-    void(* Off) (Temperature this_gen);
+	bool(* Off) (Temperature this_gen);
 
     bool(* isSupported) (Temperature this_gen);
 
@@ -2202,7 +2202,7 @@ void DestroyTemperature (Temperature this_gen);
  *  			getTemperatureValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
-void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachTemperatureCallback (Temperature this_gen)
  *  @brief 		생성한 Temperature에서 callback 함수를 삭제한다.
@@ -2219,7 +2219,7 @@ void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallbac
  *  			getTemperatureValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
-void detachTemperatureCallback (Temperature this_gen);
+bool detachTemperatureCallback (Temperature this_gen);
 
 /*!	@fn			void TemperatureOn (Temperature this_gen)
  *  @brief 		생성한 Temperature를 활성화 시킨다.
@@ -2236,7 +2236,7 @@ void detachTemperatureCallback (Temperature this_gen);
  *  			getTemperatureValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
-void TemperatureOn (Temperature this_gen);
+bool TemperatureOn (Temperature this_gen);
 
 /*!	@fn			void TemperatureOff (Temperature this_gen)
  *  @brief 		생성한 Temperature를 비활성화 시킨다.
@@ -2253,7 +2253,7 @@ void TemperatureOn (Temperature this_gen);
  *  			getTemperatureValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.temperature \n
  */
-void TemperatureOff (Temperature this_gen);
+bool TemperatureOff (Temperature this_gen);
 
 /*!	@fn			bool isTemperatureSupported (Temperature this_gen)
  *  @brief 		Temperature의 사용 가능 여부를 판단한다.
@@ -2303,13 +2303,13 @@ typedef struct _Humidity * Humidity;
 struct _Humidity
 {
 
-    void(* addCallback) (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+	bool(* addCallback) (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
-    void(* detachCallback) (Humidity this_gen);
+	bool(* detachCallback) (Humidity this_gen);
 
-    void(* On) (Humidity this_gen);
+	bool(* On) (Humidity this_gen);
 
-    void(* Off) (Humidity this_gen);
+	bool(* Off) (Humidity this_gen);
 
     bool(* isSupported) (Humidity this_gen);
 
@@ -2376,7 +2376,7 @@ void DestroyHumidity (Humidity this_gen);
  *  			getHumidityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
-void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
+bool addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data);
 
 /*!	@fn			void detachHumidityCallback (Humidity this_gen)
  *  @brief 		생성한 Humidity에서 callback 함수를 삭제한다.
@@ -2393,7 +2393,7 @@ void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int
  *  			getHumidityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
-void detachHumidityCallback (Humidity this_gen);
+bool detachHumidityCallback (Humidity this_gen);
 
 /*!	@fn			void HumidityOn (Humidity this_gen)
  *  @brief 		생성한 Humidity를 활성화 시킨다.
@@ -2410,7 +2410,7 @@ void detachHumidityCallback (Humidity this_gen);
  *  			getHumidityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
-void HumidityOn (Humidity this_gen);
+bool HumidityOn (Humidity this_gen);
 
 /*!	@fn			void HumidityOff (Humidity this_gen)
  *  @brief 		생성한 Humidity를 비활성화 시킨다.
@@ -2427,7 +2427,7 @@ void HumidityOn (Humidity this_gen);
  *  			getHumidityValue
  *  @remark 	feature	: 	http://tizen.org/feature/sensor.humidity \n
  */
-void HumidityOff (Humidity this_gen);
+bool HumidityOff (Humidity this_gen);
 
 /*!	@fn			bool isHumiditySupported (Humidity this_gen)
  *  @brief 		Humidity의 사용 가능 여부를 판단한다.

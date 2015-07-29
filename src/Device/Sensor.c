@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <sensor.h>
 #include <string.h>
+#include <dlog.h>
 
 Accelerometer NewAccelerometer (void)
 {
@@ -57,43 +58,73 @@ void DestroyAccelerometer (Accelerometer this_gen)
     free (this_gen);
 }
 
-void addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addAccelerometerCallback (Accelerometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+		dlog_print(DLOG_INFO,"DIT","NULL module");
+		return false;
+	}
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+   sensor_error_e ret= sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+   return (ret==SENSOR_ERROR_NONE)?true:false;
 }
 
-void detachAccelerometerCallback (Accelerometer this_gen)
+bool detachAccelerometerCallback (Accelerometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+    sensor_error_e ret=  sensor_listener_unset_event_cb(this->listener);
+    return (ret==SENSOR_ERROR_NONE)?true:false;
 }
 
-void AccelerometerOn (Accelerometer this_gen)
+bool AccelerometerOn (Accelerometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
-
+    	return false;
 }
 
-void AccelerometerOff (Accelerometer this_gen)
+bool AccelerometerOff (Accelerometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isAccelerometerSupported (Accelerometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_ACCELEROMETER, &supported);
     return supported;
@@ -101,6 +132,12 @@ bool isAccelerometerSupported (Accelerometer this_gen)
 
 Accelerometer_data getAccelerometerValue (Accelerometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Accelerometer_data vs={0,};
+	    return vs;
+	}
     sensor_event_s data;
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -165,43 +202,70 @@ void DestroyGravity (Gravity this_gen)
     free (this_gen);
 }
 
-void addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addGravityCallback (Gravity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     GravityExtend * this = (GravityExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret==SENSOR_ERROR_NONE)?true:false;
 }
 
-void detachGravityCallback (Gravity this_gen)
+bool detachGravityCallback (Gravity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
 	GravityExtend * this = (GravityExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void GravityOn (Gravity this_gen)
+bool GravityOn (Gravity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     GravityExtend * this = (GravityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 
 }
 
-void GravityOff (Gravity this_gen)
+bool GravityOff (Gravity this_gen)
 {
     GravityExtend * this = (GravityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isGravitySupported (Gravity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_GRAVITY, &supported);
     return supported;
@@ -273,42 +337,75 @@ void DestroyLinearAccelation (LinearAccelation this_gen)
     free (this_gen);
 }
 
-void addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addLinearAccelationCallback (LinearAccelation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret==SENSOR_ERROR_NONE)?true:false;
 }
 
-void detachLinearAccelationCallback (LinearAccelation this_gen)
+bool detachLinearAccelationCallback (LinearAccelation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
 	LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void LinearAccelationOn (LinearAccelation this_gen)
+bool LinearAccelationOn (LinearAccelation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void LinearAccelationOff (LinearAccelation this_gen)
+bool LinearAccelationOff (LinearAccelation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isLinearAccelationSupported (LinearAccelation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     bool supported = false;
     sensor_is_supported (SENSOR_LINEAR_ACCELERATION, &supported);
     return supported;
@@ -316,6 +413,13 @@ bool isLinearAccelationSupported (LinearAccelation this_gen)
 
 LinearAcceleration_data getLinearAccelationValue (LinearAccelation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    LinearAcceleration_data vs ={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -380,42 +484,78 @@ void DestroyMagnetometer (Magnetometer this_gen)
     free (this_gen);
 }
 
-void addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addMagnetometerCallback (Magnetometer this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
+
 }
 
-void detachMagnetometerCallback (Magnetometer this_gen)
+bool detachMagnetometerCallback (Magnetometer this_gen)
 {
+
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void MagnetometerOn (Magnetometer this_gen)
+bool MagnetometerOn (Magnetometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void MagnetometerOff (Magnetometer this_gen)
+bool MagnetometerOff (Magnetometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isMagnetometerSupported (Magnetometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_ACCELEROMETER, &supported);
     return supported;
@@ -423,6 +563,13 @@ bool isMagnetometerSupported (Magnetometer this_gen)
 
 Magnetometer_data getMagnetometerValue (Magnetometer this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Magnetometer_data vs={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -489,42 +636,76 @@ void DestroyRotationVector (RotationVector this_gen)
     free (this_gen);
 }
 
-void addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addRotationVectorCallback (RotationVector this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachRotationVectorCallback (RotationVector this_gen)
+bool detachRotationVectorCallback (RotationVector this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void RotationVectorOn (RotationVector this_gen)
+bool RotationVectorOn (RotationVector this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void RotationVectorOff (RotationVector this_gen)
+bool RotationVectorOff (RotationVector this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isRotationVectorSupported (RotationVector this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_ROTATION_VECTOR, &supported);
     return supported;
@@ -532,6 +713,14 @@ bool isRotationVectorSupported (RotationVector this_gen)
 
 RotationVector_data getRotationVectorValue (RotationVector this_gen)
 {
+
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    RotationVector_data vs={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -598,41 +787,77 @@ void DestroyOrientation (Orientation this_gen)
     free (this_gen);
 }
 
-void addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addOrientationCallback (Orientation this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     OrientationExtend * this = (OrientationExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachOrientationCallback (Orientation this_gen)
+bool detachOrientationCallback (Orientation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	OrientationExtend * this = (OrientationExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void OrientationOn (Orientation this_gen)
+bool OrientationOn (Orientation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     OrientationExtend * this = (OrientationExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void OrientationOff (Orientation this_gen)
+bool OrientationOff (Orientation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     OrientationExtend * this = (OrientationExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
-     }}
+         return true;
+     }
+     return false;
+}
 
 bool isOrientationSupported (Orientation this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_ORIENTATION, &supported);
     return supported;
@@ -640,6 +865,13 @@ bool isOrientationSupported (Orientation this_gen)
 
 Orientation_data getOrientationValue (Orientation this_gen)
 {
+
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Orientation_data vs = {0,};
+	    return vs;
+	}
     sensor_event_s data;
     OrientationExtend * this = (OrientationExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -706,41 +938,74 @@ void DestroyGyroscope (Gyroscope this_gen)
     free (this_gen);
 }
 
-void addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addGyroscopeCallback (Gyroscope this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachGyroscopeCallback (Gyroscope this_gen)
+bool detachGyroscopeCallback (Gyroscope this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
 	GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void GyroscopeOn (Gyroscope this_gen)
+bool GyroscopeOn (Gyroscope this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void GyroscopeOff (Gyroscope this_gen)
+bool GyroscopeOff (Gyroscope this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
-     }}
+         return true;
+     }
+     return false;
+}
 
 bool isGyroscopeSupported (Gyroscope this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_GYROSCOPE, &supported);
     return supported;
@@ -748,6 +1013,12 @@ bool isGyroscopeSupported (Gyroscope this_gen)
 
 Gyroscope_data getGyroscopeValue (Gyroscope this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Gyroscope_data vs={0,};
+	    return vs;
+	}
     sensor_event_s data;
     GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -813,41 +1084,74 @@ void DestroyLight (Light this_gen)
     free (this_gen);
 }
 
-void addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addLightCallback (Light this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     LightExtend * this = (LightExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachLightCallback (Light this_gen)
+bool detachLightCallback (Light this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+    sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void LightOn (Light this_gen)
+bool LightOn (Light this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     LightExtend * this = (LightExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void LightOff (Light this_gen)
+bool LightOff (Light this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     LightExtend * this = (LightExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
-     }}
+         return true;
+     }
+     return false;
+}
 
 bool isLightSupported (Light this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_LIGHT, &supported);
     return supported;
@@ -855,6 +1159,12 @@ bool isLightSupported (Light this_gen)
 
 Light_data getLightValue (Light this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Light_data vs ={0,};
+	    return vs;
+	}
     sensor_event_s data;
     LightExtend * this = (LightExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -918,41 +1228,77 @@ void DestroyProximity (Proximity this_gen)
     free (this_gen);
 }
 
-void addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addProximityCallback (Proximity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     ProximityExtend * this = (ProximityExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachProximityCallback (Proximity this_gen)
+bool detachProximityCallback (Proximity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	ProximityExtend * this = (ProximityExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void ProximityOn (Proximity this_gen)
+bool ProximityOn (Proximity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     ProximityExtend * this = (ProximityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void ProximityOff (Proximity this_gen)
+bool ProximityOff (Proximity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     ProximityExtend * this = (ProximityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
-     }}
+         return true;
+     }
+     return false;
+}
 
 bool isProximitySupported (Proximity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     bool supported = false;
     sensor_is_supported (SENSOR_PROXIMITY, &supported);
     return supported;
@@ -1022,41 +1368,76 @@ void DestroyPressure (Pressure this_gen)
     free (this_gen);
 }
 
-void addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addPressureCallback (Pressure this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     PressureExtend * this = (PressureExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachPressureCallback (Pressure this_gen)
+bool detachPressureCallback (Pressure this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
 	PressureExtend * this = (PressureExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void PressureOn (Pressure this_gen)
+bool PressureOn (Pressure this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     PressureExtend * this = (PressureExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void PressureOff (Pressure this_gen)
+bool PressureOff (Pressure this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     PressureExtend * this = (PressureExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
-     }}
+         return true;
+     }
+     return false;
+}
 
 bool isPressureSupported (Pressure this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     bool supported = false;
     sensor_is_supported (SENSOR_PRESSURE, &supported);
     return supported;
@@ -1064,6 +1445,13 @@ bool isPressureSupported (Pressure this_gen)
 
 Pressure_data getPressureValue (Pressure this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Pressure_data vs={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     PressureExtend * this = (PressureExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -1128,38 +1516,68 @@ void DestroyUltraViolet (UltraViolet this_gen)
     free (this_gen);
 }
 
-void addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addUltraVioletCallback (UltraViolet this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachUltraVioletCallback (UltraViolet this_gen)
+bool detachUltraVioletCallback (UltraViolet this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void UltraVioletOn (UltraViolet this_gen)
+bool UltraVioletOn (UltraViolet this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void UltraVioletOff (UltraViolet this_gen)
+bool UltraVioletOff (UltraViolet this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isUltraVioletSupported (UltraViolet this_gen)
@@ -1171,6 +1589,13 @@ bool isUltraVioletSupported (UltraViolet this_gen)
 
 UltraViolet_data getUltraVioletValue (UltraViolet this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    UltraViolet_data vs={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -1234,38 +1659,67 @@ void DestroyTemperature (Temperature this_gen)
     free (this_gen);
 }
 
-void addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addTemperatureCallback (Temperature this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
+
 }
 
-void detachTemperatureCallback (Temperature this_gen)
+bool detachTemperatureCallback (Temperature this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
 	TemperatureExtend * this = (TemperatureExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void TemperatureOn (Temperature this_gen)
+bool TemperatureOn (Temperature this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void TemperatureOff (Temperature this_gen)
+bool TemperatureOff (Temperature this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isTemperatureSupported (Temperature this_gen)
@@ -1277,6 +1731,13 @@ bool isTemperatureSupported (Temperature this_gen)
 
 Temperature_data getTemperatureValue (Temperature this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Temperature_data vs ={0,};
+	    return vs;
+	}
+
     sensor_event_s data;
     TemperatureExtend * this = (TemperatureExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
@@ -1339,38 +1800,65 @@ void DestroyHumidity (Humidity this_gen)
     free (this_gen);
 }
 
-void addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
+bool addHumidityCallback (Humidity this_gen, sensor_callback sensorCallback, int timeinterval, void * data)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     HumidityExtend * this = (HumidityExtend *)this_gen;
 
-    sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    sensor_error_e ret = sensor_listener_set_event_cb (this->listener, timeinterval, sensorCallback, data);
+    return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void detachHumidityCallback (Humidity this_gen)
+bool detachHumidityCallback (Humidity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
 	HumidityExtend * this = (HumidityExtend *)this_gen;
 
-    sensor_listener_unset_event_cb(this->listener);
+	sensor_error_e ret = sensor_listener_unset_event_cb(this->listener);
+	return (ret == SENSOR_ERROR_NONE) ? true : false ;
 }
 
-void HumidityOn (Humidity this_gen)
+bool HumidityOn (Humidity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
+
     HumidityExtend * this = (HumidityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_start (this->listener);
     if ( ison == SENSOR_ERROR_NONE )
     {
     	this->activated = true;
+    	return true;
     }
+    return false;
 }
 
-void HumidityOff (Humidity this_gen)
+bool HumidityOff (Humidity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    return false;
+	}
     HumidityExtend * this = (HumidityExtend *)this_gen;
     sensor_error_e ison = sensor_listener_stop (this->listener);
      if(ison==SENSOR_ERROR_NONE)
      {
          this->activated = false;
+         return true;
      }
+     return false;
 }
 
 bool isHumiditySupported (Humidity this_gen)
@@ -1382,6 +1870,12 @@ bool isHumiditySupported (Humidity this_gen)
 
 Humidity_data getHumidityValue (Humidity this_gen)
 {
+	if ( this_gen == NULL)
+	{
+	    dlog_print(DLOG_INFO,"DIT","NULL module");
+	    Humidity_data vs ={0,};
+	    return vs;
+	}
     sensor_event_s data;
     HumidityExtend * this = (HumidityExtend *)this_gen;
     sensor_listener_read_data (this->listener, &data);
