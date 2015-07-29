@@ -34,7 +34,7 @@ extern "C" {
  *  @retval 	NOTIFICATION_ERROR_SERVICE_NOT_READY : No response from notification service
  *  @retval 	NOTIFICATION_ERROR_UNKNOWN			 : Unknown error occurred
  *  @note 		Notification API에서 발생하는 Error Code들을 확인 해준다. \n
- *              Error의 내용은 Log를 통해 출력 된다.    
+ *              Error의 내용은 Log를 통해 출력 된다. \n   
  *  			11가지의 Error Code들을 확인 가능 하다.
  *  @see 		https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__NOTIFICATION__MODULE.html#gga59877a522577b6129d8a6175816a0867ace8d6426fa0e542f22d36e7b87bfe6c4
  */
@@ -260,7 +260,7 @@ typedef struct _NotificationExtend
     String               imagePath;
     String               soundPath;
     bool                 visible;
-}    NotificationExtend;
+} NotificationExtend;
 /* Notification */
 
 #ifdef __cplusplus
