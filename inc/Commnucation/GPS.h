@@ -49,7 +49,7 @@ typedef struct _location
     double                    horizontal;
     double                    vertical;
     time_t                    timestamp;
-    bool					  validation;
+    bool                      validation;
 
 } Location;
 
@@ -89,7 +89,7 @@ struct _gps
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
-GPS      NewGps (void);
+GPS NewGps (void);
 
 /*! @fn 		void DestroyGps (GPS this_gen)
  *  @brief 		생성한 GPS 객체를 소멸 시킨다.
@@ -102,7 +102,7 @@ GPS      NewGps (void);
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
-void     DestroyGps (GPS this_gen);
+void DestroyGps (GPS this_gen);
 
 /*! @fn 		bool isGPSAccessible (GPS this_gen)
  *  @brief 		현재 GPS 기능 지원 여부를 반환 한다.
@@ -119,7 +119,7 @@ void     DestroyGps (GPS this_gen);
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
-bool     isGPSAccessible (GPS this_gen);
+bool isGPSAccessible (GPS this_gen);
 
 /*! @fn 		bool onGPSConnect (GPS this_gen)
  *  @brief 		GPS로 연결을 시도하며 이의 성공 여부를 반환한다.
@@ -136,7 +136,7 @@ bool     isGPSAccessible (GPS this_gen);
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
-bool     onGPSConnect (GPS this_gen);
+bool onGPSConnect (GPS this_gen);
 
 /*! @fn 		bool onGPSDisconnect (GPS this_gen)
  *  @brief 		GPS로의 연결을 해제하며 이의 성공 여부를 반환한다.
@@ -153,7 +153,7 @@ bool     onGPSConnect (GPS this_gen);
  *  @remark 	feature	: http://tizen.org/feature/location \n
  *  					: http://tizen.org/feature/location.gps
  */
-bool     onGPSDisconnect (GPS this_gen);
+bool onGPSDisconnect (GPS this_gen);
 
 /*! @fn 		Location GPSRecv (GPS this_gen)
  *  @brief 		GPS로 부터 위치 정보를 수신한다.

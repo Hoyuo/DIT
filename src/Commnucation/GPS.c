@@ -6,12 +6,13 @@
 
 
 #include "Commnucation/GPS.h"
-#include "Interface/Log.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include <locations.h>
 #include <system_info.h>
+#include <dlog.h>
 
 static void gps_state_changed_cb (location_service_state_e state, void * user_data);
 
@@ -59,7 +60,7 @@ bool isGPSAccessible (GPS this_gen)
 
         return this->access;
     }
-    dlog_print(DEBUG_INFO,"DIT","NULL module");
+    dlog_print (DEBUG_INFO, "DIT", "NULL module");
     return false;
 }
 
@@ -71,7 +72,7 @@ static void gps_state_changed_cb (location_service_state_e state, void * user_da
     {
         Location location;
         int      err;
-        location.validation =true;
+        location.validation = true;
         err = location_manager_get_location (this->manager, &location.altitude,
                 &location.latitude, &location.longitude, &location.climb, &location.direction, &location.speed,
                 &location.level, &location.horizontal, &location.vertical, &location.timestamp);
@@ -109,12 +110,12 @@ bool onGPSConnect (GPS this_gen)
         }
         else
         {
-        	dlog_print(DLOG_INFO,"DIT","%s",GPSErrorChecker(error));
+            dlog_print (DLOG_INFO, "DIT", "%s", GPSErrorChecker (error));
             return this->connect = false;
         }
     }
-    dlog_print(DEBUG_INFO,"DIT","NULL module");
-        return false;
+    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool onGPSDisconnect (GPS this_gen)
@@ -130,12 +131,12 @@ bool onGPSDisconnect (GPS this_gen)
         }
         else
         {
-        	dlog_print(DLOG_INFO,"DIT","%s",GPSErrorChecker(error));
+            dlog_print (DLOG_INFO, "DIT", "%s", GPSErrorChecker (error));
             return false;
         }
     }
-    dlog_print(DEBUG_INFO,"DIT","NULL module");
-         return false;
+    dlog_print (DEBUG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 Location GPSRecv (GPS this_gen)
@@ -150,12 +151,13 @@ Location GPSRecv (GPS this_gen)
         {
             return this->location;
         }
-        else{
-            dlog_print(DEBUG_INFO,"DIT","GPS NOT RECEIVED");
-        	return l;
+        else
+        {
+            dlog_print (DEBUG_INFO, "DIT", "GPS NOT RECEIVED");
+            return l;
         }
     }
-    dlog_print(DEBUG_INFO,"DIT","NULL module");
+    dlog_print (DEBUG_INFO, "DIT", "NULL module");
     return l;
 }
 
