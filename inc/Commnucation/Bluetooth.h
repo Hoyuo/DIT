@@ -106,7 +106,7 @@ Bluetooth NewBluetooth (void);
  *  @see 		NewBluetooth
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-void      DestroyBluetooth (Bluetooth this_gen);
+void DestroyBluetooth (Bluetooth this_gen);
 
 /*! @fn 		bool isBluetoothAccessible (Bluetooth this_gen)
  *  @brief 		현재 Bluetooth 기능 지원 여부를 반환 한다.
@@ -124,7 +124,7 @@ void      DestroyBluetooth (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      isBluetoothAccessible (Bluetooth this_gen);
+bool isBluetoothAccessible (Bluetooth this_gen);
 
 /*! @fn 		bool onBluetoothConnect (Bluetooth this_gen)
  *  @brief 		Bluetooth기기로 연결을 시도하며 이의 성공 여부를 반환한다.
@@ -142,7 +142,7 @@ bool      isBluetoothAccessible (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      onBluetoothConnect (Bluetooth this_gen);
+bool onBluetoothConnect (Bluetooth this_gen);
 
 /*! @fn 		bool isBluetoothConnected (Bluetooth this_gen)
  *  @brief 		Bluetooth기기와의 연결 상태를 확인한다.
@@ -160,7 +160,7 @@ bool      onBluetoothConnect (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      isBluetoothConnected (Bluetooth this_gen);
+bool isBluetoothConnected (Bluetooth this_gen);
 
 /*! @fn 		bool onBluetoothDisconnect (Bluetooth this_gen)
  *  @brief 		Bluetooth기기로 연결을 해제하며 이의 성공 여부를 반환한다.
@@ -178,7 +178,7 @@ bool      isBluetoothConnected (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      onBluetoothDisconnect (Bluetooth this_gen);
+bool onBluetoothDisconnect (Bluetooth this_gen);
 
 /*! @fn 		void BluetoothFileSend (Bluetooth this_gen, String sendbuffer)
  *  @brief 		Bluetooth기기로 데이터를 송신한다.
@@ -196,7 +196,7 @@ bool      onBluetoothDisconnect (Bluetooth this_gen);
  * 				BluetoothFileRecv
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
+bool BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
 
 /*! @fn 		void BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
  *  @brief 		Bluetooth기기로 부터 데이터를 수신한다.
@@ -214,7 +214,7 @@ bool      BluetoothFileSend (Bluetooth this_gen, String sendbuffer);
  * 				BluetoothFileSend
  *  @remark 	feature	: http://tizen.org/feature/network.bluetooth
  */
-bool      BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
+bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer);
 
 typedef struct
 {

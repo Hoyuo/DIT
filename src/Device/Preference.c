@@ -4,11 +4,12 @@
  *  @see	Preference.h
 */
 
-
 #include "Device/Preference.h"
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+
 #include <app_preference.h>
 #include <dlog.h>
 
@@ -46,6 +47,7 @@ int getPreferenceInt (String key, int defValue)
 {
 
     int ret;
+
     preference_error_e error = preference_get_int (key, &ret);
     if ( error == PREFERENCE_ERROR_NONE )
     {
@@ -53,7 +55,7 @@ int getPreferenceInt (String key, int defValue)
     }
     else
     {
-    	dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
         return defValue;
     }
 }
@@ -61,7 +63,8 @@ int getPreferenceInt (String key, int defValue)
 double getPreferenceDouble (String key, double defValue)
 {
 
-    double  ret;
+    double ret;
+
     preference_error_e error = preference_get_double (key, &ret);
     if ( error == PREFERENCE_ERROR_NONE )
     {
@@ -69,14 +72,15 @@ double getPreferenceDouble (String key, double defValue)
     }
     else
     {
-    	dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
         return defValue;
     }
 }
 
 bool getPreferenceBoolean (String key, bool defValue)
 {
-    bool  ret;
+    bool ret;
+
     preference_error_e error = preference_get_boolean (key, &ret);
     if ( error == PREFERENCE_ERROR_NONE )
     {
@@ -84,7 +88,7 @@ bool getPreferenceBoolean (String key, bool defValue)
     }
     else
     {
-    	dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
         return defValue;
     }
 }
@@ -96,7 +100,8 @@ bool getPreferenceBoolean (String key, bool defValue)
  * */
 String getPreferenceString (String key, String defValue)
 {
-    String             ret;
+    String ret;
+
     preference_error_e error = preference_get_string (key, &ret);
     if ( error == PREFERENCE_ERROR_NONE )
     {
@@ -104,87 +109,88 @@ String getPreferenceString (String key, String defValue)
     }
     else
     {
-    	dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
         return strdup ((const String)defValue);
     }
 }
 
 bool setPreferenceInt (String key, int value)
 {
-	preference_error_e error =   preference_set_int (key, value);
-	if(error != PREFERENCE_ERROR_NONE)
-	{
-		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-		return false;
-	}
-	return true;
+    preference_error_e error = preference_set_int (key, value);
+    if ( error != PREFERENCE_ERROR_NONE )
+    {
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+        return false;
+    }
+    return true;
 }
 
 bool setPreferenceDouble (String key, double value)
 {
-	preference_error_e error =  preference_set_double (key, value);
-    if(error != PREFERENCE_ERROR_NONE)
-    	{
-    		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-    		return false;
-    	}
-    	return true;
+    preference_error_e error = preference_set_double (key, value);
+    if ( error != PREFERENCE_ERROR_NONE )
+    {
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+        return false;
+    }
+    return true;
 }
 
 bool setPreferenceBoolean (String key, bool value)
 {
-	preference_error_e error =  preference_set_boolean (key, value);
-    if(error != PREFERENCE_ERROR_NONE)
-    	{
-    		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-    		return false;
-    	}
-    	return true;
+    preference_error_e error = preference_set_boolean (key, value);
+    if ( error != PREFERENCE_ERROR_NONE )
+    {
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+        return false;
+    }
+    return true;
 }
 
 bool setPreferenceString (String key, String value)
 {
-	preference_error_e error =   preference_set_string (key, value);
-    if(error != PREFERENCE_ERROR_NONE)
-    	{
-    		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-    		return false;
-    	}
-    	return true;
+    preference_error_e error = preference_set_string (key, value);
+    if ( error != PREFERENCE_ERROR_NONE )
+    {
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+        return false;
+    }
+    return true;
 }
 
 bool PreferenceRemove (String key)
 {
-    bool existing;
+    bool               existing;
     preference_error_e error = preference_is_existing (key, &existing);
     if ( existing )
     {
-    		error = preference_remove (key);
-    		if(error != PREFERENCE_ERROR_NONE)
-    		{
-    			return true;
-    		}
-    		else{
-        		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-        		return false;
-    		}
+        error = preference_remove (key);
+        if ( error != PREFERENCE_ERROR_NONE )
+        {
+            return true;
+        }
+        else
+        {
+            dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+            return false;
+        }
     }
     else
     {
-    	dlog_print(DLOG_INFO,"DIT","Required key doesn't exist");
-    	return false;
+        dlog_print (DLOG_INFO, "DIT", "Required key doesn't exist");
+        return false;
     }
 }
 
 bool PreferenceClear (void)
 {
-	preference_error_e error =   preference_remove_all ();
-	   if(error != PREFERENCE_ERROR_NONE)
-	    	{
-	    		dlog_print(DLOG_INFO,"DIT","%s",PreferenceErrorCheck(error));
-	    		return false;
-	    	}
-	    	return true;
+    preference_error_e error = preference_remove_all ();
+    if ( error != PREFERENCE_ERROR_NONE )
+    {
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
+        return false;
+    }
+    return true;
 
 }
 
