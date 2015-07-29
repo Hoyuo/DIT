@@ -27,7 +27,7 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ### 1. Modulation Rules
 * Each of files contain their own sub modules. 
 * A module is composed of one c file and header file.
-* The start and end of the file파일의 시작부분, 구조체 시작부분, 함수 시작부분에는 주석을 추가한다.
+* The comments should be the top of each FILE, STRUCTURE and FUNCTION.
 
 ### 2. Doxygen Comment Rules
 #### FILE
@@ -64,16 +64,8 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
  *	@remark			Tizen의 features나 privileges 를 명시한다. 
  */
 ```
-
-### 3. Working Rules
-####Due. 2015-07-29
-[GitHub : Source][1]  
-[GitBook : Manual][2]  
-[Documents : Reference API][3]  
-[Release Version][4]  
-[Donation : You can help me][5]
 	
-##More Informarion
+## More Informarion
 Github ›[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][1]
 GitBook ›[![GitBook](https://cloud.githubusercontent.com/assets/8381373/8948068/de7c08b6-35dd-11e5-9b5e-714191b32406.png)][2]
 Reference ›[![Documents](https://cloud.githubusercontent.com/assets/8381373/8948073/ec4f6910-35dd-11e5-9fee-89f241f38520.PNG)][3]
