@@ -20,7 +20,7 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ## How to use this library?
 1. Download Tizen IDE and Tizen SDK. You can download [here](https://developer.tizen.org/development/tools/download).
 2. You can download release version of **[D.I.T.][4]**
-3. 
+3. 뭐라고 쓰지 흠....
 
 
 ## D.I.T. Library Rules

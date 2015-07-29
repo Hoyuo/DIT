@@ -246,11 +246,6 @@ bool onBluetoothDisconnect (Bluetooth this_gen)
 	return false;
 }
 
-/*
- * in : this_gen assign Bluetooth object
- * in : recvfile NULLABLE assign filename
- *
- */
 bool BluetoothFileRecv (Bluetooth this_gen, String * recvBuffer)
 {
 	//todo 파일만 처리 가능한 상황
@@ -352,11 +347,6 @@ static bool adapter_bonded_device_cbx (bt_device_info_s * device_info, void * us
 	{
 		free(this->remoteMACAddr);
 	}
-
-
-	//        paired_info = (bt_device_info_s *)malloc (sizeof (bt_device_info_s));
-	//        paired_info->remote_address = strdup (device_info->remote_address);
-	//        paired_info->remote_name    = strdup (device_info->remote_name);
 
 	size_t size = strlen (device_info->remote_address);
 	this->remoteMACAddr = (String)malloc (size + 1);
