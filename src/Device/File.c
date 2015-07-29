@@ -22,14 +22,17 @@
 #include <dlog.h>
 
 const char * PlayerErrorCheck(int ret);
+
 const char* MetadataExtractorErrorCheck(int ret);
+
 const char * MediaContentErrorCheck(int ret);
 
-
-
+static void player_completed_callback(void* user_data);
 
 static void deletemediaresult		(gpointer data);
+
 static void deleteSearchListElement (gpointer data);
+
 
 File NewFile (void)
 {
@@ -314,6 +317,10 @@ bool playVideo (Video this_gen)
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
 	   	}
+
+    	player_unset_completed_cb(this->player_handle);
+    	player_set_completed_cb(this->player_handle, player_completed_callback,this->player_handle);
+
 		ret = player_start (this->player_handle);
 		if(ret !=PLAYER_ERROR_NONE && ret != PLAYER_ERROR_INVALID_STATE)
 		{
@@ -507,15 +514,15 @@ bool playAudio (Audio this_gen)
 
 		AudioExtends * this = (AudioExtends *)this_gen;
 
-		player_state_e state = PLAYER_STATE_NONE;
-		player_get_state(this->player_handle,&state);
 
-		if(state == PLAYER_STATE_IDLE||state == PLAYER_STATE_IDLE)
+
 		res = player_prepare (this->player_handle);
-    	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
+    	if( res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE )
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     	}
+    	player_unset_completed_cb(this->player_handle);
+    	player_set_completed_cb(this->player_handle, player_completed_callback,this->player_handle);
     	res = player_start (this->player_handle);
     	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
@@ -850,6 +857,13 @@ int getImageHeight (Image this_gen)
 {
     ImageExtends * this = (ImageExtends *)this_gen;
     return this->height;
+}
+
+static void player_completed_callback(void* user_data)
+{
+	player_h player_handle = (player_h)user_data;
+	dlog_print(DLOG_INFO,"DIT","player_completed_callback call");
+	player_stop(player_handle);
 }
 
 const char * PlayerErrorCheck(int ret)
