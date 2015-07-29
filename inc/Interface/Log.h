@@ -18,12 +18,12 @@ extern "C" {
 
 /* Log */
 /*!	@def LOGINFO(tag, format, arg...)
- *  @brief 		문자열에 특정 태그를 붙여서 Infomation log를 발생시킨다.
+ *  @brief 		문자열에 특정 태그를 붙여서 Information log를 발생시킨다.
  *  @param[in] 	tag 발생시키고자 하는 log의 태그 이름
  *  @param[in] 	format 발생시키고자 하는 log의 문자열
  *  @param[in] 	arg 발생시키고자 하는 log의 arguments
  *  @param[out]	null
- *  @note 		문자열에 특정 태그를 붙여서 Infomation log를 발생시킨다. \n
+ *  @note 		문자열에 특정 태그를 붙여서 Information log를 발생시킨다. \n
  *  			arg는 가변인자이다.
  *  @see 		LOGDEBUG \n
  *  			LOGWARNING \n
