@@ -1,11 +1,10 @@
 
+#include "Device/MediaRecorder.h"
 #include <string.h>
 #include <stdlib.h>
 #include <dlog.h>
 #include <Elementary.h>
 #include <Evas.h>
-
-#include "Device/MediaRecorder.h"
 
 #define MEDIA_DEFAULT_BITRATE  (288000)
 #define MEDIA_DEFAULT_SAMPLERATE (44100)
@@ -14,7 +13,7 @@
 static bool recorder_define_fileformat_and_rotation(CameraRecorderExtends* cr,const char* filename);
 static bool audio_recorder_define_fileformat(AudioRecorderExtends* ar,const char* filename);
 
-const char* recorderErrorCheck(int result);
+const char* RecorderErrorCheck(int result);
 const char* cameraErrorCheck(int result);
 
 AudioRecorder NewAudioRecroder(void){
@@ -54,57 +53,72 @@ bool audioRecorderInit(AudioRecorder this_gen, const char * filename)
 	if(this_gen != NULL)
 	{
 		AudioRecorderExtends* this= (AudioRecorderExtends*)this_gen;
-
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-
-		ret = recorder_create_audiorecorder(&this->audiorecorderhandle);
-		if(ret!= RECORDER_ERROR_NONE)
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->audiorecorderhandle,&status);
+		if(status==RECORDER_STATE_NONE)
 		{
-			return false;
-		}
 
-		ret= recorder_set_audio_encoder(this->audiorecorderhandle,RECORDER_AUDIO_CODEC_AAC);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		ret = recorder_attr_set_audio_samplerate(this->audiorecorderhandle, MEDIA_DEFAULT_SAMPLERATE);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
+			recorder_error_e ret= RECORDER_ERROR_NONE;
 
-		audio_recorder_define_fileformat(this->audiorecorderhandle,filename);
-//		ret = recorder_set_file_format(this->audiorecorderhandle, RECORDER_FILE_FORMAT_MP4);
-//		if(ret!= RECORDER_ERROR_NONE)
-//		{
-//			return false;
-//		}
+			ret = recorder_create_audiorecorder(&this->audiorecorderhandle);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 
-		ret=recorder_attr_set_audio_encoder_bitrate(this->audiorecorderhandle,MEDIA_DEFAULT_BITRATE);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
+			ret= recorder_set_audio_encoder(this->audiorecorderhandle,RECORDER_AUDIO_CODEC_AAC);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+			ret = recorder_attr_set_audio_samplerate(this->audiorecorderhandle, MEDIA_DEFAULT_SAMPLERATE);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 
-		ret = recorder_set_filename(this->audiorecorderhandle, filename);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
+			ret =audio_recorder_define_fileformat(this,filename);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 
-		ret = recorder_attr_set_audio_device(this->audiorecorderhandle,RECORDER_AUDIO_DEVICE_MIC);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
+			ret=recorder_attr_set_audio_encoder_bitrate(this->audiorecorderhandle,MEDIA_DEFAULT_BITRATE);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+
+			ret = recorder_set_filename(this->audiorecorderhandle, filename);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+
+			ret = recorder_attr_set_audio_device(this->audiorecorderhandle,RECORDER_AUDIO_DEVICE_MIC);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+			ret = recorder_prepare(this->audiorecorderhandle);
+			if(ret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+			return true;
 		}
-		ret = recorder_prepare(this->audiorecorderhandle);
-		if(ret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		return true;
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -112,35 +126,55 @@ bool audioRecorderStart(AudioRecorder this_gen){
 
 	if(this_gen!=NULL){
 		AudioRecorderExtends* this= (AudioRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		ret = recorder_start(this->audiorecorderhandle);
-		if(ret==RECORDER_ERROR_NONE)
+
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->audiorecorderhandle,&status);
+
+		if(status==RECORDER_STATE_READY||status == RECORDER_STATE_PAUSED)
 		{
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret = recorder_start(this->audiorecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 			return true;
+
 		}
-		else
-		{
-			return false;
-		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
+
+
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
 bool audioRecorderPause(AudioRecorder this_gen){
 	if(this_gen!=NULL){
 		AudioRecorderExtends* this= (AudioRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->audiorecorderhandle,&status);
+		if(status == RECORDER_STATE_RECORDING)
+		{
 
-		ret=recorder_pause(this->audiorecorderhandle);
-		if(ret==RECORDER_ERROR_NONE)
-		{
-			return true;
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+
+			ret=recorder_pause(this->audiorecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+
+				return true;
+
 		}
-		else
-		{
-			return false;
-		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -148,37 +182,49 @@ bool audioRecorderEnd(AudioRecorder this_gen){
 
 	if(this_gen!=NULL){
 		AudioRecorderExtends* this= (AudioRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
 
-		ret=recorder_commit(this->audiorecorderhandle);
-		if(ret==RECORDER_ERROR_NONE)
+		recorder_state_e status=RECORDER_STATE_NONE;
+		recorder_get_state(this->audiorecorderhandle,&status);
+
+		if(status == RECORDER_STATE_RECORDING||status == RECORDER_STATE_PAUSED)
 		{
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret=recorder_commit(this->audiorecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
 bool audioRecorderCancel(AudioRecorder this_gen){
 	if(this_gen!=NULL){
 		AudioRecorderExtends* this= (AudioRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		recorder_cancel(this->audiorecorderhandle);
-		if(ret==RECORDER_ERROR_NONE)
+		recorder_state_e status;
+		recorder_get_state(this->audiorecorderhandle,&status);
+		if( status==RECORDER_STATE_RECORDING || status==RECORDER_STATE_PAUSED )
 		{
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			recorder_cancel(this->audiorecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
-
 }
 
 
@@ -222,116 +268,106 @@ void DestroyCameraRecroder(CameraRecorder this_gen){
 	}
 }
 
-static bool xxxx(camera_rotation_e rotation, void *user_data)
-{
-	dlog_print(DLOG_DEBUG,"DIT","%d supports",rotation);
-	return true;
-}
-
 bool cameraRecorderInit(CameraRecorder this_gen, const char* filename, camera_type camera, Evas_Object* evasObject){
 
 	if(this_gen !=NULL)
 	{
-
-		recorder_error_e rret=RECORDER_ERROR_NONE;
-		camera_error_e cret=CAMERA_ERROR_NONE;
-		bool b=false;
 		CameraRecorderExtends* this= (CameraRecorderExtends*)this_gen;
 
-		cret = camera_create((camera_device_e)camera,&this->camerahandle);
-		if(cret!= CAMERA_ERROR_NONE)
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->camerarecorderhandle,&status);
+
+		if(status==RECORDER_STATE_NONE)
 		{
-			return false;
+			recorder_error_e rret=RECORDER_ERROR_NONE;
+			camera_error_e cret=CAMERA_ERROR_NONE;
+			bool b=false;
+
+			cret = camera_create((camera_device_e)camera,&this->camerahandle);
+			if(cret!= CAMERA_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorCheck(cret));
+			}
+
+			cret= camera_set_display_mode(this->camerahandle, CAMERA_DISPLAY_MODE_LETTER_BOX);
+			if(cret!= CAMERA_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorCheck(cret));
+			}
+
+
+			if(camera==1)// if back camara
+			{
+				cret=camera_set_display_rotation(this->camerahandle,3);
+				dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorCheck(cret));
+			}
+
+			cret=camera_set_display(this->camerahandle,CAMERA_DISPLAY_TYPE_EVAS,(void *)evasObject);
+			if(cret!= CAMERA_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT",cameraErrorCheck(cret));
+			}
+
+			rret = recorder_create_videorecorder(this->camerahandle, &this->camerarecorderhandle);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+			recorder_attr_set_orientation_tag (this->camerarecorderhandle, 3);
+
+			rret=recorder_set_video_encoder(this->camerarecorderhandle,RECORDER_VIDEO_CODEC_MPEG4);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+			rret=recorder_attr_set_video_encoder_bitrate(this->camerarecorderhandle,MEDIA_DEFAULT_BITRATE);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+			rret=recorder_set_filename(this->camerarecorderhandle, filename);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+
+			b=recorder_define_fileformat_and_rotation(this,filename);
+
+
+			rret=recorder_set_audio_encoder(this->camerarecorderhandle,RECORDER_AUDIO_CODEC_AAC);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorCheck(cret));
+			}
+			rret=recorder_attr_set_audio_encoder_bitrate(this->camerarecorderhandle,MEDIA_DEFAULT_BITRATE);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+			rret=recorder_attr_set_audio_samplerate(this->camerarecorderhandle,MEDIA_DEFAULT_SAMPLERATE);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+
+			rret = recorder_attr_set_audio_device(this->camerarecorderhandle,RECORDER_AUDIO_DEVICE_MIC);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+			}
+
+			rret=recorder_prepare(this->camerarecorderhandle);
+			if(rret!= RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_DEBUG,"DIT","%s",RecorderErrorCheck(rret));
+				return false;
+			}
+			return true;
 		}
-
-		cret= camera_set_display_mode(this->camerahandle, CAMERA_DISPLAY_MODE_LETTER_BOX);
-		if(cret!= CAMERA_ERROR_NONE)
-		{
-			return false;
-		}
-
-
-//		cret=camera_attr_get_stream_rotation(this->camerahandle,&camera_rotation);
-//
-//		dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorcheck(cret));
-//		cret=camera_set_display_rotation(this->camerahandle,camera_rotation);
-//		dlog_print(DLOG_DEBUG,"DIT","%s",cameraErrorcheck(cret));
-
-		if(camera==1)
-		cret=camera_set_display_rotation(this->camerahandle,3);
-
-
-		cret=camera_attr_foreach_supported_stream_rotation(this->camerahandle,xxxx,NULL);
-
-
-
-
-
-		cret=camera_set_display(this->camerahandle,CAMERA_DISPLAY_TYPE_EVAS,(void *)evasObject);
-		if(cret!= CAMERA_ERROR_NONE)
-		{
-			return false;
-		}
-
-		rret = recorder_create_videorecorder(this->camerahandle, &this->camerarecorderhandle);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		recorder_attr_set_orientation_tag (this->camerarecorderhandle, 3);
-
-		rret=recorder_set_video_encoder(this->camerarecorderhandle,RECORDER_VIDEO_CODEC_MPEG4);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		rret=recorder_attr_set_video_encoder_bitrate(this->camerarecorderhandle,MEDIA_DEFAULT_BITRATE);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		rret=recorder_set_filename(this->camerarecorderhandle, filename);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-
-		b=recorder_define_fileformat_and_rotation(this,filename);
-		if(b!= true)
-		{
-			return false;
-		}
-
-		rret=recorder_set_audio_encoder(this->camerarecorderhandle,RECORDER_AUDIO_CODEC_AAC);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		rret=recorder_attr_set_audio_encoder_bitrate(this->camerarecorderhandle,MEDIA_DEFAULT_BITRATE);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		rret=recorder_attr_set_audio_samplerate(this->camerarecorderhandle,MEDIA_DEFAULT_SAMPLERATE);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-
-		rret = recorder_attr_set_audio_device(this->camerarecorderhandle,RECORDER_AUDIO_DEVICE_MIC);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-
-
-		rret=recorder_prepare(this->camerarecorderhandle);
-		if(rret!= RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		return true;
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -340,18 +376,30 @@ bool cameraRecorderStart(CameraRecorder this_gen){
 	if( this_gen != NULL )
 	{
 		CameraRecorderExtends* this= (CameraRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		ret=recorder_start(this->camerarecorderhandle);
-		if(ret!=RECORDER_ERROR_NONE)
+
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->camerarecorderhandle,&status);
+
+		if(status==RECORDER_STATE_READY||status == RECORDER_STATE_PAUSED)
 		{
-			return false;
-		}
-		else
-		{
+
+			recorder_state_e status;
+			recorder_get_state(this->camerarecorderhandle,&status);
+			dlog_print(DLOG_DEBUG,"DIT","%d",status);
+
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret=recorder_start(this->camerarecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT",RecorderErrorCheck(ret));
+				return false;
+			}
 			return true;
 		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
 	}
-
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 }
 
@@ -360,18 +408,27 @@ bool cameraRecorderPause(CameraRecorder this_gen){
 	if( this_gen != NULL )
 	{
 		CameraRecorderExtends* this= (CameraRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		ret=recorder_pause(this->camerarecorderhandle);
-		if(ret!=RECORDER_ERROR_NONE)
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
 
+		recorder_state_e status = RECORDER_STATE_NONE;
+		recorder_get_state(this->camerarecorderhandle,&status);
+		if(status == RECORDER_STATE_RECORDING)
+		{
+
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret=recorder_pause(this->camerarecorderhandle);
+
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+			return true;
+
+		}
+		dlog_print(DLOG_INFO,"DIT","Invalid State");
+		return false;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 
 
@@ -383,18 +440,25 @@ bool cameraRecorderEnd(CameraRecorder this_gen){
 	if( this_gen != NULL )
 	{
 		CameraRecorderExtends* this= (CameraRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		ret=recorder_commit(this->camerarecorderhandle);
-		if(ret!=RECORDER_ERROR_NONE)
+		recorder_state_e status;
+		recorder_get_state(this->camerarecorderhandle,&status);
+		if(status == RECORDER_STATE_RECORDING||status == RECORDER_STATE_PAUSED)
 		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
 
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret=recorder_commit(this->camerarecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+				return true;
+		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
+
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
 
 
@@ -405,21 +469,29 @@ bool cameraRecorderCancel(CameraRecorder this_gen){
 	if( this_gen != NULL )
 	{
 		CameraRecorderExtends* this= (CameraRecorderExtends*)this_gen;
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		ret=recorder_cancel(this->camerarecorderhandle);
-		if(ret!=RECORDER_ERROR_NONE)
+
+		recorder_state_e status;
+		recorder_get_state(this->camerarecorderhandle,&status);
+		dlog_print(DLOG_DEBUG,"DIT","%d",status);
+		if( status==RECORDER_STATE_RECORDING || status==RECORDER_STATE_PAUSED )
 		{
-			return false;
-		}
-		else
-		{
+			recorder_error_e ret= RECORDER_ERROR_NONE;
+			ret=recorder_cancel(this->camerarecorderhandle);
+			if(ret!=RECORDER_ERROR_NONE)
+			{
+				dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+				return false;
+			}
+
 			return true;
+
 		}
+		dlog_print(DLOG_INFO,"DIT","Invalid state");
+		return false;
+
 	}
-
+	dlog_print(DLOG_INFO,"DIT","NULL module");
 	return false;
-
-
 }
 
 
@@ -438,6 +510,7 @@ static bool recorder_define_fileformat_and_rotation(CameraRecorderExtends* cr,co
 		ret=recorder_set_file_format(cr->camerarecorderhandle,RECORDER_FILE_FORMAT_3GP);
 		if(ret!=RECORDER_ERROR_NONE)
 		{
+			dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
 			free(save_pstr);
 			return false;
 		}
@@ -447,6 +520,7 @@ static bool recorder_define_fileformat_and_rotation(CameraRecorderExtends* cr,co
 		ret=recorder_set_file_format(cr->camerarecorderhandle,RECORDER_FILE_FORMAT_MP4);
 		if(ret!=RECORDER_ERROR_NONE)
 		{
+			dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
 			free(save_pstr);
 			return false;
 		}
@@ -460,33 +534,35 @@ static bool audio_recorder_define_fileformat(AudioRecorderExtends* ar,const char
 {
 
 	char* pstr= strdup(filename);
-		char* save_pstr= pstr;
+	char* save_pstr= pstr;
 
-		recorder_error_e ret= RECORDER_ERROR_NONE;
-		pstr+=sizeof(char)*strlen(save_pstr);
-		while(*pstr!='.')pstr-=sizeof(char);
-		pstr+=sizeof(char);
-		if(strcmp(pstr,"3gp")==0)
+	recorder_error_e ret= RECORDER_ERROR_NONE;
+	pstr+=sizeof(char)*strlen(save_pstr);
+	while(*pstr!='.')pstr-=sizeof(char);
+	pstr+=sizeof(char);
+	if(strcmp(pstr,"3gp")==0)
+	{
+		ret=recorder_set_file_format(ar->audiorecorderhandle,RECORDER_FILE_FORMAT_3GP);
+		if(ret!=RECORDER_ERROR_NONE)
 		{
-			ret=recorder_set_file_format(ar->audiorecorderhandle,RECORDER_FILE_FORMAT_3GP);
-			if(ret!=RECORDER_ERROR_NONE)
-			{
-				free(save_pstr);
-				return false;
-			}
+			dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+			free(save_pstr);
+			return false;
 		}
-		if(strcmp(pstr,"mp4")==0)
+	}
+	if(strcmp(pstr,"mp4")==0)
+	{
+		ret=recorder_set_file_format(ar->audiorecorderhandle,RECORDER_FILE_FORMAT_MP4);
+		if(ret!=RECORDER_ERROR_NONE)
 		{
-			ret=recorder_set_file_format(ar->audiorecorderhandle,RECORDER_FILE_FORMAT_MP4);
-			if(ret!=RECORDER_ERROR_NONE)
-			{
-				free(save_pstr);
-				return false;
-			}
+			dlog_print(DLOG_INFO,"DIT","%s",RecorderErrorCheck(ret));
+			free(save_pstr);
+			return false;
 		}
+	}
 
-		free(save_pstr);
-		return true;
+	free(save_pstr);
+	return true;
 }
 
 
