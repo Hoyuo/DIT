@@ -45,11 +45,11 @@ const char * PreferenceErrorCheck (int errCode);
 typedef struct _Preference * Preference;
 struct _Preference
 {
-    int (* getInt) (String key,int defValue);
+    int (* getInt) (String key, int defValue);
 
-    double (* getDouble) (String key,double defValue);
+    double (* getDouble) (String key, double defValue);
 
-    bool (* getBoolean) (String key,bool defValue);
+    bool (* getBoolean) (String key, bool defValue);
 
     String (* getString) (String key, String defValue);
 
@@ -86,7 +86,7 @@ struct _Preference
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-Preference	NewPreference (void);
+Preference NewPreference (void);
 
 /*!	@fn			void DestroyPreference (Preference this_gen)
  *  @brief		생성한 Preference 객체를 소멸 시킨다.
@@ -97,7 +97,7 @@ Preference	NewPreference (void);
  *  			Preference 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewPreference
  */
-void	DestroyPreference (Preference this_gen);
+void DestroyPreference (Preference this_gen);
 
 /*! @fn 		int getPreferenceInt (String key, int defValue)
  *  @brief 		키 값에 대응하는 Preference의 @c int 값을 반환한다.
@@ -118,7 +118,7 @@ void	DestroyPreference (Preference this_gen);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-int		getPreferenceInt (String key, int defValue);
+int getPreferenceInt (String key, int defValue);
 
 /*! @fn 		double getPreferenceDouble (String key, double defValue)
  *  @brief 		키 값에 대응하는 Preference의 @c double 값을 반환한다.
@@ -139,7 +139,7 @@ int		getPreferenceInt (String key, int defValue);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-double     getPreferenceDouble (String key, double defValue);
+double getPreferenceDouble (String key, double defValue);
 
 /*! @fn 		bool getPreferenceBoolean (String key, bool defValue)
  *  @brief 		키 값에 대응하는 Preference의 @c boolean 값을 반환한다.
@@ -160,7 +160,7 @@ double     getPreferenceDouble (String key, double defValue);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-bool       getPreferenceBoolean (String key, bool defValue);
+bool getPreferenceBoolean (String key, bool defValue);
 
 /*! @fn 		String getPreferenceString (String key, String defValue)
  *  @brief 		키 값에 대응하는 Preference의 @c string 값을 반환한다.
@@ -182,7 +182,7 @@ bool       getPreferenceBoolean (String key, bool defValue);
  *  			PreferenceClear
  *  @warning    반환된 @c string 값은 이후 반드시 @a free()를 통해 메모리 해제를 해줘야 한다.
  */
-String     getPreferenceString (String key, String defValue);
+String getPreferenceString (String key, String defValue);
 
 /*! @fn 		void setPreferenceInt (String key, int value)
  *  @brief 		키 값에 대응하는 Preference에 @c int 값을 저장한다.
@@ -205,7 +205,7 @@ String     getPreferenceString (String key, String defValue);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-bool       setPreferenceInt (String key, int value);
+bool setPreferenceInt (String key, int value);
 
 /*! @fn 		void setPreferenceDouble (String key, double value)
  *  @brief 		키 값에 대응하는 Preference에 @c double 값을 저장한다.
@@ -228,7 +228,7 @@ bool       setPreferenceInt (String key, int value);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-bool       setPreferenceDouble (String key, double value);
+bool setPreferenceDouble (String key, double value);
 
 /*! @fn 		void setPreferenceBoolean (String key, bool value)
  *  @brief 		키 값에 대응하는 Preference에 @c boolean 값을 저장한다.
@@ -251,7 +251,7 @@ bool       setPreferenceDouble (String key, double value);
  *  			PreferenceRemove \n
  *  			PreferenceClear
  */
-bool       setPreferenceBoolean (String key, bool value);
+bool setPreferenceBoolean (String key, bool value);
 
 /*! @fn 		void setPreferenceString (String key, String value)
  *  @brief 		키 값에 대응하는 Preference에 @c string 값을 저장한다.
@@ -274,7 +274,7 @@ bool       setPreferenceBoolean (String key, bool value);
  *  			PreferenceRemove \n
  *  			PreferenceClear 
  */
-bool       setPreferenceString (String key, String value);
+bool setPreferenceString (String key, String value);
 
 /*! @fn 		void PreferenceRemove (String key)
  *  @brief 		키 값에 대응하는 Preference의 값을 삭제한다.
@@ -296,7 +296,7 @@ bool       setPreferenceString (String key, String value);
  *  			setPreferenceString \n
  *  			PreferenceClear
  */
-bool       PreferenceRemove (String key);
+bool PreferenceRemove (String key);
 
 /*! @fn 		void PreferenceClear (void)
  *  @brief 		모든 Preference의 값을 삭제한다.
@@ -318,7 +318,7 @@ bool       PreferenceRemove (String key);
  *  			setPreferenceString \n
  *  			PreferenceRemove
  */
-bool       PreferenceClear (void);
+bool PreferenceClear (void);
 /* Preference */
 
 #ifdef __cplusplus
