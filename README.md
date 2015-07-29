@@ -20,7 +20,7 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ## How to use this library?
 1. Download Tizen IDE and Tizen SDK. You can download [here](https://developer.tizen.org/development/tools/download).
 2. You can download release version of **[D.I.T.][4]**
-3. 파일 옮기기 뭐 그런거 설명충 등장
+3. 
 
 
 ## D.I.T. Library Rules
@@ -35,7 +35,7 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 /*!	@file		파일 이름 (확장자까지 표기)
  *	@brief		간략한 설명
  *	@note		자세한 설명 및 주의 사항
- *	@see		참고 사항 및 현재 파일과 연관된 사항들 
+ *	@see		참고 사항 및 현재 파일과 연관된 사항
  *				( URL / Header / Soucefile / Function / Struct 등 
  */
 ```
@@ -44,9 +44,9 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 /*!	@struct			구조체 이름
  *	@brief			간략한 설명
  *	@note			자세한 설명 및 주의 사항
- *	@see 			참고 사항 및 현재 구조체와 연관된 사항들 
+ *	@see 			참고 사항 및 현재 구조체와 연관된 사항
  *					( URL / Header / Soucefile / Function / Struct 등 )
- *	@todo			Tizen의 features나 privileges 를 명시한다.
+ *	@pre			Tizen의 features나 privileges 를 명시한다.
  */
 ```
 
@@ -58,15 +58,16 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
  *	@param[out]		인자로 출력 값을 저장하는 장소
  *	@retval			반환 인자 타입 및 간략한 설명
  *	@note			자세한 설명 및 주의 사항
- *	@see			참고 사항 및 현재 구조체와 연관된 사항들 
+ *	@see			참고 사항 및 현재 구조체와 연관된 사항
  *					( URL / Header / Soucefile / Function / Struct 등 )
  *					주로 같은 모듈 내부의 연관 함수들을 기재한다.
- *	@remark			Tizen의 features나 privileges 를 명시한다. 
+ *	@pre			Tizen의 features나 privileges 를 명시
+ *	@warning		함수 사용시 중요한 주의 사항을 명시
  */
 ```
 	
 ## More Informarion
-Github ›[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][1]
+GitHub ›[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8948058/b7450220-35dd-11e5-97ac-b8b827d07b80.png)][1]
 GitBook ›[![GitBook](https://cloud.githubusercontent.com/assets/8381373/8948068/de7c08b6-35dd-11e5-9b5e-714191b32406.png)][2]
 Reference ›[![Documents](https://cloud.githubusercontent.com/assets/8381373/8948073/ec4f6910-35dd-11e5-9fee-89f241f38520.PNG)][3]
 Release ›[![Release](https://cloud.githubusercontent.com/assets/8381373/8948079/f864c2e0-35dd-11e5-9b5a-1fdcd9cd00d7.png)][4]
