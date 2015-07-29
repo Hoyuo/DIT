@@ -7,26 +7,27 @@ link of DIT video in embed style and 1280x720 resolution image file
 D.I.T. library is a light-weight library for manipulating Tizen Native API. Our goal is to make Tizen Native coding simpler, easier, and more fun!  
 
 ## Why use this library?
-1. We're *not used to* developing Tizen Native.
+1. We're **not used to** developing Tizen Native.
 2. We need more easier Tizen Native Library.
-3. _Some of sample codes of Tizen Native in 'tizen.org' is not working._
-3. D.I.T. library makes tizen seems like Android.
-8. D.I.T. is heavily customizable.
-	* If you want to edit D.I.T. for your taste, [***please follow D.I.T. Library Rules***][2]
+3. ~~Some of sample codes of Tizen Native in 'tizen.org' is not working.~~
+4. D.I.T. library makes Tizen seems like Android.
+5. D.I.T. is heavily customizable.
+	* If you want to edit D.I.T. for your taste, **please follow D.I.T. Library Rules**
 
 **[More ›][2]**
 
 
 ## How to use this library?
-1. Download Tizen IDE and Tizen SDK. --- **[Click ›](https://developer.tizen.org/development/tools/download)**
-2. You can download release version of D.I.T. --- **[Click ›][4]**
+1. Download Tizen IDE and Tizen SDK. You can download [here](https://developer.tizen.org/development/tools/download).
+2. You can download release version of **[D.I.T.][4]**
 3. 파일 옮기기 뭐 그런거 설명충 등장
 
 
 ## D.I.T. Library Rules
 ### 1. Modulation Rules
-* 각 서브 모듈은 파일로 만든다. 하나의 모듈당 하나의 c source file과 head file로 이루어져 있다.
-* 파일의 시작부분, 구조체 시작부분, 함수 시작부분에는 주석을 추가한다.
+* Each of files contain their own sub modules. 
+* A module is composed of one c file and header file.
+* The start and end of the file파일의 시작부분, 구조체 시작부분, 함수 시작부분에는 주석을 추가한다.
 
 ### 2. Doxygen Comment Rules
 #### FILE
@@ -73,15 +74,11 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 [Donation : You can help me][5]
 	
 ##More Informarion
-[![GitHub](http://cdn.flaticon.com/png/256/25231.png)][1]
-
-[![GitBook](https://avatars2.githubusercontent.com/u/7111340?v=3&s=80)][2]
-
-[![Documents](http://cdn.flaticon.com/png/256/25231.png)][3]
-
-[![Release](http://cdn.flaticon.com/png/256/25231.png)][4]
-
-[![Donation](http://cdn.flaticon.com/png/256/25231.png)][5]
+[![GitHub](https://cloud.githubusercontent.com/assets/8381373/8947623/0d663904-35d8-11e5-8d77-31083477c045.png)][1]
+[![GitBook](https://cloud.githubusercontent.com/assets/8381373/8947741/94cca5b2-35d9-11e5-84c2-49d1f105fcd3.png)][2]
+[![Documents](https://cloud.githubusercontent.com/assets/8381373/8947703/15c25ee2-35d9-11e5-90d4-0081ec9f6888.PNG)][3]
+[![Release](https://cloud.githubusercontent.com/assets/8381373/8947929/15cbddde-35dc-11e5-8dbc-96b86b656724.png)][4]
+[![Donation](https://cloud.githubusercontent.com/assets/8381373/8947648/605d4756-35d8-11e5-8c24-0c2992c1c42e.PNG)][5]
 
 
 
