@@ -533,5 +533,5 @@ const char * BluetoothErrorCheck (int errCode)
 
 	default:
 		return "BT_ERROR_UNKNWON";
-	};
+	}
 }

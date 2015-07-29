@@ -208,6 +208,6 @@ const char * PreferenceErrorCheck (int errCode)
         return "PREFERENCE_ERROR_IO_ERROR : Internal I/O Error";
 
     default:
-        return "DEVICE_ERROR_NOT_UNKNOWN";
+        return "PREFERENCE_ERROR_NOT_UNKNOWN";
     }
 }
