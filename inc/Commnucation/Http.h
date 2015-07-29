@@ -19,7 +19,7 @@ extern "C" {
 #endif
 
 /*! @fn 		const char * HttpErrorCheck (CURLcode errorCode)
- *  @brief 		Bluetooth API에서 발생하는 Error Code들을 확인 해준다.
+ *  @brief 		Http API에서 발생하는 Error Code들을 확인 해준다.
  *  @param[in] 	errCode 확인 하고자 하는 Error Code
  *  @param[out]	null
  *  @retval		CURLE_OK
@@ -102,7 +102,8 @@ extern "C" {
  *  @retval 	CURLE_FTP_BAD_FILE_LIST			: Unable to parse FTP file list
  *  @retval 	CURLE_CHUNK_FAILED				: Chunk callback reported error
  *  @retval 	CURL_LAST
- *  @note 		Bluetooth API에서 발생하는 Error Code들을 확인 해준다. \n
+ *  @note 		Http API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.
  *  @see 		http://curl.haxx.se/libcurl/c/libcurl-errors.html
  */
 const char * HttpErrorCheck (CURLcode errorCode);
@@ -113,7 +114,7 @@ const char * HttpErrorCheck (CURLcode errorCode);
  *  @note	Http의 Http 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewHttp() 함수를 사용해야 하며 사용이 끝났을 때 DestoryHttp() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html
- *  @todo	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
+ *  @pre	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
  */
 typedef struct _Http * Http;
 struct _Http
@@ -146,7 +147,7 @@ struct _Http
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 Http NewHttp (void);
 
@@ -158,17 +159,19 @@ Http NewHttp (void);
  *  @note 		생성한 Http 객체를 소멸 시킨다. \n
  *  			Http 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewHttp
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 void DestoryHttp (Http this_gen);
 
 /*! @fn 		bool isHttpAccessible (Http this_gen)
- *  @brief 		현재 Bluetooth 기능 지원 여부를 반환 한다.
- *  @param[in] 	this_gen 사용 가능 여부를 반환 할 Bluetooth 객체
+ *  @brief 		현재 Http 기능 지원 여부를 반환 한다.
+ *  @param[in] 	this_gen 사용 가능 여부를 반환 할 Http 객체
  *  @param[out] null
- *  @retval 	bool
- *  @note 		현재 Bluetooth 기능 지원 여부를 반환 한다. \n
- *  			지원 가능 이라면 true, 지원 가능이 아니라면 false를 반환한다.
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
+ *  @note 		현재 Http 기능 지원 여부를 반환 한다. \n
+ *  			지원 가능 이라면 @c true, 지원 가능이 아니라면 @c false를 반환한다.
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
  *  			onHttpConnect \n
@@ -176,7 +179,7 @@ void DestoryHttp (Http this_gen);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool isHttpAccessible (Http this_gen);
 
@@ -186,9 +189,11 @@ bool isHttpAccessible (Http this_gen);
  *  @param[in] 	url 연결을 시도할 URL
  *  @param[in] 	port 연결을 시도할 포트 번호
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Http로 연결을 시도하며 이의 성공 여부를 반환한다. \n
- *  			연결에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
  *  			isHttpAccessible \n
@@ -196,7 +201,7 @@ bool isHttpAccessible (Http this_gen);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool onHttpConnect (Http this_gen, String url, int port);
 
@@ -204,9 +209,11 @@ bool onHttpConnect (Http this_gen, String url, int port);
  *  @brief 		Http로의 연결을 해제하며 이의 성공 여부를 반환한다.
  *  @param[in] 	this_gen 연결 해제 여부를 확인할 Http 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Http기기로 연결을 해제하며 이의 성공 여부를 반환한다. \n
- *  			연결 해제에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결 해제에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
  *  			isHttpAccessible \n
@@ -214,16 +221,18 @@ bool onHttpConnect (Http this_gen, String url, int port);
  *  			HttpDownload \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool onHttpDisconnect (Http this_gen);
 
-/*! @fn 		void HttpDownload (Http this_gen, String filename)
+/*! @fn 		bool HttpDownload (Http this_gen, String filename)
  *  @brief 		Http로부터 데이터를 수신 받는다.
  *  @param[in] 	this_gen 데이터를 수신 받을 Http 객체
  *  @param[in] 	filename 수신 받을 데이터 파일 이름
  *  @param[out] null
- *  @retval 	void
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		Http로부터 데이터를 수신 받는다. \n
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
@@ -232,19 +241,19 @@ bool onHttpDisconnect (Http this_gen);
  *  			onHttpDisconnect \n
  *  			HttpExcutePost \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet \n
- *  						: http://tizne.org/privileges/mediastorage \n
- *  						: http://tizne.org/privileges/download
+ *  @pre        privilege	: http://tizen.org/privilege/internet / http://tizne.org/privileges/mediastorage / http://tizne.org/privileges/download
  */
 bool HttpDownload (Http this_gen, String filename);
 
-/*! @fn 		void HttpExcutePost (Http this_gen, String req, String * res)
+/*! @fn 		bool HttpExcutePost (Http this_gen, String req, String * res)
  *  @brief 		@b POST 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다.
  *  @param[in] 	this_gen 연결된 세션의 Http 객체
  *  @param[in] 	req 요청을 하는 request buffer
- *  @param[in] 	res 결과를 받을 response buffer
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	res 결과를 받을 response buffer 주소
+ *  @param[out] res 요청에 따른 결과 값
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		@b POST 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다. \n
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
@@ -253,17 +262,19 @@ bool HttpDownload (Http this_gen, String filename);
  *  			onHttpDisconnect \n
  *  			HttpDownload \n
  * 				HttpExcuteGet
- *  @remark 	privilege	: http://tizen.org/privilege/internet \n
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool HttpExcutePost (Http this_gen, String req, String * res);
 
-/*! @fn 		void HttpExcuteGet (Http this_gen, String req, String * res)
+/*! @fn 		bool HttpExcuteGet (Http this_gen, String req, String * res)
  *  @brief 		@b GET 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다.
  *  @param[in] 	this_gen 연결된 세션의 Http 객체
  *  @param[in] 	req 요청을 하는 request buffer
- *  @param[in] 	res 결과를 받을 response buffer
- *  @param[out] null
- *  @retval 	void
+ *  @param[in] 	res 결과를 받을 response buffer 주소
+ *  @param[out] res 요청에 따른 결과 값
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		@b GET 방식을 사용하여 연결된 세션으로 @c req와 @c res를 입력해서 결과를 @c res로 받는다. \n
  *  @see 		NewHttp \n
  *  			DestoryHttp \n
@@ -272,11 +283,11 @@ bool HttpExcutePost (Http this_gen, String req, String * res);
  *  			onHttpDisconnect \n
  *  			HttpDownload \n
  * 				HttpExcutePost
- *  @remark 	privilege	: http://tizen.org/privilege/internet \n
+ *  @pre        privilege	: http://tizen.org/privilege/internet \n
  */
 bool HttpExcuteGet (Http this_gen, String req, String * res);
 
-typedef struct
+typedef struct _HttpExtends
 {
     struct _Http http;
     String       url;

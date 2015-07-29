@@ -103,6 +103,7 @@ extern "C" {
  *  @retval 	CURLE_CHUNK_FAILED				: Chunk callback reported error
  *  @retval 	CURL_LAST
  *  @note 		Socket API에서 발생하는 Error Code들을 확인 해준다. \n
+ *              Error의 내용은 Log를 통해 출력 된다.   \n
  *  @see 		http://curl.haxx.se/libcurl/c/libcurl-errors.html
 */
 const char * SocketErrorCheck (CURLcode errorCode);
@@ -113,7 +114,7 @@ const char * SocketErrorCheck (CURLcode errorCode);
  *  @note	Socket의 Socket 모듈에 대한 구조체이다. \n
     		구조체를 사용하기 전에 NewSocket() 함수를 사용해야 하며 사용이 끝났을 때 DestorySocket() 함수를 꼭 사용해야 한다.
  *  @see	https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__OPENSRC__CURL__FRAMEWORK.html
- *  @todo	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
+ *  @pre	privilege에 "http://tizen.org/privilege/internet" 을 반드시 추가해야 한다.
 */
 typedef struct _Socket * Socket;
 struct _Socket
@@ -143,7 +144,7 @@ struct _Socket
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 Socket NewSocket (void);
 
@@ -155,7 +156,7 @@ Socket NewSocket (void);
  *  @note 		생성한 Socket 객체를 소멸 시킨다. \n
  *  			Socket 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewSocket
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 void DestorySocket (Socket this_gen);
 
@@ -163,16 +164,18 @@ void DestorySocket (Socket this_gen);
  *  @brief 		TCP/UDP 연결 지원 여부를 반환한다.
  *  @param[in] 	this_gen 지원 여부를 반환 할 Socket 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		TCP/UDP 연결 지원 여부를 반환한다. \n
- *  			지원 가능 시 true, 불가능 시 false를 반환한다.
+ *  			지원 가능 시 @c true, 불가능 시 @c false를 반환한다.
  *  @see 		NewSocket \n
  *  			DestorySocket \n
  *  			onSocketConnect \n
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool isSocketAccessible (Socket this_gen);
 
@@ -182,16 +185,18 @@ bool isSocketAccessible (Socket this_gen);
  *  @param[in] 	url 연결을 시도할 URL
  *  @param[in] 	port 연결을 시도할 포트 번호
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		TCP/UDP 로 연결을 시도하며 이의 성공 여부를 반환한다. \n
- *  			연결에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewSocket \n
  *  			DestorySocket \n
  *  			isSocketAccessible \n
  *  			onSocketDisconnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool onSocketConnect (Socket this_gen, String url, int port);
 
@@ -199,16 +204,18 @@ bool onSocketConnect (Socket this_gen, String url, int port);
  *  @brief 		TCP/UDP 로 연결 해제하며 이의 성공 여부를 반환한다.
  *  @param[in] 	this_gen 연결 해제 여부를 확인할 Socket 객체
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		TCP/UDP 로 연결을 제하며 이의 성공 여부를 반환한다. \n
- *  			연결 해제에 성공하면 true, 실패하면 false를 반환한다.
+ *  			연결 해제에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewSocket \n
  *  			DestorySocket \n
  *  			isSocketAccessible \n
  *  			onSocketConnect \n
  *  			SocketMessageSend \n
  *  			SocketMessageRecv
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool onSocketDisconnect (Socket this_gen);
 
@@ -217,38 +224,42 @@ bool onSocketDisconnect (Socket this_gen);
  *  @param[in] 	this_gen 데이터를 송신할 Socket 객체
  *  @param[in] 	msg 송신할 데이터
  *  @param[out] null
- *  @retval 	bool
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		TCP/UDP 연결로 데이터를 송신하며 이의 성공 여부를 반환한다. \n
- *  			송신에 성공하면 true, 실패하면 false를 반환한다.
+ *  			송신에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewSocket \n
  *  			DestorySocket \n
  *  			isSocketAccessible \n
  *  			onSocketConnect \n
  *  			onSocketDisconnect \n
  *  			SocketMessageRecv
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool SocketMessageSend (Socket this_gen, String msg);
 
 /*! @fn 		bool SocketMessageRecv (Socket this_gen, String* msg)
  *  @brief 		TCP/UDP 연결로 데이터를 수신하며 이의 성공 여부를 반환한다.
  *  @param[in] 	this_gen 데이터를 수신할 Socket 객체
- *  @param[in] 	msg 수신할 데이터
- *  @param[out] null
- *  @retval 	bool
+ *  @param[in] 	msg 수신할 데이터를 저장할 주소
+ *  @param[out] msg 수신한 데이터
+ *  @retval 	bool \n
+ *              함수의 성공 여부를 반환한다. \n
+ *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
  *  @note 		TCP/UDP 연결로 데이터를 수신하며 이의 성공 여부를 반환한다. \n
- *  			수신에 성공하면 true, 실패하면 false를 반환한다.
+ *  			수신에 성공하면 @c true, 실패하면 @c false를 반환한다.
  *  @see 		NewSocket \n
  *  			DestorySocket \n
  *  			isSocketAccessible \n
  *  			onSocketConnect \n
  *  			onSocketDisconnect \n
  *  			SocketMessageSend
- *  @remark 	privilege	: http://tizen.org/privilege/internet
+ *  @pre        privilege	: http://tizen.org/privilege/internet
  */
 bool SocketMessageRecv (Socket this_gen, String * msg);
 
-typedef struct
+typedef struct _SocketExtends
 {
     struct _Socket socket;
     CURL *         curl;
