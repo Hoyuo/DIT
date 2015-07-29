@@ -76,7 +76,6 @@ bool isNFCAccessible (NFC this_gen)
         NFCExtends  * this = (NFCExtends *)this_gen;
 
         bool ret;
-        nfc_error_e res    = NFC_ERROR_NONE;
         system_info_get_platform_bool ("http://tizen.org/feature/network.nfc", &ret);
 
         if ( ret == true )
@@ -190,7 +189,6 @@ bool NFCSend (NFC this_gen, NDEF message)
         NFCExtends * this = (NFCExtends *)this_gen;
 
         bool access = this->access;
-        bool ret = true;
 
         if ( access == true )
         {
