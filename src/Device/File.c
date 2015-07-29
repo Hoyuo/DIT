@@ -64,42 +64,74 @@ bool deleteFile (String src)
 
     	int ret =0;
     	ret= remove (src);
-    	if(ret==-1)
+
+    	if(ret != 0)
     	{
     		dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
     		return false;
     	}
-    	else
-    	{
-    		return true;
-    	}
+
+    	return true;
     }
-    else
-    {
-    	dlog_print(DLOG_INFO,"","srcfilename NULL");
-    	return false;
-    }
+   	dlog_print(DLOG_INFO,"DIT","srcfilename NULL");
+   	return false;
+
 }
 
 bool moveFile (String src, String dst)
 {
     if ( src != NULL && dst!=NULL)
     {
-    	bool b = copyFile(src,dst);
-    	if(b==true)
+
+    	if(access(src,F_OK)==-1)
     	{
-    		remove(src);
-    		return true;
+    		dlog_print(DLOG_INFO,"DIT","source file: %s doesn't exist",src);
+    		return false;
     	}
-    	else
+
+    	char buff[BUFSIZ];
+    	FILE * in, * out;
+    	size_t n;
+    	size_t error;
+    	in  = fopen (src, "rb");
+    	out = fopen (dst, "wb");
+
+    	if(in == NULL)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","can not open source file : %s",src);
+    	}
+
+    	if(out == NULL)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","can not open destination file : %s",dst);
+    	}
+
+    	while ((n = fread (buff, 1, BUFSIZ, in)) != 0)
+    	{
+    	    error=fwrite (buff, 1, n, out);
+    	    if(error == -1)//error
+    	    {
+    	    	fclose (in);
+    	    	fclose (out);
+    	    	remove(dst);
+    			dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
+    	    	return false;
+    	    }
+    	}
+
+    	fclose (in);
+    	fclose (out);
+
+    	int ret =0;
+    	ret= remove (src);
+    	if(ret != 0)
     	{
     		dlog_print(DLOG_INFO,"DIT","FILE I/O ERROR");
     		return false;
     	}
-
+    	return true;
     }
-
-    dlog_print(DLOG_INFO,"","src filename / dst filename not valid");
+    dlog_print(DLOG_INFO,"DIT","src filename / dst filename not valid");
     return false;
 
 
@@ -120,10 +152,19 @@ bool copyFile (String src, String dst)
     size_t error;
     in  = fopen (src, "rb");
     out = fopen (dst, "wb");
+    if(in == NULL)
+    {
+    	dlog_print(DLOG_INFO,"DIT","can not open source file : %s",src);
+    }
+    if(out == NULL)
+    {
+    	dlog_print(DLOG_INFO,"DIT","can not open destination file : %s",dst);
+    }
+
     while ((n = fread (buff, 1, BUFSIZ, in)) != 0)
     {
         error=fwrite (buff, 1, n, out);
-        if(error==-1)
+        if(error == -1)
         {
         	fclose (in);
         	fclose (out);
@@ -146,6 +187,7 @@ void search_recur (String src, String dest, GList ** searchList)
     struct stat statbuf;
     if ((dp = opendir (src)) == NULL)
     {
+    	dlog_print(DLOG_INFO,"DIT","target source file doesn't exist");
         return;
     }
 
@@ -162,6 +204,7 @@ void search_recur (String src, String dest, GList ** searchList)
             {
                 continue;
             }
+
             if ( strcmp (entry->d_name, dest) == 0 )
             {
                 String pPath = realpath (entry->d_name, NULL);
@@ -179,6 +222,7 @@ void search_recur (String src, String dest, GList ** searchList)
 
         }
     }
+
     chdir ("..");
     closedir (dp);
 }
@@ -245,7 +289,9 @@ void DestroyVideo (Video this_gen)
 
     VideoExtends * this = (VideoExtends *)this_gen;
     player_error_e res;
-    res = player_destroy (this->player_handle);
+    metadata_extractor_destroy (this->videoMetadataHandle);
+    player_unprepare (this->player_handle);
+    player_destroy (this->player_handle);
 
     if ( this->uri != NULL)
     {
@@ -261,40 +307,21 @@ bool playVideo (Video this_gen)
 		VideoExtends * this = (VideoExtends *)this_gen;
 
 		player_error_e ret=PLAYER_ERROR_NONE;
-		ret = player_set_uri (this->player_handle, this->uri);
-		if(ret !=PLAYER_ERROR_NONE)
-		{
-			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
-			return false;
-		}
-		ret = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
-		if(ret !=PLAYER_ERROR_NONE)
-		{
-			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
-			return false;
-		}
-		ret = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
-		if(ret !=PLAYER_ERROR_NONE)
-		{
-			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
-			return false;
-		}
 
 		ret = player_prepare (this->player_handle);
 		if(ret !=PLAYER_ERROR_NONE && ret != PLAYER_ERROR_INVALID_STATE)
-			{
-				dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
-				return false;
-	     	}
+		{
+			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+	   	}
 		ret = player_start (this->player_handle);
-		if(ret !=PLAYER_ERROR_NONE)
+		if(ret !=PLAYER_ERROR_NONE && ret != PLAYER_ERROR_INVALID_STATE)
 		{
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
      	}
     	return true;
 	}
-
 	dlog_print(DLOG_INFO,"DIT","NULL MODULE");
 	return false;
 }
@@ -306,7 +333,7 @@ bool pauseVideo (Video this_gen)
 		VideoExtends * this = (VideoExtends *)this_gen;
 		player_error_e ret;
 		ret = player_pause (this->player_handle);
-		if(ret !=PLAYER_ERROR_NONE)
+		if(ret !=PLAYER_ERROR_NONE && ret != PLAYER_ERROR_INVALID_STATE)
 		{
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
@@ -326,7 +353,7 @@ bool stopVideo (Video this_gen)
 		VideoExtends * this = (VideoExtends *)this_gen;
 		player_error_e ret;
 		ret = player_stop (this->player_handle);
-		if(ret !=PLAYER_ERROR_NONE)
+		if(ret !=PLAYER_ERROR_NONE&& ret != PLAYER_ERROR_INVALID_STATE)
 		{
 			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
 			return false;
@@ -361,44 +388,71 @@ String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
 bool setVideoURI (Video this_gen, char * uri)
 {
 
-    if ( this_gen == NULL)
+    if ( this_gen != NULL)
     {
-    	dlog_print(DLOG_INFO,"DIT","NULL module");
-        return false;
-    }
+        player_error_e ret = PLAYER_ERROR_NONE;
 
-    if ( NULL == uri )
-    {
-    	dlog_print(DLOG_INFO,"DIT","NULL URI");
-        return false;
-    }
+        if ( NULL == uri )
+        {
+        	dlog_print(DLOG_INFO,"DIT","NULL URI");
+        	return false;
+        }
 
-    VideoExtends * this = (VideoExtends *)this_gen;
+        VideoExtends * this = (VideoExtends *)this_gen;
 
-    if ( NULL != this->uri )
-    {
-        free (this->uri);
-    }
-    this->uri = malloc (strlen (uri) + sizeof (char));
-    strcpy (this->uri, uri);
-    this->uri[strlen (uri)] = 0;
-    metadata_extractor_set_path (this->videoMetadataHandle, this->uri);
+        if ( NULL != this->uri )
+        {
+        	free (this->uri);
+        }
+        this->uri = malloc (strlen (uri) + sizeof (char));
+        strcpy (this->uri, uri);
 
+        ret = player_set_uri (this->player_handle, this->uri);
+        if(ret != PLAYER_ERROR_NONE)
+        {
+        	dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+			return false;
+        }
+        ret = metadata_extractor_set_path (this->videoMetadataHandle, this->uri);
+        if(ret != PLAYER_ERROR_NONE)
+	 	{
+	 		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+	 		return false;
+	 	}
     return true;
+    }
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
+
 }
 
 bool setEvasObject (Video this_gen, Evas_Object * EvasObject)
 {
 
-    if ( this_gen == NULL)
+    if ( this_gen != NULL)
     {
-        return false;
+    	VideoExtends * this = (VideoExtends *)this_gen;
+
+    	this->EvasObject = EvasObject;
+
+    	player_error_e ret = PLAYER_ERROR_NONE;
+    	ret = player_set_display (this->player_handle, PLAYER_DISPLAY_TYPE_EVAS, GET_DISPLAY (this->EvasObject));
+    	if(ret !=PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+    		return false;
+    	}
+    	ret = player_set_display_mode (this->player_handle, PLAYER_DISPLAY_MODE_ORIGIN_OR_LETTER);
+    	if(ret !=PLAYER_ERROR_NONE)
+    	{
+    		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(ret));
+    		return false;
+    	}
+
+    	return true;
     }
-    VideoExtends * this = (VideoExtends *)this_gen;
-
-    this->EvasObject = EvasObject;
-
-    return true;
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
 
 }
 
@@ -417,22 +471,17 @@ Audio NewAudio ()
     this->player_handle       = NULL;
     this->audioMetadataHandle = NULL;
 
-    player_error_e res;
+    player_create (&this->player_handle);
+    metadata_extractor_create (&this->audioMetadataHandle);
 
-    res = player_create (&this->player_handle);
-
-    res = metadata_extractor_create (&this->audioMetadataHandle);
     return &this->audio;
 }
 
 void DestroyAudio (Audio this_gen)
 {
 
-    if ( this_gen == NULL)
+    if ( this_gen != NULL)
     {
-    	dlog_print(DLOG_INFO,"DIT","NULL module");
-        return;
-    }
     AudioExtends * this = (AudioExtends *)this_gen;
     if ( this->uri != NULL)
     {
@@ -443,6 +492,10 @@ void DestroyAudio (Audio this_gen)
     player_unprepare (this->player_handle);
     player_destroy (this->player_handle);
     free (this);
+    }
+
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+    return;
 
 }
 
@@ -454,19 +507,17 @@ bool playAudio (Audio this_gen)
 
 		AudioExtends * this = (AudioExtends *)this_gen;
 
-		res = player_set_uri (this->player_handle, this->uri);
-		if(res != PLAYER_ERROR_NONE)
-		{
-			dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
-			return false;
-		}
+		player_state_e state = PLAYER_STATE_NONE;
+		player_get_state(this->player_handle,&state);
+
+		if(state == PLAYER_STATE_IDLE||state == PLAYER_STATE_IDLE)
 		res = player_prepare (this->player_handle);
     	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     	}
     	res = player_start (this->player_handle);
-    	if(res != PLAYER_ERROR_NONE)
+    	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     		return false;
@@ -485,8 +536,9 @@ bool pauseAudio (Audio this_gen)
 		player_error_e res;
 
     	AudioExtends * this = (AudioExtends *)this_gen;
+
     	res = player_pause (this->player_handle);
-    	if(res != PLAYER_ERROR_NONE)
+    	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     		return false;
@@ -506,11 +558,12 @@ bool stopAudio (Audio this_gen)
 
     	AudioExtends * this = (AudioExtends *)this_gen;
     	res = player_stop (this->player_handle);
-    	if(res != PLAYER_ERROR_NONE)
+    	if(res != PLAYER_ERROR_NONE && res != PLAYER_ERROR_INVALID_STATE)
     	{
     		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     		return false;
     	}
+
     	return true;
 	}
 	dlog_print(DLOG_INFO,"DIT","NULL module");
@@ -522,11 +575,8 @@ bool stopAudio (Audio this_gen)
 bool setAudioURI (Audio this_gen, char * uri)
 {
 
-    if ( this_gen == NULL)
+    if ( this_gen != NULL)
     {
-    	dlog_print(DLOG_INFO,"DIT","NULL module");
-        return false;
-    }
     AudioExtends * this = (AudioExtends *)this_gen;
     player_error_e res =PLAYER_ERROR_NONE;
 
@@ -541,15 +591,25 @@ bool setAudioURI (Audio this_gen, char * uri)
     }
     this->uri = malloc (strlen (uri) + sizeof (char));
     strcpy (this->uri, uri);
-    this->uri[strlen (uri)] = 0;
+
+    res = player_set_uri (this->player_handle, this->uri);
+	if(res != PLAYER_ERROR_NONE )
+	{
+		dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
+		return false;
+	}
 
     res = metadata_extractor_set_path (this->audioMetadataHandle, this->uri);
-    if(res != PLAYER_ERROR_NONE)
+    if(res != PLAYER_ERROR_NONE )
     {
     	dlog_print(DLOG_INFO,"DIT","%s",PlayerErrorCheck(res));
     	return false;
     }
     return true;
+    }
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+    return false;
+
 }
 
 String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey)
@@ -632,12 +692,8 @@ bool gallery_media_item_cbx (media_info_h media, void * user_data)
 
 bool getImageInfo (Image this_gen, String src)
 {
-	if(this_gen ==NULL)
+	if(this_gen != NULL)
 	{
-		dlog_print(DLOG_INFO,"DIT","NULL module");
-		return false;
-	}
-
     GList * all_item_list = NULL; // Include glib.h
     media_info_h         	 media_handle  = NULL;
     media_content_type_e	  media_type   =	0;
@@ -661,6 +717,7 @@ bool getImageInfo (Image this_gen, String src)
 
     free (filterpath);
     ret = media_filter_set_condition (filter, buf, collate_type);
+
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
         media_filter_destroy (filter);
@@ -668,6 +725,7 @@ bool getImageInfo (Image this_gen, String src)
         return false;
     }
     ret = media_filter_set_order (filter, order_type, MEDIA_DISPLAY_NAME, collate_type);
+
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
 
@@ -677,91 +735,90 @@ bool getImageInfo (Image this_gen, String src)
     }
 
     ret = media_info_foreach_media_from_db (filter, gallery_media_item_cbx, &all_item_list);
+
     if ( ret != MEDIA_CONTENT_ERROR_NONE )
     {
         dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
         return false;
     }
+    media_handle = (media_info_h)g_list_nth_data (all_item_list, 0);
+
+    ret = media_info_get_media_id (media_handle, &this->media_id);
+    if(ret != MEDIA_CONTENT_ERROR_NONE)
+    {
+      	g_list_free_full(all_item_list,deletemediaresult);
+        dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+        return false;
+    }
+    if ( media_type == MEDIA_CONTENT_TYPE_IMAGE )
+    {
+
+    	ret = media_info_get_image (media_handle, &this->imageMetaHandle);
+
+    	if ( ret != MEDIA_CONTENT_ERROR_NONE )
+    	{
+    		g_list_free_full(all_item_list,deletemediaresult);
+    		dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+    		return false;
+    	}
+
+    	ret=image_meta_get_width (this->imageMetaHandle, &this->width);
+
+    	if ( ret != MEDIA_CONTENT_ERROR_NONE )
+    	{
+    	g_list_free_full(all_item_list,deletemediaresult);
+    	dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+    	return false;
+    	}
+
+    	ret=image_meta_get_height (this->imageMetaHandle, &this->height);
+    	if ( ret != MEDIA_CONTENT_ERROR_NONE )
+    	{
+    		g_list_free_full(all_item_list,deletemediaresult);
+    		dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+    		return false;
+    	}
+
+    	if ( this->datetaken )
+    	{
+    		free (this->datetaken);
+    	}
+
+    	ret=image_meta_get_date_taken (this->imageMetaHandle, &this->datetaken);
+    	if ( ret != MEDIA_CONTENT_ERROR_NONE )
+    	{
+    		g_list_free_full(all_item_list,deletemediaresult);
+    		dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+    		return false;
+    	}
+
+    	if ( this->burst_id )
+    	{
+    		free (this->burst_id);
+    	}
+    	ret=	image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
+    	if ( ret	 != MEDIA_CONTENT_ERROR_NONE )
+    	{
+    		g_list_free_full(all_item_list,deletemediaresult);
+    		dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
+    		return false;
+    	}
+    	media_content_disconnect ();
+
+    	return true;
+    }
     else
     {
-        media_handle = (media_info_h)g_list_nth_data (all_item_list, 0);
-
-        ret = media_info_get_media_id (media_handle, &this->media_id);
-        if(ret != MEDIA_CONTENT_ERROR_NONE)
-        {
-        	g_list_free_full(all_item_list,deletemediaresult);
-            dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-            return false;
-        }
-        if ( media_type == MEDIA_CONTENT_TYPE_IMAGE )
-        {
-
-            ret = media_info_get_image (media_handle, &this->imageMetaHandle);
-            if ( ret != MEDIA_CONTENT_ERROR_NONE )
-            {
-            	g_list_free_full(all_item_list,deletemediaresult);
-                dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-                return false;
-            }
-            else
-            {
-                ret=image_meta_get_width (this->imageMetaHandle, &this->width);
-                if ( ret != MEDIA_CONTENT_ERROR_NONE )
-                {
-                	g_list_free_full(all_item_list,deletemediaresult);
-                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-                    return false;
-                }
-
-
-                ret=image_meta_get_height (this->imageMetaHandle, &this->height);
-                if ( ret != MEDIA_CONTENT_ERROR_NONE )
-                {
-                	g_list_free_full(all_item_list,deletemediaresult);
-                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-                    return false;
-                }
-
-                if ( this->datetaken )
-                {
-                    free (this->datetaken);
-                }
-                ret=image_meta_get_date_taken (this->imageMetaHandle, &this->datetaken);
-                if ( ret != MEDIA_CONTENT_ERROR_NONE )
-                {
-                	g_list_free_full(all_item_list,deletemediaresult);
-                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-                    return false;
-                }
-
-                if ( this->burst_id )
-                {
-                    free (this->burst_id);
-                }
-                ret=image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
-                if ( ret != MEDIA_CONTENT_ERROR_NONE )
-                {
-                	g_list_free_full(all_item_list,deletemediaresult);
-                    dlog_print(DLOG_INFO,"DIT",MediaContentErrorCheck(ret));
-                    return false;
-                }
-
-                media_content_disconnect ();
-
-                return true;
-            }
-
-        }
-        else
-        {
-        	dlog_print(DLOG_INFO,"DIT","not image");
-        	return false;
-        }
+    	dlog_print(DLOG_INFO,"DIT","not image");
+    	return false;
     }
-	dlog_print(DLOG_INFO,"DIT","NULL Module");
 
-    return false;
+	}
+	dlog_print(DLOG_INFO,"DIT","NULL module");
+	return false;
+
 }
+
 
 String getImageBurstId (Image this_gen)
 {
