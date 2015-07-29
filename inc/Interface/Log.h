@@ -95,7 +95,7 @@ extern "C" {
 { \
     if (expr) \
     { \
-    	LOGERROR(tag, format, ##arg); \
+        LOGERROR(tag, format, ##arg); \
     } \
 }
 /* Log */
