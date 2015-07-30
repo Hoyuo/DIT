@@ -135,6 +135,21 @@ struct _NFC
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/network.nfc
  *  @warning    사용이 끝났을 때 DestroyNFC()함수를 꼭 사용해야한다.
+ *
+ *  @code{.c}
+NFC NewNFC (void)
+{
+    NFCExtends * this = (NFCExtends *)malloc (sizeof (NFCExtends));
+
+    this->nfc.isAccessible = isNFCAccessible;
+    this->nfc.onConnect    = onNFCConnect;
+    this->nfc.onDisconnect = onNFCDisconnect;
+    this->nfc.Send         = NFCSend;
+    this->nfc.Recv         = NFCRecv;
+
+    return &this->nfc;
+}
+ *	@endcode
  */
 NFC NewNFC (void);
 

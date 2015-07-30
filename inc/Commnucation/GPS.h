@@ -93,6 +93,29 @@ struct _gps
  *              * http://tizen.org/feature/location \n
  *              * http://tizen.org/feature/location.gps
  *  @warning    사용이 끝났을 때 DestroyGps() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+ *  GPS NewGps (void)
+ *  {
+ *      GPSExtends * this = (GPSExtends *)malloc (sizeof (GPSExtends));
+ *
+ *      this->gps.isAccessible = isGPSAccessible;
+ *      this->gps.onConnect    = onGPSConnect;
+ *      this->gps.onDisconnect = onGPSDisconnect;
+ *      this->gps.Recv         = GPSRecv;
+ *
+ *      location_manager_create (LOCATIONS_METHOD_GPS, &this->manager);
+ *
+ *      this->state = LOCATIONS_SERVICE_DISABLED;
+ *
+ *      Location location = {0,};
+ *      this->location = location;
+ *      this->access   = false;
+ *      this->connect  = false;
+ *
+ *      return &this->gps;
+ *  }
+ *  @endcode
  */
 GPS NewGps (void);
 

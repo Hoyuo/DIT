@@ -45,7 +45,7 @@ void DeleteNDEF (NDEF * ndef)
     }
 }
 
-NFC NewNFC ()
+NFC NewNFC (void)
 {
     NFCExtends * this = (NFCExtends *)malloc (sizeof (NFCExtends));
 

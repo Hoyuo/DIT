@@ -97,6 +97,25 @@ struct _Bluetooth
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/network.bluetooth
  *  @warning    사용이 끝났을 때 DestroyBluetooth() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+ *  Bluetooth NewBluetooth (void)
+ *  {
+ *  	BluetoothExtends * this = malloc (sizeof (BluetoothExtends));
+ *  	this->bluetooth.isAccessible = isBluetoothAccessible;
+ *  	this->bluetooth.onConnect    = onBluetoothConnect;
+ *  	this->bluetooth.isConnected  = isBluetoothConnected;
+ *  	this->bluetooth.onDisconnect = onBluetoothDisconnect;
+ *  	this->bluetooth.FileRecv     = BluetoothFileRecv;
+ *  	this->bluetooth.FileSend     = BluetoothFileSend;
+ *
+ *  	this->connected     = false;
+ *  	this->accessible    = false;
+ *  	this->remoteMACAddr = NULL;
+ *
+ *  	return &this->bluetooth;
+ *  }
+ *  @endcode
  */
 Bluetooth NewBluetooth (void);
 

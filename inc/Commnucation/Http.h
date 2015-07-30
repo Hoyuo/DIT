@@ -151,6 +151,28 @@ struct _Http
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/internet
  *  @warning    사용이 끝났을 때 DestoryHttp() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Http NewHttp (void)
+{
+    HttpExtends * this = (HttpExtends *)malloc (sizeof (HttpExtends));
+
+    this->http.isAccessible = isHttpAccessible;
+    this->http.onConnect    = onHttpConnect;
+    this->http.onDisconnect = onHttpDisconnect;
+    this->http.Download     = HttpDownload;
+    this->http.Get          = HttpExcuteGet;
+    this->http.Post         = HttpExcutePost;
+
+    this->url  = NULL;
+    this->port = 80;
+
+    this->access = false;
+    this->conect = false;
+
+    return &this->http;
+}
+ *	@endcode
  */
 Http NewHttp (void);
 
