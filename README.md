@@ -9,18 +9,21 @@ D.I.T. library is a light-weight library for manipulating Tizen Native API. Our 
 ## Why use this library?
 1. We're **not used to** developing Tizen Native.
 2. We need more easier Tizen Native Library.
-3. ~~Some of sample codes of Tizen Native in 'tizen.org' is not working.~~
+3. D.I.T. library is easy, great and efficient library.
 4. D.I.T. library makes Tizen seems like Android.
 5. D.I.T. is heavily customizable.
-	* If you want to edit D.I.T. for your taste, **please follow D.I.T. Library Rules**
+	* If you want to edit D.I.T. for your taste, **[please follow D.I.T. Library Rules](https://github.com/Hoyuo/DIT#dit-library-rules)**
 
 **[More ›][2]**
 
 
 ## How to use this library?
-1. Download Tizen IDE and Tizen SDK. You can download [here](https://developer.tizen.org/development/tools/download).
-2. You can download release version of **[D.I.T.][4]**
-3. 뭐라고 쓰지 흠....
+1. Download Tizen IDE and Tizen SDK. You can download.   
+ 	**[› Here](https://developer.tizen.org/development/tools/download)**
+2. You can download release version.  
+	**[› D.I.T. release version][4]**
+3. D.I.T. Book will help you !    
+	**[› D.I.T. Book][6]**
 
 
 ## D.I.T. Library Rules
@@ -81,10 +84,10 @@ Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
- [3]: http://dee-j.github.io/html
- [4]: https://github.com/Hoyuo/DIT/releases
+ [3]: http://dee-j.github.io/html/index.html
+ [4]: https://github.com/Hoyuo/DIT/releases/tag/1.0
  [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
- [6]: #
+ [6]: http://hoyuo.gitbooks.io/tizen-d-i-t/content/use.html
  [7]: #
  [8]: #
  [9]: #

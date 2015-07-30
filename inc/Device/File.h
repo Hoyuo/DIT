@@ -681,7 +681,7 @@ bool stopAudio (Audio this_gen);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
- *  @warming    사용전 setAudioURI() 를 통해 meta data 를 가져올 Audio 객체의 URI를 설정해야한다. \n
+ *  @warning    사용전 setAudioURI() 를 통해 meta data 를 가져올 Audio 객체의 URI를 설정해야한다. \n
  *              또한 @a <metadata_extractor.h> 를 반드시 include해야 하며 meta data가 저장된 String은 @c free() 해야한다.
  */
 String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
@@ -705,7 +705,7 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
- *  @warming    playAudio() , pauseAudio() , stopAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
+ *  @warning    playAudio() , pauseAudio() , stopAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
 bool setAudioURI (Audio this_gen, String uri);
 /* Audio */
