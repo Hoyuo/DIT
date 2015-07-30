@@ -638,16 +638,15 @@ Image NewImage ()
 {
     ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
 
-    this->image.extractInfo  = getImageInfo;
+    this->image.setURI  	 = setImageURI;
     this->imageMetaHandle    = NULL;
     this->image.getBurstId   = getImageBurstId;
     this->image.getMediaId   = getImageMediaId;
-    this->image.getDateTaken = getImageDateTaken;
+    this->image.getDate		 = getImageDate;
     this->image.getWidth     = getImageWidth;
     this->image.getHeight    = getImageHeight;
     this->height             = -1;
     this->width              = -1;
-    this->burst_id           = NULL;
     this->datetaken          = NULL;
     this->media_id           = NULL;
 
@@ -666,11 +665,6 @@ void DestroyImage (Image this_gen)
     if ( this->imageMetaHandle != NULL)
     {
         image_meta_destroy (this->imageMetaHandle);
-    }
-
-    if ( this->burst_id )
-    {
-        free (this->burst_id);
     }
 
     if ( this->datetaken )
@@ -697,7 +691,7 @@ bool gallery_media_item_cbx (media_info_h media, void * user_data)
     return false;
 }
 
-bool getImageInfo (Image this_gen, String src)
+bool setImageURI (Image this_gen, String src)
 {
     if ( this_gen != NULL)
     {
@@ -799,17 +793,6 @@ bool getImageInfo (Image this_gen, String src)
                 return false;
             }
 
-            if ( this->burst_id )
-            {
-                free (this->burst_id);
-            }
-            ret = image_meta_get_burst_id (this->imageMetaHandle, &this->burst_id);
-            if ( ret != MEDIA_CONTENT_ERROR_NONE )
-            {
-                g_list_free_full (all_item_list, deletemediaresult);
-                dlog_print (DLOG_INFO, "DIT", MediaContentErrorCheck (ret));
-                return false;
-            }
             media_content_disconnect ();
 
             return true;
@@ -826,13 +809,6 @@ bool getImageInfo (Image this_gen, String src)
 
 }
 
-String getImageBurstId (Image this_gen)
-{
-    ImageExtends * this = (ImageExtends *)this_gen;
-
-    return this->burst_id;
-}
-
 String getImageMediaId (Image this_gen)
 {
     ImageExtends * this = (ImageExtends *)this_gen;
@@ -840,7 +816,7 @@ String getImageMediaId (Image this_gen)
     return this->media_id;
 }
 
-String getImageDateTaken (Image this_gen)
+String getImageDate (Image this_gen)
 {
     ImageExtends * this = (ImageExtends *)this_gen;
     return this->datetaken;

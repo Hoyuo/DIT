@@ -736,11 +736,9 @@ struct _Image
 {
     bool       (* setURI) (Image this_gen, String src);
 
-    String     (* getBurstId) (Image this_gen);
-
     String     (* getMediaId) (Image this_gen);
 
-    String     (* getDateTaken) (Image this_gen);
+    String     (* getDate) (Image this_gen);
 
     int        (* getWidth) (Image this_gen);
 
@@ -756,7 +754,6 @@ typedef struct _ImageExtends
     int           height;
 
     String datetaken;
-    String burst_id;
     String media_id;
 
 } ImageExtends;
@@ -770,9 +767,8 @@ typedef struct _ImageExtends
  *  			Image 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestroyImage \n
  *  			setImageURI \n
- *  			getImageBurstId \n
  *  			getImageMediaId \n
- *  			getImageDateTaken \n
+ *  			getImageDate \n
  *  			getImageWidth \n
  *  			getImageHeight
  *  @warning    사용이 끝났을 때 DestoryImage() 함수를 꼭 사용해야 한다.
@@ -782,16 +778,14 @@ Image NewImage ()
 {
     ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
 
-    this->image.extractInfo  = setImageURI;
+    this->image.setURI		 = setImageURI;
     this->imageMetaHandle    = NULL;
-    this->image.getBurstId   = getImageBurstId;
     this->image.getMediaId   = getImageMediaId;
-    this->image.getDateTaken = getImageDateTaken;
+    this->image.getDate		 = getImageDate;
     this->image.getWidth     = getImageWidth;
     this->image.getHeight    = getImageHeight;
     this->height             = -1;
     this->width              = -1;
-    this->burst_id           = NULL;
     this->datetaken          = NULL;
     this->media_id           = NULL;
 
@@ -823,30 +817,12 @@ void   DestroyImage (Image this_gen);
  *  @note 		사진 파일의 meta data를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageBurstId \n
  *  			getImageMediaId \n
- *  			getImageDateTaken \n
+ *  			getImageDate \n
  *  			getImageWidth \n
  *  			getImageHeight
  */
 bool   setImageURI (Image this_gen, String src);
-
-/*! @fn 		String getImageBurstId (Image this_gen)
- *  @brief 		사진 파일의 meta data 중 Burst Id를 가져온다.
- *  @param[in] 	this_gen Image 객체
- *  @param[out] null
- *  @retval 	String
- *  @note 		사진 파일의 meta data 중 Burst Id를 가져온다. \n
- *  @see 		NewImage \n
- *  			DestroyImage \n
- *  			setImageURI \n
- *  			getImageMediaId \n
- *  			getImageDateTaken \n
- *  			getImageWidth \n
- *  			getImageHeight
- *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
- */
-String getImageBurstId (Image this_gen);
 
 /*! @fn 		String getImageMediaId (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 Media Id를 가져온다.
@@ -857,15 +833,14 @@ String getImageBurstId (Image this_gen);
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			setImageURI \n
- *  			getImageBurstId \n
- *  			getImageDateTaken \n
+ *  			getImageDate \n
  *  			getImageWidth \n
  *  			getImageHeight
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 String getImageMediaId (Image this_gen);
 
-/*! @fn 		String getImageDateTaken (Image this_gen)
+/*! @fn 		String getImageDate (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 찍은 날짜 정보를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[out] null
@@ -874,13 +849,12 @@ String getImageMediaId (Image this_gen);
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			setImageURI \n
- *  			getImageBurstId \n
  *  			getImageMediaId \n
  *  			getImageWidth \n
  *  			getImageHeight
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
-String getImageDateTaken (Image this_gen);
+String getImageDate (Image this_gen);
 
 /*! @fn 		int getImageWidth (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 width 정보를 가져온다.
@@ -892,9 +866,8 @@ String getImageDateTaken (Image this_gen);
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			setImageURI \n
- *  			getImageBurstId \n
  *  			getImageMediaId \n
- *  			getImageDateTaken \n
+ *  			getImageDate \n
  *  			getImageHeight
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
@@ -910,9 +883,8 @@ int    getImageWidth (Image this_gen);
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			setImageURI \n
- *  			getImageBurstId \n
  *  			getImageMediaId \n
- *  			getImageDateTaken \n
+ *  			getImageDate \n
  *  			getImageWidth \n
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
