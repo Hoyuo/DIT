@@ -1,3 +1,6 @@
+
+
+
 link of DIT video in embed style and 1280x720 resolution image file
 
 [![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](https://www.youtube.com/embed/MBfxQIz80Jk)
@@ -5,6 +8,8 @@ link of DIT video in embed style and 1280x720 resolution image file
 ## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
 ### Welcome to the *D.I.T.* GitHub page.
 D.I.T. library is a light-weight library for manipulating Tizen Native API. Our goal is to make Tizen Native coding simpler, easier, and more fun!  
+
+![DIT](https://cloud.githubusercontent.com/assets/8381373/8978836/b61dad1c-36e0-11e5-9ef4-593ffdba8ed3.png)
 
 ## Why use this library?
 1. We're **not used to** developing Tizen Native.
@@ -77,10 +82,13 @@ Release ›[![Release](https://cloud.githubusercontent.com/assets/8381373/894807
 
 ##Click here to help out
 Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948083/058d7750-35de-11e5-9674-cd5e568847e7.PNG)][5]
+
+
 <br><br><br><br><br><br><br>
 
 ##Tizen Developer Guide for beginners
 **[Click ›](http://hoyuo.gitbooks.io/tizen)**
+
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
