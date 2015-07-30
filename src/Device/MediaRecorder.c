@@ -22,7 +22,6 @@ static bool recorder_define_fileformat_and_rotation (CameraRecorderExtends * cr,
 
 static bool audio_recorder_define_fileformat (AudioRecorderExtends * ar, const String filename);
 
-
 AudioRecorder NewAudioRecorder (void)
 {
 
@@ -296,7 +295,7 @@ bool cameraRecorderInit (CameraRecorder this_gen, const String filename, camera_
         {
             recorder_error_e rret = RECORDER_ERROR_NONE;
             camera_error_e   cret = CAMERA_ERROR_NONE;
-            bool b = false;
+            bool             b    = false;
 
             cret = camera_create ((camera_device_e)camera, &this->camerahandle);
             if ( cret != CAMERA_ERROR_NONE )
@@ -402,7 +401,6 @@ bool cameraRecorderStart (CameraRecorder this_gen)
         {
             recorder_state_e status;
             recorder_get_state (this->camerarecorderhandle, &status);
-            dlog_print (DLOG_DEBUG, "DIT", "%d", status);
 
             recorder_error_e ret = RECORDER_ERROR_NONE;
             ret = recorder_start (this->camerarecorderhandle);
@@ -587,109 +585,110 @@ static bool audio_recorder_define_fileformat (AudioRecorderExtends * ar, const S
     return true;
 }
 
-const char* RecorderErrorCheck(int result)
+const char * RecorderErrorCheck (int result)
 {
-	switch(result){
+    switch (result)
+    {
 
-	case RECORDER_ERROR_NONE:
-		return "RECORDER_ERROR_NONE: Successful";
+    case RECORDER_ERROR_NONE:
+        return "RECORDER_ERROR_NONE: Successful";
 
-	case RECORDER_ERROR_INVALID_PARAMETER:
-		return "RECORDER_ERROR_INVALID_PARAMETER: Invalid parameter";
+    case RECORDER_ERROR_INVALID_PARAMETER:
+        return "RECORDER_ERROR_INVALID_PARAMETER: Invalid parameter";
 
-	case RECORDER_ERROR_INVALID_STATE:
-		return "RECORDER_ERROR_INVALID_STATE: Invalid state";
+    case RECORDER_ERROR_INVALID_STATE:
+        return "RECORDER_ERROR_INVALID_STATE: Invalid state";
 
-	case RECORDER_ERROR_OUT_OF_MEMORY:
-		return "RECORDER_ERROR_OUT_OF_MEMORY: Out of memory";
+    case RECORDER_ERROR_OUT_OF_MEMORY:
+        return "RECORDER_ERROR_OUT_OF_MEMORY: Out of memory";
 
-	case RECORDER_ERROR_DEVICE:
-		return "RECORDER_ERROR_DEVICE: Device error";
+    case RECORDER_ERROR_DEVICE:
+        return "RECORDER_ERROR_DEVICE: Device error";
 
-	case RECORDER_ERROR_INVALID_OPERATION:
-		return "RECORDER_ERROR_INVALID_OPERATION: Internal error";
+    case RECORDER_ERROR_INVALID_OPERATION:
+        return "RECORDER_ERROR_INVALID_OPERATION: Internal error";
 
-	case RECORDER_ERROR_SOUND_POLICY:
-		return "RECORDER_ERROR_SOUND_POLICY: Blocked by Audio Session Manager";
+    case RECORDER_ERROR_SOUND_POLICY:
+        return "RECORDER_ERROR_SOUND_POLICY: Blocked by Audio Session Manager";
 
-	case RECORDER_ERROR_SECURITY_RESTRICTED:
-		return "RECORDER_ERROR_SECURITY_RESTRICTED: Restricted by security system policy";
+    case RECORDER_ERROR_SECURITY_RESTRICTED:
+        return "RECORDER_ERROR_SECURITY_RESTRICTED: Restricted by security system policy";
 
-	case RECORDER_ERROR_SOUND_POLICY_BY_CALL:
-		return "RECORDER_ERROR_SOUND_POLICY_BY_CALL: Blocked by Audio Session Manager - CALL";
+    case RECORDER_ERROR_SOUND_POLICY_BY_CALL:
+        return "RECORDER_ERROR_SOUND_POLICY_BY_CALL: Blocked by Audio Session Manager - CALL";
 
-	case RECORDER_ERROR_SOUND_POLICY_BY_ALARM:
-		return "RECORDER_ERROR_SOUND_POLICY_BY_ALARM: Blocked by Audio Session Manager - ALARM";
+    case RECORDER_ERROR_SOUND_POLICY_BY_ALARM:
+        return "RECORDER_ERROR_SOUND_POLICY_BY_ALARM: Blocked by Audio Session Manager - ALARM";
 
-	case RECORDER_ERROR_ESD:
-		return "RECORDER_ERROR_ESD: ESD situation";
+    case RECORDER_ERROR_ESD:
+        return "RECORDER_ERROR_ESD: ESD situation";
 
-	case RECORDER_ERROR_OUT_OF_STORAGE:
-		return "RECORDER_ERROR_OUT_OF_STORAGE: Out of storage";
+    case RECORDER_ERROR_OUT_OF_STORAGE:
+        return "RECORDER_ERROR_OUT_OF_STORAGE: Out of storage";
 
-	case RECORDER_ERROR_PERMISSION_DENIED:
-		return "RECORDER_ERROR_PERMISSION_DENIED: The access to the resources can not be granted";
+    case RECORDER_ERROR_PERMISSION_DENIED:
+        return "RECORDER_ERROR_PERMISSION_DENIED: The access to the resources can not be granted";
 
-	case RECORDER_ERROR_NOT_SUPPORTED:
-		return "RECORDER_ERROR_NOT_SUPPORTED: The feature is not supported";
+    case RECORDER_ERROR_NOT_SUPPORTED:
+        return "RECORDER_ERROR_NOT_SUPPORTED: The feature is not supported";
 
-	default:
-		return "RECORDER_ERROR_UNKNOWN";
-	}
+    default:
+        return "RECORDER_ERROR_UNKNOWN";
+    }
 }
 
 const char * CameraErrorCheck (int result)
 {
-	switch(result)
-	{
+    switch (result)
+    {
 
-	case CAMERA_ERROR_NONE:
-		return "CAMERA_ERROR_NONE: Successful";
+    case CAMERA_ERROR_NONE:
+        return "CAMERA_ERROR_NONE: Successful";
 
-	case CAMERA_ERROR_INVALID_PARAMETER:
-		return "CAMERA_ERROR_INVALID_PARAMETER: Invalid parameter";
+    case CAMERA_ERROR_INVALID_PARAMETER:
+        return "CAMERA_ERROR_INVALID_PARAMETER: Invalid parameter";
 
-	case CAMERA_ERROR_INVALID_STATE:
-		return "CAMERA_ERROR_INVALID_STATE: Invalid state";
+    case CAMERA_ERROR_INVALID_STATE:
+        return "CAMERA_ERROR_INVALID_STATE: Invalid state";
 
-	case CAMERA_ERROR_OUT_OF_MEMORY:
-		return "CAMERA_ERROR_OUT_OF_MEMORY: Out of memory";
+    case CAMERA_ERROR_OUT_OF_MEMORY:
+        return "CAMERA_ERROR_OUT_OF_MEMORY: Out of memory";
 
-	case CAMERA_ERROR_DEVICE:
-		return "CAMERA_ERROR_DEVICE: Device error";
+    case CAMERA_ERROR_DEVICE:
+        return "CAMERA_ERROR_DEVICE: Device error";
 
-	case CAMERA_ERROR_INVALID_OPERATION:
-		return "CAMERA_ERROR_INVALID_OPERATION: Internal error";
+    case CAMERA_ERROR_INVALID_OPERATION:
+        return "CAMERA_ERROR_INVALID_OPERATION: Internal error";
 
-	case CAMERA_ERROR_SOUND_POLICY:
-		return "CAMERA_ERROR_SOUND_POLICY: Blocked by Audio Session Manager";
+    case CAMERA_ERROR_SOUND_POLICY:
+        return "CAMERA_ERROR_SOUND_POLICY: Blocked by Audio Session Manager";
 
-	case CAMERA_ERROR_SECURITY_RESTRICTED:
-		return "CAMERA_ERROR_SECURITY_RESTRICTED: Restricted by security system policy";
+    case CAMERA_ERROR_SECURITY_RESTRICTED:
+        return "CAMERA_ERROR_SECURITY_RESTRICTED: Restricted by security system policy";
 
-	case CAMERA_ERROR_DEVICE_BUSY:
-		return "CAMERA_ERROR_DEVICE_BUSY: The device is using another application or working on some operation";
+    case CAMERA_ERROR_DEVICE_BUSY:
+        return "CAMERA_ERROR_DEVICE_BUSY: The device is using another application or working on some operation";
 
-	case CAMERA_ERROR_DEVICE_NOT_FOUND:
-		return "CAMERA_ERROR_DEVICE_NOT_FOUND: No camera device";
+    case CAMERA_ERROR_DEVICE_NOT_FOUND:
+        return "CAMERA_ERROR_DEVICE_NOT_FOUND: No camera device";
 
-	case CAMERA_ERROR_SOUND_POLICY_BY_CALL:
-		return "CAMERA_ERROR_SOUND_POLICY_BY_CALL: Blocked by Audio Session Manager - CALL";
+    case CAMERA_ERROR_SOUND_POLICY_BY_CALL:
+        return "CAMERA_ERROR_SOUND_POLICY_BY_CALL: Blocked by Audio Session Manager - CALL";
 
-	case CAMERA_ERROR_SOUND_POLICY_BY_ALARM:
-		return "CAMERA_ERROR_SOUND_POLICY_BY_ALARM: Blocked by Audio Session Manager - ALARM";
+    case CAMERA_ERROR_SOUND_POLICY_BY_ALARM:
+        return "CAMERA_ERROR_SOUND_POLICY_BY_ALARM: Blocked by Audio Session Manager - ALARM";
 
-	case CAMERA_ERROR_ESD:
-		return "CAMERA_ERROR_ESD: ESD situation";
+    case CAMERA_ERROR_ESD:
+        return "CAMERA_ERROR_ESD: ESD situation";
 
-	case CAMERA_ERROR_PERMISSION_DENIED:
-		return "CAMERA_ERROR_PERMISSION_DENIED: The access to the resources can not be granted";
+    case CAMERA_ERROR_PERMISSION_DENIED:
+        return "CAMERA_ERROR_PERMISSION_DENIED: The access to the resources can not be granted";
 
-	case CAMERA_ERROR_NOT_SUPPORTED:
-		return "CAMERA_ERROR_NOT_SUPPORTED: The feature is not supported";
+    case CAMERA_ERROR_NOT_SUPPORTED:
+        return "CAMERA_ERROR_NOT_SUPPORTED: The feature is not supported";
 
-	default:
-		return "CAMERA_ERROR_UNKNOWN";
-	}
+    default:
+        return "CAMERA_ERROR_UNKNOWN";
+    }
 
 }

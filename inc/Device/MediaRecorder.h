@@ -44,7 +44,7 @@ extern "C" {
  *              15가지의 Error Code들을 확인 가능 하다.
  *  @see        [Tizen Native API Document - Recorder Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html#ga9edb84cd056c6c6e09190e924f0a2617)
  */
-const char* RecorderErrorCheck(int result);
+const char * RecorderErrorCheck (int result);
 
 /*! @fn         const char * CameraErrorCheck (int errCode)
  *  @brief      Camera에서 발생하는 Error Code들을 확인 해준다.
@@ -71,7 +71,7 @@ const char* RecorderErrorCheck(int result);
  *              15가지의 Error Code들을 확인 가능 하다.
  *  @see        [Tizen Native API Document - Camera Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__CAMERA__MODULE.html#ga2ef5666f3fa5a86c28347623dba6fd39)
  */
-const char* CameraErrorCheck(int result);
+const char * CameraErrorCheck (int result);
 
 /* AudioRecorder */
 /*! @struct _AudioRecorder
@@ -87,6 +87,7 @@ const char* CameraErrorCheck(int result);
  *          * http://tizen.org/feature/microphone
  */
 typedef struct _AudioRecorder * AudioRecorder;
+
 struct _AudioRecorder
 {
 
@@ -140,7 +141,7 @@ AudioRecorder NewAudioRecorder (void)
 }
  *	@endcode
  */
-AudioRecorder NewAudioRecorder(void);
+AudioRecorder NewAudioRecorder (void);
 
 /*! @fn         void DestroyAudioRecorder(AudioRecorder this_gen);
  *  @brief      생성한 AudioRecorder 객체를 소멸 시킨다.
@@ -157,7 +158,7 @@ AudioRecorder NewAudioRecorder(void);
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/microphone
  */
-void DestroyAudioRecorder(AudioRecorder this_gen);
+void DestroyAudioRecorder (AudioRecorder this_gen);
 
 /*! @fn         bool audioRecorderInit(AudioRecorder this_gen, const String filename)
  *  @brief      녹음을 시작하기전 녹음할 Audio Recorder 객체를 초기화 한다.
@@ -181,7 +182,7 @@ void DestroyAudioRecorder(AudioRecorder this_gen);
  *              * http://tizen.org/feature/microphone
  *  @warning    audioRecorderStart() 를 통해 녹음을 시작하기 전 반드시 실행 해야 한다.
  */
-bool audioRecorderInit(AudioRecorder this_gen, const String filename);
+bool audioRecorderInit (AudioRecorder this_gen, const String filename);
 
 /*! @fn         bool audioRecorderStart(AudioRecorder this_gen)
  *  @brief      녹음을 시작한다.
@@ -204,7 +205,7 @@ bool audioRecorderInit(AudioRecorder this_gen, const String filename);
  *              * http://tizen.org/feature/microphone
  *  @warning    녹음을 시작하기 전 반드시 audioRecorderInit() 함수를 실행 해야 한다.
  */
-bool audioRecorderStart(AudioRecorder this_gen);
+bool audioRecorderStart (AudioRecorder this_gen);
 
 /*! @fn         bool audioRecorderPause(AudioRecorder this_gen)
  *  @brief      녹음을 일시 정지 한다.
@@ -226,7 +227,7 @@ bool audioRecorderStart(AudioRecorder this_gen);
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/microphone
  */
-bool audioRecorderPause(AudioRecorder this_gen);
+bool audioRecorderPause (AudioRecorder this_gen);
 
 /*! @fn         bool audioRecorderEnd(AudioRecorder this_gen)
  *  @brief      녹음을 종료하고 녹음 결과를 저장한다.
@@ -248,7 +249,7 @@ bool audioRecorderPause(AudioRecorder this_gen);
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/microphone
  */
-bool audioRecorderEnd(AudioRecorder this_gen);
+bool audioRecorderEnd (AudioRecorder this_gen);
 
 /*! @fn         bool audioRecorderCancel(AudioRecorder this_gen)
  *  @brief      녹음을 취소하며 녹음 결과를 저장하지 않는다.
@@ -270,7 +271,7 @@ bool audioRecorderEnd(AudioRecorder this_gen);
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/microphone
  */
-bool audioRecorderCancel(AudioRecorder this_gen);
+bool audioRecorderCancel (AudioRecorder this_gen);
 
 typedef struct _AudioRecorderExtends
 {
@@ -279,12 +280,12 @@ typedef struct _AudioRecorderExtends
 
 } AudioRecorderExtends;
 
-
 /* CameraRecorder */
-typedef enum{
-	CAMERA_BACK = 0,
-	CAMERA_FRONT
-}camera_type;
+typedef enum
+{
+    CAMERA_BACK = 0,
+    CAMERA_FRONT
+} camera_type;
 
 /*! @struct _CameraRecorder
  *  @brief  CameraRecorder 모듈에 대한 구조체이다. CameraRecorder 모듈은 동영상을 녹화할 수 있다.
@@ -300,6 +301,7 @@ typedef enum{
  *          * http://tizen.org/feature/microphone
  */
 typedef struct _CameraRecorder * CameraRecorder;
+
 struct _CameraRecorder
 {
 
@@ -355,7 +357,7 @@ CameraRecorder NewCameraRecorder (void)
 }
  *	@endcode
  */
-CameraRecorder NewCameraRecorder(void);
+CameraRecorder NewCameraRecorder (void);
 
 /*! @fn         void DestroyCameraRecorder(CameraRecorder this_gen)
  *  @brief      생성한 CameraRecorder 객체를 소멸 시킨다.
@@ -373,7 +375,7 @@ CameraRecorder NewCameraRecorder(void);
  *              * http://tizen.org/feature/camera \n
  *              * http://tizen.org/feature/microphone
  */
-void DestroyCameraRecorder(CameraRecorder this_gen);
+void DestroyCameraRecorder (CameraRecorder this_gen);
 
 /*! @fn         bool cameraRecorderInit(CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object* evasObject)
  *  @brief      녹화를 시작하기전 녹화할 Camera Recorder 객체를 초기화 한다.
@@ -400,7 +402,7 @@ void DestroyCameraRecorder(CameraRecorder this_gen);
  *              * http://tizen.org/feature/microphone
  *  @warning    cameraRecorderStart() 를 통해 녹화를 시작하기 전 반드시 실행 해야 한다.
  */
-bool cameraRecorderInit(CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object* evasObject);
+bool cameraRecorderInit (CameraRecorder this_gen, const String filename, camera_type camera, Evas_Object * evasObject);
 
 /*! @fn         bool cameraRecorderStart(CameraRecorder this_gen)
  *  @brief      녹화를 시작한다.
@@ -424,7 +426,7 @@ bool cameraRecorderInit(CameraRecorder this_gen, const String filename, camera_t
  *              * http://tizen.org/feature/microphone
  *  @warning    녹화를 시작하기 전 반드시 cameraRecorderInit() 함수를 실행 해야 한다.
  */
-bool cameraRecorderStart(CameraRecorder this_gen);
+bool cameraRecorderStart (CameraRecorder this_gen);
 
 /*! @fn         bool cameraRecorderPause(CameraRecorder this_gen)
  *  @brief      녹화를 일시 정지 한다.
@@ -447,7 +449,7 @@ bool cameraRecorderStart(CameraRecorder this_gen);
  *              * http://tizen.org/feature/camera \n
  *              * http://tizen.org/feature/microphone
  */
-bool cameraRecorderPause(CameraRecorder this_gen);
+bool cameraRecorderPause (CameraRecorder this_gen);
 
 /*! @fn         bool cameraRecorderEnd(CameraRecorder this_gen)
  *  @brief      녹화를 종료하고 녹화 결과를 저장한다.
@@ -470,7 +472,7 @@ bool cameraRecorderPause(CameraRecorder this_gen);
  *              * http://tizen.org/feature/camera \n
  *              * http://tizen.org/feature/microphone
  */
-bool cameraRecorderEnd(CameraRecorder this_gen);
+bool cameraRecorderEnd (CameraRecorder this_gen);
 
 /*! @fn         bool cameraRecorderCancel(CameraRecorder this_gen)
  *  @brief      녹화를 취소하며 녹화 결과를 저장하지 않는다.
@@ -493,7 +495,7 @@ bool cameraRecorderEnd(CameraRecorder this_gen);
  *              * http://tizen.org/feature/camera \n
  *              * http://tizen.org/feature/microphone
  */
-bool cameraRecorderCancel(CameraRecorder this_gen);
+bool cameraRecorderCancel (CameraRecorder this_gen);
 
 typedef struct _CameraRecorderExtends
 {
