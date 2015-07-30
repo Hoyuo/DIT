@@ -734,7 +734,7 @@ bool   setAudioURI (Audio this_gen, String uri);
 typedef struct _Image * Image;
 struct _Image
 {
-    bool       (* extractInfo) (Image this_gen, String src);
+    bool       (* setURI) (Image this_gen, String src);
 
     String     (* getBurstId) (Image this_gen);
 
@@ -769,7 +769,7 @@ typedef struct _ImageExtends
  *  @note 		새로운 Image 객체를 생성한다. \n
  *  			Image 객체를 사용하기 전에 반드시 호출해야 한다.
  *  @see 		DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageBurstId \n
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
@@ -782,7 +782,7 @@ Image NewImage ()
 {
     ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
 
-    this->image.extractInfo  = getImageInfo;
+    this->image.extractInfo  = setImageURI;
     this->imageMetaHandle    = NULL;
     this->image.getBurstId   = getImageBurstId;
     this->image.getMediaId   = getImageMediaId;
@@ -812,7 +812,7 @@ Image  NewImage (void);
  */
 void   DestroyImage (Image this_gen);
 
-/*! @fn 		bool getImageInfo (Image this_gen, String src)
+/*! @fn 		bool setImageURI (Image this_gen, String src)
  *  @brief 		사진 파일의 meta data를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[in] 	src meta data를 가져올 사진 파일의 path
@@ -829,7 +829,7 @@ void   DestroyImage (Image this_gen);
  *  			getImageWidth \n
  *  			getImageHeight
  */
-bool   getImageInfo (Image this_gen, String src);
+bool   setImageURI (Image this_gen, String src);
 
 /*! @fn 		String getImageBurstId (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 Burst Id를 가져온다.
@@ -839,12 +839,12 @@ bool   getImageInfo (Image this_gen, String src);
  *  @note 		사진 파일의 meta data 중 Burst Id를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
  *  			getImageWidth \n
  *  			getImageHeight
- *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
+ *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 String getImageBurstId (Image this_gen);
 
@@ -856,12 +856,12 @@ String getImageBurstId (Image this_gen);
  *  @note 		사진 파일의 meta data 중 Media Id를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageBurstId \n
  *  			getImageDateTaken \n
  *  			getImageWidth \n
  *  			getImageHeight
- *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
+ *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 String getImageMediaId (Image this_gen);
 
@@ -873,12 +873,12 @@ String getImageMediaId (Image this_gen);
  *  @note 		사진 파일의 meta data 중 찍은 날짜 정보를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageBurstId \n
  *  			getImageMediaId \n
  *  			getImageWidth \n
  *  			getImageHeight
- *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
+ *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 String getImageDateTaken (Image this_gen);
 
@@ -891,12 +891,12 @@ String getImageDateTaken (Image this_gen);
  *				단위는 픽셀이다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageBurstId \n
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
  *  			getImageHeight
- *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
+ *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 int    getImageWidth (Image this_gen);
 
@@ -909,12 +909,12 @@ int    getImageWidth (Image this_gen);
  *				단위는 픽셀이다.
  *  @see 		NewImage \n
  *  			DestroyImage \n
- *  			getImageInfo \n
+ *  			setImageURI \n
  *  			getImageBurstId \n
  *  			getImageMediaId \n
  *  			getImageDateTaken \n
  *  			getImageWidth \n
- *  @warning   사용 전 getImageInfo()를 최소 한번 이상 호출해야 한다.
+ *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
 int    getImageHeight (Image this_gen);
 /* Image */
