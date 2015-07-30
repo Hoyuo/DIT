@@ -80,7 +80,7 @@ Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948
 <br><br><br><br><br><br><br>
 
 ##Tizen Developer Guide for beginners
-**[Written by Hoyuo ›](http://hoyuo.gitbooks.io/tizen)**
+**[Click ›](http://hoyuo.gitbooks.io/tizen)**
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
