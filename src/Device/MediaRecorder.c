@@ -87,9 +87,8 @@ bool audioRecorderInit (AudioRecorder this_gen, const String filename)
             }
 
             ret = audio_recorder_define_fileformat (this, filename);
-            if ( ret != RECORDER_ERROR_NONE )
+            if ( ret != true )
             {
-                dlog_print (DLOG_INFO, "DIT", "%s", RecorderErrorCheck (ret));
                 return false;
             }
 
