@@ -313,7 +313,6 @@ typedef struct _VideoExtends
  *  			playVideo \n
  *  			pauseVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
@@ -379,7 +378,6 @@ void DestroyVideo (Video this_gen);
  *  			DestroyVideo \n
  *  			pauseVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
@@ -403,7 +401,6 @@ bool playVideo (Video this_gen);
  *  			DestroyVideo \n
  *  			playVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
@@ -426,7 +423,6 @@ bool pauseVideo (Video this_gen);
  *  			DestroyVideo \n
  *  			playVideo \n
  *  			pauseVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI \n
  *  			setEvasObject
@@ -449,7 +445,6 @@ bool stopVideo (Video this_gen);
  *  			playVideo \n
  *  			pauseVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			setVideoURI \n
  *  			setEvasObject
  *  @pre        @b privilege \n
@@ -475,14 +470,13 @@ String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
  *  			playVideo \n
  *  			pauseVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setEvasObject
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/display \n
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
- *  @warning    playVideo() , pauseVideo() , stopVideo() ,  recordVideo() , getVideoInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
+ *  @warning    playVideo() , pauseVideo() , stopVideo() , getVideoInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
 bool setVideoURI (Video this_gen, String URI);
 
@@ -500,7 +494,6 @@ bool setVideoURI (Video this_gen, String URI);
  *  			playVideo \n
  *  			pauseVideo \n
  *  			stopVideo \n
- *  			recordVideo \n
  *  			getVideoInfo \n
  *  			setVideoURI
  *  @pre        @b privilege \n
