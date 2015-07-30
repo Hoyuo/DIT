@@ -148,6 +148,25 @@ struct _Socket
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/internet
  *  @warning    사용이 끝났을 때 DestorySocket() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Socket NewSocket (void)
+{
+    SocketExtends * this = (SocketExtends *)malloc (sizeof (SocketExtends));
+
+    this->socket.isAccessible = isSocketAccessible;
+    this->socket.onConnect    = onSocketConnect;
+    this->socket.onDisconnect = onSocketDisconnect;
+    this->socket.Send         = SocketMessageSend;
+    this->socket.Recv         = SocketMessageRecv;
+
+    this->curl   = NULL;
+    this->access = false;
+    this->conect = false;
+
+    return &this->socket;
+}
+ *	@endcode
  */
 Socket NewSocket (void);
 

@@ -88,6 +88,35 @@ struct _OngoingNotification
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/notification
  *  @warning    사용이 끝났을 때 DestroyOngoingNotification() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+OngoingNotification NewOngoingNotification (void)
+{
+    OngoingNotificationExtend * this;
+
+    this = (OngoingNotificationExtend *)malloc (sizeof (OngoingNotificationExtend));
+
+    this->Ongoingnotification.Show        = OngoingNotificationShow;
+    this->Ongoingnotification.Hide        = OngoingNotificationHide;
+    this->Ongoingnotification.setTitle    = setOngoingNotificationTitle;
+    this->Ongoingnotification.setText     = setOngoingNotificationText;
+    this->Ongoingnotification.setIcon     = setOngoingNotificationIcon;
+    this->Ongoingnotification.setSound    = setOngoingNotificationSound;
+    this->Ongoingnotification.setProgress = setOngoingNotificationProgress;
+    this->Ongoingnotification.update      = updateOngoingNotification;
+
+    this->ongoingnotification_handle = notification_create (NOTIFICATION_TYPE_ONGOING);
+    this->title                      = NULL;
+    this->text                       = NULL;
+    this->imagePath                  = NULL;
+    this->soundPath                  = NULL;
+    this->visible                    = false;
+
+    notification_set_display_applist (this->ongoingnotification_handle, NOTIFICATION_DISPLAY_APP_NOTIFICATION_TRAY | NOTIFICATION_DISPLAY_APP_TICKER);
+
+    return &this->Ongoingnotification;
+}
+ *	@endcode
  */
 OngoingNotification NewOngoingNotification (void);
 

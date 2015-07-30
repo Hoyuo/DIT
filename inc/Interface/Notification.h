@@ -85,6 +85,33 @@ struct _Notification
  *  @pre    	@b privilege \n
  *              * http://tizen.org/privilege/notification
  *  @warning    사용이 끝났을 때 DestroyNotification() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Notification NewNotification (void)
+{
+    NotificationExtend * this;
+
+    this = (NotificationExtend *)malloc (sizeof (NotificationExtend));
+
+    this->notification.Show     = NotificationShow;
+    this->notification.Hide     = NotificationHide;
+    this->notification.setTitle = setNotificationTitle;
+    this->notification.setText  = setNotificationText;
+    this->notification.setIcon  = setNotificationIcon;
+    this->notification.setSound = setNotificationSound;
+    this->notification.update   = updateNotification;
+
+    this->notification_handle = notification_create (NOTIFICATION_TYPE_NOTI);
+    this->title               = NULL;
+    this->text                = NULL;
+    this->imagePath           = NULL;
+    this->soundPath           = NULL;
+    this->visible             = false;
+
+    return &this->notification;
+}
+ *	@endcode
+ *
  */
 Notification NewNotification (void);
 

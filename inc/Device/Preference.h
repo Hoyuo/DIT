@@ -86,6 +86,28 @@ struct _Preference
  *  			PreferenceRemove \n
  *  			PreferenceClear
  *  @warning    사용이 끝났을 때 DestroyPreference() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Preference NewPreference (void)
+{
+    Preference this = (Preference)malloc (sizeof (struct _Preference));
+
+    this->getInt     = getPreferenceInt;
+    this->getDouble  = getPreferenceDouble;
+    this->getBoolean = getPreferenceBoolean;
+    this->getString  = getPreferenceString;
+
+    this->setInt     = setPreferenceInt;
+    this->setDouble  = setPreferenceDouble;
+    this->setBoolean = setPreferenceBoolean;
+    this->setString  = setPreferenceString;
+
+    this->Remove = PreferenceRemove;
+    this->Clear  = PreferenceClear;
+
+    return this;
+}
+ *	@endcode
  */
 Preference NewPreference (void);
 

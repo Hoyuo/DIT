@@ -75,6 +75,21 @@ struct _Vibration
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/haptic
  *  @warning    사용이 끝났을 때 DestroyVibration() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Vibration NewVibration (void)
+{
+    VibrationExtend * this = (VibrationExtend *)malloc (sizeof (VibrationExtend));
+
+    this->vibration.Custom = VibrationCustom;
+    this->vibration.Short  = VibrationShort;
+    this->vibration.Middle = VibrationMiddle;
+    this->vibration.Long   = VibrationLong;
+
+    device_haptic_open (0, &this->handle);
+
+    return &this->vibration;
+}
  */
 Vibration NewVibration (void);
 
@@ -209,6 +224,20 @@ struct _Display
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/display
  *  @warning    사용이 끝났을 때 DestroyDisplay() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Display NewDisplay (void)
+{
+    DisplayExtend * this = (DisplayExtend *)malloc (sizeof (DisplayExtend));
+
+    this->display.Lock      = DisplayLock;
+    this->display.Unlock    = DisplayUnlock;
+    this->display.Dim       = DisplayDim;
+    this->display.getBright = getDisplayBrightLevel;
+    this->display.setBright = setDisplayBrightLevel;
+
+    return &this->display;
+}
  */
 Display NewDisplay (void);
 
@@ -353,6 +382,17 @@ struct _Battery
  *  			getBatteryRemainsPercent \n
  *  			isBatteryCharging
  *  @warning    사용이 끝났을 때 DestoryBattery() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Battery NewBattery (void)
+{
+    BatteryExtend * this = (BatteryExtend *)malloc (sizeof (BatteryExtend));
+
+    this->battery.getLevel   = getBatteryRemainsPercent;
+    this->battery.isCharging = isBatteryCharging;
+
+    return &this->battery;
+}
  */
 Battery NewBattery (void);
 
@@ -438,6 +478,17 @@ struct _Flash
  *  @pre        @b priviledge \n
  *              * http://tizen.org/privilege/led \n
  *  @warning    사용이 끝났을 때 DestoryFlash() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Flash NewFlash (void)
+{
+    Flash this = (Flash)malloc (sizeof (struct _Flash));
+
+    this->On  = onFlash;
+    this->Off = offFlash;
+
+    return this;
+}
  */
 Flash NewFlash (void);
 

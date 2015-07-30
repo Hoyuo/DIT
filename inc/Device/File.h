@@ -137,6 +137,20 @@ struct _File
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  *  @warning    사용이 끝났을 때 DestroyFile() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+File NewFile (void)
+{
+    File this = malloc (sizeof (struct _File));
+
+    this->Delete             = deleteFile;
+    this->Copy               = copyFile;
+    this->Move               = moveFile;
+    this->Search             = searchFile;
+    this->deleteSearchedList = deleteSearchedList;
+    return this;
+}
+ *	@endcode
  */
 File NewFile (void);
 
@@ -308,6 +322,31 @@ typedef struct _VideoExtends
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  *  @warning    사용이 끝났을 때 DestoryVideo() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Video NewVideo (void)
+{
+
+    VideoExtends * this = (VideoExtends *)malloc (sizeof (VideoExtends));
+
+    this->video.getInfo   = getVideoInfo;
+    this->video.Pause     = pauseVideo;
+    this->video.Play      = playVideo;
+    this->video.Stop      = stopVideo;
+    this->video.setURI    = setVideoURI;
+    this->video.setObject = setEvasObject;
+
+    this->videoMetadataHandle = NULL;
+    this->player_handle       = NULL;
+    this->uri                 = NULL;
+    this->EvasObject          = NULL;
+
+    player_create (&this->player_handle);
+    metadata_extractor_create (&this->videoMetadataHandle);
+
+    return &this->video;
+}
+ *	@endcode
  */
 Video  NewVideo (void);
 
@@ -526,6 +565,29 @@ typedef struct _AudioExtends
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
  *  @warning    사용이 끝났을 때 DestoryAudio() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Audio NewAudio ()
+{
+
+    AudioExtends * this = (AudioExtends *)malloc (sizeof (AudioExtends));
+
+    this->audio.getInfo = getAudioInfo;
+    this->audio.Pause   = pauseAudio;
+    this->audio.Play    = playAudio;
+    this->audio.Stop    = stopAudio;
+    this->audio.setURI  = setAudioURI;
+
+    this->uri                 = NULL;
+    this->player_handle       = NULL;
+    this->audioMetadataHandle = NULL;
+
+    player_create (&this->player_handle);
+    metadata_extractor_create (&this->audioMetadataHandle);
+
+    return &this->audio;
+}
+ *	@endcode
  */
 Audio  NewAudio (void);
 
@@ -714,6 +776,28 @@ typedef struct _ImageExtends
  *  			getImageWidth \n
  *  			getImageHeight
  *  @warning    사용이 끝났을 때 DestoryImage() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Image NewImage ()
+{
+    ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
+
+    this->image.extractInfo  = getImageInfo;
+    this->imageMetaHandle    = NULL;
+    this->image.getBurstId   = getImageBurstId;
+    this->image.getMediaId   = getImageMediaId;
+    this->image.getDateTaken = getImageDateTaken;
+    this->image.getWidth     = getImageWidth;
+    this->image.getHeight    = getImageHeight;
+    this->height             = -1;
+    this->width              = -1;
+    this->burst_id           = NULL;
+    this->datetaken          = NULL;
+    this->media_id           = NULL;
+
+    return &this->image;
+}
+ *	@endcode
  */
 Image  NewImage (void);
 

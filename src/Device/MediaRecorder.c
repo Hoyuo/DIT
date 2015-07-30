@@ -23,7 +23,7 @@ static bool recorder_define_fileformat_and_rotation (CameraRecorderExtends * cr,
 static bool audio_recorder_define_fileformat (AudioRecorderExtends * ar, const String filename);
 
 
-AudioRecorder NewAudioRecroder (void)
+AudioRecorder NewAudioRecorder (void)
 {
 
     AudioRecorderExtends * this = malloc (sizeof (AudioRecorderExtends));
@@ -241,7 +241,7 @@ bool audioRecorderCancel (AudioRecorder this_gen)
     return false;
 }
 
-CameraRecorder NewCameraRecroder (void)
+CameraRecorder NewCameraRecorder (void)
 {
 
     CameraRecorderExtends * this = malloc (sizeof (CameraRecorderExtends));
@@ -257,7 +257,7 @@ CameraRecorder NewCameraRecroder (void)
     return &this->camerarecorder;
 }
 
-void DestroyCameraRecroder (CameraRecorder this_gen)
+void DestroyCameraRecorder (CameraRecorder this_gen)
 {
 
     if ( this_gen != NULL)

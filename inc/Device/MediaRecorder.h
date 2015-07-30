@@ -122,6 +122,23 @@ struct _AudioRecorder
  *  @pre        @b feature \n
  *              * http://tizen.org/feature/microphone
  *  @warning    사용이 끝났을 때 DestroyAudioRecorder() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+AudioRecorder NewAudioRecorder (void)
+{
+
+    AudioRecorderExtends * this = malloc (sizeof (AudioRecorderExtends));
+    this->audiorecorder.Init   = audioRecorderInit;
+    this->audiorecorder.Start  = audioRecorderStart;
+    this->audiorecorder.Pause  = audioRecorderPause;
+    this->audiorecorder.End    = audioRecorderEnd;
+    this->audiorecorder.Cancel = audioRecorderCancel;
+
+    this->audiorecorderhandle = NULL;
+
+    return &this->audiorecorder;
+}
+ *	@endcode
  */
 AudioRecorder NewAudioRecorder(void);
 
@@ -319,6 +336,24 @@ struct _CameraRecorder
  *              * http://tizen.org/feature/camera \n
  *              * http://tizen.org/feature/microphone
  *  @warning    사용이 끝났을 때 DestroyCameraRecorder() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+CameraRecorder NewCameraRecorder (void)
+{
+
+    CameraRecorderExtends * this = malloc (sizeof (CameraRecorderExtends));
+    this->camerarecorder.Init   = cameraRecorderInit;
+    this->camerarecorder.Start  = cameraRecorderStart;
+    this->camerarecorder.Pause  = cameraRecorderPause;
+    this->camerarecorder.End    = cameraRecorderEnd;
+    this->camerarecorder.Cancel = cameraRecorderCancel;
+
+    this->camerarecorderhandle = NULL;
+    this->camerahandle         = NULL;
+
+    return &this->camerarecorder;
+}
+ *	@endcode
  */
 CameraRecorder NewCameraRecorder(void);
 

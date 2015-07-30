@@ -180,6 +180,30 @@ typedef struct _AccelerometerExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.accelerometer
  *  @warning    사용이 끝났을 때 DestroyAccelerometer() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Accelerometer NewAccelerometer (void)
+{
+
+    AccelerometerExtend * this = malloc (sizeof (AccelerometerExtend));
+
+    this->accelerometer.Off            = AccelerometerOff;
+    this->accelerometer.On             = AccelerometerOn;
+    this->accelerometer.addCallback    = addAccelerometerCallback;
+    this->accelerometer.getValue       = getAccelerometerValue;
+    this->accelerometer.isSupported    = isAccelerometerSupported;
+    this->accelerometer.detachCallback = detachAccelerometerCallback;
+
+    this->type      = SENSOR_ACCELEROMETER;
+    this->listener  = NULL;
+    this->sensor    = NULL;
+    this->activated = false;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+    return &this->accelerometer;
+}
+ *	@endcode
  */
 Accelerometer NewAccelerometer (void);
 
@@ -375,6 +399,30 @@ typedef struct _GravityExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.gravity
  *  @warning    사용이 끝났을 때 DestroyGravity() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Gravity NewGravity (void)
+{
+
+    GravityExtend * this = malloc (sizeof (GravityExtend));
+
+    this->gravity.Off            = GravityOff;
+    this->gravity.On             = GravityOn;
+    this->gravity.addCallback    = addGravityCallback;
+    this->gravity.getValue       = getGravityValue;
+    this->gravity.isSupported    = isGravitySupported;
+    this->gravity.detachCallback = detachGravityCallback;
+
+    this->type     = SENSOR_GRAVITY;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->gravity;
+}
+ *	@endcode
  */
 Gravity NewGravity (void);
 
@@ -570,6 +618,29 @@ typedef struct _LinearAccelationExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.linear_acceleration
  *  @warning    사용이 끝났을 때 DestroyLinearAccelation() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+LinearAccelation NewLinearAccelation (void)
+{
+
+    LinearAccelationExtend * this = malloc (sizeof (LinearAccelationExtend));
+
+    this->linearaccelation.Off            = LinearAccelationOff;
+    this->linearaccelation.On             = LinearAccelationOn;
+    this->linearaccelation.addCallback    = addLinearAccelationCallback;
+    this->linearaccelation.getValue       = getLinearAccelationValue;
+    this->linearaccelation.isSupported    = isLinearAccelationSupported;
+    this->linearaccelation.detachCallback = detachLinearAccelationCallback;
+
+    this->type     = SENSOR_LINEAR_ACCELERATION;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+    return &this->linearaccelation;
+}
+ *	@endcode
  */
 LinearAccelation NewLinearAccelation (void);
 
@@ -765,6 +836,28 @@ typedef struct _MagnetometerExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.magnetometer
  *  @warning    사용이 끝났을 때 DestroyMagnetometer() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Magnetometer NewMagnetometer (void)
+{
+    MagnetometerExtend * this = malloc (sizeof (MagnetometerExtend));
+
+    this->magnetometer.Off            = MagnetometerOff;
+    this->magnetometer.On             = MagnetometerOn;
+    this->magnetometer.addCallback    = addMagnetometerCallback;
+    this->magnetometer.getValue       = getMagnetometerValue;
+    this->magnetometer.isSupported    = isMagnetometerSupported;
+    this->magnetometer.detachCallback = detachMagnetometerCallback;
+    this->type                        = SENSOR_MAGNETIC;
+    this->listener                    = NULL;
+    this->sensor                      = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->magnetometer;
+}
+ *	@endcode
  */
 Magnetometer NewMagnetometer (void);
 
@@ -960,6 +1053,29 @@ typedef struct _RotationVectorExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.rotation_vector
  *  @warning    사용이 끝났을 때 DestroyRotationVector() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+RotationVector NewRotationVector (void)
+{
+    RotationVectorExtend * this = malloc (sizeof (RotationVectorExtend));
+
+    this->rotationvector.Off            = RotationVectorOff;
+    this->rotationvector.On             = RotationVectorOn;
+    this->rotationvector.addCallback    = addRotationVectorCallback;
+    this->rotationvector.getValue       = getRotationVectorValue;
+    this->rotationvector.isSupported    = isRotationVectorSupported;
+    this->rotationvector.detachCallback = detachRotationVectorCallback;
+
+    this->type     = SENSOR_ROTATION_VECTOR;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->rotationvector;
+}
+ *	@endcode
  */
 RotationVector NewRotationVector (void);
 
@@ -1155,6 +1271,30 @@ typedef struct _OrientationExtend
  *              * http://tizen.org/feature/sensor.accelerometer \n
  *				* http://tizen.org/feature/sensor.magnetometer
  *  @warning    사용이 끝났을 때 DestroyOrientation() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Orientation NewOrientation (void)
+{
+
+    OrientationExtend * this = malloc (sizeof (OrientationExtend));
+
+    this->orientation.Off            = OrientationOff;
+    this->orientation.On             = OrientationOn;
+    this->orientation.addCallback    = addOrientationCallback;
+    this->orientation.getValue       = getOrientationValue;
+    this->orientation.isSupported    = isOrientationSupported;
+    this->orientation.detachCallback = detachOrientationCallback;
+
+    this->type     = SENSOR_ORIENTATION;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->orientation;
+}
+ *	@endcode
  */
 Orientation NewOrientation (void);
 
@@ -1357,6 +1497,30 @@ typedef struct _GyroscopeExtend
  *  @pre     	@b feature \n
  *              http://tizen.org/feature/sensor.gyroscope
  *  @warning    사용이 끝났을 때 DestroyGyroscope() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Gyroscope NewGyroscope (void)
+{
+
+    GyroscopeExtend * this = malloc (sizeof (GyroscopeExtend));
+
+    this->gyroscope.Off            = GyroscopeOff;
+    this->gyroscope.On             = GyroscopeOn;
+    this->gyroscope.addCallback    = addGyroscopeCallback;
+    this->gyroscope.getValue       = getGyroscopeValue;
+    this->gyroscope.isSupported    = isGyroscopeSupported;
+    this->gyroscope.detachCallback = detachGyroscopeCallback;
+
+    this->type     = SENSOR_GYROSCOPE;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_create_listener (this->sensor, &this->listener);
+    sensor_listener_start (this->listener);
+
+    return &this->gyroscope;
+}
+ *	@endcode
  */
 Gyroscope NewGyroscope (void);
 
@@ -1552,6 +1716,30 @@ typedef struct _LightExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.photometer
  *  @warning    사용이 끝났을 때 DestroyLight() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Light NewLight (void)
+{
+
+    LightExtend * this = malloc (sizeof (LightExtend));
+
+    this->light.Off            = LightOff;
+    this->light.On             = LightOn;
+    this->light.addCallback    = addLightCallback;
+    this->light.getValue       = getLightValue;
+    this->light.isSupported    = isLightSupported;
+    this->light.detachCallback = detachLightCallback;
+
+    this->type     = SENSOR_LIGHT;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->light;
+}
+ *	@endcode
  */
 Light NewLight (void);
 
@@ -1748,6 +1936,30 @@ typedef struct _ProximityExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.proximity
  *  @warning    사용이 끝났을 때 DestroyProximity() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Proximity NewProximity (void)
+{
+
+    ProximityExtend * this = malloc (sizeof (ProximityExtend));
+
+    this->proximity.Off            = ProximityOff;
+    this->proximity.On             = ProximityOn;
+    this->proximity.addCallback    = addProximityCallback;
+    this->proximity.getValue       = getProximityValue;
+    this->proximity.isSupported    = isProximitySupported;
+    this->proximity.detachCallback = detachProximityCallback;
+
+    this->type     = SENSOR_PROXIMITY;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->proximity;
+}
+ *	@endcode
  */
 Proximity NewProximity (void);
 
@@ -1968,7 +2180,31 @@ typedef struct _PressureExtend
  *              * http://tizen.org/feature/sensor.rotation_vector \n
  *              * http://tizen.org/feature/sensor.gravity
  *  @warning    사용이 끝났을 때 DestroyPressure() 함수를 꼭 사용해야 한다. \n
- *              Pressure Sensor의 경우 device에 있는 다양한 센서들을 조합해서 사용하므로 모든 Sensor를 추가해야 한다.              
+ *              Pressure Sensor의 경우 device에 있는 다양한 센서들을 조합해서 사용하므로 모든 Sensor를 추가해야 한다.
+ *
+ *  @code{.c}
+Pressure NewPressure (void)
+{
+
+    PressureExtend * this = malloc (sizeof (PressureExtend));
+
+    this->pressure.Off            = PressureOff;
+    this->pressure.On             = PressureOn;
+    this->pressure.addCallback    = addPressureCallback;
+    this->pressure.getValue       = getPressureValue;
+    this->pressure.isSupported    = isPressureSupported;
+    this->pressure.detachCallback = detachPressureCallback;
+
+    this->type     = SENSOR_PRESSURE;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->pressure;
+}
+ *	@endcode
  */
 Pressure NewPressure (void);
 
@@ -2248,6 +2484,30 @@ typedef struct _UltraVioletExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.ultraviolet
  *  @warning    사용이 끝났을 때 DestroyUltraViolet() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+UltraViolet NewUltraViolet (void)
+{
+
+    UltraVioletExtend * this = malloc (sizeof (UltraVioletExtend));
+
+    this->ultraviolet.Off            = UltraVioletOff;
+    this->ultraviolet.On             = UltraVioletOn;
+    this->ultraviolet.addCallback    = addUltraVioletCallback;
+    this->ultraviolet.getValue       = getUltraVioletValue;
+    this->ultraviolet.isSupported    = isUltraVioletSupported;
+    this->ultraviolet.detachCallback = detachUltraVioletCallback;
+
+    this->type     = SENSOR_ULTRAVIOLET;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->ultraviolet;
+}
+ *	@endcode
  */
 UltraViolet NewUltraViolet (void);
 
@@ -2443,6 +2703,30 @@ typedef struct _TemperatureExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.temperature
  *  @warning    사용이 끝났을 때 DestroyTemperature() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Temperature NewTemperature (void)
+{
+
+    TemperatureExtend * this = malloc (sizeof (TemperatureExtend));
+
+    this->temperature.Off            = TemperatureOff;
+    this->temperature.On             = TemperatureOn;
+    this->temperature.addCallback    = addTemperatureCallback;
+    this->temperature.getValue       = getTemperatureValue;
+    this->temperature.isSupported    = isTemperatureSupported;
+    this->temperature.detachCallback = detachTemperatureCallback;
+
+    this->type     = SENSOR_TEMPERATURE;
+    this->listener = NULL;
+    this->sensor   = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->temperature;
+}
+ *	@endcode
  */
 Temperature NewTemperature (void);
 
@@ -2638,6 +2922,29 @@ typedef struct _HumidityExtend
  *  @pre     	@b feature \n
  *              * http://tizen.org/feature/sensor.humidity
  *  @warning    사용이 끝났을 때 DestroyHumidity() 함수를 꼭 사용해야 한다.
+ *
+ *  @code{.c}
+Humidity NewHumidity (void)
+{
+
+    HumidityExtend * this = malloc (sizeof (HumidityExtend));
+
+    this->humidity.Off            = HumidityOff;
+    this->humidity.On             = HumidityOn;
+    this->humidity.addCallback    = addHumidityCallback;
+    this->humidity.getValue       = getHumidityValue;
+    this->humidity.isSupported    = isHumiditySupported;
+    this->humidity.detachCallback = detachHumidityCallback;
+    this->type                    = SENSOR_HUMIDITY;
+    this->listener                = NULL;
+    this->sensor                  = NULL;
+
+    sensor_get_default_sensor (this->type, &this->sensor);
+    sensor_create_listener (this->sensor, &this->listener);
+
+    return &this->humidity;
+}
+ *	@endcode
  */
 Humidity NewHumidity (void);
 
