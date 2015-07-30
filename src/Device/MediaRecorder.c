@@ -1,7 +1,7 @@
-/*! @file	MediaRecoder.c
- *  @brief	Media Recoder API가 정의되어있다.
- *  @note	Media Recoder API가 정의되어있다.
- *  @see	MediaRecoder.h
+/*! @file	MediaRecorder.c
+ *  @brief	Media Recorder API가 정의되어있다.
+ *  @note	Media Recorder API가 정의되어있다.
+ *  @see	MediaRecorder.h
 */
 
 #include "Device/MediaRecorder.h"

@@ -1,6 +1,6 @@
-/*! @file   MediaRecoder.h
- *  @brief  Media Recoder API 를 사용하기 위해 포함해야 하는 헤더이다.
- *  @note   Media Recoder의 Init / Start / Pause / End / Cancel 관련 API를 제공한다.
+/*! @file   MediaRecorder.h
+ *  @brief  Media MediaRecorder API 를 사용하기 위해 포함해야 하는 헤더이다.
+ *  @note   Media MediaRecorder의 Init / Start / Pause / End / Cancel 관련 API를 제공한다.
  *  @see    [Tizen Native API](https://developer.tizen.org/development/api-references/native-application?redirect=https%3A//developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/index.html)
  */
 
@@ -21,7 +21,7 @@ extern "C" {
 #endif
 
 /*! @fn         const char * RecorderErrorCheck (int errCode)
- *  @brief      Media Recoder에서 발생하는 Error Code들을 확인 해준다.
+ *  @brief      Media Recorder에서 발생하는 Error Code들을 확인 해준다.
  *  @param[in]  errCode 확인 하고자 하는 Error Code
  *  @param[out] null
  *  @retval     RECORDER_ERROR_NONE                     : Successful
@@ -39,10 +39,10 @@ extern "C" {
  *  @retval     RECORDER_ERROR_PERMISSION_DENIED        : The access to the resources can not be granted
  *  @retval     RECORDER_ERROR_NOT_SUPPORTED            : The feature is not supported
  *  @retval     RECORDER_ERROR_UNKNOWN                  : Unknown error occurred 
- *  @note       Media Recoder에서 발생하는 Error Code들을 확인 해준다. \n
+ *  @note       Media Recorder에서 발생하는 Error Code들을 확인 해준다. \n
  *              Error의 내용은 Log를 통해 출력 된다.    \n
  *              15가지의 Error Code들을 확인 가능 하다.
- *  @see        [Tizen Native API Document - Recoder Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html#ga9edb84cd056c6c6e09190e924f0a2617)
+ *  @see        [Tizen Native API Document - Recorder Error](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html#ga9edb84cd056c6c6e09190e924f0a2617)
  */
 const char* RecorderErrorCheck(int result);
 
@@ -76,9 +76,9 @@ const char* CameraErrorCheck(int result);
 /* AudioRecorder */
 /*! @struct _AudioRecorder
  *  @brief  AudioRecorder 모듈에 대한 구조체이다. AudioRecorder 모듈은 음원을 녹음할 수 있다.
- *  @note   Media Recoder의 AudioRecorder 모듈에 대한 구조체이다. \n
+ *  @note   Media Recorder의 AudioRecorder 모듈에 대한 구조체이다. \n
             구조체를 사용하기 전에 NewAudioRecorder() 함수를 사용해야 하며 사용이 끝났을 때 DestroyAudioRecorder() 함수를 꼭 사용해야 한다.
- *  @see    [Tizen Native API Document - Recoder part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html)
+ *  @see    [Tizen Native API Document - Recorder part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html)
  *  @pre    @b privilege \n
  *          * http://tizen.org/privilege/recorder \n
  *          * http://tizen.org/privilege/mediastorage \n
@@ -271,9 +271,9 @@ typedef enum{
 
 /*! @struct _CameraRecorder
  *  @brief  CameraRecorder 모듈에 대한 구조체이다. CameraRecorder 모듈은 동영상을 녹화할 수 있다.
- *  @note   Media Recoder의 CameraRecorder 모듈에 대한 구조체이다. \n
+ *  @note   Media Recorder의 CameraRecorder 모듈에 대한 구조체이다. \n
             구조체를 사용하기 전에 NewCameraRecorder() 함수를 사용해야 하며 사용이 끝났을 때 DestroyAudioRecorder() 함수를 꼭 사용해야 한다.
- *  @see    [Tizen Native API Document - Recoder part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html)
+ *  @see    [Tizen Native API Document - Recorder part](https://developer.tizen.org/dev-guide/2.3.0/org.tizen.native.mobile.apireference/group__CAPI__MEDIA__RECORDER__MODULE.html)
  *  @pre    @b privilege \n
  *          * http://tizen.org/privilege/recorder \n
  *          * http://tizen.org/privilege/mediastorage \n

@@ -52,7 +52,7 @@ const char * NFCErrorChecker (int errorcode);
 
 
 /* NDEF */
-/*! @struct	_NDEF
+/*! @struct	NDEF
  *  @brief	NFC통신에 필요한 NDEF (NFC Data Exchange Format)에 대한 구조체이다.
  *  @note	NFC통신에 필요한 NDEF (NFC Data Exchange Format)에 대한 구조체이다. \n
     		구조체를 사용하기 전에 CreateNDEF() 함수를 사용해야 하며 사용이 끝났을 때 DeleteNDEF() 함수를 꼭 사용해야 한다.
@@ -60,7 +60,7 @@ const char * NFCErrorChecker (int errorcode);
  *  @pre    @b feature \n
  *          * http://tizen.org/feature/network.nfc \n
  */
-typedef struct _NDEF
+typedef struct NDEF
 {
     String tag;
     String msg;
