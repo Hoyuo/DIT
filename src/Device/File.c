@@ -640,7 +640,6 @@ Image NewImage ()
 
     this->image.setURI  	 = setImageURI;
     this->imageMetaHandle    = NULL;
-    this->image.getBurstId   = getImageBurstId;
     this->image.getMediaId   = getImageMediaId;
     this->image.getDate		 = getImageDate;
     this->image.getWidth     = getImageWidth;
