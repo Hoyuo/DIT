@@ -807,14 +807,14 @@ Image NewImage (void);
 void DestroyImage (Image this_gen);
 
 /*! @fn 		bool setImageURI (Image this_gen, String src)
- *  @brief 		사진 파일의 meta data를 가져온다.
+ *  @brief 		생성한 Image 객체의 URI를 설정한다.
  *  @param[in] 	this_gen Image 객체
- *  @param[in] 	src meta data를 가져올 사진 파일의 path
+ *  @param[in] 	src 설정할
  *  @param[out] null
  *  @retval 	bool \n
  *              함수의 성공 여부를 반환한다. \n
  *              실패시 @c false를 반환하며 상세한 원인을 Log로 출력한다.
- *  @note 		사진 파일의 meta data를 가져온다. \n
+ *  @note 		생성한 Image 객체의 URI를 설정한다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			getImageMediaId \n
@@ -841,11 +841,11 @@ bool setImageURI (Image this_gen, String src);
 String getImageMediaId (Image this_gen);
 
 /*! @fn 		String getImageDate (Image this_gen)
- *  @brief 		사진 파일의 meta data 중 찍은 날짜 정보를 가져온다.
+ *  @brief 		사진 파일의 meta data 중 날짜 정보를 가져온다.
  *  @param[in] 	this_gen Image 객체
  *  @param[out] null
  *  @retval 	String
- *  @note 		사진 파일의 meta data 중 찍은 날짜 정보를 가져온다. \n
+ *  @note 		사진 파일의 meta data 중 날짜 정보를 가져온다. \n
  *  @see 		NewImage \n
  *  			DestroyImage \n
  *  			setImageURI \n
