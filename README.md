@@ -1,9 +1,4 @@
-
-
-
-link of DIT video in embed style and 1280x720 resolution image file
-
-[![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](https://www.youtube.com/embed/MBfxQIz80Jk)
+[![Start Video](https://cloud.githubusercontent.com/assets/8381373/8979980/6a5e1bac-36e8-11e5-8604-1c2b63b64f0a.png)](https://www.youtube.com/embed/MBfxQIz80Jk)
 
 ## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
 ### Welcome to the *D.I.T.* GitHub page.
