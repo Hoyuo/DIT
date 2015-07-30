@@ -74,8 +74,10 @@ Release ›[![Release](https://cloud.githubusercontent.com/assets/8381373/894807
 
 ##Click here to help out
 Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948083/058d7750-35de-11e5-9674-cd5e568847e7.PNG)][5]
+<br><br><br><br><br><br><br>
 
-
+##Tizen Developer Guide for beginners
+**[Written by Hoyuo ›](http://hoyuo.gitbooks.io/tizen)**
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
