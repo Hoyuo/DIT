@@ -550,7 +550,6 @@ typedef struct _AudioExtends
  *  			playAudio \n
  *  			pauseAudio \n
  *  			stopAudio \n
- *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
  *  @pre    	@b privilege \n
@@ -611,7 +610,6 @@ void DestroyAudio (Audio this_gen);
  *  			DestroyAudio \n
  *  			pauseAudio \n
  *  			stopAudio \n
- *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
  *  @pre        @b privilege \n
@@ -635,7 +633,6 @@ bool playAudio (Audio this_gen);
  *  			DestroyAudio \n
  *  			playAudio \n
  *  			stopAudio \n
- *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
  *  @pre        @b privilege \n
@@ -658,7 +655,6 @@ bool pauseAudio (Audio this_gen);
  *  			DestroyAudio \n
  *  			playAudio \n
  *  			pauseAudio \n
- *  			recordAudio \n
  *  			getAudioInfo \n
  *  			setAudioURI
  *  @pre        @b privilege \n
@@ -680,7 +676,6 @@ bool stopAudio (Audio this_gen);
  *  			playAudio \n
  *  			pauseAudio \n
  *  			stopAudio \n
- *  			recordAudio \n
  *  			setAudioURI
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/mediastorage \n
@@ -705,13 +700,12 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *  			playAudio \n
  *  			pauseAudio \n
  *  			stopAudio \n
- *  			recordAudio \n
  *  			getAudioInfo
  *  @pre        @b privilege \n
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
- *  @warming    playAudio() , pauseAudio() , stopAudio() ,  recordAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
+ *  @warming    playAudio() , pauseAudio() , stopAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
 bool setAudioURI (Audio this_gen, String uri);
 /* Audio */
