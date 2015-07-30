@@ -25,8 +25,10 @@ typedef char * String;
 
 /*!
  *	@mainpage Do It Tizen for Native API
- *	@brief		간략한 설명
- *	@details	자세한 설명
+ *	@brief
+ *	Welcome to the *D.I.T.* GitHub page. \n
+	D.I.T. library is a light-weight library for manipulating Tizen Native API. \n
+ *	Our goal is to make Tizen Native coding simpler, easier, and more fun!\n
  *	@section intro Introduction
 	Tizen 2.3의 Native Application API는 필요한 정보들이 세분화 분리가 되어있다.
 	예를 들어 NFC를 이용하여서 기본적인 데이터를 작성하는 Application을 개발 해야 한다고 가정 하면,
