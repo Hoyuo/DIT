@@ -119,9 +119,6 @@ bool AccelerometerOff (Accelerometer this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
     AccelerometerExtend * this = (AccelerometerExtend *)this_gen;
     sensor_error_e ison = SENSOR_ERROR_NONE;
     ison = sensor_listener_stop (this->listener);
@@ -133,6 +130,9 @@ bool AccelerometerOff (Accelerometer this_gen)
 
     this->activated = false;
     return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isAccelerometerSupported (Accelerometer this_gen)
@@ -294,20 +294,19 @@ bool GravityOff (Gravity this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    GravityExtend * this = (GravityExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	GravityExtend * this = (GravityExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
     this->activated = false;
     return true;
+    }  dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isGravitySupported (Gravity this_gen)
@@ -466,20 +465,20 @@ bool LinearAccelationOff (LinearAccelation this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	LinearAccelationExtend * this = (LinearAccelationExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isLinearAccelationSupported (LinearAccelation this_gen)
@@ -637,9 +636,6 @@ bool MagnetometerOff (Magnetometer this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
     MagnetometerExtend * this = (MagnetometerExtend *)this_gen;
     sensor_error_e ison = SENSOR_ERROR_NONE;
     ison = sensor_listener_stop (this->listener);
@@ -651,6 +647,9 @@ bool MagnetometerOff (Magnetometer this_gen)
 
     this->activated = false;
     return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isMagnetometerSupported (Magnetometer this_gen)
@@ -809,20 +808,20 @@ bool RotationVectorOff (RotationVector this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	RotationVectorExtend * this = (RotationVectorExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isRotationVectorSupported (RotationVector this_gen)
@@ -983,20 +982,20 @@ bool OrientationOff (Orientation this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    OrientationExtend * this = (OrientationExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+        OrientationExtend * this = (OrientationExtend *)this_gen;
+        sensor_error_e ison = SENSOR_ERROR_NONE;
+        ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+        if ( ison != SENSOR_ERROR_NONE )
+        {
+        	return false;
+        }
 
-    this->activated = false;
-    return true;
+        this->activated = false;
+        return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isOrientationSupported (Orientation this_gen)
@@ -1156,20 +1155,20 @@ bool GyroscopeOff (Gyroscope this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	GyroscopeExtend * this = (GyroscopeExtend *)this_gen;
+        sensor_error_e ison = SENSOR_ERROR_NONE;
+        ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+        if ( ison != SENSOR_ERROR_NONE )
+        {
+        	return false;
+        }
 
-    this->activated = false;
-    return true;
+        this->activated = false;
+        return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isGyroscopeSupported (Gyroscope this_gen)
@@ -1329,20 +1328,20 @@ bool LightOff (Light this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    LightExtend * this = (LightExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+        LightExtend * this = (LightExtend *)this_gen;
+        sensor_error_e ison = SENSOR_ERROR_NONE;
+        ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+        if ( ison != SENSOR_ERROR_NONE )
+        {
+        	return false;
+        }
 
-    this->activated = false;
-    return true;
+        this->activated = false;
+        return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isLightSupported (Light this_gen)
@@ -1500,20 +1499,20 @@ bool ProximityOff (Proximity this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    ProximityExtend * this = (ProximityExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	ProximityExtend * this = (ProximityExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
     this->activated = false;
     return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isProximitySupported (Proximity this_gen)
@@ -1671,20 +1670,20 @@ bool PressureOff (Pressure this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    PressureExtend * this = (PressureExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	PressureExtend * this = (PressureExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isPressureSupported (Pressure this_gen)
@@ -1842,20 +1841,20 @@ bool UltraVioletOff (UltraViolet this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	UltraVioletExtend * this = (UltraVioletExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isUltraVioletSupported (UltraViolet this_gen)
@@ -2013,20 +2012,20 @@ bool TemperatureOff (Temperature this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    TemperatureExtend * this = (TemperatureExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	TemperatureExtend * this = (TemperatureExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isTemperatureSupported (Temperature this_gen)
@@ -2184,20 +2183,20 @@ bool HumidityOff (Humidity this_gen)
 {
     if ( this_gen != NULL)
     {
-        dlog_print (DLOG_INFO, "DIT", "NULL module");
-        return false;
-    }
-    HumidityExtend * this = (HumidityExtend *)this_gen;
-    sensor_error_e ison = SENSOR_ERROR_NONE;
-    ison = sensor_listener_stop (this->listener);
+    	HumidityExtend * this = (HumidityExtend *)this_gen;
+    	sensor_error_e ison = SENSOR_ERROR_NONE;
+    	ison = sensor_listener_stop (this->listener);
 
-    if ( ison != SENSOR_ERROR_NONE )
-    {
-        return false;
-    }
+    	if ( ison != SENSOR_ERROR_NONE )
+    	{
+    		return false;
+    	}
 
-    this->activated = false;
-    return true;
+    	this->activated = false;
+    	return true;
+    }
+    dlog_print (DLOG_INFO, "DIT", "NULL module");
+    return false;
 }
 
 bool isHumiditySupported (Humidity this_gen)
