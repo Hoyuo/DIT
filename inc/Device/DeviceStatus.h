@@ -239,6 +239,7 @@ Display NewDisplay (void)
 
     return &this->display;
 }
+ *	@endcode
  */
 Display NewDisplay (void);
 
@@ -394,6 +395,7 @@ Battery NewBattery (void)
 
     return &this->battery;
 }
+ *	@endcode
  */
 Battery NewBattery (void);
 
@@ -490,6 +492,7 @@ Flash NewFlash (void)
 
     return this;
 }
+ *	@endcode
  */
 Flash NewFlash (void);
 
