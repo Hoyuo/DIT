@@ -309,7 +309,7 @@ bool cameraRecorderInit (CameraRecorder this_gen, const String filename, camera_
                 dlog_print (DLOG_DEBUG, "DIT", "%s", CameraErrorCheck (cret));
             }
 
-            if ( camera == 1 )// if back camara
+            if ( camera == CAMERA_FRONT )// if front camara
             {
                 cret = camera_set_display_rotation (this->camerahandle, 3);
                 dlog_print (DLOG_DEBUG, "DIT", "%s", CameraErrorCheck (cret));
