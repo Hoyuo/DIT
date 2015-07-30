@@ -63,7 +63,7 @@ struct _Preference
 
     bool (* Remove) (String key);
 
-    bool (* Clear) ();
+    bool (* Clear) (void);
 
 };
 
