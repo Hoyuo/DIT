@@ -638,16 +638,16 @@ Image NewImage ()
 {
     ImageExtends * this = (ImageExtends *)malloc (sizeof (ImageExtends));
 
-    this->image.setURI  	 = setImageURI;
-    this->imageMetaHandle    = NULL;
-    this->image.getMediaId   = getImageMediaId;
-    this->image.getDate		 = getImageDate;
-    this->image.getWidth     = getImageWidth;
-    this->image.getHeight    = getImageHeight;
-    this->height             = -1;
-    this->width              = -1;
-    this->datetaken          = NULL;
-    this->media_id           = NULL;
+    this->image.setURI     = setImageURI;
+    this->imageMetaHandle  = NULL;
+    this->image.getMediaId = getImageMediaId;
+    this->image.getDate    = getImageDate;
+    this->image.getWidth   = getImageWidth;
+    this->image.getHeight  = getImageHeight;
+    this->height           = -1;
+    this->width            = -1;
+    this->datetaken        = NULL;
+    this->media_id         = NULL;
 
     return &this->image;
 }

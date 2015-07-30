@@ -109,11 +109,11 @@ typedef struct _File * File;
 struct _File
 {
 
-	bool (* Delete) (String src);
+    bool (* Delete) (String src);
 
-	bool (* Copy) (String src, String dst);
+    bool (* Copy) (String src, String dst);
 
-	bool (* Move) (String src, String dst);
+    bool (* Move) (String src, String dst);
 
     GList * (* Search) (String src, String dst);
 
@@ -278,11 +278,11 @@ void deleteSearchedList (GList * searchedList);
 typedef struct _Video * Video;
 struct _Video
 {
-	bool (* Play) (Video this_gen);
+    bool (* Play) (Video this_gen);
 
-	bool (* Pause) (Video this_gen);
+    bool (* Pause) (Video this_gen);
 
-	bool (* Stop) (Video this_gen);
+    bool (* Stop) (Video this_gen);
 
     String (* getInfo) (Video this_gen, metadata_extractor_attr_e element);
 
@@ -348,7 +348,7 @@ Video NewVideo (void)
 }
  *	@endcode
  */
-Video  NewVideo (void);
+Video NewVideo (void);
 
 /*! @fn 		void DestroyVideo (Video this_gen)
  *  @brief 		생성한 Video 객체를 소멸 시킨다.
@@ -363,7 +363,7 @@ Video  NewVideo (void);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  */
-void   DestroyVideo (Video this_gen);
+void DestroyVideo (Video this_gen);
 
 /*! @fn 		bool playVideo (Video this_gen)
  *  @brief 		동영상 파일을 재생한다.
@@ -388,7 +388,7 @@ void   DestroyVideo (Video this_gen);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  */
-bool   playVideo (Video this_gen);
+bool playVideo (Video this_gen);
 
 /*! @fn 		bool pauseVideo (Video this_gen)
  *  @brief 		동영상 파일을 일시 정지한다.
@@ -412,7 +412,7 @@ bool   playVideo (Video this_gen);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  */
-bool   pauseVideo (Video this_gen);
+bool pauseVideo (Video this_gen);
 
 /*! @fn 		bool stopVideo (Video this_gen)
  *  @brief 		동영상 파일을 정지한다.
@@ -435,7 +435,7 @@ bool   pauseVideo (Video this_gen);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  */
-bool   stopVideo (Video this_gen);
+bool stopVideo (Video this_gen);
 
 /*! @fn 		String getVideoInfo (Video this_gen, metadata_extractor_attr_e element)
  *  @brief 		동영상 파일의 meta data를 가져온다.
@@ -484,7 +484,7 @@ String getVideoInfo (Video this_gen, metadata_extractor_attr_e element);
  *              * http://tizen.org/privilege/externalstorage
  *  @warning    playVideo() , pauseVideo() , stopVideo() ,  recordVideo() , getVideoInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
-bool   setVideoURI (Video this_gen, String URI);
+bool setVideoURI (Video this_gen, String URI);
 
 /*! @fn 		bool setEvasObject (Video this_gen, Evas_Object * EvasObject)
  *  @brief 		생성한 Video 객체의 Evas Object를 설정한다.
@@ -508,7 +508,7 @@ bool   setVideoURI (Video this_gen, String URI);
  *              * http://tizen.org/privilege/mediastorage \n
  *              * http://tizen.org/privilege/externalstorage
  */
-bool   setEvasObject (Video this_gen, Evas_Object * EvasObject);
+bool setEvasObject (Video this_gen, Evas_Object * EvasObject);
 /* Video */
 
 
@@ -526,11 +526,11 @@ bool   setEvasObject (Video this_gen, Evas_Object * EvasObject);
 typedef struct _Audio * Audio;
 struct _Audio
 {
-	bool (* Play) (Audio this_gen);
+    bool (* Play) (Audio this_gen);
 
-	bool (* Pause) (Audio this_gen);
+    bool (* Pause) (Audio this_gen);
 
-	bool (* Stop) (Audio this_gen);
+    bool (* Stop) (Audio this_gen);
 
     String (* getInfo) (Audio this_gen, metadata_extractor_attr_e metadataKey);
 
@@ -589,7 +589,7 @@ Audio NewAudio ()
 }
  *	@endcode
  */
-Audio  NewAudio (void);
+Audio NewAudio (void);
 
 /*! @fn 		void DestroyAudio (Audio this_gen)
  *  @brief 		생성한 Audio 객체를 소멸 시킨다.
@@ -604,7 +604,7 @@ Audio  NewAudio (void);
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
  */
-void   DestroyAudio (Audio this_gen);
+void DestroyAudio (Audio this_gen);
 
 /*! @fn 		bool playAudio (Audio this_gen)
  *  @brief 		음악 파일을 재생한다.
@@ -628,7 +628,7 @@ void   DestroyAudio (Audio this_gen);
  *  @warning    음악 파일을 재생하기 전 NewAudio() 함수를 통해 Audio 객체를 생성한 후 \n
  *              setAudioURI()를 통해 Audio 객체의 설정을 하고 사용해야한다.
  */
-bool   playAudio (Audio this_gen);
+bool playAudio (Audio this_gen);
 
 /*! @fn 		bool pauseAudio (Audio this_gen)
  *  @brief 		음악 파일을 일시 정지한다.
@@ -651,7 +651,7 @@ bool   playAudio (Audio this_gen);
  *              * http://tizen.org/privilege/internet
  *  @warning    음악 파일을 일시 정지하기 전 해당 Audio 객체는 playAudio()를 통해 현재 재생 중이여야 한다.
  */
-bool   pauseAudio (Audio this_gen);
+bool pauseAudio (Audio this_gen);
 
 /*! @fn 		bool stopAudio (Audio this_gen)
  *  @brief 		동영상 파일을 정지한다.
@@ -673,7 +673,7 @@ bool   pauseAudio (Audio this_gen);
  *              * http://tizen.org/privilege/externalstorage \n
  *              * http://tizen.org/privilege/internet
  */
-bool   stopAudio (Audio this_gen);
+bool stopAudio (Audio this_gen);
 
 /*! @fn 		String getAudioInfo (Audio this_gen, metadata_extractor_attr_e element)
  *  @brief 		음악 파일의 meta data를 가져온다.
@@ -720,7 +720,7 @@ String getAudioInfo (Audio this_gen, metadata_extractor_attr_e metadataKey);
  *              * http://tizen.org/privilege/internet
  *  @warming    playAudio() , pauseAudio() , stopAudio() ,  recordAudio() , getAudioInfo() 함수를 사용하기 전에 미리 URI를 설정해야 한다.
  */
-bool   setAudioURI (Audio this_gen, String uri);
+bool setAudioURI (Audio this_gen, String uri);
 /* Audio */
 
 
@@ -793,7 +793,7 @@ Image NewImage ()
 }
  *	@endcode
  */
-Image  NewImage (void);
+Image NewImage (void);
 
 /*! @fn 		void DestroyImage (Image this_gen)
  *  @brief 		생성한 Image 객체를 소멸 시킨다.
@@ -804,7 +804,7 @@ Image  NewImage (void);
  *  			Image 객체를 사용한 후 반드시 호출해야 한다.
  *  @see 		NewImage
  */
-void   DestroyImage (Image this_gen);
+void DestroyImage (Image this_gen);
 
 /*! @fn 		bool setImageURI (Image this_gen, String src)
  *  @brief 		사진 파일의 meta data를 가져온다.
@@ -822,7 +822,7 @@ void   DestroyImage (Image this_gen);
  *  			getImageWidth \n
  *  			getImageHeight
  */
-bool   setImageURI (Image this_gen, String src);
+bool setImageURI (Image this_gen, String src);
 
 /*! @fn 		String getImageMediaId (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 Media Id를 가져온다.
@@ -871,7 +871,7 @@ String getImageDate (Image this_gen);
  *  			getImageHeight
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
-int    getImageWidth (Image this_gen);
+int getImageWidth (Image this_gen);
 
 /*! @fn 		int getImageHeight (Image this_gen)
  *  @brief 		사진 파일의 meta data 중 height 정보를 가져온다.
@@ -888,7 +888,7 @@ int    getImageWidth (Image this_gen);
  *  			getImageWidth \n
  *  @warning   사용 전 setImageURI()를 최소 한번 이상 호출해야 한다.
  */
-int    getImageHeight (Image this_gen);
+int getImageHeight (Image this_gen);
 /* Image */
 
 #ifdef __cplusplus
