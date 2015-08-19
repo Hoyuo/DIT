@@ -55,7 +55,7 @@ int getPreferenceInt (String key, int defValue)
     }
     else
     {
-        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
         return defValue;
     }
 }
@@ -72,7 +72,7 @@ double getPreferenceDouble (String key, double defValue)
     }
     else
     {
-        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
         return defValue;
     }
 }
@@ -88,7 +88,7 @@ bool getPreferenceBoolean (String key, bool defValue)
     }
     else
     {
-        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (ret));
+        dlog_print (DLOG_INFO, "DIT", "%s", PreferenceErrorCheck (error));
         return defValue;
     }
 }
