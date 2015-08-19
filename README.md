@@ -1,26 +1,29 @@
-link of DIT video in embed style and 1280x720 resolution image file
-
-[![Start Video](http://images.technewstoday.com.s3.amazonaws.com/tnt/the-new-samsung-z3-is-hitting-the-market-soon-after-the-surprising-success.jpg)](https://www.youtube.com/embed/MBfxQIz80Jk)
+[![Start Video](https://cloud.githubusercontent.com/assets/8381373/8979980/6a5e1bac-36e8-11e5-8604-1c2b63b64f0a.png)](https://www.youtube.com/embed/ZlEkwy6Rhfw)
 
 ## The Easiest Tizen Native Library: *Do It Tizen! (D.I.T.)*
 ### Welcome to the *D.I.T.* GitHub page.
 D.I.T. library is a light-weight library for manipulating Tizen Native API. Our goal is to make Tizen Native coding simpler, easier, and more fun!  
 
+![DIT](https://cloud.githubusercontent.com/assets/8381373/8978836/b61dad1c-36e0-11e5-9ef4-593ffdba8ed3.png)
+
 ## Why use this library?
 1. We're **not used to** developing Tizen Native.
 2. We need more easier Tizen Native Library.
-3. ~~Some of sample codes of Tizen Native in 'tizen.org' is not working.~~
+3. D.I.T. library is easy, great and efficient library.
 4. D.I.T. library makes Tizen seems like Android.
 5. D.I.T. is heavily customizable.
-	* If you want to edit D.I.T. for your taste, **please follow D.I.T. Library Rules**
+	* If you want to edit D.I.T. for your taste, **[please follow D.I.T. Library Rules](https://github.com/Hoyuo/DIT#dit-library-rules)**
 
 **[More ›][2]**
 
 
 ## How to use this library?
-1. Download Tizen IDE and Tizen SDK. You can download [here](https://developer.tizen.org/development/tools/download).
-2. You can download release version of **[D.I.T.][4]**
-3. 뭐라고 쓰지 흠....
+1. Download Tizen IDE and Tizen SDK. You can download.   
+ 	**[› Here](https://developer.tizen.org/development/tools/download)**
+2. You can download release version.  
+	**[› D.I.T. release version][4]**
+3. D.I.T. Book will help you !    
+	**[› D.I.T. Book][6]**
 
 
 ## D.I.T. Library Rules
@@ -74,17 +77,20 @@ Release ›[![Release](https://cloud.githubusercontent.com/assets/8381373/894807
 
 ##Click here to help out
 Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948083/058d7750-35de-11e5-9674-cd5e568847e7.PNG)][5]
+
+
 <br><br><br><br><br><br><br>
 
 ##Tizen Developer Guide for beginners
-**[Written by Hoyuo ›](http://hoyuo.gitbooks.io/tizen)**
+**[Click ›](http://hoyuo.gitbooks.io/tizen)**
+
 
  [1]: https://github.com/Hoyuo/DIT
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
- [3]: http://dee-j.github.io/html
- [4]: https://github.com/Hoyuo/DIT/releases
+ [3]: http://dee-j.github.io/html/index.html
+ [4]: https://github.com/Hoyuo/DIT/releases/tag/1.0
  [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
- [6]: #
+ [6]: http://hoyuo.gitbooks.io/tizen-d-i-t/content/use.html
  [7]: #
  [8]: #
  [9]: #
