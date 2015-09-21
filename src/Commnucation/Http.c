@@ -11,7 +11,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <curl.h>
+#include <curl/curl.h>
 #include <system_info.h>
 #include <dlog.h>
 

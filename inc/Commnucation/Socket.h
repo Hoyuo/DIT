@@ -12,7 +12,7 @@
 
 #include "dit.h"
 
-#include <curl.h>
+#include <curl/curl.h>
 
 #ifdef __cplusplus
 extern "C" {

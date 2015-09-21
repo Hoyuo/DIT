@@ -12,7 +12,7 @@
 #include <sys/select.h>
 
 #include <dlog.h>
-#include <curl.h>
+#include <curl/curl.h>
 #include <system_info.h>
 
 static int wait_on_socket (curl_socket_t sockfd, int for_recv, long timeout_ms);

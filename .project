@@ -35,15 +35,4 @@
 		<nature>org.tizen.nativecore.apichecker.core.tizenCppNature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 	</natures>
-	<filteredResources>
-		<filter>
-			<id>1437417737169</id>
-			<name></name>
-			<type>26</type>
-			<matcher>
-				<id>org.eclipse.ui.ide.multiFilter</id>
-				<arguments>1.0-projectRelativePath-matches-false-false-*/.tpk</arguments>
-			</matcher>
-		</filter>
-	</filteredResources>
 </projectDescription>
