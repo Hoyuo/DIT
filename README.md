@@ -75,9 +75,6 @@ GitBook ›[![GitBook](https://cloud.githubusercontent.com/assets/8381373/894806
 Reference ›[![Documents](https://cloud.githubusercontent.com/assets/8381373/8948073/ec4f6910-35dd-11e5-9fee-89f241f38520.PNG)][3]
 Release ›[![Release](https://cloud.githubusercontent.com/assets/8381373/8948079/f864c2e0-35dd-11e5-9b5a-1fdcd9cd00d7.png)][4]
 
-##Click here to help out
-Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948083/058d7750-35de-11e5-9674-cd5e568847e7.PNG)][5]
-
 
 <br><br><br><br><br><br><br>
 
@@ -89,7 +86,7 @@ Donation ›[![Donation](https://cloud.githubusercontent.com/assets/8381373/8948
  [2]: https://www.gitbook.com/book/hoyuo/tizen-d-i-t/details
  [3]: http://dee-j.github.io/html/index.html
  [4]: https://github.com/Hoyuo/DIT/releases/tag/1.0
- [5]: https://gumroad.com/l/gitbook_55b5a748e3411810000a9b5d?wanted=true
+ [5]: #
  [6]: http://hoyuo.gitbooks.io/tizen-d-i-t/content/use.html
  [7]: #
  [8]: #
